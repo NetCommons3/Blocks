@@ -9,10 +9,10 @@ env:
   - NETCOMMONS_VERSION=master DB=mysql
 
 before_script:
-  - export NETCOMMONS_BUILD_DIR=/NetCommons3
-  - git clone git://github.com/NetCommons3/NetCommons3 
-  - cd 
-  - git checkout 
+  - export NETCOMMONS_BUILD_DIR=`dirname $TRAVIS_BUILD_DIR`/NetCommons3
+  - git clone git://github.com/NetCommons3/NetCommons3 $NETCOMMONS_BUILD_DIR
+  - cd $NETCOMMONS_BUILD_DIR
+  - git checkout $NETCOMMONS_VERSION
   - . tools/build/plugins/cakephp/travis/pre.sh
 
 script:
