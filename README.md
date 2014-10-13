@@ -8,4 +8,4 @@ Blocks for NetComomns3
 
 | dependencies  | status |
 | ------------- | ------ |
-| composer.json | [![Dependency Status](https://www.versioneye.com/user/projects/(versioneye_project_ID)/badge.png)](https://www.versioneye.com/user/projects/(versioneye_project_ID)) |
+| composer.json | [![Dependency Status](https://www.versioneye.com/user/projects/543b99c1b2a9c5db88000385/badge.png)](https://www.versioneye.com/user/projects/543b99c1b2a9c5db88000385) |
