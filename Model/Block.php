@@ -123,13 +123,13 @@ class Block extends BlocksAppModel {
  * @return boolean True if the operation should continue, false if it should abort
  */
 	public function beforeSave($options = array()) {
-		if (! isset($this->data['id'])) {
-			$this->data['created_user'] = CakeSession::read('Auth.User.id');
+		if (! isset($this->data[$this->name]['id'])) {
+			$this->data[$this->name]['created_user'] = CakeSession::read('Auth.User.id');
 		}
-		if (! isset($this->data['id']) && ! isset($this->data['key'])) {
-			$this->data['key'] = hash('sha256', 'block_' . microtime());
+		if (! isset($this->data[$this->name]['id']) && ! isset($this->data[$this->name]['key'])) {
+			$this->data[$this->name]['key'] = hash('sha256', 'block_' . microtime());
 		}
-		$this->data['modified_user'] = CakeSession::read('Auth.User.id');
+		$this->data[$this->name]['modified_user'] = CakeSession::read('Auth.User.id');
 		return true;
 	}
 
