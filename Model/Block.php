@@ -120,7 +120,7 @@ class Block extends BlocksAppModel {
  * before save
  *
  * @param array $options Options passed from Model::save().
- * @return boolean True if the operation should continue, false if it should abort
+ * @return bool True if the operation should continue, false if it should abort
  */
 	public function beforeSave($options = array()) {
 		if (! isset($this->data[$this->name]['id'])) {
