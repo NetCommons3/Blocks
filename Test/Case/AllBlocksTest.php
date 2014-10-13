@@ -13,7 +13,7 @@
  * Blocks All Test Case
  *
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
- * @package Blocks\Test\Case
+ * @package NetCommons\Blocks\Test\Case
  * @codeCoverageIgnore
  */
 class AllBlocksTest extends CakeTestSuite {

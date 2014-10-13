@@ -15,7 +15,7 @@ App::uses('Block', 'Blocks.Model');
  * Block Test Case
  *
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
- * @package Blocks\Test\Case\Model
+ * @package NetCommons\Blocks\Test\Case\Model
  */
 class BlockTest extends CakeTestCase {
 

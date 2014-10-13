@@ -13,7 +13,7 @@
  * BlockFixture
  *
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
- * @package Blocks\Test\Fixture
+ * @package NetCommons\Blocks\Test\Fixture
  */
 class BlockFixture extends CakeTestFixture {
 

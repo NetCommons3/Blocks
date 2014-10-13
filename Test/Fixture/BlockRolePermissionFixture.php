@@ -13,7 +13,7 @@
  * BlockRolePermissionFixture
  *
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
- * @package Blocks\Test\Fixture
+ * @package NetCommons\Blocks\Test\Fixture
  */
 class BlockRolePermissionFixture extends CakeTestFixture {
 
