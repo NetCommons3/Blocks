@@ -46,14 +46,103 @@ class BlockFixture extends CakeTestFixture {
 	public $records = array(
 		array(
 			'id' => 1,
-			'language_id' => 1,
+			'language_id' => 2,
 			'room_id' => 1,
-			'key' => 'Lorem ipsum dolor sit amet',
-			'name' => 'Lorem ipsum dolor sit amet',
+			'key' => 'block_1',
 			'created_user' => 1,
-			'created' => '2014-10-10 13:42:04',
+			'created' => '2014-06-18 02:06:22',
 			'modified_user' => 1,
-			'modified' => '2014-10-10 13:42:04'
+			'modified' => '2014-06-18 02:06:22'
+		),
+		array(
+			'id' => 2,
+			'language_id' => 2,
+			'room_id' => 2,
+			'key' => 'block_2',
+			'created_user' => 2,
+			'created' => '2014-06-18 02:06:22',
+			'modified_user' => 2,
+			'modified' => '2014-06-18 02:06:22'
+		),
+		array(
+			'id' => 3,
+			'language_id' => 2,
+			'room_id' => 3,
+			'key' => 'block_3',
+			'created_user' => 3,
+			'created' => '2014-06-18 02:06:22',
+			'modified_user' => 3,
+			'modified' => '2014-06-18 02:06:22'
+		),
+		array(
+			'id' => 4,
+			'language_id' => 2,
+			'room_id' => 4,
+			'key' => 'block_4',
+			'created_user' => 4,
+			'created' => '2014-06-18 02:06:22',
+			'modified_user' => 4,
+			'modified' => '2014-06-18 02:06:22'
+		),
+		array(
+			'id' => 5,
+			'language_id' => 2,
+			'room_id' => 5,
+			'key' => 'block_5',
+			'created_user' => 5,
+			'created' => '2014-06-18 02:06:22',
+			'modified_user' => 5,
+			'modified' => '2014-06-18 02:06:22'
+		),
+		array(
+			'id' => 6,
+			'language_id' => 2,
+			'key' => 'block_6',
+			'room_id' => 6,
+			'created_user' => 6,
+			'created' => '2014-06-18 02:06:22',
+			'modified_user' => 6,
+			'modified' => '2014-06-18 02:06:22'
+		),
+		array(
+			'id' => 7,
+			'language_id' => 2,
+			'room_id' => 7,
+			'key' => 'block_7',
+			'created_user' => 7,
+			'created' => '2014-06-18 02:06:22',
+			'modified_user' => 7,
+			'modified' => '2014-06-18 02:06:22'
+		),
+		array(
+			'id' => 8,
+			'language_id' => 2,
+			'room_id' => 8,
+			'key' => 'block_8',
+			'created_user' => 8,
+			'created' => '2014-06-18 02:06:22',
+			'modified_user' => 8,
+			'modified' => '2014-06-18 02:06:22'
+		),
+		array(
+			'id' => 9,
+			'language_id' => 2,
+			'room_id' => 9,
+			'key' => 'block_9',
+			'created_user' => 9,
+			'created' => '2014-06-18 02:06:22',
+			'modified_user' => 9,
+			'modified' => '2014-06-18 02:06:22'
+		),
+		array(
+			'id' => 10,
+			'language_id' => 2,
+			'room_id' => 10,
+			'key' => 'block_10',
+			'created_user' => 10,
+			'created' => '2014-06-18 02:06:22',
+			'modified_user' => 10,
+			'modified' => '2014-06-18 02:06:22'
 		),
 	);
 
