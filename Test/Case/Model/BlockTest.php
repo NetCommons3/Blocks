@@ -61,15 +61,6 @@ class BlockTest extends CakeTestCase {
 	}
 
 /**
- * testIndex
- *
- * @return  void
- */
-	public function testIndex() {
-		$this->assertTrue(true);
-	}
-
-/**
  * testCreateSave
  *
  * @return  void
@@ -84,10 +75,12 @@ class BlockTest extends CakeTestCase {
 		);
 		$result = $this->Block->save($block);
 
-		$this->assertTrue(isset($result['Block']['id']));
-		$this->assertTrue(isset($result['Block']['key']) && strlen($result['Block']['key']) > 0);
-		$this->assertTrue((int)$result['Block']['created_user'] === 1);
-		$this->assertTrue((int)$result['Block']['modified_user'] === 1);
+		$this->assertArrayHasKey('id', $result['Block']);
+		$this->assertArrayHasKey('key', $result['Block']);
+		$this->assertTrue(strlen($result['Block']['key']) > 0, 'Error strlen Block.key');
+
+		$this->assertEquals((int)$result['Block']['modified_user'], 1);
+		$this->assertEquals((int)$result['Block']['created_user'], 1);
 
 		CakeSession::write('Auth.User.id', null);
 	}
@@ -107,8 +100,8 @@ class BlockTest extends CakeTestCase {
 
 		$result = $this->Block->save($block);
 
-		$this->assertTrue((int)$result['Block']['id'] === 1);
-		$this->assertTrue((int)$result['Block']['modified_user'] === 1);
+		$this->assertEquals($result['Block']['id'], 1, 'Error equals id = 1');
+		$this->assertEquals($result['Block']['modified_user'], 1, 'Error equals modified_user = 1');
 
 		CakeSession::write('Auth.User.id', null);
 	}

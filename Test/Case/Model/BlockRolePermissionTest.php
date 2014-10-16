@@ -58,5 +58,4 @@ class BlockRolePermissionTest extends CakeTestCase {
 	public function testIndex() {
 		$this->assertTrue(true);
 	}
-
 }
