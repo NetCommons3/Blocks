@@ -133,4 +133,55 @@ class Block extends BlocksAppModel {
 		return true;
 	}
 
+/**
+ * save block
+ *
+ * @param array $frame frame data
+ * @return mixed On success Model::$data if its not empty or true, false on failure
+ * @throws Exception
+ */
+	public function saveByFrameId($frameId) {
+		$this->setDataSource('master');
+		$this->Frame->setDataSource('master');
+
+		//frameの取得
+		$frame = $this->Frame->findById($frameId);
+		if (! $frame) {
+			return false;
+		}
+
+		if (isset($frame['Frame']['block_id']) && (int)$frame['Frame']['block_id'] > 0) {
+			return $frame;
+		}
+
+		$dataSource = $this->getDataSource();
+		$dataSource->begin();
+
+		//frame関連のセット
+		try {
+			//blocksテーブル登録
+			$block = array();
+			$block['Block']['room_id'] = $frame['Frame']['room_id'];
+			$block['Block']['language_id'] = $frame['Frame']['language_id'];
+			$block = $this->save($block);
+			if (! $block) {
+				throw new Exception();
+			}
+			$blockId = (int)$block['Block']['id'];
+
+			//framesテーブル更新
+			$frame['Frame']['block_id'] = $blockId;
+			if (! $this->Frame->save($frame)) {
+				throw new Exception();
+			}
+
+			$dataSource->commit();
+			return $block;
+
+		} catch (Exception $e) {
+			$dataSource->rollback();
+			return false;
+		}
+	}
+
 }
