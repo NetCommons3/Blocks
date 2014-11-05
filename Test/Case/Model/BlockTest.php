@@ -26,17 +26,18 @@ class BlockTest extends CakeTestCase {
  */
 	public $fixtures = array(
 		'plugin.blocks.block',
-		//'plugin.blocks.language',
-		//'plugin.blocks.room',
+		'plugin.frames.box',
+		'plugin.frames.plugin',
+		'plugin.frames.language',
+		'plugin.rooms.room',
 		//'plugin.blocks.group',
 		//'plugin.blocks.groups_language',
 		//'plugin.blocks.user',
 		//'plugin.blocks.groups_user',
 		//'plugin.blocks.space',
-		//'plugin.blocks.box',
 		//'plugin.blocks.top_page',
 		//'plugin.blocks.page',
-		//'plugin.blocks.frame',
+		'plugin.blocks.frame',
 	);
 
 /**
@@ -104,6 +105,85 @@ class BlockTest extends CakeTestCase {
 		$this->assertEquals($result['Block']['modified_user'], 1, 'Error equals modified_user = 1');
 
 		CakeSession::write('Auth.User.id', null);
+	}
+
+/**
+ * testSaveByFrameIdNoFrame
+ *
+ * @return  void
+ */
+	public function testSaveByFrameIdNoFrame() {
+		$frameId = 999;
+
+		$result = $this->Block->saveByFrameId($frameId);
+
+		$this->assertFalse($result);
+	}
+
+/**
+ * testSaveByFrameId
+ *
+ * @return  void
+ */
+	public function testSaveByFrameId() {
+		$frameId = 1;
+
+		$result = $this->Block->saveByFrameId($frameId);
+
+		$this->assertArrayHasKey('id', $result['Block']);
+		$this->assertArrayHasKey('key', $result['Block']);
+		$this->assertTrue(strlen($result['Block']['key']) > 0, 'Error strlen Block.key');
+	}
+
+/**
+ * testSaveByFrameIdNewBlock
+ *
+ * @return  void
+ */
+	public function testSaveByFrameIdNewBlock() {
+		$frameId = 2;
+
+		$result = $this->Block->saveByFrameId($frameId);
+
+		$this->assertArrayHasKey('id', $result['Block']);
+		$this->assertArrayHasKey('key', $result['Block']);
+		$this->assertTrue(strlen($result['Block']['key']) > 0, 'Error strlen Block.key');
+	}
+
+/**
+ * testSaveByFrameIdBlockSaveError
+ *
+ * @return  void
+ */
+	public function testSaveByFrameIdBlockSaveError() {
+		$this->Block = $this->getMockForModel('Blocks.Block', array('save'));
+		$this->Block->expects($this->any())
+			->method('save')
+			->will($this->returnValue(false));
+
+		$frameId = 2;
+
+		$result = $this->Block->saveByFrameId($frameId);
+
+		$this->assertFalse($result);
+	}
+
+/**
+ * testSaveByFrameIdBlockSaveError
+ *
+ * @return  void
+ */
+	public function testSaveByFrameIdFrameSaveError() {
+		$this->Frame = $this->getMockForModel('Frames.Frame', array('save'));
+		$this->Frame->expects($this->any())
+			->method('save')
+			->will($this->returnValue(false));
+
+		$frameId = 2;
+
+		$result = $this->Block->saveByFrameId($frameId);
+
+		$this->assertFalse($result);
 	}
 
 }

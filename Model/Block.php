@@ -136,7 +136,7 @@ class Block extends BlocksAppModel {
 /**
  * save block
  *
- * @param array $frame frame data
+ * @param int $frameId frames.id
  * @return mixed On success Model::$data if its not empty or true, false on failure
  * @throws Exception
  */
@@ -151,7 +151,7 @@ class Block extends BlocksAppModel {
 		}
 
 		if (isset($frame['Frame']['block_id']) && (int)$frame['Frame']['block_id'] > 0) {
-			return $frame;
+			return $this->findById((int)$frame['Frame']['block_id']);
 		}
 
 		$dataSource = $this->getDataSource();
