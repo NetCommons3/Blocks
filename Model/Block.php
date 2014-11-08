@@ -87,7 +87,7 @@ class Block extends BlocksAppModel {
 			'order' => ''
 		),
 		'Room' => array(
-			'className' => 'Room',
+			'className' => 'Rooms.Room',
 			'foreignKey' => 'room_id',
 			'conditions' => '',
 			'fields' => '',
@@ -102,7 +102,7 @@ class Block extends BlocksAppModel {
  */
 	public $hasMany = array(
 		'Frame' => array(
-			'className' => 'Frame',
+			'className' => 'Frames.Frame',
 			'foreignKey' => 'block_id',
 			'dependent' => false,
 			'conditions' => '',
