@@ -147,7 +147,7 @@ class Block extends BlocksAppModel {
 		//frameの取得
 		$frame = $this->Frame->findById($frameId);
 		if (! $frame) {
-			return false;
+			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 		}
 
 		if (isset($frame['Frame']['block_id']) && (int)$frame['Frame']['block_id'] > 0) {

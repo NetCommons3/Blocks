@@ -113,6 +113,8 @@ class BlockTest extends CakeTestCase {
  * @return  void
  */
 	public function testSaveByFrameIdNoFrame() {
+		$this->setExpectedException('InternalErrorException');
+
 		$frameId = 999;
 
 		$result = $this->Block->saveByFrameId($frameId);
