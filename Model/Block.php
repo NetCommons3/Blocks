@@ -138,7 +138,7 @@ class Block extends BlocksAppModel {
  *
  * @param int $frameId frames.id
  * @return mixed On success Model::$data if its not empty or true, false on failure
- * @throws Exception
+ * @throws InternalErrorException
  */
 	public function saveByFrameId($frameId) {
 		$this->setDataSource('master');
@@ -154,34 +154,23 @@ class Block extends BlocksAppModel {
 			return $this->findById((int)$frame['Frame']['block_id']);
 		}
 
-		$dataSource = $this->getDataSource();
-		$dataSource->begin();
-
-		//frame関連のセット
-		try {
-			//blocksテーブル登録
-			$block = array();
-			$block['Block']['room_id'] = $frame['Frame']['room_id'];
-			$block['Block']['language_id'] = $frame['Frame']['language_id'];
-			$block = $this->save($block);
-			if (! $block) {
-				throw new Exception();
-			}
-			$blockId = (int)$block['Block']['id'];
-
-			//framesテーブル更新
-			$frame['Frame']['block_id'] = $blockId;
-			if (! $this->Frame->save($frame)) {
-				throw new Exception();
-			}
-
-			$dataSource->commit();
-			return $block;
-
-		} catch (Exception $e) {
-			$dataSource->rollback();
-			return false;
+		//blocksテーブル登録
+		$block = array();
+		$block['Block']['room_id'] = $frame['Frame']['room_id'];
+		$block['Block']['language_id'] = $frame['Frame']['language_id'];
+		$block = $this->save($block);
+		if (! $block) {
+			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 		}
+		$blockId = (int)$block['Block']['id'];
+
+		//framesテーブル更新
+		$frame['Frame']['block_id'] = $blockId;
+		if (! $this->Frame->save($frame)) {
+			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+		}
+
+		return $block;
 	}
 
 }

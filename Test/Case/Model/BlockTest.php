@@ -145,8 +145,9 @@ class BlockTest extends CakeTestCase {
 
 		$result = $this->Block->saveByFrameId($frameId);
 
-		$this->assertArrayHasKey('id', $result['Block']);
-		$this->assertArrayHasKey('key', $result['Block']);
+		$this->assertArrayHasKey('Block', $result, print_r($result, true));
+		$this->assertArrayHasKey('id', $result['Block'], print_r($result['Block'], true));
+		$this->assertArrayHasKey('key', $result['Block'], print_r($result['Block'], true));
 		$this->assertTrue(strlen($result['Block']['key']) > 0, 'Error strlen Block.key');
 	}
 
@@ -156,6 +157,8 @@ class BlockTest extends CakeTestCase {
  * @return  void
  */
 	public function testSaveByFrameIdBlockSaveError() {
+		$this->setExpectedException('InternalErrorException');
+
 		$this->Block = $this->getMockForModel('Blocks.Block', array('save'));
 		$this->Block->expects($this->any())
 			->method('save')
@@ -163,9 +166,7 @@ class BlockTest extends CakeTestCase {
 
 		$frameId = 2;
 
-		$result = $this->Block->saveByFrameId($frameId);
-
-		$this->assertFalse($result);
+		$this->Block->saveByFrameId($frameId);
 	}
 
 /**
@@ -174,6 +175,8 @@ class BlockTest extends CakeTestCase {
  * @return  void
  */
 	public function testSaveByFrameIdFrameSaveError() {
+		$this->setExpectedException('InternalErrorException');
+
 		$this->Frame = $this->getMockForModel('Frames.Frame', array('save'));
 		$this->Frame->expects($this->any())
 			->method('save')
@@ -181,9 +184,7 @@ class BlockTest extends CakeTestCase {
 
 		$frameId = 2;
 
-		$result = $this->Block->saveByFrameId($frameId);
-
-		$this->assertFalse($result);
+		$this->Block->saveByFrameId($frameId);
 	}
 
 }
