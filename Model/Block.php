@@ -123,11 +123,11 @@ class Block extends BlocksAppModel {
  * @return bool True if the operation should continue, false if it should abort
  */
 	public function beforeSave($options = array()) {
+		if (! isset($this->data[$this->name]['id']) && ! isset($this->data[$this->name]['key'])) {
+			$this->data[$this->name]['key'] = Security::hash($this->name . mt_rand() . microtime());
+		}
 		if (! isset($this->data[$this->name]['id'])) {
 			$this->data[$this->name]['created_user'] = CakeSession::read('Auth.User.id');
-		}
-		if (! isset($this->data[$this->name]['id']) && ! isset($this->data[$this->name]['key'])) {
-			$this->data[$this->name]['key'] = hash('sha256', 'block_' . microtime());
 		}
 		$this->data[$this->name]['modified_user'] = CakeSession::read('Auth.User.id');
 		return true;
@@ -137,10 +137,20 @@ class Block extends BlocksAppModel {
  * save block
  *
  * @param int $frameId frames.id
+ * @param boolean|array $validate Either a boolean, or an array.
+ *   If a boolean, indicates whether or not to validate before saving.
+ *   If an array, can have following keys:
+ *
+ *   - validate: Set to true/false to enable or disable validation.
+ *   - fieldList: An array of fields you want to allow for saving.
+ *   - callbacks: Set to false to disable callbacks. Using 'before' or 'after'
+ *      will enable only those callbacks.
+ *   - `counterCache`: Boolean to control updating of counter caches (if any)
  * @return mixed On success Model::$data if its not empty or true, false on failure
+ *
  * @throws InternalErrorException
  */
-	public function saveByFrameId($frameId) {
+	public function saveByFrameId($frameId, $validate = true) {
 		$this->setDataSource('master');
 		$this->Frame->setDataSource('master');
 
@@ -158,7 +168,7 @@ class Block extends BlocksAppModel {
 		$block = array();
 		$block['Block']['room_id'] = $frame['Frame']['room_id'];
 		$block['Block']['language_id'] = $frame['Frame']['language_id'];
-		$block = $this->save($block);
+		$block = $this->save($block, $validate);
 		if (! $block) {
 			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 		}
@@ -166,7 +176,7 @@ class Block extends BlocksAppModel {
 
 		//framesテーブル更新
 		$frame['Frame']['block_id'] = $blockId;
-		if (! $this->Frame->save($frame)) {
+		if (! $this->Frame->save($frame, $validate)) {
 			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 		}
 
