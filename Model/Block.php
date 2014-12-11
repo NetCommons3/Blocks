@@ -137,7 +137,7 @@ class Block extends BlocksAppModel {
  * save block
  *
  * @param int $frameId frames.id
- * @param boolean|array $validate Either a boolean, or an array.
+ * @param bool|array $validate Either a boolean, or an array.
  *   If a boolean, indicates whether or not to validate before saving.
  *   If an array, can have following keys:
  *
