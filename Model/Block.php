@@ -149,6 +149,8 @@ class Block extends BlocksAppModel {
  * @return mixed On success Model::$data if its not empty or true, false on failure
  *
  * @throws InternalErrorException
+ *
+ * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
  */
 	public function saveByFrameId($frameId, $validate = true) {
 		$this->setDataSource('master');
