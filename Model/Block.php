@@ -154,8 +154,9 @@ class Block extends BlocksAppModel {
  */
 
 	public function saveByFrameId($frameId, $validate = true) {
+			var_dump('saveByFrameId');
 		$this->loadModels([
-			'Block' => 'Blocks.Block',
+			/* 'Block' => 'Blocks.Block', */
 			'Frame' => 'Frames.Frame',
 		]);
 
