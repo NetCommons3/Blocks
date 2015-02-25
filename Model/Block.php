@@ -161,11 +161,15 @@ class Block extends BlocksAppModel {
 
 		//frameの取得
 		$frame = $this->Frame->findById($frameId);
+			var_dump(1);
 		if (! $frame) {
+			var_dump(1);
 			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 		}
 
+			var_dump(1);
 		if (isset($frame['Frame']['block_id']) && (int)$frame['Frame']['block_id'] > 0) {
+			var_dump(1);
 			return $this->findById(is_int($frame['Frame']['block_id']) ? (int)$frame['Frame']['block_id'] : $frame['Frame']['block_id']);
 		}
 
@@ -174,16 +178,21 @@ class Block extends BlocksAppModel {
 		$block['Block']['room_id'] = $frame['Frame']['room_id'];
 		$block['Block']['language_id'] = $frame['Frame']['language_id'];
 		$block = $this->save($block, $validate);
+			var_dump(1);
 		if (! $block) {
+			var_dump(1);
 			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 		}
 		$blockId = (int)$block['Block']['id'];
 
 		//framesテーブル更新
 		$frame['Frame']['block_id'] = $blockId;
+			var_dump(1);
 		if (! $this->Frame->save($frame, $validate)) {
+			var_dump(1);
 			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 		}
+			var_dump(1);
 
 		return $block;
 	}
