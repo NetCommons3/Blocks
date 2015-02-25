@@ -166,7 +166,7 @@ class Block extends BlocksAppModel {
 		}
 
 		if (isset($frame['Frame']['block_id']) && (int)$frame['Frame']['block_id'] > 0) {
-			return $this->findById((int)$frame['Frame']['block_id']);
+			return $this->findById(is_int($frame['Frame']['block_id']) ? (int)$frame['Frame']['block_id'] : $frame['Frame']['block_id']);
 		}
 
 		//blocksテーブル登録
