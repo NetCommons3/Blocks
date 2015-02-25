@@ -152,9 +152,12 @@ class Block extends BlocksAppModel {
  *
  * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
  */
+
 	public function saveByFrameId($frameId, $validate = true) {
-		$this->setDataSource('master');
-		$this->Frame->setDataSource('master');
+		$this->loadModels([
+			'Block' => 'Blocks.Block',
+			'Frame' => 'Frames.Frame',
+		]);
 
 		//frameの取得
 		$frame = $this->Frame->findById($frameId);
