@@ -126,10 +126,6 @@ class Block extends BlocksAppModel {
 		if (! isset($this->data[$this->name]['id']) && ! isset($this->data[$this->name]['key'])) {
 			$this->data[$this->name]['key'] = Security::hash($this->name . mt_rand() . microtime());
 		}
-		/* if (! isset($this->data[$this->name]['id'])) { */
-		/* 	$this->data[$this->name]['created_user'] = CakeSession::read('Auth.User.id'); */
-		/* } */
-		/* $this->data[$this->name]['modified_user'] = CakeSession::read('Auth.User.id'); */
 		return true;
 	}
 
