@@ -38,6 +38,7 @@ class BlockTest extends CakeTestCase {
 		//'plugin.blocks.top_page',
 		//'plugin.blocks.page',
 		'plugin.blocks.frame',
+		'plugin.users.user',
 	);
 
 /**
