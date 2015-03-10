@@ -161,7 +161,7 @@ class Block extends BlocksAppModel {
 			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 		}
 
-		if (isset($frame['Frame']['block_id']) && (int)$frame['Frame']['block_id'] > 0) {
+		if (isset($frame['Frame']['block_id'])) {
 			return $this->findById(is_int($frame['Frame']['block_id']) ? (int)$frame['Frame']['block_id'] : $frame['Frame']['block_id']);
 		}
 
