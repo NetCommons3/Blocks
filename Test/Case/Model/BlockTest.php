@@ -26,18 +26,11 @@ class BlockTest extends CakeTestCase {
  */
 	public $fixtures = array(
 		'plugin.blocks.block',
-		'plugin.frames.box',
+		'plugin.boxes.box',
+		'plugin.frames.frame',
 		'plugin.frames.plugin',
-		'plugin.frames.language',
+		'plugin.m17n.language',
 		'plugin.rooms.room',
-		//'plugin.blocks.group',
-		//'plugin.blocks.groups_language',
-		//'plugin.blocks.user',
-		//'plugin.blocks.groups_user',
-		//'plugin.blocks.space',
-		//'plugin.blocks.top_page',
-		//'plugin.blocks.page',
-		'plugin.blocks.frame',
 		'plugin.users.user',
 	);
 
@@ -144,7 +137,7 @@ class BlockTest extends CakeTestCase {
  * @return  void
  */
 	public function testSaveByFrameIdNewBlock() {
-		$frameId = 2;
+		$frameId = 11;
 
 		$result = $this->Block->saveByFrameId($frameId);
 
@@ -167,7 +160,7 @@ class BlockTest extends CakeTestCase {
 			->method('save')
 			->will($this->returnValue(false));
 
-		$frameId = 2;
+		$frameId = 11;
 
 		$this->Block->saveByFrameId($frameId);
 	}
@@ -185,7 +178,7 @@ class BlockTest extends CakeTestCase {
 			->method('save')
 			->will($this->returnValue(false));
 
-		$frameId = 2;
+		$frameId = 11;
 
 		$this->Block->saveByFrameId($frameId);
 	}
