@@ -184,4 +184,16 @@ class Block extends BlocksAppModel {
 		return $block;
 	}
 
+/**
+ * validate block
+ *
+ * @param array $data received post data
+ * @return bool True on success, false on error
+ */
+	public function validateBlock($data) {
+		$this->set($data);
+		$this->validates();
+		return $this->validationErrors ? false : true;
+	}
+
 }

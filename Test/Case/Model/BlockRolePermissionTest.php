@@ -58,4 +58,22 @@ class BlockRolePermissionTest extends CakeTestCase {
 	public function testIndex() {
 		$this->assertTrue(true);
 	}
+
+/**
+ * Expect BlockRolePermission->validateBlockRolePermissions() to return true on validation success
+ *
+ * @return  void
+ */
+	public function testValidateBlockRolePermissions() {
+		$data = array(
+			'id' => 1,
+			'roles_room_id' => 1,
+			'block_key' => 'Lorem ipsum dolor sit amet',
+			'permission' => 'Lorem ipsum dolor sit amet',
+			'value' => 1,
+		);
+		$result = $this->BlockRolePermission->validateBlockRolePermissions($data);
+
+		$this->assertTrue($result);
+	}
 }

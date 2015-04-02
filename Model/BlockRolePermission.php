@@ -85,4 +85,15 @@ class BlockRolePermission extends BlocksAppModel {
 			'order' => ''
 		)
 	);
+
+/**
+ * Validate BlockRolePermissions
+ *
+ * @param array $data received post data
+ * @return bool True on success, false on error
+ */
+	public function validateBlockRolePermissions($data) {
+		$this->validateMany($data);
+		return $this->validationErrors ? false : true;
+	}
 }

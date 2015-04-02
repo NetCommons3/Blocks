@@ -183,4 +183,20 @@ class BlockTest extends CakeTestCase {
 		$this->Block->saveByFrameId($frameId);
 	}
 
+/**
+ * Expect Block->validateBlock() to return true on validation success
+ *
+ * @return  void
+ */
+	public function testValidateBlock() {
+		$data = array(
+			'id' => 1,
+			'language_id' => 2,
+			'room_id' => 1,
+			'key' => 'block_1',
+		);
+		$result = $this->Block->validateBlock($data);
+
+		$this->assertTrue($result);
+	}
 }
