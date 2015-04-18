@@ -18,13 +18,13 @@
 	<div class="col-xs-offset-1 col-xs-11">
 		<?php
 			$options = array(
-				'0' => __d('blocks', 'No display'),
-				'1' => __d('blocks', 'Display'),
-				'2' => __d('blocks', 'Limited Public'),
+				Block::TYPE_PRIVATE => __d('blocks', 'No display'),
+				Block::TYPE_PUBLIC => __d('blocks', 'Display'),
+				Block::TYPE_LIMITED => __d('blocks', 'Limited Public'),
 			);
 
 			echo $this->Form->radio('Block.public_type', $options, array(
-				'value' => isset($block['publicType']) ? $block['publicType'] : '0',
+				'value' => isset($block['publicType']) ? $block['publicType'] : Block::TYPE_PRIVATE,
 				'legend' => false,
 				'separator' => '<br />',
 			));

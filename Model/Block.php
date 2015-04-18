@@ -24,6 +24,27 @@ App::uses('BlocksAppModel', 'Blocks.Model');
 class Block extends BlocksAppModel {
 
 /**
+ * Private block
+ *
+ * @var int
+ */
+	const TYPE_PRIVATE = '0';
+
+/**
+ * Public block
+ *
+ * @var int
+ */
+	const TYPE_PUBLIC = '1';
+
+/**
+ * Limited block
+ *
+ * @var int
+ */
+	const TYPE_LIMITED = '2';
+
+/**
  * Validation rules
  *
  * @var array
@@ -49,26 +70,26 @@ class Block extends BlocksAppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'key' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'name' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
+		//'key' => array(
+		//	'notEmpty' => array(
+		//		'rule' => array('notEmpty'),
+		//		//'message' => 'Your custom message here',
+		//		//'allowEmpty' => false,
+		//		//'required' => false,
+		//		//'last' => false, // Stop validation after this rule
+		//		//'on' => 'create', // Limit validation to 'create' or 'update' operations
+		//	),
+		//),
+		//'name' => array(
+		//	'notEmpty' => array(
+		//		'rule' => array('notEmpty'),
+		//		//'message' => 'Your custom message here',
+		//		//'allowEmpty' => false,
+		//		//'required' => false,
+		//		//'last' => false, // Stop validation after this rule
+		//		//'on' => 'create', // Limit validation to 'create' or 'update' operations
+		//	),
+		//),
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
@@ -124,34 +145,23 @@ class Block extends BlocksAppModel {
  */
 	public function beforeSave($options = array()) {
 		if (! isset($this->data[$this->name]['id']) && ! isset($this->data[$this->name]['key'])) {
-			$this->data[$this->name]['key'] = Security::hash($this->name . mt_rand() . microtime());
+			$this->data[$this->name]['key'] = Security::hash($this->name . mt_rand() . microtime(), 'md5');
 		}
 		return true;
 	}
 
 /**
- * save block
+ * Save block data and frame.block_id.
+ * Please do the transaction and validation in the caller.
  *
  * @param int $frameId frames.id
- * @param bool|array $validate Either a boolean, or an array.
- *   If a boolean, indicates whether or not to validate before saving.
- *   If an array, can have following keys:
- *
- *   - validate: Set to true/false to enable or disable validation.
- *   - fieldList: An array of fields you want to allow for saving.
- *   - callbacks: Set to false to disable callbacks. Using 'before' or 'after'
- *      will enable only those callbacks.
- *   - `counterCache`: Boolean to control updating of counter caches (if any)
+ * @param int $block block data
  * @return mixed On success Model::$data if its not empty or true, false on failure
  *
  * @throws InternalErrorException
- *
- * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
  */
-
-	public function saveByFrameId($frameId, $validate = true) {
+	public function saveByFrameId($frameId, $block = null) {
 		$this->loadModels([
-			'Block' => 'Blocks.Block',
 			'Frame' => 'Frames.Frame',
 		]);
 
@@ -161,24 +171,26 @@ class Block extends BlocksAppModel {
 			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 		}
 
-		if (isset($frame['Frame']['block_id'])) {
-			return $this->findById(is_int($frame['Frame']['block_id']) ? (int)$frame['Frame']['block_id'] : $frame['Frame']['block_id']);
+		if ($block === false || $block === null && ! $this->data) {
+			if (isset($frame['Frame']['block_id'])) {
+				return $this->findById((int)$frame['Frame']['block_id']);
+			}
+			$block = array();
+			$block['Block']['room_id'] = $frame['Frame']['room_id'];
+			$block['Block']['language_id'] = $frame['Frame']['language_id'];
 		}
 
-		//blocksテーブル登録
-		$block = array();
-		$block['Block']['room_id'] = $frame['Frame']['room_id'];
-		$block['Block']['language_id'] = $frame['Frame']['language_id'];
-		$block = $this->save($block, $validate);
-		if (! $block) {
+		//blocksの登録
+		if (! $block = $this->save($block, false)) {
 			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 		}
-		$blockId = (int)$block['Block']['id'];
 
 		//framesテーブル更新
-		$frame['Frame']['block_id'] = $blockId;
-		if (! $this->Frame->save($frame, $validate)) {
-			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+		if (! $frame['Frame']['block_id']) {
+			$frame['Frame']['block_id'] = (int)$block['Block']['id'];
+			if (! $this->Frame->save($frame, false)) {
+				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+			}
 		}
 
 		return $block;
@@ -196,4 +208,41 @@ class Block extends BlocksAppModel {
 		return $this->validationErrors ? false : true;
 	}
 
+/**
+ * Delete block.
+ * Please do the transaction and validation in the caller.
+ *
+ * @param string $key blocks.key
+ * @return void
+ *
+ * @throws InternalErrorException
+ */
+	public function deleteBlock($key) {
+		$this->loadModels([
+			'Frame' => 'Frames.Frame',
+		]);
+
+		$conditions = array(
+			$this->alias . '.key' => $key
+		);
+
+		$blocks = $this->find('list', array(
+				'recursive' => -1,
+				'conditions' => $conditions,
+			)
+		);
+		if (! $this->deleteAll($conditions, true)) {
+			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+		}
+
+		$blocks = array_keys($blocks);
+		foreach ($blocks as $blockId) {
+			if (! $this->Frame->updateAll(
+					array('Frame.block_id' => null),
+					array('Frame.block_id' => (int)$blockId)
+			)) {
+				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+			}
+		}
+	}
 }
