@@ -45,6 +45,15 @@ class Block extends BlocksAppModel {
 	const TYPE_LIMITED = '2';
 
 /**
+ * use behaviors
+ *
+ * @var array
+ */
+	public $actsAs = array(
+		'NetCommons.OriginalKey'
+	);
+
+/**
  * Validation rules
  *
  * @var array
@@ -136,19 +145,6 @@ class Block extends BlocksAppModel {
 			'counterQuery' => ''
 		)
 	);
-
-/**
- * before save
- *
- * @param array $options Options passed from Model::save().
- * @return bool True if the operation should continue, false if it should abort
- */
-	public function beforeSave($options = array()) {
-		if (! isset($this->data[$this->name]['id']) && ! isset($this->data[$this->name]['key'])) {
-			$this->data[$this->name]['key'] = Security::hash($this->name . mt_rand() . microtime(), 'md5');
-		}
-		return true;
-	}
 
 /**
  * Save block data and frame.block_id.
