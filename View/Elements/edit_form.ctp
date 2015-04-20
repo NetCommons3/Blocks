@@ -1,11 +1,12 @@
 <?php
 /**
  * Blocks edit template
- *   - $controller: Controller for delete request.
+ *   - $controller: Controller for edit request.
  *   - $action: Action for delete request.
  *   - $callback: Callback element for parameters and messages.
  *   - $callbackOptions: Callback options for element.
  *   - $cancel: Cancel url.
+ *   - $options: Options array for Form->create()
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
@@ -13,9 +14,13 @@
  * @license http://www.netcommons.org/license.txt NetCommons License
  * @copyright Copyright 2014, NetCommons Project
  */
+
+if (! isset($options)) {
+	$options = array();
+}
 ?>
 
-<?php echo $this->Form->create($controller, array('novalidate' => true, 'action' => $action)); ?>
+<?php echo $this->Form->create($controller, Hash::merge(array('novalidate' => true, 'action' => $action), $options)); ?>
 	<div class="panel panel-default">
 		<div class="panel-body has-feedback">
 			<?php echo $this->element($callback, (isset($callbackOptions) ? $callbackOptions : array())); ?>

@@ -5,6 +5,7 @@
  *   - $action: Action for delete request.
  *   - $callback: Callback element for parameters and messages.
  *   - $callbackOptions: Callback options for element.
+ *   - $options: Options array for Form->create()
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
@@ -12,10 +13,14 @@
  * @license http://www.netcommons.org/license.txt NetCommons License
  * @copyright Copyright 2014, NetCommons Project
  */
+
+if (! isset($options)) {
+	$options = array();
+}
 ?>
 
 <div ng-init="dangerZone=false;">
-	<?php echo $this->Form->create($controller, array('type' => 'delete', 'action' => $action)); ?>
+	<?php echo $this->Form->create($controller, Hash::merge(array('type' => 'delete', 'action' => $action), $options)); ?>
 		<accordion close-others="false">
 			<accordion-group is-open="dangerZone" class="panel-danger">
 				<accordion-heading style="cursor: pointer">
