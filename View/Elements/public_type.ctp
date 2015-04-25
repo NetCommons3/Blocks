@@ -1,6 +1,10 @@
 <?php
 /**
- * public type template
+ * Element of public type form
+ *   - $block: Block data.
+ *       - publicType: The `public_type` field of blocks table.
+ *       - from: The `from` field of blocks table.
+ *       - to: The `to` field of blocks table.
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
@@ -20,7 +24,7 @@
 			$options = array(
 				Block::TYPE_PRIVATE => __d('blocks', 'No display'),
 				Block::TYPE_PUBLIC => __d('blocks', 'Display'),
-				Block::TYPE_LIMITED => __d('blocks', 'Limited Public'),
+				Block::TYPE_LIMITED => __d('blocks', 'Limited'),
 			);
 
 			echo $this->Form->radio('Block.public_type', $options, array(
@@ -29,7 +33,7 @@
 				'separator' => '<br />',
 			));
 
-			$publicTypePeriod = $block['publicType'] === '2';
+			$publicTypePeriod = $block['publicType'] === Block::TYPE_LIMITED;
 		?>
 	</div>
 
