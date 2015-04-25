@@ -1,11 +1,12 @@
 <?php
 /**
- * The comment role permission elements
- *   - $roles: The results `Roles` data of NetCommonsBlockComponent->getBlockRolePermissions(),
- *             and The formatter is camelized data.
+ * Element of comment role permission edit form
+ *   - $roles:
+ *       The results `Roles` data of NetCommonsBlockComponent->getBlockRolePermissions(),
+ *        and The formatter is camelized data.
  *   - $permissions:
- *             The results `BlockRolePermissions` data of NetCommonsBlockComponent->getBlockRolePermissions(),
- *             and The formatter is camelized data.
+ *       The results `BlockRolePermissions` data of NetCommonsBlockComponent->getBlockRolePermissions(),
+ *        and The formatter is camelized data.
  *   - $isAutoApproval: Model of is_comment_auto_approval
  *       - name: model name
  *       - value: model value

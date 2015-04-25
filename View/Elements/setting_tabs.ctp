@@ -1,6 +1,6 @@
 <?php
 /**
- * Setting tabs template
+ * Element of setting tabs
  *   - $tabs: Array data is 'block_settings' => URL1 or 'role_permissions' => URL3.
  *   - $active: Active tab key. Value is 'block_edit or 'role_permissions'.
  *

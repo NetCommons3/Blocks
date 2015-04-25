@@ -1,6 +1,6 @@
 <?php
 /**
- * Blocks delete template
+ * Element of block delete form
  *   - $controller: Controller for delete request.
  *   - $action: Action for delete request.
  *   - $callback: Callback element for parameters and messages.

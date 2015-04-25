@@ -1,12 +1,14 @@
 <?php
 /**
- * BlockRolePermission settings element
- *   - $permission: A key name of permission.
- *   - $roles: The results `Roles` data of NetCommonsBlockComponent->getBlockRolePermissions(),
- *             and The formatter is camelized data.
+ * Element of BlockRolePermission settings
+ *   - $permission:
+ *       A key name of permission.
+ *   - $roles:
+ *       The results `Roles` data of NetCommonsBlockComponent->getBlockRolePermissions(),
+ *         and The formatter is camelized data.
  *   - $rolePermissions:
- *             The results `BlockRolePermissions` data of NetCommonsBlockComponent->getBlockRolePermissions(),
- *             and The formatter is camelized data.
+ *       The results `BlockRolePermissions` data of NetCommonsBlockComponent->getBlockRolePermissions(),
+ *        and The formatter is camelized data.
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>

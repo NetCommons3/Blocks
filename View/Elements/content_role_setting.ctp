@@ -1,11 +1,12 @@
 <?php
 /**
- * The content role permission elements
- *   - $roles: The results `Roles` data of NetCommonsBlockComponent->getBlockRolePermissions(),
- *             and The formatter is camelized data.
+ * Element of content role permission edit form
+ *   - $roles:
+ *       The results `Roles` data of NetCommonsBlockComponent->getBlockRolePermissions(),
+ *        and The formatter is camelized data.
  *   - $permissions:
- *             The results `BlockRolePermissions` data of NetCommonsBlockComponent->getBlockRolePermissions(),
- *             and The formatter is camelized data.
+ *       The results `BlockRolePermissions` data of NetCommonsBlockComponent->getBlockRolePermissions(),
+ *        and The formatter is camelized data.
  *   - $useWorkflow: Model of use_workflow
  *       - name: model name
  *       - value: model value
