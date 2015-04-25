@@ -24,25 +24,14 @@ App::uses('BlocksAppModel', 'Blocks.Model');
 class Block extends BlocksAppModel {
 
 /**
- * Private block
+ * Block type
  *
  * @var int
  */
-	const TYPE_PRIVATE = '0';
-
-/**
- * Public block
- *
- * @var int
- */
-	const TYPE_PUBLIC = '1';
-
-/**
- * Limited block
- *
- * @var int
- */
-	const TYPE_LIMITED = '2';
+	const
+		TYPE_PRIVATE = '0',
+		TYPE_PUBLIC = '1',
+		TYPE_LIMITED = '2';
 
 /**
  * use behaviors
