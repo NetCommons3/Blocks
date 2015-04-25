@@ -1,11 +1,11 @@
 <?php
 /**
- * Blocks edit template
+ * Element of block edit form
  *   - $controller: Controller for edit request.
  *   - $action: Action for delete request.
  *   - $callback: Callback element for parameters and messages.
  *   - $callbackOptions: Callback options for element.
- *   - $cancel: Cancel url.
+ *   - $cancelUrl: Cancel url.
  *   - $options: Options array for Form->create()
  *
  * @author Noriko Arai <arai@nii.ac.jp>
@@ -27,7 +27,7 @@ if (! isset($options)) {
 		</div>
 
 		<div class="panel-footer text-center">
-			<button type="button" class="btn btn-default btn-workflow" onclick="location.href = '<?php echo $cancel; ?>'">
+			<button type="button" class="btn btn-default btn-workflow" onclick="location.href = '<?php echo $cancelUrl; ?>'">
 				<span class="glyphicon glyphicon-remove"></span>
 				<?php echo __d('net_commons', 'Cancel'); ?>
 			</button>
