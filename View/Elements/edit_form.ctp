@@ -22,7 +22,7 @@ if (! isset($options)) {
 
 <?php echo $this->Form->create($controller, Hash::merge(array('novalidate' => true, 'action' => $action), $options)); ?>
 	<div class="panel panel-default">
-		<div class="panel-body has-feedback">
+		<div class="panel-body">
 			<?php echo $this->element($callback, (isset($callbackOptions) ? $callbackOptions : array())); ?>
 		</div>
 

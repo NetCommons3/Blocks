@@ -24,7 +24,7 @@
 		<?php echo __d('blocks', 'Comment role settings') ?>
 	</div>
 
-	<div class="panel-body has-feedback">
+	<div class="panel-body">
 		<div class="row form-group">
 			<div class="col-xs-12">
 				<strong><?php echo __d('blocks', 'Creatable roles'); ?></strong>
