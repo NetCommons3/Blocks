@@ -26,11 +26,13 @@ class BlockDeleteTest extends CakeTestCase {
  */
 	public $fixtures = array(
 		'plugin.blocks.block',
+		'plugin.blocks.block_role_permission',
 		'plugin.boxes.box',
 		'plugin.frames.frame',
 		'plugin.frames.plugin',
 		'plugin.m17n.language',
 		'plugin.rooms.room',
+		'plugin.rooms.roles_room',
 		'plugin.users.user',
 	);
 
@@ -91,7 +93,7 @@ class BlockDeleteTest extends CakeTestCase {
  *
  * @return  void
  */
-	public function testDeleteBlockFailOnDeleteAll() {
+	public function testFailOnDeleteAll() {
 		$this->setExpectedException('InternalErrorException');
 
 		$this->Block = $this->getMockForModel('Blocks.Block', array('deleteAll'));
@@ -109,12 +111,30 @@ class BlockDeleteTest extends CakeTestCase {
  *
  * @return  void
  */
-	public function testDeleteBlockFailOnFrameUpdateAll() {
+	public function testFailOnFrameUpdateAll() {
 		$this->setExpectedException('InternalErrorException');
 
 		$this->Frame = $this->getMockForModel('Frames.Frame', array('updateAll'));
 		$this->Frame->expects($this->any())
 			->method('updateAll')
+			->will($this->returnValue(false));
+
+		$blockKey = 'block_1';
+		$this->Block->deleteBlock($blockKey);
+	}
+
+/**
+ * Expect Block->deleteBlock() fail on BlockRolePermission->deleteAll()
+ * e.g.) connection error
+ *
+ * @return  void
+ */
+	public function testFailOnBlockRolePermissionDeleteAll() {
+		$this->setExpectedException('InternalErrorException');
+
+		$this->Frame = $this->getMockForModel('Blocks.BlockRolePermission', array('deleteAll'));
+		$this->Frame->expects($this->any())
+			->method('deleteAll')
 			->will($this->returnValue(false));
 
 		$blockKey = 'block_1';

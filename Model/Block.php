@@ -205,6 +205,7 @@ class Block extends BlocksAppModel {
 	public function deleteBlock($key) {
 		$this->loadModels([
 			'Frame' => 'Frames.Frame',
+			'BlockRolePermission' => 'Blocks.BlockRolePermission',
 		]);
 
 		$conditions = array(
@@ -217,6 +218,11 @@ class Block extends BlocksAppModel {
 			)
 		);
 		if (! $this->deleteAll($conditions, true)) {
+			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+		}
+
+		//BlockRolePermissionデータ削除
+		if (! $this->BlockRolePermission->deleteAll(array($this->BlockRolePermission->alias . '.block_key' => $key), true)) {
 			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 		}
 
