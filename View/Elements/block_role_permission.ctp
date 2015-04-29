@@ -22,7 +22,7 @@
 	<?php if (isset($rolePermissions[$key])) : ?>
 		<div class="inline-block">
 			<?php
-				$name = 'BlockRolePermission.' . $permission . '.' . $key;
+				$name = 'BlockRolePermission.' . $permission . '.' . Inflector::underscore($key);
 				$rolesRoomId = (int)$rolePermissions[$key]['rolesRoomId'];
 
 				if (! $rolePermissions[$key]['fixed']) {

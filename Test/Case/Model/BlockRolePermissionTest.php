@@ -66,11 +66,13 @@ class BlockRolePermissionTest extends CakeTestCase {
  */
 	public function testValidateBlockRolePermissions() {
 		$data = array(
-			'id' => 1,
-			'roles_room_id' => 1,
-			'block_key' => 'Lorem ipsum dolor sit amet',
-			'permission' => 'Lorem ipsum dolor sit amet',
-			'value' => 1,
+			'BlockRolePermission' => array(
+				'id' => 1,
+				'roles_room_id' => 1,
+				'block_key' => 'Lorem ipsum dolor sit amet',
+				'permission' => 'Lorem ipsum dolor sit amet',
+				'value' => true,
+			)
 		);
 		$result = $this->BlockRolePermission->validateBlockRolePermissions($data);
 

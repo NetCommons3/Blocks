@@ -56,6 +56,29 @@ e.g.) create_content,  post_top_article', 'charset' => 'utf8'),
 			'modified_user' => 1,
 			'modified' => '2014-10-10 13:44:57'
 		),
+
+		//Faqs plugin
+		array(
+			'id' => '100',
+			'roles_room_id' => 4,
+			'block_key' => 'block_100',
+			'permission' => 'content_creatable',
+			'value' => true,
+		),
+		array(
+			'id' => '101',
+			'roles_room_id' => 2,
+			'block_key' => 'block_100',
+			'permission' => 'content_publishable',
+			'value' => true,
+		),
+		array(
+			'id' => '102',
+			'roles_room_id' => 3,
+			'block_key' => 'block_100',
+			'permission' => 'content_publishable',
+			'value' => true,
+		),
 	);
 
 }
