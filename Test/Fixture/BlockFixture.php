@@ -158,6 +158,30 @@ class BlockFixture extends CakeTestFixture {
 			'modified_user' => 10,
 			'modified' => '2014-06-18 02:06:22'
 		),
+
+		//Faq plugin
+		array(
+			'id' => '100',
+			'language_id' => '2',
+			'room_id' => '1',
+			'plugin_key' => 'faqs',
+			'key' => 'block_100',
+		),
+		array(
+			'id' => '101',
+			'language_id' => '2',
+			'room_id' => '1',
+			'plugin_key' => 'faqs',
+			'key' => 'block_101',
+		),
+		array(
+			'id' => '102',
+			'language_id' => '2',
+			'room_id' => '2',
+			'plugin_key' => 'faqs',
+			'key' => 'block_102',
+		),
+
 	);
 
 }
