@@ -182,6 +182,29 @@ class BlockFixture extends CakeTestFixture {
 			'key' => 'block_102',
 		),
 
+		//Edumap plugin
+		array(
+			'id' => '121',
+			'language_id' => '2',
+			'room_id' => '1',
+			'plugin_key' => 'edumap',
+			'key' => 'block_121',
+		),
+		array(
+			'id' => '122',
+			'language_id' => '2',
+			'room_id' => '1',
+			'plugin_key' => 'edumap',
+			'key' => 'block_122',
+		),
+		array(
+			'id' => '123',
+			'language_id' => '2',
+			'room_id' => '2',
+			'plugin_key' => 'edumap',
+			'key' => 'block_123',
+		),
+
 	);
 
 }
