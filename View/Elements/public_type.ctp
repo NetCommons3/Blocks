@@ -22,8 +22,8 @@
 	<div class="col-xs-offset-1 col-xs-11">
 		<?php
 			$options = array(
-				Block::TYPE_PRIVATE => __d('blocks', 'No display'),
-				Block::TYPE_PUBLIC => __d('blocks', 'Display'),
+				Block::TYPE_PRIVATE => __d('blocks', 'Private'),
+				Block::TYPE_PUBLIC => __d('blocks', 'Public'),
 				Block::TYPE_LIMITED => __d('blocks', 'Limited'),
 			);
 

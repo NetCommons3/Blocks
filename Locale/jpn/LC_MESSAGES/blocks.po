@@ -1,0 +1,107 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2015-05-05 15:31+0000\n"
+"PO-Revision-Date: 2015-05-06 00:49+0900\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"X-Generator: Poedit 1.7.5\n"
+
+#: Bbses/View/Blocks/index.ctp:46 Blocks/View/Elements/public_type.ctp:19
+#: Faqs/View/Blocks/index.ctp:40 Iframes/View/Blocks/index.ctp:45
+#: Links/View/Blocks/index.ctp:40
+msgid "Publishing setting"
+msgstr "公開設定"
+
+#: Bbses/View/Blocks/index.ctp:77 Blocks/View/Elements/public_type.ctp:25
+#: Faqs/View/Blocks/index.ctp:71 Iframes/View/Blocks/index.ctp:76
+#: Links/View/Blocks/index.ctp:71
+#: Videos/View/Elements/VideoBlockSettings/block_form.ctp:58
+msgid "Private"
+msgstr "非公開"
+
+#: Bbses/View/Blocks/index.ctp:79 Blocks/View/Elements/public_type.ctp:26
+#: Faqs/View/Blocks/index.ctp:73 Iframes/View/Blocks/index.ctp:78
+#: Links/View/Blocks/index.ctp:73
+#: Videos/View/Elements/VideoBlockSettings/block_form.ctp:59
+msgid "Public"
+msgstr "公開"
+
+#: Bbses/View/Blocks/index.ctp:81 Blocks/View/Elements/public_type.ctp:27
+#: Faqs/View/Blocks/index.ctp:75 Iframes/View/Blocks/index.ctp:80
+#: Links/View/Blocks/index.ctp:75
+msgid "Limited"
+msgstr "期限付き"
+
+#: Blocks/View/Elements/comment_role_setting.ctp:24
+msgid "Comment role settings"
+msgstr "コメント"
+
+#: Blocks/View/Elements/comment_role_setting.ctp:30
+#: Blocks/View/Elements/content_role_setting.ctp:30
+msgid "Creatable roles"
+msgstr "作成者"
+
+#: Blocks/View/Elements/comment_role_setting.ctp:43
+msgid "Comment approval"
+msgstr "自動公開"
+
+#: Blocks/View/Elements/comment_role_setting.ctp:48
+msgid "Automatic approval"
+msgstr "自動公開する"
+
+#: Blocks/View/Elements/comment_role_setting.ctp:49
+msgid "Need approval"
+msgstr "承認が必要"
+
+#: Blocks/View/Elements/comment_role_setting.ctp:63
+#: Blocks/View/Elements/content_role_setting.ctp:63
+msgid "Publishable roles"
+msgstr "承認者"
+
+#: Blocks/View/Elements/content_role_setting.ctp:24
+msgid "Content role settings"
+msgstr "コンテンツ"
+
+#: Blocks/View/Elements/content_role_setting.ctp:43
+msgid "Content approval"
+msgstr "承認機能"
+
+#: Blocks/View/Elements/content_role_setting.ctp:48
+msgid "Disuse"
+msgstr "使わない"
+
+#: Blocks/View/Elements/content_role_setting.ctp:49
+msgid "Use"
+msgstr "使う"
+
+#: Videos/View/Elements/VideoBlockSettings/block_form.ctp:48
+msgid "Public Setting"
+msgstr ""
+
+#: Videos/View/Elements/VideoBlockSettings/block_form.ctp:60
+msgid "Limited Public"
+msgstr ""
+
+#: Videos/View/Elements/VideoBlockSettings/block_form.ctp:72
+msgid "Start"
+msgstr ""
+
+#: Videos/View/Elements/VideoBlockSettings/block_form.ctp:107
+msgid "End"
+msgstr ""
+
+#: Videos/View/VideoBlockSettings/edit.ctp:106
+msgid "jPlayer"
+msgstr ""
+
+#: Videos/View/VideoBlockSettings/edit.ctp:107
+msgid "HTML5"
+msgstr ""
