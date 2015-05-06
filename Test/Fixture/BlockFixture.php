@@ -228,6 +228,29 @@ class BlockFixture extends CakeTestFixture {
 			'key' => 'block_143',
 		),
 
+		//AccessCounters plugin
+		array(
+			'id' => '161',
+			'language_id' => '2',
+			'room_id' => '1',
+			'plugin_key' => 'access_counters',
+			'key' => 'block_161',
+		),
+		array(
+			'id' => '162',
+			'language_id' => '2',
+			'room_id' => '1',
+			'plugin_key' => 'access_counters',
+			'key' => 'block_162',
+		),
+		array(
+			'id' => '163',
+			'language_id' => '2',
+			'room_id' => '2',
+			'plugin_key' => 'access_counters',
+			'key' => 'block_163',
+		),
+
 	);
 
 }
