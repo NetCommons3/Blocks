@@ -205,6 +205,29 @@ class BlockFixture extends CakeTestFixture {
 			'key' => 'block_123',
 		),
 
+		//Iframes plugin
+		array(
+			'id' => '141',
+			'language_id' => '2',
+			'room_id' => '1',
+			'plugin_key' => 'iframes',
+			'key' => 'block_141',
+		),
+		array(
+			'id' => '142',
+			'language_id' => '2',
+			'room_id' => '1',
+			'plugin_key' => 'iframes',
+			'key' => 'block_142',
+		),
+		array(
+			'id' => '143',
+			'language_id' => '2',
+			'room_id' => '2',
+			'plugin_key' => 'iframes',
+			'key' => 'block_143',
+		),
+
 	);
 
 }
