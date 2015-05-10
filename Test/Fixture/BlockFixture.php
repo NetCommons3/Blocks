@@ -251,6 +251,36 @@ class BlockFixture extends CakeTestFixture {
 			'key' => 'block_163',
 		),
 
+		//RssReaders plugin
+		array(
+			'id' => '181',
+			'language_id' => '2',
+			'room_id' => '1',
+			'plugin_key' => 'rss_readers',
+			'key' => 'block_181',
+		),
+		array(
+			'id' => '182',
+			'language_id' => '2',
+			'room_id' => '1',
+			'plugin_key' => 'rss_readers',
+			'key' => 'block_182',
+		),
+		array(
+			'id' => '183',
+			'language_id' => '2',
+			'room_id' => '2',
+			'plugin_key' => 'rss_readers',
+			'key' => 'block_183',
+		),
+		array(
+			'id' => '186',
+			'language_id' => '2',
+			'room_id' => '1',
+			'plugin_key' => 'rss_readers',
+			'key' => 'block_186',
+		),
+
 	);
 
 }
