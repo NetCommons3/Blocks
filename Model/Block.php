@@ -205,7 +205,10 @@ class Block extends BlocksAppModel {
 	public function validateBlock($data) {
 		$this->set($data);
 		$this->validates();
-		return $this->validationErrors ? false : true;
+		if ($this->validationErrors) {
+			return false;
+		}
+		return true;
 	}
 
 /**

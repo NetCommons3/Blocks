@@ -199,4 +199,21 @@ class BlockTest extends CakeTestCase {
 
 		$this->assertTrue($result);
 	}
+
+/**
+ * Expect Block->validateBlock() to return true on validation error
+ *
+ * @return  void
+ */
+	public function testValidateBlockError() {
+		$data = array(
+			'id' => 1,
+			'language_id' => 'aaaa',
+			'room_id' => 1,
+			'key' => 'block_1',
+		);
+		$result = $this->Block->validateBlock($data);
+
+		$this->assertFalse($result);
+	}
 }
