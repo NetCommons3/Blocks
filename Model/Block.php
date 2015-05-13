@@ -104,7 +104,7 @@ class Block extends BlocksAppModel {
  * @see Model::save()
  */
 	public function beforeValidate($options = array()) {
-		$this->validate = array(
+		$this->validate = Hash::merge($this->validate, array(
 			'language_id' => array(
 				'numeric' => array(
 					'rule' => array('numeric'),
@@ -145,7 +145,7 @@ class Block extends BlocksAppModel {
 			//		//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			//	),
 			//),
-		);
+		));
 
 		return parent::beforeValidate($options);
 	}
