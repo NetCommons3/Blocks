@@ -29,6 +29,7 @@
 					echo $this->Form->checkbox($name . '.value', array(
 							'div' => false,
 							'checked' => (int)$rolePermissions[$key]['value'],
+							'ng-click' => 'clickRole($event, \'' . $permission . '\', \'' . h($key) . '\')'
 						));
 
 					echo $this->Form->label($name . '.value', h($role['name']));
