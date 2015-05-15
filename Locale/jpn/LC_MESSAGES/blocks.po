@@ -5,14 +5,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "POT-Creation-Date: 2015-05-05 15:31+0000\n"
-"PO-Revision-Date: 2015-05-06 00:49+0900\n"
+"PO-Revision-Date: 2015-05-15 15:59+0900\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-"X-Generator: Poedit 1.7.5\n"
+"X-Generator: Poedit 1.6.10\n"
 
 #: Bbses/View/Blocks/index.ctp:46 Blocks/View/Elements/public_type.ctp:19
 #: Faqs/View/Blocks/index.ctp:40 Iframes/View/Blocks/index.ctp:45
@@ -38,7 +38,7 @@ msgstr "公開"
 #: Faqs/View/Blocks/index.ctp:75 Iframes/View/Blocks/index.ctp:80
 #: Links/View/Blocks/index.ctp:75
 msgid "Limited"
-msgstr "期限付き"
+msgstr "期限付き公開"
 
 #: Blocks/View/Elements/comment_role_setting.ctp:24
 msgid "Comment role settings"
