@@ -34,6 +34,16 @@ class Block extends BlocksAppModel {
 		TYPE_LIMITED = '2';
 
 /**
+ * Approval type
+ *
+ * @var int
+ */
+	const
+		NOT_NEED_APPROVAL = '0',
+		NEED_APPROVAL = '1',
+		NEED_COMMENT_APPROVAL = '2';
+
+/**
  * use behaviors
  *
  * @var array

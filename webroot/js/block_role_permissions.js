@@ -13,44 +13,70 @@
 NetCommonsApp.controller('BlockRolePermissions', function($scope) {
 
   /**
+   * Not need approval
+   *
+   * @const
+   */
+  $scope.NOT_NEED_APPROVAL = '0';
+
+  /**
+   * Need both approval
+   *
+   * @const
+   */
+  $scope.NEED_APPROVAL = '1';
+
+  /**
+   * Need comment approval
+   *
+   * @const
+   */
+  $scope.NEED_COMMENT_APPROVAL = '2';
+
+  /**
+   * categories
+   *
+   * @type {integer}
+   */
+  $scope.useWorkflow = 0;
+
+  /**
+   * categories
+   *
+   * @type {integer}
+   */
+  $scope.useCommentApproval = 0;
+
+  /**
    * initialize
    *
    * @return {void}
    */
   $scope.initialize = function(data) {
-    console.log(data);
-
-
     $scope.roles = data.roles;
-    $scope.frameId = data.frameId;
+    if (! angular.isUndefined(data.useWorkflow)) {
+      $scope.useWorkflow = data.useWorkflow;
+    }
+    if (! angular.isUndefined(data.useCommentApproval)) {
+      $scope.useCommentApproval = data.useCommentApproval;
+    }
   };
 
   /**
-   * Set more than level
+   * Click role
    *
    * @return {void}
    */
   $scope.clickRole = function($event, permission, roleKey) {
-//    console.log($event);
-//    console.log(permission);
-//    console.log(roleKey);
-//
-//    console.log($event.currentTarget.checked);
     var baseRole = $scope.roles[roleKey];
 
-
-
-//      if (! angular.isUndefined(element[0]) &&
-//              ! angular.isUndefined(data['title'])) {
-//        element[0].value = data['title'];
-//      }
-
-
-
     angular.forEach($scope.roles, function(role) {
-      //console.log(key);
-      //console.log(role);
-      var element = $('input[type="checkbox"][name="data[BlockRolePermission][' + permission + '][' + role['roleKey'] + '][value]"]');
+      var element = $('input[type="checkbox"]' +
+                      '[name="data[BlockRolePermission]' +
+                      '[' + permission + ']' +
+                      '[' + role['roleKey'] + ']' +
+                      '[value]"]');
+
       if (! $event.currentTarget.checked) {
         if (baseRole['level'] > role['level']) {
           if (! angular.isUndefined(element[0]) && ! element[0].disabled) {
@@ -65,7 +91,23 @@ NetCommonsApp.controller('BlockRolePermissions', function($scope) {
         }
       }
     });
+  };
 
+  /**
+   * Click approval type
+   *
+   * @return {void}
+   */
+  $scope.clickApprovalType = function($event) {
+    $scope.useWorkflow = 0;
+    $scope.useCommentApproval = 0;
+    if ($event.currentTarget.value === $scope.NEED_APPROVAL) {
+      $scope.useWorkflow = 1;
+    }
+    if ($event.currentTarget.value === $scope.NEED_APPROVAL ||
+            $event.currentTarget.value === $scope.NEED_COMMENT_APPROVAL) {
+      $scope.useCommentApproval = 1;
+    }
   };
 
 });
