@@ -5,7 +5,6 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2015-05-05 15:31+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -14,103 +13,83 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: Bbses/View/Blocks/index.ctp:46
+#: Announcements/View/AnnouncementBlocks/index.ctp:40
 #: Blocks/View/Elements/public_type.ctp:19
-#: Faqs/View/Blocks/index.ctp:40
-#: Iframes/View/Blocks/index.ctp:45
-#: Links/View/Blocks/index.ctp:40
 msgid "Publishing setting"
 msgstr ""
 
-#: Bbses/View/Blocks/index.ctp:77
+#: Announcements/View/AnnouncementBlocks/index.ctp:71
 #: Blocks/View/Elements/public_type.ctp:25
-#: Faqs/View/Blocks/index.ctp:71
-#: Iframes/View/Blocks/index.ctp:76
-#: Links/View/Blocks/index.ctp:71
-#: Videos/View/Elements/VideoBlockSettings/block_form.ctp:58
 msgid "Private"
 msgstr ""
 
-#: Bbses/View/Blocks/index.ctp:79
+#: Announcements/View/AnnouncementBlocks/index.ctp:73
 #: Blocks/View/Elements/public_type.ctp:26
-#: Faqs/View/Blocks/index.ctp:73
-#: Iframes/View/Blocks/index.ctp:78
-#: Links/View/Blocks/index.ctp:73
-#: Videos/View/Elements/VideoBlockSettings/block_form.ctp:59
 msgid "Public"
 msgstr ""
 
-#: Bbses/View/Blocks/index.ctp:81
+#: Announcements/View/AnnouncementBlocks/index.ctp:75
 #: Blocks/View/Elements/public_type.ctp:27
-#: Faqs/View/Blocks/index.ctp:75
-#: Iframes/View/Blocks/index.ctp:80
-#: Links/View/Blocks/index.ctp:75
 msgid "Limited"
 msgstr ""
 
-#: Blocks/View/Elements/comment_role_setting.ctp:24
-msgid "Comment role settings"
+#: Bbses/View/Elements/BbsBlockRolePermissions/edit_form.ctp:31
+#: Blogs/View/Elements/BlockRolePermissions/edit_form.ctp:31
+#: Faqs/View/Elements/FaqBlockRolePermissions/edit_form.ctp:30
+#: Links/View/Elements/LinkBlockRolePermissions/edit_form.ctp:30
+#: Questionnaires/View/Elements/QuestionnaireBlockRolePermissions/edit_form.ctp:30
+#: Videos/View/Elements/VideoBlockRolePermissions/edit_form.ctp:23
+msgid "Content creatable roles"
 msgstr ""
 
-#: Blocks/View/Elements/comment_role_setting.ctp:30
-#: Blocks/View/Elements/content_role_setting.ctp:30
-msgid "Creatable roles"
+#: Bbses/View/Elements/BbsBlockRolePermissions/edit_form.ctp:32
+#: Blogs/View/Elements/BlockRolePermissions/edit_form.ctp:32
+#: Videos/View/Elements/VideoBlockRolePermissions/edit_form.ctp:24
+msgid "Content comment creatable roles"
 msgstr ""
 
-#: Blocks/View/Elements/comment_role_setting.ctp:43
-msgid "Comment approval"
+#: Bbses/View/Elements/BbsBlockRolePermissions/edit_form.ctp:35
+#: Blogs/View/Elements/BlockRolePermissions/edit_form.ctp:35
+#: Videos/View/Elements/VideoBlockRolePermissions/edit_form.ctp:27
+msgid "Content comment publishable roles"
 msgstr ""
 
-#: Blocks/View/Elements/comment_role_setting.ctp:48
-msgid "Automatic approval"
+#: Bbses/View/Elements/BbsBlockRolePermissions/edit_form.ctp:38
+#: Blogs/View/Elements/BlockRolePermissions/edit_form.ctp:38
+#: Videos/View/Elements/VideoBlockRolePermissions/edit_form.ctp:30
+msgid "Need approval in both %s and comments "
 msgstr ""
 
-#: Blocks/View/Elements/comment_role_setting.ctp:49
+#: Bbses/View/Elements/BbsBlockRolePermissions/edit_form.ctp:39
+#: Blogs/View/Elements/BlockRolePermissions/edit_form.ctp:39
+#: Videos/View/Elements/VideoBlockRolePermissions/edit_form.ctp:31
+msgid "Need only comments approval"
+msgstr ""
+
+#: Bbses/View/Elements/BbsBlockRolePermissions/edit_form.ctp:40
+#: Blogs/View/Elements/BlockRolePermissions/edit_form.ctp:40
+#: Faqs/View/Elements/FaqBlockRolePermissions/edit_form.ctp:34
+#: Links/View/Elements/LinkBlockRolePermissions/edit_form.ctp:34
+#: Questionnaires/View/Elements/QuestionnaireBlockRolePermissions/edit_form.ctp:34
+#: Videos/View/Elements/VideoBlockRolePermissions/edit_form.ctp:32
+msgid "Not need approval"
+msgstr ""
+
+#: Blocks/View/Elements/block_role_setting.ctp:48
+msgid "Creatable settings"
+msgstr ""
+
+#: Blocks/View/Elements/block_role_setting.ctp:49
+msgid "Approval settings"
+msgstr ""
+
+#: Blocks/View/Elements/setting_tabs.ctp:20
+msgid "Block settings"
+msgstr ""
+
+#: Faqs/View/Elements/FaqBlockRolePermissions/edit_form.ctp:33
+#: Links/View/Elements/LinkBlockRolePermissions/edit_form.ctp:33
+#: Questionnaires/View/Elements/QuestionnaireBlockRolePermissions/edit_form.ctp:33
 msgid "Need approval"
-msgstr ""
-
-#: Blocks/View/Elements/comment_role_setting.ctp:63
-#: Blocks/View/Elements/content_role_setting.ctp:63
-msgid "Publishable roles"
-msgstr ""
-
-#: Blocks/View/Elements/content_role_setting.ctp:24
-msgid "Content role settings"
-msgstr ""
-
-#: Blocks/View/Elements/content_role_setting.ctp:43
-msgid "Content approval"
-msgstr ""
-
-#: Blocks/View/Elements/content_role_setting.ctp:48
-msgid "Disuse"
-msgstr ""
-
-#: Blocks/View/Elements/content_role_setting.ctp:49
-msgid "Use"
-msgstr ""
-
-#: Videos/View/Elements/VideoBlockSettings/block_form.ctp:48
-msgid "Public Setting"
-msgstr ""
-
-#: Videos/View/Elements/VideoBlockSettings/block_form.ctp:60
-msgid "Limited Public"
-msgstr ""
-
-#: Videos/View/Elements/VideoBlockSettings/block_form.ctp:72
-msgid "Start"
-msgstr ""
-
-#: Videos/View/Elements/VideoBlockSettings/block_form.ctp:107
-msgid "End"
-msgstr ""
-
-#: Videos/View/VideoBlockSettings/edit.ctp:106
-msgid "jPlayer"
-msgstr ""
-
-#: Videos/View/VideoBlockSettings/edit.ctp:107
-msgid "HTML5"
 msgstr ""
 

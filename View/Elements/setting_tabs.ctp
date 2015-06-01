@@ -17,7 +17,7 @@
 	<?php if (isset($tabs['block_settings'])) : ?>
 		<li class="<?php echo ($active === 'block_settings' ? 'active' : ''); ?>">
 			<a href="<?php echo $this->Html->url($tabs['block_settings']['url']); ?>">
-				<?php echo __d('net_commons', 'Block settings'); ?>
+				<?php echo __d('blocks', 'Block settings'); ?>
 			</a>
 		</li>
 		<?php
