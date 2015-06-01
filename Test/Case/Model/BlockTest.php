@@ -28,8 +28,8 @@ class BlockTest extends CakeTestCase {
 		'plugin.blocks.block',
 		'plugin.boxes.box',
 		'plugin.frames.frame',
-		'plugin.frames.plugin',
 		'plugin.m17n.language',
+		'plugin.plugin_manager.plugin',
 		'plugin.rooms.room',
 		'plugin.users.user',
 	);
