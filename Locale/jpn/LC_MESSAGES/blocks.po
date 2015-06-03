@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"PO-Revision-Date: 2015-06-01 17:55+0900\n"
+"PO-Revision-Date: 2015-06-03 22:57+0900\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "POT-Creation-Date: \n"
 "Language: ja\n"
-"X-Generator: Poedit 1.8.1\n"
+"X-Generator: Poedit 1.7.5\n"
 
 #: Announcements/View/AnnouncementBlocks/index.ctp:40
 #: Blocks/View/Elements/public_type.ctp:19
@@ -54,7 +54,7 @@ msgstr "コメントを投稿できる権限"
 #: Blogs/View/Elements/BlockRolePermissions/edit_form.ctp:35
 #: Videos/View/Elements/VideoBlockRolePermissions/edit_form.ctp:27
 msgid "Content comment publishable roles"
-msgstr "承認できる権限"
+msgstr "コメントを承認できる権限"
 
 #: Bbses/View/Elements/BbsBlockRolePermissions/edit_form.ctp:38
 #: Blogs/View/Elements/BlockRolePermissions/edit_form.ctp:38
