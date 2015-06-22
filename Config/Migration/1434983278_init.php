@@ -11,7 +11,8 @@
 /**
  * Init migration
  *
- * @package NetCommons\NetCommons\Config\Migration
+ * @author Shohei Nakajima <nakajimashouhei@gmail.com>
+ * @package NetCommons\Blocks\Config\Migration
  */
 class Init extends CakeMigration {
 

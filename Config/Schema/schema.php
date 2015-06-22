@@ -13,7 +13,7 @@
  * Schema file
  *
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
- * @package NetCommons\NetCommons\Config\Schema
+ * @package NetCommons\Blocks\Config\Schema
  * @SuppressWarnings(PHPMD.LongVariable)
  * @SuppressWarnings(PHPMD.TooManyFields)
  */
