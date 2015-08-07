@@ -281,6 +281,37 @@ class BlockFixture extends CakeTestFixture {
 			'key' => 'block_186',
 		),
 
+		//Topics plugin
+		array(
+			'id' => '191',
+			'language_id' => '2',
+			'room_id' => '1',
+			'plugin_key' => 'topics',
+			'key' => 'block_191',
+		),
+		array(
+			'id' => '192',
+			'language_id' => '2',
+			'room_id' => '1',
+			'to' => '2000-01-01 00:00:00',
+			'plugin_key' => 'topics',
+			'key' => 'block_192',
+		),
+		array(
+			'id' => '193',
+			'language_id' => '2',
+			'room_id' => '2',
+			'plugin_key' => 'topics',
+			'key' => 'block_193',
+		),
+		array(
+			'id' => '196',
+			'language_id' => '2',
+			'room_id' => '1',
+			'plugin_key' => 'topics',
+			'key' => 'block_196',
+		),
+
 	);
 
 }
