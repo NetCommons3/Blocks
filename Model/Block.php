@@ -188,8 +188,8 @@ class Block extends BlocksAppModel {
 			$block = array();
 			$block['Block']['room_id'] = $frame['Frame']['room_id'];
 			$block['Block']['language_id'] = $frame['Frame']['language_id'];
+			$block['Block']['name'] = sprintf(__d('blocks', 'New block %s'), date('YmdHis'));
 		}
-		$block['Block']['name'] = '新しいブロック ' . date('Ymd');
 
 		//blocksの登録
 		if (! $block = $this->save($block, false)) {
