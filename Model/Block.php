@@ -189,6 +189,7 @@ class Block extends BlocksAppModel {
 			$block['Block']['room_id'] = $frame['Frame']['room_id'];
 			$block['Block']['language_id'] = $frame['Frame']['language_id'];
 		}
+		$block['Block']['name'] = '新しいブロック ' . date('Ymd');
 
 		//blocksの登録
 		if (! $block = $this->save($block, false)) {
