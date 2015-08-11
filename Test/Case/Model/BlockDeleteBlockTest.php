@@ -27,13 +27,13 @@ class BlockDeleteTest extends CakeTestCase {
 	public $fixtures = array(
 		'plugin.blocks.block',
 		'plugin.blocks.block_role_permission',
-		'plugin.boxes.box',
-		'plugin.frames.frame',
-		'plugin.m17n.language',
-		'plugin.plugin_manager.plugin',
-		'plugin.rooms.room',
-		'plugin.rooms.roles_room',
-		'plugin.users.user',
+		//'plugin.boxes.box',
+		//'plugin.frames.frame',
+		//'plugin.m17n.language',
+		//'plugin.plugin_manager.plugin',
+		//'plugin.rooms.room',
+		//'plugin.rooms.roles_room',
+		//'plugin.users.user',
 	);
 
 /**

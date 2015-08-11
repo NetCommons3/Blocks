@@ -26,12 +26,12 @@ class BlockTest extends CakeTestCase {
  */
 	public $fixtures = array(
 		'plugin.blocks.block',
-		'plugin.boxes.box',
-		'plugin.frames.frame',
-		'plugin.m17n.language',
-		'plugin.plugin_manager.plugin',
-		'plugin.rooms.room',
-		'plugin.users.user',
+		//'plugin.boxes.box',
+		//'plugin.frames.frame',
+		//'plugin.m17n.language',
+		//'plugin.plugin_manager.plugin',
+		//'plugin.rooms.room',
+		//'plugin.users.user',
 	);
 
 /**
