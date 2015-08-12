@@ -10,6 +10,7 @@
  */
 
 App::uses('Block', 'Blocks.Model');
+App::uses('YACakeTestCase', 'NetCommons.TestSuite');
 
 /**
  * Block Test Case
@@ -17,7 +18,7 @@ App::uses('Block', 'Blocks.Model');
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Blocks\Test\Case\Model
  */
-class BlockTest extends CakeTestCase {
+class BlockTest extends YACakeTestCase {
 
 /**
  * Fixtures

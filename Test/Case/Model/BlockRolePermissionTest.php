@@ -10,6 +10,7 @@
  */
 
 App::uses('BlockRolePermission', 'Blocks.Model');
+App::uses('YACakeTestCase', 'NetCommons.TestSuite');
 
 /**
  * BlockRolePermission Test Case
@@ -17,7 +18,7 @@ App::uses('BlockRolePermission', 'Blocks.Model');
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Blocks\Test\Case\Model
  */
-class BlockRolePermissionTest extends CakeTestCase {
+class BlockRolePermissionTest extends YACakeTestCase {
 
 /**
  * Fixtures
