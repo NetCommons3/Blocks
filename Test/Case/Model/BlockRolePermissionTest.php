@@ -27,7 +27,6 @@ class BlockRolePermissionTest extends YACakeTestCase {
  */
 	public $fixtures = array(
 		'plugin.blocks.block_role_permission',
-		//'plugin.blocks.roles_room'
 	);
 
 /**
@@ -49,15 +48,6 @@ class BlockRolePermissionTest extends YACakeTestCase {
 		unset($this->BlockRolePermission);
 
 		parent::tearDown();
-	}
-
-/**
- * testIndex
- *
- * @return  void
- */
-	public function testIndex() {
-		$this->assertTrue(true);
 	}
 
 /**
