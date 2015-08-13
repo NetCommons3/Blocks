@@ -10,6 +10,7 @@
  */
 
 App::uses('BlockRolePermission', 'Blocks.Model');
+App::uses('YACakeTestCase', 'NetCommons.TestSuite');
 
 /**
  * BlockRolePermission Test Case
@@ -17,7 +18,7 @@ App::uses('BlockRolePermission', 'Blocks.Model');
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Blocks\Test\Case\Model
  */
-class BlockRolePermissionTest extends CakeTestCase {
+class BlockRolePermissionTest extends YACakeTestCase {
 
 /**
  * Fixtures
@@ -26,7 +27,6 @@ class BlockRolePermissionTest extends CakeTestCase {
  */
 	public $fixtures = array(
 		'plugin.blocks.block_role_permission',
-		//'plugin.blocks.roles_room'
 	);
 
 /**
@@ -48,15 +48,6 @@ class BlockRolePermissionTest extends CakeTestCase {
 		unset($this->BlockRolePermission);
 
 		parent::tearDown();
-	}
-
-/**
- * testIndex
- *
- * @return  void
- */
-	public function testIndex() {
-		$this->assertTrue(true);
 	}
 
 /**

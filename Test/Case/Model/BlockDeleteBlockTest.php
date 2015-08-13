@@ -10,6 +10,7 @@
  */
 
 App::uses('Block', 'Blocks.Model');
+App::uses('YACakeTestCase', 'NetCommons.TestSuite');
 
 /**
  * Block Test Case
@@ -17,7 +18,7 @@ App::uses('Block', 'Blocks.Model');
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Blocks\Test\Case\Model
  */
-class BlockDeleteTest extends CakeTestCase {
+class BlockDeleteBlockTest extends YACakeTestCase {
 
 /**
  * Fixtures
@@ -27,13 +28,6 @@ class BlockDeleteTest extends CakeTestCase {
 	public $fixtures = array(
 		'plugin.blocks.block',
 		'plugin.blocks.block_role_permission',
-		'plugin.boxes.box',
-		'plugin.frames.frame',
-		'plugin.m17n.language',
-		'plugin.plugin_manager.plugin',
-		'plugin.rooms.room',
-		'plugin.rooms.roles_room',
-		'plugin.users.user',
 	);
 
 /**
