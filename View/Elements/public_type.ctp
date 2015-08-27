@@ -28,12 +28,12 @@
 			);
 
 			echo $this->Form->radio('Block.public_type', $options, array(
-				'value' => isset($block['publicType']) ? $block['publicType'] : Block::TYPE_PRIVATE,
+//				'value' => isset($block['publicType']) ? $block['publicType'] : Block::TYPE_PRIVATE,
 				'legend' => false,
 				'separator' => '<br />',
 			));
 
-			$publicTypePeriod = $block['publicType'] === Block::TYPE_LIMITED;
+			$publicTypePeriod = $this->data['Block']['public_type'] === Block::TYPE_LIMITED;
 		?>
 	</div>
 
@@ -41,7 +41,7 @@
 		<div class="input-group inline-block" style="margin-left: 20px;">
 			<div class="input-group">
 				<?php echo $this->Form->time('Block.from', array(
-					'value' => (isset($block['from']) ? $block['from'] : null),
+//					'value' => (isset($this->data['Block']['from']) ? $block['from'] : null),
 					'label' => false,
 					'class' => 'form-control',
 					'placeholder' => 'yyyy-mm-dd hh:nn'
@@ -52,7 +52,7 @@
 				</span>
 
 				<?php echo $this->Form->time('Block.to', array(
-					'value' => (isset($block['to']) ? $block['to'] : null),
+//					'value' => (isset($block['to']) ? $block['to'] : null),
 					'label' => false,
 					'class' => 'form-control',
 					'placeholder' => 'yyyy-mm-dd hh:nn'
