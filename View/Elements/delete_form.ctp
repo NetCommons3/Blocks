@@ -1,7 +1,7 @@
 <?php
 /**
  * Element of block delete form
- *   - $controller: Controller for delete request.
+ *   - $model: Controller for delete request.
  *   - $action: Action for delete request.
  *   - $callback: Callback element for parameters and messages.
  *   - $callbackOptions: Callback options for element.
@@ -17,10 +17,16 @@
 if (! isset($options)) {
 	$options = array();
 }
+
+//後で削除する
+if (isset($controller)) {
+	$model = $controller;
+}
+
 ?>
 
 <div ng-init="dangerZone=false;">
-	<?php echo $this->Form->create($controller, Hash::merge(array('type' => 'delete', 'action' => $action), $options)); ?>
+	<?php echo $this->Form->create($model, Hash::merge(array('type' => 'delete', 'action' => $action), $options)); ?>
 		<accordion close-others="false">
 			<accordion-group is-open="dangerZone" class="panel-danger">
 				<accordion-heading style="cursor: pointer">

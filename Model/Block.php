@@ -161,6 +161,25 @@ class Block extends BlocksAppModel {
 	}
 
 /**
+ * Get Block data
+ *
+ * @param string $blockId blocks.id
+ * @param int $roomId rooms.id
+ * @return array Block data
+ */
+	public function getBlock($blockId, $roomId) {
+		$block = $this->find('first', array(
+			'recursive' => -1,
+			'conditions' => array(
+				'Block.id' => $blockId,
+				'Block.room_id' => $roomId,
+			)
+		));
+
+		return $block;
+	}
+
+/**
  * Save block data and frame.block_id.
  * Please do the transaction and validation in the caller.
  *
