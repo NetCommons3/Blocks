@@ -18,6 +18,9 @@
 if (! isset($options)) {
 	$options = array();
 }
+if (isset($action)) {
+	$options['action'] = $action;
+}
 
 //後で削除する
 if (isset($controller)) {
@@ -25,7 +28,7 @@ if (isset($controller)) {
 }
 ?>
 
-<?php echo $this->Form->create($model, Hash::merge(array('novalidate' => true, 'action' => $action), $options)); ?>
+<?php echo $this->Form->create($model, Hash::merge(array('novalidate' => true), $options)); ?>
 	<div class="panel panel-default">
 		<div class="panel-body">
 			<?php echo $this->element($callback, (isset($callbackOptions) ? $callbackOptions : array())); ?>

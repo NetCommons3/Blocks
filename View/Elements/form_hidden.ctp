@@ -10,26 +10,14 @@
  */
 ?>
 
-<?php echo $this->Form->hidden('Frame.id', array(
-		'value' => $frameId,
-	)); ?>
+<?php echo $this->Form->hidden('Frame.id'); ?>
 
-<?php echo $this->Form->hidden('Block.id', array(
-		'value' => $block['id'],
-	)); ?>
+<?php echo $this->Form->hidden('Block.id'); ?>
 
-<?php echo $this->Form->hidden('Block.key', array(
-		'value' => $block['key'],
-	)); ?>
+<?php echo $this->Form->hidden('Block.key'); ?>
 
-<?php echo $this->Form->hidden('Block.language_id', array(
-		'value' => $languageId,
-	)); ?>
+<?php echo $this->Form->hidden('Block.language_id'); ?>
 
-<?php echo $this->Form->hidden('Block.room_id', array(
-		'value' => $roomId,
-	)); ?>
+<?php echo $this->Form->hidden('Block.room_id'); ?>
 
-<?php echo $this->Form->hidden('Block.plugin_key', array(
-		'value' => $this->params['plugin'],
-	));
+<?php echo $this->Form->hidden('Block.plugin_key');
