@@ -9,3 +9,7 @@
 .block-danger-zone .panel-title > a.accordion-toggle {
 	display: block;
 }
+
+.block-setting-body {
+	padding: 15px;
+}
