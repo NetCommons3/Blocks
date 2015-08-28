@@ -114,7 +114,7 @@ class Block extends BlocksAppModel {
  * @see Model::save()
  */
 	public function beforeValidate($options = array()) {
-		$this->validate = Hash::merge($this->validate, array(
+		$this->validate = Hash::merge(array(
 			'language_id' => array(
 				'numeric' => array(
 					'rule' => array('numeric'),
@@ -135,27 +135,17 @@ class Block extends BlocksAppModel {
 					//'on' => 'create', // Limit validation to 'create' or 'update' operations
 				),
 			),
-			//'key' => array(
-			//	'notEmpty' => array(
-			//		'rule' => array('notEmpty'),
-			//		//'message' => 'Your custom message here',
-			//		//'allowEmpty' => false,
-			//		//'required' => false,
-			//		//'last' => false, // Stop validation after this rule
-			//		//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			//	),
-			//),
-			//'name' => array(
-			//	'notEmpty' => array(
-			//		'rule' => array('notEmpty'),
-			//		//'message' => 'Your custom message here',
-			//		//'allowEmpty' => false,
-			//		//'required' => false,
-			//		//'last' => false, // Stop validation after this rule
-			//		//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			//	),
-			//),
-		));
+			'name' => array(
+				'notBlank' => array(
+					'rule' => array('notBlank'),
+					'message' => sprintf(__d('net_commons', 'Please input %s.'), __d('blocks', 'Block name')),
+					//'allowEmpty' => false,
+					//'required' => false,
+					//'last' => false, // Stop validation after this rule
+					//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				),
+			),
+		), $this->validate);
 
 		return parent::beforeValidate($options);
 	}
@@ -168,6 +158,7 @@ class Block extends BlocksAppModel {
  * @return array Block data
  */
 	public function getBlock($blockId, $roomId) {
+		//BlockBehaviorにするため、後で削除
 		$block = $this->find('first', array(
 			'recursive' => -1,
 			'conditions' => array(
@@ -190,6 +181,7 @@ class Block extends BlocksAppModel {
  * @throws InternalErrorException
  */
 	public function saveByFrameId($frameId, $block = null) {
+		//BlockBehaviorにするため、後で削除
 		$this->loadModels([
 			'Frame' => 'Frames.Frame',
 		]);
@@ -233,6 +225,7 @@ class Block extends BlocksAppModel {
  * @return bool True on success, false on error
  */
 	public function validateBlock($data) {
+		//BlockBehaviorにするため、後で削除
 		$this->set($data);
 		$this->validates();
 		if ($this->validationErrors) {
@@ -251,6 +244,7 @@ class Block extends BlocksAppModel {
  * @throws InternalErrorException
  */
 	public function deleteBlock($key) {
+		//BlockBehaviorにするため、後で削除
 		$this->loadModels([
 			'Frame' => 'Frames.Frame',
 			'BlockRolePermission' => 'Blocks.BlockRolePermission',
