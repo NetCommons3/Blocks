@@ -83,6 +83,9 @@ class BlockBehavior extends ModelBehavior {
 		if (! $model->data['Block']['name']) {
 			$model->data['Block']['name'] = sprintf(__d('blocks', 'Block %s'), date('YmdHis'));
 		}
+		if (! isset($model->data['Block']['plugin_key']) || ! $model->data['Block']['plugin_key']) {
+			$model->data['Block']['plugin_key'] = Inflector::underscore($model->plugin);
+		}
 
 		//blocksの登録
 		if (! $block = $model->Block->save($model->data['Block'], false)) {
@@ -108,6 +111,29 @@ class BlockBehavior extends ModelBehavior {
 		}
 
 		return parent::beforeSave($model, $options);
+	}
+
+/**
+ * Create block data
+ *
+ * @param int $blockId blocks.id
+ * @param array $options Create options array
+ * @param bool $created If True, the results of the Model::find() to create it if it was null
+ * @return array
+ */
+	public function createBlock(Model $model, $options = array()) {
+		$options = Hash::merge(array(
+			'id' => null,
+			'key' => null,
+			'name' => null,
+			'language_id' => Configure::read('Config.languageId'),
+			'room_id' => null,
+			'plugin_key' => Inflector::underscore($model->plugin)
+		), $options);
+
+		$block = $model->Block->create($options);
+
+		return $block;
 	}
 
 /**

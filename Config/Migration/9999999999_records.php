@@ -48,6 +48,7 @@ class Records extends NetCommonsMigration {
 				'language_id' => '2',
 				'room_id' => '1',
 				'plugin_key' => 'announcements',
+				'name' => 'NetCommons 3! セッティングモードで編集しよう.',
 				'key' => 'block_1',
 			),
 			array(
@@ -63,6 +64,7 @@ class Records extends NetCommonsMigration {
 				'language_id' => '1',
 				'room_id' => '1',
 				'plugin_key' => 'announcements',
+				'name' => 'NetCommons 3! Click the setting mode.',
 				'key' => 'block_1',
 			),
 			array(
