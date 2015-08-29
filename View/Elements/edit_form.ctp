@@ -35,15 +35,9 @@ if (isset($controller)) {
 		</div>
 
 		<div class="panel-footer text-center">
-			<button type="button" class="btn btn-default btn-workflow" onclick="location.href = '<?php echo $this->Html->url('/' . $cancelUrl); ?>'">
-				<span class="glyphicon glyphicon-remove"></span>
-				<?php echo __d('net_commons', 'Cancel'); ?>
-			</button>
+			<?php echo $this->NetCommonsForm->cancelButton(__d('net_commons', 'Cancel'), $cancelUrl); ?>
 
-			<?php echo $this->Form->button(__d('net_commons', 'OK'), array(
-					'class' => 'btn btn-primary btn-workflow',
-					'name' => 'save',
-				)); ?>
+			<?php echo $this->NetCommonsForm->saveButton(__d('net_commons', 'OK')); ?>
 		</div>
 	</div>
 <?php echo $this->Form->end();
