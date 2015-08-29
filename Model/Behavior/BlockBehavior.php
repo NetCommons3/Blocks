@@ -78,7 +78,10 @@ class BlockBehavior extends ModelBehavior {
 			}
 			$model->data['Block']['room_id'] = $frame['Frame']['room_id'];
 			$model->data['Block']['language_id'] = $frame['Frame']['language_id'];
-			$model->data['Block']['name'] = sprintf(__d('blocks', 'New block %s'), date('YmdHis'));
+			$model->data['Block']['name'] = '';
+		}
+		if (! $model->data['Block']['name']) {
+			$model->data['Block']['name'] = sprintf(__d('blocks', 'Block %s'), date('YmdHis'));
 		}
 
 		//blocksの登録
