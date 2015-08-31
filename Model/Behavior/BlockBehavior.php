@@ -136,10 +136,10 @@ class BlockBehavior extends ModelBehavior {
 
 		//block_id, block_keyのセット
 		foreach ($model->data as $name => $data) {
-			if (isset($data['block_id'])) {
+			if ($model->$name->hasField('block_id')) {
 				$model->data[$name]['block_id'] = $model->data['Block']['id'];
 			}
-			if (isset($data['block_key'])) {
+			if ($model->$name->hasField('block_key')) {
 				$model->data[$name]['block_key'] = $model->data['Block']['key'];
 			}
 		}
