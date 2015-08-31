@@ -73,6 +73,35 @@ class BlockBehavior extends ModelBehavior {
  * @return void
  * @throws InternalErrorException
  */
+	private function __setRecursiveBlockField(Model $model, &$data, $field, $key, $value) {
+		CakeLog::debug(print_r(array($field, $key, $value), true));
+
+		if (is_string($data[$key])) {
+			return;
+		}
+
+		if (isset($model->$key)) {
+		CakeLog::debug(print_r('model isset = true', true));
+			if ($model->$key->hasField($field)) {
+		CakeLog::debug(print_r('hasField=true', true));
+				$data[$key][$field] = $value;
+			}
+			return;
+		}
+
+		foreach (array_keys($data[$key]) as $key2) {
+			$this->__setRecursiveBlockField($model, $data[$key], $field, $key2, $value);
+		}
+	}
+
+/**
+ * savePrepare
+ *
+ * @param Model $model Model using this behavior
+ * @param array $frame Frame data
+ * @return void
+ * @throws InternalErrorException
+ */
 	private function __saveBlock(Model $model, $frame) {
 		$model->data['Block']['room_id'] = $frame['Frame']['room_id'];
 		$model->data['Block']['language_id'] = $frame['Frame']['language_id'];
@@ -114,6 +143,12 @@ class BlockBehavior extends ModelBehavior {
 			'Block' => 'Blocks.Block',
 			'Frame' => 'Frames.Frame',
 		));
+		if (isset($this->setting['loadModels'])) {
+			$model->loadModels($this->setting['loadModels']);
+		}
+
+		CakeLog::debug($model->Category);
+		CakeLog::debug($model->CategoryOrder);
 
 		//frameの取得
 		$frame = $model->Frame->findById($model->data['Frame']['id']);
@@ -135,14 +170,27 @@ class BlockBehavior extends ModelBehavior {
 		}
 
 		//block_id, block_keyのセット
-		foreach ($model->data as $name => $data) {
-			if ($model->$name->hasField('block_id')) {
-				$model->data[$name]['block_id'] = $model->data['Block']['id'];
+		foreach ($model->data as $key => $data) {
+			if ($key === 'Frame') {
+				continue;
 			}
-			if ($model->$name->hasField('block_key')) {
-				$model->data[$name]['block_key'] = $model->data['Block']['key'];
-			}
+
+			$this->__setRecursiveBlockField($model, $model->data, 'block_id', $key, $model->data['Block']['id']);
+
+			$this->__setRecursiveBlockField($model, $model->data, 'block_key', $key, $model->data['Block']['key']);
+//
+//			if (! isset($model->$name)) {
+//				continue;
+//			}
+//			if ($model->$name->hasField('block_id')) {
+//				$model->data[$name]['block_id'] = $model->data['Block']['id'];
+//			}
+//			if ($model->$name->hasField('block_key')) {
+//				$model->data[$name]['block_key'] = $model->data['Block']['key'];
+//			}
 		}
+
+CakeLog::debug(print_r($model->data, true));
 
 		return parent::beforeSave($model, $options);
 	}
