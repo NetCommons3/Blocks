@@ -66,24 +66,22 @@ class BlockBehavior extends ModelBehavior {
 	}
 
 /**
- * savePrepare
+ * Set block field
  *
  * @param Model $model Model using this behavior
- * @param array $frame Frame data
+ * @param array &$data Model data
+ * @param string $field Update field
+ * @param string $key Recursive key
+ * @param string $value Update value
  * @return void
- * @throws InternalErrorException
  */
 	private function __setRecursiveBlockField(Model $model, &$data, $field, $key, $value) {
-		CakeLog::debug(print_r(array($field, $key, $value), true));
-
 		if (is_string($data[$key])) {
 			return;
 		}
 
 		if (isset($model->$key)) {
-		CakeLog::debug(print_r('model isset = true', true));
 			if ($model->$key->hasField($field)) {
-		CakeLog::debug(print_r('hasField=true', true));
 				$data[$key][$field] = $value;
 			}
 			return;
@@ -143,12 +141,9 @@ class BlockBehavior extends ModelBehavior {
 			'Block' => 'Blocks.Block',
 			'Frame' => 'Frames.Frame',
 		));
-		if (isset($this->setting['loadModels'])) {
-			$model->loadModels($this->setting['loadModels']);
+		if (isset($this->settings['loadModels'])) {
+			$model->loadModels($this->settings['loadModels']);
 		}
-
-		CakeLog::debug($model->Category);
-		CakeLog::debug($model->CategoryOrder);
 
 		//frameの取得
 		$frame = $model->Frame->findById($model->data['Frame']['id']);
@@ -170,7 +165,8 @@ class BlockBehavior extends ModelBehavior {
 		}
 
 		//block_id, block_keyのセット
-		foreach ($model->data as $key => $data) {
+		$keys = array_keys($model->data);
+		foreach ($keys as $key) {
 			if ($key === 'Frame') {
 				continue;
 			}
@@ -178,19 +174,7 @@ class BlockBehavior extends ModelBehavior {
 			$this->__setRecursiveBlockField($model, $model->data, 'block_id', $key, $model->data['Block']['id']);
 
 			$this->__setRecursiveBlockField($model, $model->data, 'block_key', $key, $model->data['Block']['key']);
-//
-//			if (! isset($model->$name)) {
-//				continue;
-//			}
-//			if ($model->$name->hasField('block_id')) {
-//				$model->data[$name]['block_id'] = $model->data['Block']['id'];
-//			}
-//			if ($model->$name->hasField('block_key')) {
-//				$model->data[$name]['block_key'] = $model->data['Block']['key'];
-//			}
 		}
-
-CakeLog::debug(print_r($model->data, true));
 
 		return parent::beforeSave($model, $options);
 	}
