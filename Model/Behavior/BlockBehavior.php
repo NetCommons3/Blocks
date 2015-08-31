@@ -20,6 +20,24 @@ App::uses('ModelBehavior', 'Model');
 class BlockBehavior extends ModelBehavior {
 
 /**
+ * Max length of content
+ *
+ * @var int
+ */
+	const NAME_LENGTH = 50;
+
+/**
+ * Setup this behavior with the specified configuration settings.
+ *
+ * @param Model $model Model using this behavior
+ * @param array $config Configuration settings for $model
+ * @return void
+ */
+	public function setup(Model $model, $config = array()) {
+		$this->settings = Hash::merge($this->settings, $config);
+	}
+
+/**
  * beforeValidate is called before a model is validated, you can use this callback to
  * add behavior validation rules into a models validate array. Returning false
  * will allow you to make the validation fail.
@@ -48,6 +66,36 @@ class BlockBehavior extends ModelBehavior {
 	}
 
 /**
+ * savePrepare
+ *
+ * @param Model $model Model using this behavior
+ * @param array $frame Frame data
+ * @return void
+ * @throws InternalErrorException
+ */
+	private function __saveBlock(Model $model, $frame) {
+		$model->data['Block']['room_id'] = $frame['Frame']['room_id'];
+		$model->data['Block']['language_id'] = $frame['Frame']['language_id'];
+
+		if (isset($model->data['Block']['name']) && $model->data['Block']['name']) {
+			//値があれば、何もしない
+		} elseif (isset($this->settings['name'])) {
+			list($alias, $filed) = pluginSplit($this->settings['name']);
+			$model->data['Block']['name'] = mb_strimwidth(strip_tags($model->data[$alias][$filed]), 0, self::NAME_LENGTH);
+		} else {
+			$model->data['Block']['name'] = sprintf(__d('blocks', 'Block %s'), date('YmdHis'));
+		}
+
+		$model->data['Block']['plugin_key'] = Inflector::underscore($model->plugin);
+
+		//blocksの登録
+		if (! $block = $model->Block->save($model->data['Block'], false)) {
+			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+		}
+		$model->data['Block'] = $block['Block'];
+	}
+
+/**
  * beforeSave is called before a model is saved. Returning false from a beforeSave callback
  * will abort the save operation.
  *
@@ -55,6 +103,7 @@ class BlockBehavior extends ModelBehavior {
  * @param array $options Options passed from Model::save().
  * @return mixed False if the operation should abort. Any other result will continue.
  * @see Model::save()
+ * @throws InternalErrorException
  */
 	public function beforeSave(Model $model, $options = array()) {
 		if (! isset($model->data['Frame']['id'])) {
@@ -72,35 +121,20 @@ class BlockBehavior extends ModelBehavior {
 			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 		}
 
-		if (! isset($model->data['Block'])) {
-			if ($frame['Frame']['block_id']) {
-				return parent::beforeSave($model, $options);
-			}
-			$model->data['Block']['room_id'] = $frame['Frame']['room_id'];
-			$model->data['Block']['language_id'] = $frame['Frame']['language_id'];
-			$model->data['Block']['name'] = '';
-		}
-		if (! $model->data['Block']['name']) {
-			$model->data['Block']['name'] = sprintf(__d('blocks', 'Block %s'), date('YmdHis'));
-		}
-		if (! isset($model->data['Block']['plugin_key']) || ! $model->data['Block']['plugin_key']) {
-			$model->data['Block']['plugin_key'] = Inflector::underscore($model->plugin);
+		if (! isset($model->data['Block']) && $frame['Frame']['block_id']) {
+			return parent::beforeSave($model, $options);
 		}
 
 		//blocksの登録
-		if (! $block = $model->Block->save($model->data['Block'], false)) {
-			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-		}
-		$model->data['Block'] = $block['Block'];
+		$this->__saveBlock($model, $frame);
 
 		//framesテーブル更新
 		if (! $frame['Frame']['block_id']) {
-			$frame['Frame']['block_id'] = (int)$block['Block']['id'];
-			if (! $model->Frame->save($frame, false)) {
-				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-			}
+			$frame['Frame']['block_id'] = (int)$model->data['Block']['id'];
+			$model->Frame->save($frame, false);
 		}
 
+		//block_id, block_keyのセット
 		foreach ($model->data as $name => $data) {
 			if (isset($data['block_id'])) {
 				$model->data[$name]['block_id'] = $model->data['Block']['id'];
@@ -116,9 +150,8 @@ class BlockBehavior extends ModelBehavior {
 /**
  * Create block data
  *
- * @param int $blockId blocks.id
+ * @param Model $model Model using this behavior
  * @param array $options Create options array
- * @param bool $created If True, the results of the Model::find() to create it if it was null
  * @return array
  */
 	public function createBlock(Model $model, $options = array()) {
