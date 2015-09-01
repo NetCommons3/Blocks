@@ -227,20 +227,19 @@ class BlockBehavior extends ModelBehavior {
  * Delete block.
  *
  * @param Model $model Model using this behavior
- * @param string $key blocks.key
+ * @param string $blockKey blocks.key
  * @return void
  * @throws InternalErrorException
  */
-	public function deleteBlock(Model $model, $key) {
+	public function deleteBlock(Model $model, $blockKey) {
 		$model->loadModels([
 			'Block' => 'Blocks.Block',
-			'BlockRolePermission' => 'Blocks.BlockRolePermission',
 			'Frame' => 'Frames.Frame',
 		]);
 
 		//Blockデータ取得
 		$conditions = array(
-			$model->Block->alias . '.key' => $key
+			$model->Block->alias . '.key' => $blockKey
 		);
 		$blocks = $model->Block->find('list', array(
 			'recursive' => -1,
@@ -252,17 +251,35 @@ class BlockBehavior extends ModelBehavior {
 			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 		}
 
-		//BlockRolePermissionデータ削除
-		if (! $model->BlockRolePermission->deleteAll(array($model->BlockRolePermission->alias . '.block_key' => $key), false)) {
-			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-		}
-
-		$blocks = array_keys($blocks);
-		foreach ($blocks as $blockId) {
+		$blockIds = array_keys($blocks);
+		foreach ($blockIds as $blockId) {
 			if (! $model->Frame->updateAll(
 					array('Frame.block_id' => null),
 					array('Frame.block_id' => (int)$blockId)
 			)) {
+				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+			}
+		}
+
+		$settings = Hash::merge(
+			array('BlockRolePermission' => 'Blocks.BlockRolePermission'),
+			$this->settings['loadModels']
+		);
+
+		//関連Modelのデータ削除
+		$model->loadModels($settings);
+		$modelClasses = array_keys($settings);
+
+		foreach ($modelClasses as $class) {
+			$result = true;
+
+			if ($model->$class->hasField('block_id')) {
+				$result = $model->$class->deleteAll(array($model->$class->alias . '.block_id' => $blockIds), false);
+			}
+			if ($model->$class->hasField('block_key')) {
+				$result = $model->$class->deleteAll(array($model->$class->alias . '.block_key' => $blockKey), false);
+			}
+			if (! $result) {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
 		}
