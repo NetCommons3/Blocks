@@ -117,10 +117,10 @@ class BlockRolePermission extends BlocksAppModel {
  * @return bool True on success, false on error
  */
 	public function validateBlockRolePermissions($data) {
-		$this->validateMany($data);
-		if ($this->validationErrors) {
-			return false;
-		}
+		//$this->validateMany($data);
+		//if ($this->validationErrors) {
+		//	return false;
+		//}
 		return true;
 	}
 }

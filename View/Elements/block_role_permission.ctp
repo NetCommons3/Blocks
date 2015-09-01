@@ -1,5 +1,7 @@
 <?php
 /**
+ * 後で削除する
+ *
  * Element of BlockRolePermission settings
  *   - $permission:
  *       A key name of permission.

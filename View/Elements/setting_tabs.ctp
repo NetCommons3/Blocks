@@ -26,12 +26,14 @@
 	<?php endif; ?>
 
 	<?php if (isset($tabs['role_permissions'])) : ?>
-		<?php if ($this->request->params['action'] === 'edit') : ?>
-			<li class="<?php echo ($active === 'role_permissions' ? 'active' : ''); ?>">
-				<a href="<?php echo $this->Html->url($tabs['role_permissions']['url']); ?>">
-					<?php echo __d('net_commons', 'Role permission settings'); ?>
-				</a>
-			</li>
+		<?php if ($blockPermissionEditable) : ?>
+			<?php if ($this->request->params['action'] === 'edit') : ?>
+				<li class="<?php echo ($active === 'role_permissions' ? 'active' : ''); ?>">
+					<a href="<?php echo $this->Html->url($tabs['role_permissions']['url']); ?>">
+						<?php echo __d('net_commons', 'Role permission settings'); ?>
+					</a>
+				</li>
+			<?php endif; ?>
 		<?php endif; ?>
 		<?php
 			unset($tabs['role_permissions']);

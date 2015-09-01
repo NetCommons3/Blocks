@@ -1,5 +1,6 @@
 <?php
 /**
+ * 後で削除する
  * Element of block role setting
  *   - $roles:
  *       The results `Roles` data of NetCommonsBlockComponent->getBlockRolePermissions(),
