@@ -180,28 +180,6 @@ class BlockBehavior extends ModelBehavior {
 	}
 
 /**
- * Create block data
- *
- * @param Model $model Model using this behavior
- * @param array $options Create options array
- * @return array
- */
-	public function createBlock(Model $model, $options = array()) {
-		$options = Hash::merge(array(
-			'id' => null,
-			'key' => null,
-			'name' => null,
-			'language_id' => Configure::read('Config.languageId'),
-			'room_id' => null,
-			'plugin_key' => Inflector::underscore($model->plugin)
-		), $options);
-
-		$block = $model->Block->create($options);
-
-		return $block;
-	}
-
-/**
  * Get Block data
  *
  * @param Model $model Model using this behavior
@@ -221,6 +199,23 @@ class BlockBehavior extends ModelBehavior {
 		));
 
 		return $block;
+	}
+
+/**
+ * Get conditions
+ *
+ * @param Model $model Model using this behavior
+ * @param array $conditions Model::find conditions default value
+ * @return array Conditions data
+ */
+	public function getBlockConditions(Model $model, $conditions = array()) {
+		$conditions = Hash::merge(array(
+			'Block.language_id' => CurrentUtility::read('Language.id'),
+			'Block.room_id' => CurrentUtility::read('Room.id'),
+			'Block.plugin_key ' => CurrentUtility::read('Plugin.key'),
+		), $conditions);
+
+		return $conditions;
 	}
 
 /**

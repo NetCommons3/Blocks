@@ -22,12 +22,6 @@ if (! isset($options)) {
 if (isset($action)) {
 	$options['action'] = $action;
 }
-
-//後で削除する
-if (isset($controller)) {
-	$model = $controller;
-}
-
 ?>
 
 <div class="block-danger-zone" ng-init="dangerZone=false;">

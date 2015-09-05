@@ -157,18 +157,18 @@ class Block extends BlocksAppModel {
  * @param int $roomId rooms.id
  * @return array Block data
  */
-	public function getBlock($blockId, $roomId) {
-		//BlockBehaviorにするため、後で削除
-		$block = $this->find('first', array(
-			'recursive' => -1,
-			'conditions' => array(
-				'Block.id' => $blockId,
-				'Block.room_id' => $roomId,
-			)
-		));
-
-		return $block;
-	}
+	//public function getBlock($blockId, $roomId) {
+	//	//BlockBehaviorにするため、後で削除
+	//	$block = $this->find('first', array(
+	//		'recursive' => -1,
+	//		'conditions' => array(
+	//			'Block.id' => $blockId,
+	//			'Block.room_id' => $roomId,
+	//		)
+	//	));
+	//
+	//	return $block;
+	//}
 
 /**
  * Save block data and frame.block_id.
@@ -180,43 +180,43 @@ class Block extends BlocksAppModel {
  *
  * @throws InternalErrorException
  */
-	public function saveByFrameId($frameId, $block = null) {
-		//BlockBehaviorにするため、後で削除
-		$this->loadModels([
-			'Frame' => 'Frames.Frame',
-		]);
-
-		//frameの取得
-		$frame = $this->Frame->findById($frameId);
-		if (! $frame) {
-			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-		}
-
-		if ($block === false || $block === null && ! $this->data) {
-			if (isset($frame['Frame']['block_id'])) {
-				return $this->findById((int)$frame['Frame']['block_id']);
-			}
-			$block = array();
-			$block['Block']['room_id'] = $frame['Frame']['room_id'];
-			$block['Block']['language_id'] = $frame['Frame']['language_id'];
-			$block['Block']['name'] = sprintf(__d('blocks', 'New block %s'), date('YmdHis'));
-		}
-
-		//blocksの登録
-		if (! $block = $this->save($block, false)) {
-			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-		}
-
-		//framesテーブル更新
-		if (! $frame['Frame']['block_id']) {
-			$frame['Frame']['block_id'] = (int)$block['Block']['id'];
-			if (! $this->Frame->save($frame, false)) {
-				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-			}
-		}
-
-		return $block;
-	}
+	//public function saveByFrameId($frameId, $block = null) {
+	//	//BlockBehaviorにするため、後で削除
+	//	$this->loadModels([
+	//		'Frame' => 'Frames.Frame',
+	//	]);
+	//
+	//	//frameの取得
+	//	$frame = $this->Frame->findById($frameId);
+	//	if (! $frame) {
+	//		throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+	//	}
+	//
+	//	if ($block === false || $block === null && ! $this->data) {
+	//		if (isset($frame['Frame']['block_id'])) {
+	//			return $this->findById((int)$frame['Frame']['block_id']);
+	//		}
+	//		$block = array();
+	//		$block['Block']['room_id'] = $frame['Frame']['room_id'];
+	//		$block['Block']['language_id'] = $frame['Frame']['language_id'];
+	//		$block['Block']['name'] = sprintf(__d('blocks', 'New block %s'), date('YmdHis'));
+	//	}
+	//
+	//	//blocksの登録
+	//	if (! $block = $this->save($block, false)) {
+	//		throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+	//	}
+	//
+	//	//framesテーブル更新
+	//	if (! $frame['Frame']['block_id']) {
+	//		$frame['Frame']['block_id'] = (int)$block['Block']['id'];
+	//		if (! $this->Frame->save($frame, false)) {
+	//			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+	//		}
+	//	}
+	//
+	//	return $block;
+	//}
 
 /**
  * validate block
@@ -224,15 +224,15 @@ class Block extends BlocksAppModel {
  * @param array $data received post data
  * @return bool True on success, false on error
  */
-	public function validateBlock($data) {
-		//BlockBehaviorにするため、後で削除
-		$this->set($data);
-		$this->validates();
-		if ($this->validationErrors) {
-			return false;
-		}
-		return true;
-	}
+	//public function validateBlock($data) {
+	//	//BlockBehaviorにするため、後で削除
+	//	$this->set($data);
+	//	$this->validates();
+	//	if ($this->validationErrors) {
+	//		return false;
+	//	}
+	//	return true;
+	//}
 
 /**
  * Delete block.
@@ -243,39 +243,39 @@ class Block extends BlocksAppModel {
  *
  * @throws InternalErrorException
  */
-	public function deleteBlock($key) {
-		//BlockBehaviorにするため、後で削除
-		$this->loadModels([
-			'Frame' => 'Frames.Frame',
-			'BlockRolePermission' => 'Blocks.BlockRolePermission',
-		]);
-
-		$conditions = array(
-			$this->alias . '.key' => $key
-		);
-
-		$blocks = $this->find('list', array(
-				'recursive' => -1,
-				'conditions' => $conditions,
-			)
-		);
-		if (! $this->deleteAll($conditions, false)) {
-			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-		}
-
-		//BlockRolePermissionデータ削除
-		if (! $this->BlockRolePermission->deleteAll(array($this->BlockRolePermission->alias . '.block_key' => $key), false)) {
-			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-		}
-
-		$blocks = array_keys($blocks);
-		foreach ($blocks as $blockId) {
-			if (! $this->Frame->updateAll(
-					array('Frame.block_id' => null),
-					array('Frame.block_id' => (int)$blockId)
-			)) {
-				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-			}
-		}
-	}
+	//public function deleteBlock($key) {
+	//	//BlockBehaviorにするため、後で削除
+	//	$this->loadModels([
+	//		'Frame' => 'Frames.Frame',
+	//		'BlockRolePermission' => 'Blocks.BlockRolePermission',
+	//	]);
+	//
+	//	$conditions = array(
+	//		$this->alias . '.key' => $key
+	//	);
+	//
+	//	$blocks = $this->find('list', array(
+	//			'recursive' => -1,
+	//			'conditions' => $conditions,
+	//		)
+	//	);
+	//	if (! $this->deleteAll($conditions, false)) {
+	//		throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+	//	}
+	//
+	//	//BlockRolePermissionデータ削除
+	//	if (! $this->BlockRolePermission->deleteAll(array($this->BlockRolePermission->alias . '.block_key' => $key), false)) {
+	//		throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+	//	}
+	//
+	//	$blocks = array_keys($blocks);
+	//	foreach ($blocks as $blockId) {
+	//		if (! $this->Frame->updateAll(
+	//				array('Frame.block_id' => null),
+	//				array('Frame.block_id' => (int)$blockId)
+	//		)) {
+	//			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+	//		}
+	//	}
+	//}
 }

@@ -89,24 +89,7 @@ e.g.) ルーム管理者、またはそれに準ずるユーザ: ルーム管理
  *
  * @var array $records
  */
-	public $records = array(
-		'Block' => array(
-			array(
-				'id' => '1',
-				'language_id' => '2',
-				'room_id' => '1',
-				'plugin_key' => 'announcements',
-				'key' => 'block_1',
-			),
-			array(
-				'id' => '2',
-				'language_id' => '2',
-				'room_id' => '1',
-				'plugin_key' => 'menus',
-				'key' => 'block_2',
-			),
-		),
-	);
+	public $records = array();
 
 /**
  * Before migration callback
@@ -125,36 +108,6 @@ e.g.) ルーム管理者、またはそれに準ずるユーザ: ルーム管理
  * @return bool Should process continue
  */
 	public function after($direction) {
-		if ($direction === 'down') {
-			return true;
-		}
-
-		foreach ($this->records as $model => $records) {
-			if (!$this->updateRecords($model, $records)) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-/**
- * Update model records
- *
- * @param string $model model name to update
- * @param string $records records to be stored
- * @param string $scope ?
- * @return bool Should process continue
- */
-	public function updateRecords($model, $records, $scope = null) {
-		$Model = $this->generateModel($model);
-		foreach ($records as $record) {
-			$Model->create();
-			if (!$Model->save($record, false)) {
-				return false;
-			}
-		}
-
 		return true;
 	}
 }

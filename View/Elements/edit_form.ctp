@@ -21,11 +21,6 @@ if (! isset($options)) {
 if (isset($action)) {
 	$options['action'] = $action;
 }
-
-//後で削除する
-if (isset($controller)) {
-	$model = $controller;
-}
 ?>
 
 <?php echo $this->Form->create($model, Hash::merge(array('novalidate' => true), $options)); ?>
