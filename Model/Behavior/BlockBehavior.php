@@ -210,9 +210,9 @@ class BlockBehavior extends ModelBehavior {
  */
 	public function getBlockConditions(Model $model, $conditions = array()) {
 		$conditions = Hash::merge(array(
-			'Block.language_id' => CurrentUtility::read('Language.id'),
-			'Block.room_id' => CurrentUtility::read('Room.id'),
-			'Block.plugin_key ' => CurrentUtility::read('Plugin.key'),
+			'Block.language_id' => Current::read('Language.id'),
+			'Block.room_id' => Current::read('Room.id'),
+			'Block.plugin_key ' => Current::read('Plugin.key'),
 		), $conditions);
 
 		return $conditions;
