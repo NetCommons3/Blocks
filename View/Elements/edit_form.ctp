@@ -21,6 +21,9 @@ if (! isset($options)) {
 if (isset($action)) {
 	$options['action'] = $action;
 }
+if (! isset($cancelUrl)) {
+	$cancelUrl = null;
+}
 ?>
 
 <?php echo $this->Form->create($model, Hash::merge(array('novalidate' => true), $options)); ?>
@@ -30,9 +33,7 @@ if (isset($action)) {
 		</div>
 
 		<div class="panel-footer text-center">
-			<?php echo $this->NetCommonsForm->cancelButton(__d('net_commons', 'Cancel'), $cancelUrl); ?>
-
-			<?php echo $this->NetCommonsForm->saveButton(__d('net_commons', 'OK')); ?>
+			<?php echo $this->Button->cancelAndSave(__d('net_commons', 'Cancel'), __d('net_commons', 'OK'), $cancelUrl); ?>
 		</div>
 	</div>
 <?php echo $this->Form->end();
