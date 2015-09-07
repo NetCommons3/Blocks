@@ -35,6 +35,9 @@ class BlockBehavior extends ModelBehavior {
  */
 	public function setup(Model $model, $config = array()) {
 		$this->settings = Hash::merge($this->settings, $config);
+		if (! isset($this->settings['loadModels'])) {
+			$this->settings['loadModels'] = array();
+		}
 	}
 
 /**
@@ -180,26 +183,28 @@ class BlockBehavior extends ModelBehavior {
 	}
 
 /**
+ * 後で削除
+ *
  * Get Block data
  *
  * @param Model $model Model using this behavior
- * @param string $blockId blocks.id
+ * @param int $blockId blocks.id
  * @param int $roomId rooms.id
  * @return array Block data
  */
-	public function getBlock(Model $model, $blockId, $roomId) {
-		$model->Block = ClassRegistry::init('Blocks.Block');
-
-		$block = $model->Block->find('first', array(
-			'recursive' => -1,
-			'conditions' => array(
-				'Block.id' => $blockId,
-				'Block.room_id' => $roomId,
-			)
-		));
-
-		return $block;
-	}
+	//public function getBlock(Model $model, $blockId, $roomId) {
+	//	$model->Block = ClassRegistry::init('Blocks.Block');
+	//
+	//	$block = $model->Block->find('first', array(
+	//		'recursive' => -1,
+	//		'conditions' => array(
+	//			'Block.id' => $blockId,
+	//			'Block.room_id' => $roomId,
+	//		)
+	//	));
+	//
+	//	return $block;
+	//}
 
 /**
  * Get conditions

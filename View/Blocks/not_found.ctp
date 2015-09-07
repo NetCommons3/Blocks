@@ -1,6 +1,6 @@
 <?php
 /**
- * Blocks view for editor template
+ * Not found block template
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
@@ -8,7 +8,6 @@
  * @license http://www.netcommons.org/license.txt NetCommons License
  * @copyright Copyright 2014, NetCommons Project
  */
-
 ?>
 
 <div class="modal-body">
@@ -16,11 +15,7 @@
 
 	<div class="tab-content">
 		<div class="text-right">
-			<a class="btn btn-success" href="<?php echo $this->Html->url(
-					'/' . $this->request->params['plugin'] . '/' . $this->request->params['controller'] . '/add/' . Current::read('Frame.id')
-				); ?>">
-				<span class="glyphicon glyphicon-plus"> </span>
-			</a>
+			<?php echo $this->NetCommonsForm->addLink(); ?>
 		</div>
 
 		<div class="text-left">
