@@ -39,8 +39,7 @@ class BlockRolePermissionBehavior extends ModelBehavior {
 		));
 
 		foreach ($model->data[$model->BlockRolePermission->alias] as $permission) {
-			$model->BlockRolePermission->validateMany($permission);
-			if ($model->BlockRolePermission->validationErrors) {
+			if (! $model->BlockRolePermission->validateMany($permission)) {
 				$model->validationErrors = Hash::merge($model->validationErrors, $model->BlockRolePermission->validationErrors);
 				return false;
 			}

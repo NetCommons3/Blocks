@@ -28,7 +28,6 @@
 			);
 
 			echo $this->Form->radio('Block.public_type', $options, array(
-				'value' => isset($block['publicType']) ? $block['publicType'] : Block::TYPE_PRIVATE, //←暫定、request->dataを使うように修正する
 				'legend' => false,
 				'separator' => '<br />',
 			));

@@ -55,6 +55,15 @@ class BlockBehavior extends ModelBehavior {
 			return true;
 		}
 
+		if (isset($model->data['Block']['public_type'])) {
+			if ($model->data['Block']['public_type'] === Block::TYPE_LIMITED) {
+				//$data['Block']['from'] = implode('-', $data['Block']['from']);
+				//$data['Block']['to'] = implode('-', $data['Block']['to']);
+			} else {
+				unset($model->data['Block']['from'], $model->data['Block']['to']);
+			}
+		}
+
 		$model->loadModels(array(
 			'Block' => 'Blocks.Block',
 		));

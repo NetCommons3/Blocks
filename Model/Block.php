@@ -135,16 +135,16 @@ class Block extends BlocksAppModel {
 					//'on' => 'create', // Limit validation to 'create' or 'update' operations
 				),
 			),
-			'name' => array(
-				'notBlank' => array(
-					'rule' => array('notBlank'),
-					'message' => sprintf(__d('net_commons', 'Please input %s.'), __d('blocks', 'Block name')),
-					//'allowEmpty' => false,
-					//'required' => false,
-					//'last' => false, // Stop validation after this rule
-					//'on' => 'create', // Limit validation to 'create' or 'update' operations
-				),
-			),
+			//'name' => array(
+			//	'notBlank' => array(
+			//		'rule' => array('notBlank'),
+			//		'message' => sprintf(__d('net_commons', 'Please input %s.'), __d('blocks', 'Block name')),
+			//		//'allowEmpty' => false,
+			//		//'required' => false,
+			//		//'last' => false, // Stop validation after this rule
+			//		//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			//	),
+			//),
 		), $this->validate);
 
 		return parent::beforeValidate($options);

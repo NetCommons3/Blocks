@@ -15,7 +15,7 @@
 
 	<div class="tab-content">
 		<div class="text-right">
-			<?php echo $this->NetCommonsForm->addLink(); ?>
+			<?php echo $this->Button->addLink(); ?>
 		</div>
 
 		<div class="text-left">
