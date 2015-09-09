@@ -226,7 +226,23 @@ class BlockBehavior extends ModelBehavior {
 		$conditions = Hash::merge(array(
 			'Block.language_id' => Current::read('Language.id'),
 			'Block.room_id' => Current::read('Room.id'),
-			'Block.plugin_key ' => Current::read('Plugin.key'),
+			'Block.plugin_key' => Current::read('Plugin.key'),
+		), $conditions);
+
+		return $conditions;
+	}
+
+/**
+ * Get condition by Block.id
+ *
+ * @param Model $model Model using this behavior
+ * @param array $conditions Model::find conditions default value
+ * @return array Conditions data
+ */
+	public function getBlockConditionById(Model $model, $conditions = array()) {
+		$conditions = Hash::merge(array(
+			'Block.id' => Current::read('Block.id'),
+			'Block.room_id' => Current::read('Room.id'),
 		), $conditions);
 
 		return $conditions;
