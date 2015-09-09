@@ -76,8 +76,8 @@ class BlockRolePermission extends BlocksAppModel {
 				),
 			),
 			'block_key' => array(
-				'notEmpty' => array(
-					'rule' => array('notEmpty'),
+				'notBlank' => array(
+					'rule' => array('notBlank'),
 					'message' => __d('net_commons', 'Invalid request.'),
 					'allowEmpty' => false,
 					'required' => true,
@@ -86,8 +86,8 @@ class BlockRolePermission extends BlocksAppModel {
 				),
 			),
 			'permission' => array(
-				'notEmpty' => array(
-					'rule' => array('notEmpty'),
+				'notBlank' => array(
+					'rule' => array('notBlank'),
 					'message' => __d('net_commons', 'Invalid request.'),
 					'allowEmpty' => false,
 					'required' => true,
