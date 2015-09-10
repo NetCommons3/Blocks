@@ -192,30 +192,6 @@ class BlockBehavior extends ModelBehavior {
 	}
 
 /**
- * 後で削除
- *
- * Get Block data
- *
- * @param Model $model Model using this behavior
- * @param int $blockId blocks.id
- * @param int $roomId rooms.id
- * @return array Block data
- */
-	//public function getBlock(Model $model, $blockId, $roomId) {
-	//	$model->Block = ClassRegistry::init('Blocks.Block');
-	//
-	//	$block = $model->Block->find('first', array(
-	//		'recursive' => -1,
-	//		'conditions' => array(
-	//			'Block.id' => $blockId,
-	//			'Block.room_id' => $roomId,
-	//		)
-	//	));
-	//
-	//	return $block;
-	//}
-
-/**
  * Get conditions
  *
  * @param Model $model Model using this behavior

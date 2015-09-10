@@ -109,19 +109,4 @@ class BlockRolePermission extends BlocksAppModel {
 
 		return parent::beforeValidate($options);
 	}
-
-/**
- * Validate BlockRolePermissions
- *
- * @param array $data received post data
- * @return bool True on success, false on error
- */
-	public function validateBlockRolePermissions($data) {
-		//後で削除
-		//$this->validateMany($data);
-		//if ($this->validationErrors) {
-		//	return false;
-		//}
-		return true;
-	}
 }
