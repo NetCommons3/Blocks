@@ -61,7 +61,7 @@ class BlockRolePermissionFormHelper extends FormHelper {
 				'disabled' => (bool)$role['fixed']
 			), $attributes);
 			if (! $options['disabled']) {
-				$options['ng-click'] = 'clickRole($event, \'' . Inflector::variable($permission) . '\', \'' . Inflector::variable($roleKey) . '\')';
+				$options['ng-click'] = 'clickRole($event, \'' . $permission . '\', \'' . Inflector::variable($roleKey) . '\')';
 			}
 			$html .= $this->Form->checkbox($fieldName . '.' . $roleKey . '.value', $options);
 

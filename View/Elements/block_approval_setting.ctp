@@ -59,7 +59,7 @@ $this->request->data[$model]['approval_type'] = $approvalType;
 		</div>
 
 		<div class="panel-body">
-			<div>
+			<div class="form-group">
 				<?php if (isset($useWorkflow)) : ?>
 					<?php echo $this->Form->hidden($model . '.' . $useWorkflow, array('ng-value' => 'useWorkflow')); ?>
 					<?php $this->Form->unlockField($model . '.' . $useWorkflow); ?>
@@ -78,7 +78,7 @@ $this->request->data[$model]['approval_type'] = $approvalType;
 			</div>
 
 			<?php foreach ($settingPermissions as $permission => $label) : ?>
-				<div>
+				<div class="form-group">
 					<?php echo $this->Form->label('BlockRolePermission.' . $permission, h($label)); ?>
 					<?php echo $this->BlockRolePermissionForm->checkboxBlockRolePermission('BlockRolePermission.' . $permission); ?>
 				</div>
