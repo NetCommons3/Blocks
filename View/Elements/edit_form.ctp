@@ -1,7 +1,7 @@
 <?php
 /**
  * Element of block edit form
- *   - $controller: Controller for edit request.
+ *   - $model: Model for edit request.
  *   - $action: Action for delete request.
  *   - $callback: Callback element for parameters and messages.
  *   - $callbackOptions: Callback options for element.
@@ -18,24 +18,22 @@
 if (! isset($options)) {
 	$options = array();
 }
+if (isset($action)) {
+	$options['action'] = $action;
+}
+if (! isset($cancelUrl)) {
+	$cancelUrl = null;
+}
 ?>
 
-<?php echo $this->Form->create($controller, Hash::merge(array('novalidate' => true, 'action' => $action), $options)); ?>
+<?php echo $this->Form->create($model, Hash::merge(array('novalidate' => true), $options)); ?>
 	<div class="panel panel-default">
 		<div class="panel-body">
 			<?php echo $this->element($callback, (isset($callbackOptions) ? $callbackOptions : array())); ?>
 		</div>
 
 		<div class="panel-footer text-center">
-			<button type="button" class="btn btn-default btn-workflow" onclick="location.href = '<?php echo $cancelUrl; ?>'">
-				<span class="glyphicon glyphicon-remove"></span>
-				<?php echo __d('net_commons', 'Cancel'); ?>
-			</button>
-
-			<?php echo $this->Form->button(__d('net_commons', 'OK'), array(
-					'class' => 'btn btn-primary btn-workflow',
-					'name' => 'save',
-				)); ?>
+			<?php echo $this->Button->cancelAndSave(__d('net_commons', 'Cancel'), __d('net_commons', 'OK'), $cancelUrl); ?>
 		</div>
 	</div>
 <?php echo $this->Form->end();

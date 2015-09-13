@@ -76,8 +76,8 @@ class BlockRolePermission extends BlocksAppModel {
 				),
 			),
 			'block_key' => array(
-				'notEmpty' => array(
-					'rule' => array('notEmpty'),
+				'notBlank' => array(
+					'rule' => array('notBlank'),
 					'message' => __d('net_commons', 'Invalid request.'),
 					'allowEmpty' => false,
 					'required' => true,
@@ -86,8 +86,8 @@ class BlockRolePermission extends BlocksAppModel {
 				),
 			),
 			'permission' => array(
-				'notEmpty' => array(
-					'rule' => array('notEmpty'),
+				'notBlank' => array(
+					'rule' => array('notBlank'),
 					'message' => __d('net_commons', 'Invalid request.'),
 					'allowEmpty' => false,
 					'required' => true,
@@ -108,19 +108,5 @@ class BlockRolePermission extends BlocksAppModel {
 		));
 
 		return parent::beforeValidate($options);
-	}
-
-/**
- * Validate BlockRolePermissions
- *
- * @param array $data received post data
- * @return bool True on success, false on error
- */
-	public function validateBlockRolePermissions($data) {
-		$this->validateMany($data);
-		if ($this->validationErrors) {
-			return false;
-		}
-		return true;
 	}
 }

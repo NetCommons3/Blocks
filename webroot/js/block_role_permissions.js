@@ -52,8 +52,18 @@ NetCommonsApp.controller('BlockRolePermissions', function($scope) {
    *
    * @return {void}
    */
-  $scope.initialize = function(data) {
+  $scope.initializeRoles = function(data) {
     $scope.roles = data.roles;
+  };
+
+  /**
+   * initialize
+   *
+   * @return {void}
+   */
+  $scope.initializeApproval = function(data) {
+    $scope.initializeRoles(data);
+
     if (! angular.isUndefined(data.useWorkflow)) {
       $scope.useWorkflow = data.useWorkflow;
     }
