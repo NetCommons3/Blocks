@@ -11,7 +11,7 @@
 ?>
 
 <div class="modal-body">
-	<?php echo $this->element('NetCommons.setting_tabs', $settingTabs); ?>
+	<?php echo $this->Block->mainTabs(BlockTabsComponent::MAIN_TAB_BLOCK_INDEX); ?>
 
 	<div class="tab-content">
 		<div class="text-right">
