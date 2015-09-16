@@ -25,7 +25,7 @@ if (isset($action)) {
 ?>
 
 <div class="block-danger-zone" ng-init="dangerZone=false;">
-	<?php echo $this->Form->create($model, Hash::merge(array('type' => 'delete'), $options)); ?>
+	<?php echo $this->NetCommonsForm->create($model, Hash::merge(array('type' => 'delete'), $options)); ?>
 		<accordion close-others="false">
 			<accordion-group is-open="dangerZone" class="panel-danger">
 				<accordion-heading class="clearfix">
