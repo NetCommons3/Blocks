@@ -38,9 +38,6 @@ e.g.) ルーム管理者、またはそれに準ずるユーザ: ルーム管理
 期間限定公開の場合、現在時刻がfrom-toカラムの範囲内の時に公開。'),
 		'from' => array('type' => 'datetime', 'null' => true, 'default' => null, 'comment' => 'Datetime display frame from.'),
 		'to' => array('type' => 'datetime', 'null' => true, 'default' => null, 'comment' => 'Datetime display frame to.'),
-		'translation_engine' => array('type' => 'string', 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'is_auto_translated' => array('type' => 'boolean', 'null' => true, 'default' => null),
-		'is_first_auto_translation' => array('type' => 'boolean', 'null' => true, 'default' => null),
 		'created_user' => array('type' => 'integer', 'null' => true, 'default' => null, 'unsigned' => false),
 		'created' => array('type' => 'datetime', 'null' => true, 'default' => null),
 		'modified_user' => array('type' => 'integer', 'null' => true, 'default' => null, 'unsigned' => false),
@@ -175,6 +172,170 @@ e.g.) ルーム管理者、またはそれに準ずるユーザ: ルーム管理
 			'to' => null,
 		),
 
+		////Faq plugin
+		//array(
+		//	'id' => '100',
+		//	'language_id' => '2',
+		//	'room_id' => '1',
+		//	'plugin_key' => 'faqs',
+		//	'key' => 'block_100',
+		//),
+		//array(
+		//	'id' => '101',
+		//	'language_id' => '2',
+		//	'room_id' => '1',
+		//	'plugin_key' => 'faqs',
+		//	'key' => 'block_101',
+		//),
+		//array(
+		//	'id' => '102',
+		//	'language_id' => '2',
+		//	'room_id' => '2',
+		//	'plugin_key' => 'faqs',
+		//	'key' => 'block_102',
+		//),
+		//
+		////Edumap plugin
+		//array(
+		//	'id' => '121',
+		//	'language_id' => '2',
+		//	'room_id' => '1',
+		//	'plugin_key' => 'edumap',
+		//	'key' => 'block_121',
+		//),
+		//array(
+		//	'id' => '122',
+		//	'language_id' => '2',
+		//	'room_id' => '1',
+		//	'plugin_key' => 'edumap',
+		//	'key' => 'block_122',
+		//),
+		//array(
+		//	'id' => '123',
+		//	'language_id' => '2',
+		//	'room_id' => '2',
+		//	'plugin_key' => 'edumap',
+		//	'key' => 'block_123',
+		//),
+		//
+		////Iframes plugin
+		//array(
+		//	'id' => '141',
+		//	'language_id' => '2',
+		//	'room_id' => '1',
+		//	'plugin_key' => 'iframes',
+		//	'key' => 'block_141',
+		//),
+		//array(
+		//	'id' => '142',
+		//	'language_id' => '2',
+		//	'room_id' => '1',
+		//	'plugin_key' => 'iframes',
+		//	'key' => 'block_142',
+		//),
+		//array(
+		//	'id' => '143',
+		//	'language_id' => '2',
+		//	'room_id' => '2',
+		//	'plugin_key' => 'iframes',
+		//	'key' => 'block_143',
+		//),
+		//
+		////AccessCounters plugin
+		//array(
+		//	'id' => '161',
+		//	'language_id' => '2',
+		//	'room_id' => '1',
+		//	'plugin_key' => 'access_counters',
+		//	'key' => 'block_161',
+		//),
+		//array(
+		//	'id' => '162',
+		//	'language_id' => '2',
+		//	'room_id' => '1',
+		//	'plugin_key' => 'access_counters',
+		//	'key' => 'block_162',
+		//),
+		//array(
+		//	'id' => '163',
+		//	'language_id' => '2',
+		//	'room_id' => '2',
+		//	'plugin_key' => 'access_counters',
+		//	'key' => 'block_163',
+		//),
+		//
+		////RssReaders plugin
+		//array(
+		//	'id' => '181',
+		//	'language_id' => '2',
+		//	'room_id' => '1',
+		//	'plugin_key' => 'rss_readers',
+		//	'key' => 'block_181',
+		//),
+		//array(
+		//	'id' => '182',
+		//	'language_id' => '2',
+		//	'room_id' => '1',
+		//	'plugin_key' => 'rss_readers',
+		//	'key' => 'block_182',
+		//),
+		//array(
+		//	'id' => '183',
+		//	'language_id' => '2',
+		//	'room_id' => '2',
+		//	'plugin_key' => 'rss_readers',
+		//	'key' => 'block_183',
+		//),
+		//array(
+		//	'id' => '186',
+		//	'language_id' => '2',
+		//	'room_id' => '1',
+		//	'plugin_key' => 'rss_readers',
+		//	'key' => 'block_186',
+		//),
+		//
+		////Topics plugin
+		//array(
+		//	'id' => '191',
+		//	'language_id' => '2',
+		//	'room_id' => '1',
+		//	'plugin_key' => 'topics',
+		//	'key' => 'block_191',
+		//),
+		//array(
+		//	'id' => '192',
+		//	'language_id' => '2',
+		//	'room_id' => '1',
+		//	'to' => '2000-01-01 00:00:00',
+		//	'plugin_key' => 'topics',
+		//	'key' => 'block_192',
+		//),
+		//array(
+		//	'id' => '193',
+		//	'language_id' => '2',
+		//	'room_id' => '2',
+		//	'plugin_key' => 'topics',
+		//	'key' => 'block_193',
+		//),
+		//array(
+		//	'id' => '196',
+		//	'language_id' => '2',
+		//	'room_id' => '1',
+		//	'plugin_key' => 'topics',
+		//	'key' => 'block_196',
+		//),
 	);
+
+/**
+ * Initialize the fixture.
+ *
+ * @return void
+ */
+	public function init() {
+		foreach ($this->records as $i => $recode) {
+			$this->records[$i]['plugin_key'] = NetCommonsCakeTestCase::$plugin;
+		}
+		parent::init();
+	}
 
 }
