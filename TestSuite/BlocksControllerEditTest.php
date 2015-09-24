@@ -20,20 +20,6 @@ App::uses('NetCommonsControllerTestCase', 'NetCommons.TestSuite');
 class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 
 /**
- * Plugin name
- *
- * @var string
- */
-	public $plugin = null;
-
-/**
- * Controller name
- *
- * @var string
- */
-	public $controller = null;
-
-/**
  * setUp method
  *
  * @return void
@@ -41,7 +27,7 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 	public function setUp() {
 		parent::setUp();
 
-		$this->generate(Inflector::camelize($this->plugin) . '.' . Inflector::camelize($this->controller), array(
+		$this->generate(Inflector::camelize($this->_plugin) . '.' . Inflector::camelize($this->_controller), array(
 			'components' => array(
 				'Auth' => array('user'),
 				'Session',

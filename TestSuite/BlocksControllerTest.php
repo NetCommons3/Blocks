@@ -20,20 +20,6 @@ App::uses('NetCommonsControllerTestCase', 'NetCommons.TestSuite');
 class BlocksControllerTest extends NetCommonsControllerTestCase {
 
 /**
- * Plugin name
- *
- * @var string
- */
-	public $pluginName = null;
-
-/**
- * Controller name
- *
- * @var string
- */
-	public $controllerName = null;
-
-/**
  * setUp method
  *
  * @return void
@@ -41,7 +27,7 @@ class BlocksControllerTest extends NetCommonsControllerTestCase {
 	public function setUp() {
 		parent::setUp();
 
-		$this->generate(Inflector::camelize($this->pluginName) . '.' . Inflector::camelize($this->controllerName), array(
+		$this->generate(Inflector::camelize($this->_plugin) . '.' . Inflector::camelize($this->_controller), array(
 			'components' => array(
 				'Auth' => array('user'),
 				'Session',
@@ -60,12 +46,10 @@ class BlocksControllerTest extends NetCommonsControllerTestCase {
 
 		//アクション実行
 		$frameId = '6';
-		$result = $this->testAction('/' . $this->pluginName . '/' . $this->controllerName . '/index/' . $frameId, array(
+		$result = $this->testAction('/' . $this->_plugin . '/' . $this->_controller . '/index/' . $frameId, array(
 			'method' => 'get',
 			'return' => 'view',
 		));
-
-var_dump(Current::$current);
 
 		AuthGeneralTestSuite::logout($this);
 	}
@@ -80,7 +64,7 @@ var_dump(Current::$current);
 
 		//アクション実行
 		$frameId = '6';
-		$result = $this->testAction('/' . $this->pluginName . '/' . $this->controllerName . '/index/' . $frameId, array(
+		$result = $this->testAction('/' . $this->_plugin . '/' . $this->_controller . '/index/' . $frameId, array(
 			'method' => 'get',
 			'return' => 'view',
 		));
