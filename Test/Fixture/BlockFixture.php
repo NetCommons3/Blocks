@@ -9,6 +9,8 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
+App::uses('NetCommonsCakeTestCase', 'NetCommons.TestSuite');
+
 /**
  * BlockFixture
  *
@@ -332,8 +334,11 @@ e.g.) ルーム管理者、またはそれに準ずるユーザ: ルーム管理
  * @return void
  */
 	public function init() {
-		foreach ($this->records as $i => $recode) {
-			$this->records[$i]['plugin_key'] = NetCommonsCakeTestCase::$plugin;
+		if (NetCommonsCakeTestCase::$plugin) {
+			$records = array_keys($this->records);
+			foreach ($records as $i) {
+				$this->records[$i]['plugin_key'] = NetCommonsCakeTestCase::$plugin;
+			}
 		}
 		parent::init();
 	}
