@@ -172,6 +172,9 @@ e.g.) ルーム管理者、またはそれに準ずるユーザ: ルーム管理
 			'to' => null,
 		),
 
+		//101-200まで、ページ遷移のためのテスト
+
+
 		////Faq plugin
 		//array(
 		//	'id' => '100',
@@ -332,6 +335,18 @@ e.g.) ルーム管理者、またはそれに準ずるユーザ: ルーム管理
  * @return void
  */
 	public function init() {
+		for ($i = 101; $i <= 200; $i++) {
+			$this->records[] = array(
+				'id' => $i,
+				'language_id' => '2',
+				'room_id' => '2',
+				'plugin_key' => 'blocks',
+				'key' => 'block_' . $i,
+				'name' => 'Block name ' . $i,
+				'public_type' => '1',
+			);
+		}
+
 		if (class_exists('NetCommonsCakeTestCase')) {
 			$records = array_keys($this->records);
 			foreach ($records as $i) {

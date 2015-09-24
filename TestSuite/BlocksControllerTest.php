@@ -64,7 +64,7 @@ class BlocksControllerTest extends NetCommonsControllerTestCase {
 
 		//アクション実行
 		$frameId = '6';
-		$result = $this->testAction('/' . $this->_plugin . '/' . $this->_controller . '/index/' . $frameId, array(
+		$this->testAction('/' . $this->_plugin . '/' . $this->_controller . '/index/' . $frameId, array(
 			'method' => 'get',
 			'return' => 'view',
 		));
