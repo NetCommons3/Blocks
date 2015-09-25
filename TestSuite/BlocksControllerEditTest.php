@@ -20,6 +20,13 @@ App::uses('NetCommonsControllerTestCase', 'NetCommons.TestSuite');
 class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 
 /**
+ * Post data
+ *
+ * @var array
+ */
+	public $data = null;
+
+/**
  * setUp method
  *
  * @return void
@@ -92,6 +99,7 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 			'return' => 'view',
 		));
 
+		//評価
 		$this->assertRegExp('/<form.*?action=".*?' . preg_quote($url, '/') . '.*?">/', $result);
 		$this->assertRegExp('/<input.*?' . preg_quote('data[Frame][id]', '/') . '.*?value="' . $frameId . '".*?>/', $result);
 		$this->assertRegExp('/<input.*?' . preg_quote('data[Block][id]', '/') . '.*?>/', $result);
@@ -121,17 +129,21 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 	public function testAddPost() {
 		AuthGeneralTestSuite::login($this);
 
-//		$frameId = '6';
-//		$url = NetCommonsUrl::actionUrl(array(
-//			'plugin' => $this->_plugin,
-//			'controller' => $this->_controller,
-//			'action' => 'add',
-//			'frame_id' => $frameId
-//		));
-//		$result = $this->testAction($url, array(
-//			'method' => 'post',
-//			'return' => 'view',
-//		));
+		$frameId = '6';
+		$url = NetCommonsUrl::actionUrl(array(
+			'plugin' => $this->_plugin,
+			'controller' => $this->_controller,
+			'action' => 'add',
+			'frame_id' => $frameId
+		));
+		$this->testAction($url, array(
+			'method' => 'post',
+			'data' => $this->data,
+			'return' => 'view'
+		));
+
+		//評価
+		$this->assertTextEquals('edit', $this->controller->view);
 
 		AuthGeneralTestSuite::logout($this);
 	}
@@ -154,7 +166,7 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 			'frame_id' => $frameId,
 			'block_id' => $blockId
 		));
-		$result = $this->testAction($url, array(
+		$this->testAction($url, array(
 			'method' => 'get',
 			'return' => 'view',
 		));
@@ -197,6 +209,7 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 			'return' => 'view',
 		));
 
+		//評価
 		$this->assertRegExp('/<form.*?action=".*?' . preg_quote($url, '/') . '.*?">/', $result);
 		$this->assertRegExp('/<input.*?' . preg_quote('data[Frame][id]', '/') . '.*?value="' . $frameId . '".*?>/', $result);
 		$this->assertRegExp('/<input.*?' . preg_quote('data[Block][id]', '/') . '.*?value="' . $blockId . '".*?>/', $result);
@@ -214,20 +227,24 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 	public function testEditPut() {
 		AuthGeneralTestSuite::login($this);
 
-//		//アクション実行
-//		$frameId = '6';
-//		$blockId = '4';
-//		$url = NetCommonsUrl::actionUrl(array(
-//			'plugin' => $this->_plugin,
-//			'controller' => $this->_controller,
-//			'action' => 'edit',
-//			'frame_id' => $frameId,
-//			'block_id' => $blockId
-//		));
-//		$result = $this->testAction($url, array(
-//			'method' => 'put',
-//			'return' => 'view',
-//		));
+		//アクション実行
+		$frameId = '6';
+		$blockId = '4';
+		$url = NetCommonsUrl::actionUrl(array(
+			'plugin' => $this->_plugin,
+			'controller' => $this->_controller,
+			'action' => 'edit',
+			'frame_id' => $frameId,
+			'block_id' => $blockId
+		));
+		$result = $this->testAction($url, array(
+			'method' => 'put',
+			'data' => $this->data,
+			'return' => 'view',
+		));
+
+		//評価
+		$this->assertTextEquals('edit', $this->controller->view);
 
 		AuthGeneralTestSuite::logout($this);
 	}
@@ -303,21 +320,24 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 	public function testDeletePost() {
 		AuthGeneralTestSuite::login($this);
 
-//		//アクション実行
-//		$frameId = '6';
-//		$blockId = '4';
-//		$url = NetCommonsUrl::actionUrl(array(
-//			'plugin' => $this->_plugin,
-//			'controller' => $this->_controller,
-//			'action' => 'delete',
-//			'frame_id' => $frameId,
-//			'block_id' => $blockId
-//		));
-//		$result = $this->testAction($url, array(
-//			'method' => 'delete',
-//			'return' => 'view',
-//		));
+		//アクション実行
+		$frameId = '6';
+		$blockId = '4';
+		$url = NetCommonsUrl::actionUrl(array(
+			'plugin' => $this->_plugin,
+			'controller' => $this->_controller,
+			'action' => 'delete',
+			'frame_id' => $frameId,
+			'block_id' => $blockId
+		));
+		$this->testAction($url, array(
+			'method' => 'delete',
+			'data' => $this->data,
+			'return' => 'view',
+		));
 
+		//評価
+		$this->assertTextEquals('delete', $this->controller->view);
 
 		AuthGeneralTestSuite::logout($this);
 	}
