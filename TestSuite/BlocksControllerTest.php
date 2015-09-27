@@ -16,25 +16,16 @@ App::uses('NetCommonsControllerTestCase', 'NetCommons.TestSuite');
  *
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Blocks\TestSuite
+ * @codeCoverageIgnore
  */
 class BlocksControllerTest extends NetCommonsControllerTestCase {
 
 /**
- * setUp method
+ * Action name
  *
- * @return void
+ * @var string
  */
-	public function setUp() {
-		parent::setUp();
-
-		$this->generate(Inflector::camelize($this->_plugin) . '.' . Inflector::camelize($this->_controller), array(
-			'components' => array(
-				'Auth' => array('user'),
-				'Session',
-				'Security',
-			)
-		));
-	}
+	protected $_action = 'index';
 
 /**
  * index()のテスト
@@ -46,24 +37,15 @@ class BlocksControllerTest extends NetCommonsControllerTestCase {
 
 		//アクション実行
 		$frameId = '6';
-		$url = NetCommonsUrl::actionUrl(array(
-			'plugin' => $this->_plugin,
-			'controller' => $this->_controller,
-			'action' => 'index',
-			'frame_id' => $frameId
-		));
-		$result = $this->testAction($url, array(
-			'method' => 'get',
-			'return' => 'view',
-		));
+		$this->_testNcAction(
+			array('frame_id' => $frameId)
+		);
 
-		$editUrl = NetCommonsUrl::actionUrl(array(
-			'plugin' => $this->_plugin,
-			'controller' => $this->_controller,
-			'action' => 'edit',
-		));
-		$this->assertRegExp('/<a href=".*?' . preg_quote($editUrl, '/') . '.*?".*?>/', $result);
-		$this->assertRegExp('/<input.*?' . preg_quote('data[Frame][block_id]', '/') . '".*?>/', $result);
+		$editUrl = $this->_getActionUrl(array('action' => 'edit'));
+		$this->assertRegExp('/<a href=".*?' . preg_quote($editUrl, '/') . '.*?".*?>/', $this->contents);
+		$this->assertRegExp(
+			'/<input.*?name="' . preg_quote('data[Frame][block_id]', '/') . '".*?>/', $this->contents
+		);
 
 		AuthGeneralTestSuite::logout($this);
 	}
@@ -78,16 +60,9 @@ class BlocksControllerTest extends NetCommonsControllerTestCase {
 
 		//アクション実行
 		$frameId = '18';
-		$url = NetCommonsUrl::actionUrl(array(
-			'plugin' => $this->_plugin,
-			'controller' => $this->_controller,
-			'action' => 'index',
-			'frame_id' => $frameId
-		));
-		$result = $this->testAction($url, array(
-			'method' => 'get',
-			'return' => 'view',
-		));
+		$this->_testNcAction(
+			array('frame_id' => $frameId)
+		);
 
 		//評価
 		$this->assertTextEquals('Blocks.Blocks/not_found', $this->controller->view);
@@ -105,16 +80,9 @@ class BlocksControllerTest extends NetCommonsControllerTestCase {
 
 		//アクション実行
 		$frameId = '6';
-		$url = NetCommonsUrl::actionUrl(array(
-			'plugin' => $this->_plugin,
-			'controller' => $this->_controller,
-			'action' => 'index',
-			'frame_id' => $frameId
-		));
-		$this->testAction($url, array(
-			'method' => 'get',
-			'return' => 'view',
-		));
+		$this->_testNcAction(
+			array('frame_id' => $frameId)
+		);
 	}
 
 /**
@@ -140,22 +108,16 @@ class BlocksControllerTest extends NetCommonsControllerTestCase {
 
 		//アクション実行
 		$frameId = '16';
-		$url = NetCommonsUrl::actionUrl(array(
-			'plugin' => $this->_plugin,
-			'controller' => $this->_controller,
-			'action' => 'index',
-			'frame_id' => $frameId
-		));
-		$result = $this->testAction($url, array(
-			'method' => 'get',
-			'return' => 'view',
-		));
+		$page = '1';
+		$this->_testNcAction(
+			array('frame_id' => $frameId)
+		);
 
 		//評価
-		$this->assertRegExp('/' . preg_quote('<ul class="pagination">', '/') . '/', $result);
-		$this->assertNotRegExp('/' . preg_quote('<li><a', '/') . '.*?rel="first".*?' . preg_quote('</a></li>', '/') . '/', $result);
-		$this->assertRegExp('/' . preg_quote('<li class="active"><a>1</a></li>', '/') . '/', $result);
-		$this->assertRegExp('/' . preg_quote('<li><a', '/') . '.*?rel="last".*?' . preg_quote('</a></li>', '/') . '/', $result);
+		$this->assertRegExp('/' . preg_quote('<ul class="pagination">', '/') . '/', $this->contents);
+		$this->assertNotRegExp('/<li><a.*?rel="first".*?<\/a><\/li>/', $this->contents);
+		$this->assertRegExp('/<li class="active"><a>' . $page . '<\/a><\/li>/', $this->contents);
+		$this->assertRegExp('/<li><a.*?rel="last".*?<\/a><\/li>/', $this->contents);
 
 		AuthGeneralTestSuite::logout($this);
 	}
@@ -170,23 +132,16 @@ class BlocksControllerTest extends NetCommonsControllerTestCase {
 
 		//アクション実行
 		$frameId = '16';
-		$url = NetCommonsUrl::actionUrl(array(
-			'plugin' => $this->_plugin,
-			'controller' => $this->_controller,
-			'action' => 'index',
-			'frame_id' => $frameId,
-			'page:3'
-		));
-		$result = $this->testAction($url, array(
-			'method' => 'get',
-			'return' => 'view',
-		));
+		$page = '3';
+		$this->_testNcAction(
+			array('frame_id' => $frameId, 'page:' . $page)
+		);
 
 		//評価
-		$this->assertRegExp('/' . preg_quote('<ul class="pagination">', '/') . '/', $result);
-		$this->assertRegExp('/' . preg_quote('<li><a', '/') . '.*?rel="first".*?' . preg_quote('</a></li>', '/') . '/', $result);
-		$this->assertRegExp('/' . preg_quote('<li class="active"><a>3</a></li>', '/') . '/', $result);
-		$this->assertRegExp('/' . preg_quote('<li><a', '/') . '.*?rel="last".*?' . preg_quote('</a></li>', '/') . '/', $result);
+		$this->assertRegExp('/<ul class="pagination">/', $this->contents);
+		$this->assertRegExp('/<li><a.*?rel="first".*?<\/a><\/li>/', $this->contents);
+		$this->assertRegExp('/<li class="active"><a>' . $page . '<\/a><\/li>/', $this->contents);
+		$this->assertRegExp('/<li><a.*?rel="last".*?<\/a><\/li>/', $this->contents);
 
 		AuthGeneralTestSuite::logout($this);
 	}
@@ -201,23 +156,16 @@ class BlocksControllerTest extends NetCommonsControllerTestCase {
 
 		//アクション実行
 		$frameId = '16';
-		$url = NetCommonsUrl::actionUrl(array(
-			'plugin' => $this->_plugin,
-			'controller' => $this->_controller,
-			'action' => 'index',
-			'frame_id' => $frameId,
-			'page:5'
-		));
-		$result = $this->testAction($url, array(
-			'method' => 'get',
-			'return' => 'view',
-		));
+		$page = '5';
+		$this->_testNcAction(
+			array('frame_id' => $frameId, 'page:' . $page)
+		);
 
 		//評価
-		$this->assertRegExp('/' . preg_quote('<ul class="pagination">', '/') . '/', $result);
-		$this->assertRegExp('/' . preg_quote('<li><a', '/') . '.*?rel="first".*?' . preg_quote('</a></li>', '/') . '/', $result);
-		$this->assertRegExp('/' . preg_quote('<li class="active"><a>5</a></li>', '/') . '/', $result);
-		$this->assertNotRegExp('/' . preg_quote('<li><a', '/') . '.*?rel="last".*?' . preg_quote('</a></li>', '/') . '/', $result);
+		$this->assertRegExp('/<ul class="pagination">/', $this->contents);
+		$this->assertRegExp('/<li><a.*?rel="first".*?<\/a><\/li>/', $this->contents);
+		$this->assertRegExp('/<li class="active"><a>' . $page . '<\/a><\/li>/', $this->contents);
+		$this->assertNotRegExp('/<li><a.*?rel="last".*?<\/a><\/li>/', $this->contents);
 
 		AuthGeneralTestSuite::logout($this);
 	}

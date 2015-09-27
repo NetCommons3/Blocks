@@ -16,32 +16,10 @@ App::uses('NetCommonsControllerTestCase', 'NetCommons.TestSuite');
  *
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Blocks\TestSuite
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
+ * @codeCoverageIgnore
  */
 class BlocksControllerEditTest extends NetCommonsControllerTestCase {
-
-/**
- * Post data
- *
- * @var array
- */
-	public $data = null;
-
-/**
- * setUp method
- *
- * @return void
- */
-	public function setUp() {
-		parent::setUp();
-
-		$this->generate(Inflector::camelize($this->_plugin) . '.' . Inflector::camelize($this->_controller), array(
-			'components' => array(
-				'Auth' => array('user'),
-				'Session',
-				'Security',
-			)
-		));
-	}
 
 /**
  * add()のログインなしテスト
@@ -49,20 +27,16 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
  * @return void
  */
 	public function testAddWOLogin() {
-		$this->setExpectedException('ForbiddenException');
+		$frameId = '6';
 
 		//アクション実行
-		$frameId = '6';
-		$url = NetCommonsUrl::actionUrl(array(
-			'plugin' => $this->_plugin,
-			'controller' => $this->_controller,
-			'action' => 'add',
-			'frame_id' => $frameId
-		));
-		$this->testAction($url, array(
-			'method' => 'get',
-			'return' => 'view',
-		));
+		$this->setExpectedException('ForbiddenException');
+		$this->_testNcAction(
+			array(
+				'action' => 'add',
+				'frame_id' => $frameId,
+			)
+		);
 	}
 
 /**
@@ -81,6 +55,7 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 /**
  * add()のGETパラメータテスト
  *
+ * @param string $method Request method
  * @return void
  */
 	public function testAddGet($method = 'get') {
@@ -88,22 +63,27 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 
 		$frameId = '6';
 		$roomId = '1';
-		$url = NetCommonsUrl::actionUrl(array(
-			'plugin' => $this->_plugin,
-			'controller' => $this->_controller,
-			'action' => 'add',
-			'frame_id' => $frameId
-		));
-		$result = $this->testAction($url, array(
-			'method' => $method,
-			'return' => 'view',
-		));
+
+		//アクション実行
+		$url = $this->_getActionUrl(
+			array(
+				'action' => 'add',
+				'frame_id' => $frameId,
+			)
+		);
+		$this->_testNcAction($url, array('method' => $method));
 
 		//評価
-		$this->assertRegExp('/<form.*?action=".*?' . preg_quote($url, '/') . '.*?">/', $result);
-		$this->assertRegExp('/<input.*?' . preg_quote('data[Frame][id]', '/') . '.*?value="' . $frameId . '".*?>/', $result);
-		$this->assertRegExp('/<input.*?' . preg_quote('data[Block][id]', '/') . '.*?>/', $result);
-		$this->assertRegExp('/<input.*?' . preg_quote('data[Block][room_id]', '/') . '.*?value="' . $roomId . '".*?>/', $result);
+		$this->assertRegExp('/<form.*?action=".*?' . preg_quote($url, '/') . '.*?">/', $this->contents);
+		$this->assertRegExp(
+			'/<input.*?name="' . preg_quote('data[Frame][id]', '/') . '".*?value="' . $frameId . '".*?>/', $this->contents
+		);
+		$this->assertRegExp(
+			'/<input.*?name="' . preg_quote('data[Block][id]', '/') . '".*?>/', $this->contents
+		);
+		$this->assertRegExp(
+			'/<input.*?name="' . preg_quote('data[Block][room_id]', '/') . '".*?value="' . $roomId . '".*?>/', $this->contents
+		);
 
 		AuthGeneralTestSuite::logout($this);
 	}
@@ -129,18 +109,14 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 	public function testAddPost() {
 		AuthGeneralTestSuite::login($this);
 
+		//アクション実行
 		$frameId = '6';
-		$url = NetCommonsUrl::actionUrl(array(
-			'plugin' => $this->_plugin,
-			'controller' => $this->_controller,
-			'action' => 'add',
-			'frame_id' => $frameId
-		));
-		$this->testAction($url, array(
-			'method' => 'post',
-			'data' => $this->data,
-			'return' => 'view'
-		));
+		$this->_testNcAction(
+			array(
+				'action' => 'add',
+				'frame_id' => $frameId,
+			)
+		);
 
 		//評価
 		$this->assertTextEquals('edit', $this->controller->view);
@@ -154,22 +130,18 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
  * @return void
  */
 	public function testEditWOLogin() {
-		$this->setExpectedException('ForbiddenException');
-
-		//アクション実行
 		$frameId = '6';
 		$blockId = '4';
-		$url = NetCommonsUrl::actionUrl(array(
-			'plugin' => $this->_plugin,
-			'controller' => $this->_controller,
-			'action' => 'edit',
-			'frame_id' => $frameId,
-			'block_id' => $blockId
-		));
-		$this->testAction($url, array(
-			'method' => 'get',
-			'return' => 'view',
-		));
+
+		//アクション実行
+		$this->setExpectedException('ForbiddenException');
+		$this->_testNcAction(
+			array(
+				'action' => 'edit',
+				'frame_id' => $frameId,
+				'block_id' => $blockId
+			)
+		);
 	}
 
 /**
@@ -188,33 +160,38 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 /**
  * edit()のGETパラメータテスト
  *
+ * @param string $method Request method
  * @return void
  */
 	public function testEditGet($method = 'get') {
 		AuthGeneralTestSuite::login($this);
 
-		//アクション実行
 		$frameId = '6';
 		$blockId = '4';
 		$roomId = '1';
-		$url = NetCommonsUrl::actionUrl(array(
-			'plugin' => $this->_plugin,
-			'controller' => $this->_controller,
-			'action' => 'edit',
-			'frame_id' => $frameId,
-			'block_id' => $blockId
-		));
-		$result = $this->testAction($url, array(
-			'method' => $method,
-			'return' => 'view',
-		));
+
+		//アクション実行
+		$url = $this->_getActionUrl(
+			array(
+				'action' => 'edit',
+				'frame_id' => $frameId,
+				'block_id' => $blockId
+			)
+		);
+		$this->_testNcAction($url, array('method' => $method));
 
 		//評価
-		$this->assertRegExp('/<form.*?action=".*?' . preg_quote($url, '/') . '.*?">/', $result);
-		$this->assertRegExp('/<input.*?' . preg_quote('data[Frame][id]', '/') . '.*?value="' . $frameId . '".*?>/', $result);
-		$this->assertRegExp('/<input.*?' . preg_quote('data[Block][id]', '/') . '.*?value="' . $blockId . '".*?>/', $result);
-		$this->assertRegExp('/<input.*?' . preg_quote('data[Block][room_id]', '/') . '.*?value="' . $roomId . '".*?>/', $result);
-		$this->assertRegExp('/<button.*?type="submit".*?>/', $result);
+		$this->assertRegExp('/<form.*?action=".*?' . preg_quote($url, '/') . '.*?">/', $this->contents);
+		$this->assertRegExp(
+			'/<input.*?name="' . preg_quote('data[Frame][id]', '/') . '".*?value="' . $frameId . '".*?>/', $this->contents
+		);
+		$this->assertRegExp(
+			'/<input.*?name="' . preg_quote('data[Block][id]', '/') . '".*?value="' . $blockId . '".*?>/', $this->contents
+		);
+		$this->assertRegExp(
+			'/<input.*?name="' . preg_quote('data[Block][room_id]', '/') . '".*?value="' . $roomId . '".*?>/', $this->contents
+		);
+		$this->assertRegExp('/<button.*?type="submit".*?>/', $this->contents);
 
 		AuthGeneralTestSuite::logout($this);
 	}
@@ -227,21 +204,17 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 	public function testEditPut() {
 		AuthGeneralTestSuite::login($this);
 
-		//アクション実行
 		$frameId = '6';
 		$blockId = '4';
-		$url = NetCommonsUrl::actionUrl(array(
-			'plugin' => $this->_plugin,
-			'controller' => $this->_controller,
-			'action' => 'edit',
-			'frame_id' => $frameId,
-			'block_id' => $blockId
-		));
-		$result = $this->testAction($url, array(
-			'method' => 'put',
-			'data' => $this->data,
-			'return' => 'view',
-		));
+
+		//アクション実行
+		$this->_testNcAction(
+			array(
+				'action' => 'edit',
+				'frame_id' => $frameId,
+				'block_id' => $blockId
+			)
+		);
 
 		//評価
 		$this->assertTextEquals('edit', $this->controller->view);
@@ -267,23 +240,19 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
  *
  * @return void
  */
-	public function testDeleteWOLogin($method = 'delete', $exception = 'ForbiddenException') {
-		$this->setExpectedException($exception);
-
-		//アクション実行
+	public function testDeleteWOLogin() {
 		$frameId = '6';
 		$blockId = '4';
-		$url = NetCommonsUrl::actionUrl(array(
-			'plugin' => $this->_plugin,
-			'controller' => $this->_controller,
-			'action' => 'delete',
-			'frame_id' => $frameId,
-			'block_id' => $blockId
-		));
-		$this->testAction($url, array(
-			'method' => $method,
-			'return' => 'view',
-		));
+
+		//アクション実行
+		$this->setExpectedException('ForbiddenException');
+		$this->_testNcAction(
+			array(
+				'action' => 'delete',
+				'frame_id' => $frameId,
+				'block_id' => $blockId
+			)
+		);
 	}
 
 /**
@@ -307,7 +276,48 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 	public function testDeleteGet() {
 		AuthGeneralTestSuite::login($this);
 
-		$this->testDeleteWOLogin('get', 'BadRequestException');
+		$frameId = '6';
+		$blockId = '4';
+
+		//アクション実行
+		$this->setExpectedException('BadRequestException');
+		$this->_testNcAction(
+			array(
+				'action' => 'delete',
+				'frame_id' => $frameId,
+				'block_id' => $blockId
+			),
+			array('method' => 'get')
+		);
+
+		AuthGeneralTestSuite::logout($this);
+	}
+
+/**
+ * delete()のGET(json)パラメータテスト
+ *
+ * @return void
+ */
+	public function testDeleteGetJson() {
+		AuthGeneralTestSuite::login($this);
+
+		$frameId = '6';
+		$blockId = '4';
+
+		//アクション実行
+		$this->_testNcAction(
+			array(
+				'action' => 'delete',
+				'frame_id' => $frameId,
+				'block_id' => $blockId
+			),
+			array('type' => 'json', 'method' => 'get')
+		);
+
+		//評価
+		$result = json_decode($this->contents, true);
+		$this->assertArrayHasKey('code', $result);
+		$this->assertEquals(400, $result['code']);
 
 		AuthGeneralTestSuite::logout($this);
 	}
@@ -320,21 +330,17 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 	public function testDeletePost() {
 		AuthGeneralTestSuite::login($this);
 
-		//アクション実行
 		$frameId = '6';
 		$blockId = '4';
-		$url = NetCommonsUrl::actionUrl(array(
-			'plugin' => $this->_plugin,
-			'controller' => $this->_controller,
-			'action' => 'delete',
-			'frame_id' => $frameId,
-			'block_id' => $blockId
-		));
-		$this->testAction($url, array(
-			'method' => 'delete',
-			'data' => $this->data,
-			'return' => 'view',
-		));
+
+		//アクション実行
+		$this->_testNcAction(
+			array(
+				'action' => 'delete',
+				'frame_id' => $frameId,
+				'block_id' => $blockId
+			)
+		);
 
 		//評価
 		$this->assertTextEquals('delete', $this->controller->view);
