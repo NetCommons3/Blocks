@@ -19,7 +19,7 @@ if (! isset($options)) {
 	$options = array();
 }
 if (isset($action)) {
-	$options['action'] = $action;
+	$options['url'] = $action;
 }
 if (! isset($cancelUrl)) {
 	$cancelUrl = null;
@@ -36,4 +36,4 @@ if (! isset($cancelUrl)) {
 			<?php echo $this->Button->cancelAndSave(__d('net_commons', 'Cancel'), __d('net_commons', 'OK'), $cancelUrl); ?>
 		</div>
 	</div>
-<?php echo $this->Form->end();
+<?php echo $this->NetCommonsForm->end();

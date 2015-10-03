@@ -37,7 +37,7 @@ $initializeParams = NetCommonsAppController::camelizeKeyRecursive(array('roles' 
 		<div class="panel-body">
 			<?php foreach ($settingPermissions as $permission => $label) : ?>
 				<div class="form-group">
-					<?php echo $this->Form->label('BlockRolePermission.' . $permission, h($label)); ?>
+					<?php echo $this->NetCommonsForm->label('BlockRolePermission.' . $permission, h($label)); ?>
 					<?php echo $this->BlockRolePermissionForm->checkboxBlockRolePermission('BlockRolePermission.' . $permission); ?>
 				</div>
 			<?php endforeach; ?>
