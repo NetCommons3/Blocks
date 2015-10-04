@@ -193,10 +193,10 @@ e.g.) ルーム管理者、またはそれに準ずるユーザ: ルーム管理
 			);
 		}
 
-		if (class_exists('NetCommonsCakeTestCase') && NetCommonsCakeTestCase::$plugin) {
+		if (class_exists('NetCommonsTestSuite') && NetCommonsTestSuite::$plugin) {
 			$records = array_keys($this->records);
 			foreach ($records as $i) {
-				$this->records[$i]['plugin_key'] = NetCommonsCakeTestCase::$plugin;
+				$this->records[$i]['plugin_key'] = NetCommonsTestSuite::$plugin;
 			}
 		}
 		parent::init();
