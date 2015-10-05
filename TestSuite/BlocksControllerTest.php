@@ -33,7 +33,7 @@ class BlocksControllerTest extends NetCommonsControllerTestCase {
  * @return void
  */
 	public function testIndex() {
-		AuthGeneralTestSuite::login($this);
+		TestAuthGeneral::login($this);
 
 		//アクション実行
 		$frameId = '6';
@@ -47,7 +47,7 @@ class BlocksControllerTest extends NetCommonsControllerTestCase {
 			'/<input.*?name="' . preg_quote('data[Frame][block_id]', '/') . '".*?>/', $this->contents
 		);
 
-		AuthGeneralTestSuite::logout($this);
+		TestAuthGeneral::logout($this);
 	}
 
 /**
@@ -56,7 +56,7 @@ class BlocksControllerTest extends NetCommonsControllerTestCase {
  * @return void
  */
 	public function testIndexNoBlock() {
-		AuthGeneralTestSuite::login($this);
+		TestAuthGeneral::login($this);
 
 		//アクション実行
 		$frameId = '18';
@@ -67,7 +67,7 @@ class BlocksControllerTest extends NetCommonsControllerTestCase {
 		//評価
 		$this->assertTextEquals('Blocks.Blocks/not_found', $this->controller->view);
 
-		AuthGeneralTestSuite::logout($this);
+		TestAuthGeneral::logout($this);
 	}
 
 /**
@@ -91,11 +91,11 @@ class BlocksControllerTest extends NetCommonsControllerTestCase {
  * @return void
  */
 	public function testIndexWOBlockEditable() {
-		AuthGeneralTestSuite::login($this, Role::ROOM_ROLE_KEY_GENERAL_USER);
+		TestAuthGeneral::login($this, Role::ROOM_ROLE_KEY_GENERAL_USER);
 
 		$this->testIndexWOLogin();
 
-		AuthGeneralTestSuite::logout($this);
+		TestAuthGeneral::logout($this);
 	}
 
 /**
@@ -104,7 +104,7 @@ class BlocksControllerTest extends NetCommonsControllerTestCase {
  * @return void
  */
 	public function testIndexFirstPageOnMultiplePages() {
-		AuthGeneralTestSuite::login($this);
+		TestAuthGeneral::login($this);
 
 		//アクション実行
 		$frameId = '16';
@@ -119,7 +119,7 @@ class BlocksControllerTest extends NetCommonsControllerTestCase {
 		$this->assertRegExp('/<li class="active"><a>' . $page . '<\/a><\/li>/', $this->contents);
 		$this->assertRegExp('/<li><a.*?rel="last".*?<\/a><\/li>/', $this->contents);
 
-		AuthGeneralTestSuite::logout($this);
+		TestAuthGeneral::logout($this);
 	}
 
 /**
@@ -128,7 +128,7 @@ class BlocksControllerTest extends NetCommonsControllerTestCase {
  * @return void
  */
 	public function testIndexOnMultiplePages() {
-		AuthGeneralTestSuite::login($this);
+		TestAuthGeneral::login($this);
 
 		//アクション実行
 		$frameId = '16';
@@ -143,7 +143,7 @@ class BlocksControllerTest extends NetCommonsControllerTestCase {
 		$this->assertRegExp('/<li class="active"><a>' . $page . '<\/a><\/li>/', $this->contents);
 		$this->assertRegExp('/<li><a.*?rel="last".*?<\/a><\/li>/', $this->contents);
 
-		AuthGeneralTestSuite::logout($this);
+		TestAuthGeneral::logout($this);
 	}
 
 /**
@@ -152,7 +152,7 @@ class BlocksControllerTest extends NetCommonsControllerTestCase {
  * @return void
  */
 	public function testIndexLastPageOnMultiplePages() {
-		AuthGeneralTestSuite::login($this);
+		TestAuthGeneral::login($this);
 
 		//アクション実行
 		$frameId = '16';
@@ -167,7 +167,7 @@ class BlocksControllerTest extends NetCommonsControllerTestCase {
 		$this->assertRegExp('/<li class="active"><a>' . $page . '<\/a><\/li>/', $this->contents);
 		$this->assertNotRegExp('/<li><a.*?rel="last".*?<\/a><\/li>/', $this->contents);
 
-		AuthGeneralTestSuite::logout($this);
+		TestAuthGeneral::logout($this);
 	}
 
 }

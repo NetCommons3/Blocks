@@ -45,11 +45,11 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
  * @return void
  */
 	public function testAddWOBlockEditable() {
-		AuthGeneralTestSuite::login($this, Role::ROOM_ROLE_KEY_GENERAL_USER);
+		TestAuthGeneral::login($this, Role::ROOM_ROLE_KEY_GENERAL_USER);
 
 		$this->testAddWOLogin();
 
-		AuthGeneralTestSuite::logout($this);
+		TestAuthGeneral::logout($this);
 	}
 
 /**
@@ -59,7 +59,7 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
  * @return void
  */
 	public function testAddGet($method = 'get') {
-		AuthGeneralTestSuite::login($this);
+		TestAuthGeneral::login($this);
 
 		$frameId = '6';
 		$roomId = '1';
@@ -85,7 +85,7 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 			'/<input.*?name="' . preg_quote('data[Block][room_id]', '/') . '".*?value="' . $roomId . '".*?>/', $this->contents
 		);
 
-		AuthGeneralTestSuite::logout($this);
+		TestAuthGeneral::logout($this);
 	}
 
 /**
@@ -94,11 +94,11 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
  * @return void
  */
 	public function testAddPut() {
-		AuthGeneralTestSuite::login($this);
+		TestAuthGeneral::login($this);
 
 		$this->testAddGet('put');
 
-		AuthGeneralTestSuite::logout($this);
+		TestAuthGeneral::logout($this);
 	}
 
 /**
@@ -107,7 +107,7 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
  * @return void
  */
 	public function testAddPost() {
-		AuthGeneralTestSuite::login($this);
+		TestAuthGeneral::login($this);
 
 		//アクション実行
 		$frameId = '6';
@@ -121,7 +121,7 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 		//評価
 		$this->assertTextEquals('edit', $this->controller->view);
 
-		AuthGeneralTestSuite::logout($this);
+		TestAuthGeneral::logout($this);
 	}
 
 /**
@@ -150,11 +150,11 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
  * @return void
  */
 	public function testEditWOBlockEditable() {
-		AuthGeneralTestSuite::login($this, Role::ROOM_ROLE_KEY_GENERAL_USER);
+		TestAuthGeneral::login($this, Role::ROOM_ROLE_KEY_GENERAL_USER);
 
 		$this->testEditWOLogin();
 
-		AuthGeneralTestSuite::logout($this);
+		TestAuthGeneral::logout($this);
 	}
 
 /**
@@ -164,7 +164,7 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
  * @return void
  */
 	public function testEditGet($method = 'get') {
-		AuthGeneralTestSuite::login($this);
+		TestAuthGeneral::login($this);
 
 		$frameId = '6';
 		$blockId = '4';
@@ -193,7 +193,7 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 		);
 		$this->assertRegExp('/<button.*?type="submit".*?>/', $this->contents);
 
-		AuthGeneralTestSuite::logout($this);
+		TestAuthGeneral::logout($this);
 	}
 
 /**
@@ -202,7 +202,7 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
  * @return void
  */
 	public function testEditPut() {
-		AuthGeneralTestSuite::login($this);
+		TestAuthGeneral::login($this);
 
 		$frameId = '6';
 		$blockId = '4';
@@ -219,7 +219,7 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 		//評価
 		$this->assertTextEquals('edit', $this->controller->view);
 
-		AuthGeneralTestSuite::logout($this);
+		TestAuthGeneral::logout($this);
 	}
 
 /**
@@ -228,11 +228,11 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
  * @return void
  */
 	public function testEditPost() {
-		AuthGeneralTestSuite::login($this);
+		TestAuthGeneral::login($this);
 
 		$this->testEditGet('post');
 
-		AuthGeneralTestSuite::logout($this);
+		TestAuthGeneral::logout($this);
 	}
 
 /**
@@ -261,11 +261,11 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
  * @return void
  */
 	public function testDeleteWOBlockEditable() {
-		AuthGeneralTestSuite::login($this, Role::ROOM_ROLE_KEY_GENERAL_USER);
+		TestAuthGeneral::login($this, Role::ROOM_ROLE_KEY_GENERAL_USER);
 
 		$this->testDeleteWOLogin();
 
-		AuthGeneralTestSuite::logout($this);
+		TestAuthGeneral::logout($this);
 	}
 
 /**
@@ -274,7 +274,7 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
  * @return void
  */
 	public function testDeleteGet() {
-		AuthGeneralTestSuite::login($this);
+		TestAuthGeneral::login($this);
 
 		$frameId = '6';
 		$blockId = '4';
@@ -290,7 +290,7 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 			array('method' => 'get')
 		);
 
-		AuthGeneralTestSuite::logout($this);
+		TestAuthGeneral::logout($this);
 	}
 
 /**
@@ -299,7 +299,7 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
  * @return void
  */
 	public function testDeleteGetJson() {
-		AuthGeneralTestSuite::login($this);
+		TestAuthGeneral::login($this);
 
 		$frameId = '6';
 		$blockId = '4';
@@ -319,7 +319,7 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 		$this->assertArrayHasKey('code', $result);
 		$this->assertEquals(400, $result['code']);
 
-		AuthGeneralTestSuite::logout($this);
+		TestAuthGeneral::logout($this);
 	}
 
 /**
@@ -328,7 +328,7 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
  * @return void
  */
 	public function testDeletePost() {
-		AuthGeneralTestSuite::login($this);
+		TestAuthGeneral::login($this);
 
 		$frameId = '6';
 		$blockId = '4';
@@ -345,7 +345,7 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 		//評価
 		$this->assertTextEquals('delete', $this->controller->view);
 
-		AuthGeneralTestSuite::logout($this);
+		TestAuthGeneral::logout($this);
 	}
 
 }
