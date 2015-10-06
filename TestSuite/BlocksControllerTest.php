@@ -46,7 +46,7 @@ class BlocksControllerTest extends NetCommonsControllerTestCase {
  *
  * @return array
  */
-	public function dataProviderByRoleAccess() {
+	public function dataProviderRoleAccess() {
 		//$role, $isException
 		$data = array(
 			array(Role::ROOM_ROLE_KEY_ROOM_ADMINISTRATOR, false),
@@ -64,7 +64,7 @@ class BlocksControllerTest extends NetCommonsControllerTestCase {
  *
  * @return array
  */
-	public function dataProviderByPaginator() {
+	public function dataProviderPaginator() {
 		//$page, $isFirst, $isLast
 		$data = array(
 			array(1, true, false),
@@ -100,7 +100,9 @@ class BlocksControllerTest extends NetCommonsControllerTestCase {
 			'action' => 'add',
 			'frame_id' => $frameId
 		));
-		$this->assertRegExp('/<a href=".*?' . preg_quote($expect, '/') . '.*?".*?>/', $this->contents);
+		$this->assertRegExp(
+			'/<a href=".*?' . preg_quote($expect, '/') . '.*?".*?>/', $this->contents
+		);
 
 		//--編集ボタンチェック
 		$blockId = '2';
@@ -111,12 +113,12 @@ class BlocksControllerTest extends NetCommonsControllerTestCase {
 			'frame_id' => $frameId,
 			'block_id' => $blockId
 		));
-		$this->assertRegExp('/<a href=".*?' . preg_quote($expect, '/') . '.*?".*?>/', $this->contents);
+		$this->assertRegExp(
+			'/<a href=".*?' . preg_quote($expect, '/') . '.*?".*?>/', $this->contents
+		);
 
 		//--カレントブロックラジオボタン
-		$this->assertRegExp(
-			'/<input.*?name="' . preg_quote('data[Frame][block_id]', '/') . '".*?>/', $this->contents
-		);
+		$this->assertInput('input', 'data[Frame][block_id]', null, $this->contents);
 
 		TestAuthGeneral::logout($this);
 	}
@@ -140,7 +142,7 @@ class BlocksControllerTest extends NetCommonsControllerTestCase {
 		$this->testAction($url, array('method' => 'get', 'return' => 'view'));
 
 		//チェック
-		$this->assertTextEquals('Blocks.Blocks/not_found', $this->controller->view);
+		$this->assertTextEquals($this->controller->view, 'Blocks.Blocks/not_found');
 
 		TestAuthGeneral::logout($this);
 	}
@@ -150,7 +152,7 @@ class BlocksControllerTest extends NetCommonsControllerTestCase {
  *
  * @param string $role ロール名
  * @param bool $isException Exceptionの有無
- * @dataProvider dataProviderByRoleAccess
+ * @dataProvider dataProviderRoleAccess
  * @return void
  */
 	public function testAccessPermission($role, $isException) {
@@ -181,7 +183,7 @@ class BlocksControllerTest extends NetCommonsControllerTestCase {
  * @param int $page ページ番号
  * @param bool $isFirst 最初のページかどうか
  * @param bool $isLast 最後のページかどうか
- * @dataProvider dataProviderByPaginator
+ * @dataProvider dataProviderPaginator
  * @return void
  */
 	public function testIndexPaginator($page, $isFirst, $isLast) {
@@ -202,7 +204,9 @@ class BlocksControllerTest extends NetCommonsControllerTestCase {
 		$this->testAction($url, array('method' => 'get', 'return' => 'view'));
 
 		//チェック
-		$this->assertRegExp('/' . preg_quote('<ul class="pagination">', '/') . '/', $this->contents);
+		$this->assertRegExp(
+			'/' . preg_quote('<ul class="pagination">', '/') . '/', $this->contents
+		);
 		if ($isFirst) {
 			$this->assertNotRegExp('/<li><a.*?rel="first".*?<\/a><\/li>/', $this->contents);
 		} else {

@@ -47,7 +47,7 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
  *
  * @return array
  */
-	public function dataProviderByRoleAccess() {
+	public function dataProviderRoleAccess() {
 		//$action, $method, $expect, $role, $exception, $data
 		$data = array(
 			//addアクション
@@ -76,12 +76,15 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 /**
  * アクセス許可テスト
  *
+ * @param string $action アクション名
+ * @param string $method リクエストメソッド（get or post or put）
+ * @param string $expect 期待するviewファイル
  * @param string $role ロール名
  * @param bool $exception Exceptionの有無
- * @dataProvider dataProviderByRoleAccess
+ * @dataProvider dataProviderRoleAccess
  * @return void
  */
-	public function testAccessPermission($action, $method, $expect, $role, $exception) {
+	public function testAccessPermission($action, $method, $expected, $role, $exception) {
 		if ($exception) {
 			$this->setExpectedException($exception);
 		}
@@ -110,7 +113,12 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 		$this->testAction(NetCommonsUrl::actionUrl($url), $params);
 
 		//チェック
-		$this->assertTextEquals($expect, $this->controller->view);
+		$this->assertTextEquals($this->controller->view, $expected);
+
+		//ログアウト
+		if (isset($role)) {
+			TestAuthGeneral::logout($this);
+		}
 	}
 
 /**
@@ -126,7 +134,7 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 		$blockId = '4';
 
 		//アクション実行
-			$url = NetCommonsUrl::actionUrl(array(
+		$url = NetCommonsUrl::actionUrl(array(
 			'plugin' => $this->plugin,
 			'controller' => $this->_controller,
 			'action' => 'delete',
@@ -155,8 +163,9 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
  * @param string $method リクエストメソッド（get or post or put）
  * @param array $data 登録データ
  * @param bool $validationError validationErrorの有無
- * @dataProvider dataProviderByAdd
+ * @dataProvider dataProviderAdd
  * @return void
+ * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
  */
 	public function testAdd($method, $data = null, $validationError = false) {
 		//ログイン
@@ -164,6 +173,10 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 
 		$frameId = '6';
 		$roomId = '1';
+		if ($validationError) {
+			$data = Hash::remove($data, $validationError['field']);
+			$data = Hash::insert($data, $validationError['field'], $validationError['value']);
+		}
 
 		//アクション実行
 		$url = NetCommonsUrl::actionUrl(array(
@@ -182,23 +195,29 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 		//チェック
 		if ($method === 'post' && ! $validationError) {
 			$header = $this->controller->response->header();
-			$this->assertNotEmpty($header['Location']);
+			$asserts = array(
+				array('method' => 'assertNotEmpty', 'value' => $header['Location'])
+			);
 		} else {
-			$this->assertRegExp('/<form.*?action=".*?' . preg_quote($url, '/') . '.*?">/', $this->contents);
-			$this->assertRegExp(
-				'/<input.*?name="' . preg_quote('data[Frame][id]', '/') . '".*?value="' . $frameId . '".*?>/', $this->contents
-			);
-			$this->assertRegExp(
-				'/<input.*?name="' . preg_quote('data[Block][id]', '/') . '".*?>/', $this->contents
-			);
-			$this->assertRegExp(
-				'/<input.*?name="' . preg_quote('data[Block][room_id]', '/') . '".*?value="' . $roomId . '".*?>/', $this->contents
+			$asserts = array(
+				array('method' => 'assertInput', 'type' => 'form', 'name' => null, 'value' => $url),
+				array('method' => 'assertInput', 'type' => 'input', 'name' => 'data[Frame][id]', 'value' => $frameId),
+				array('method' => 'assertInput', 'type' => 'input', 'name' => 'data[Block][id]', 'value' => null),
+				array('method' => 'assertInput', 'type' => 'input', 'name' => 'data[Block][room_id]', 'value' => $roomId),
 			);
 			//バリデーションエラー
 			if ($validationError) {
-				$this->assertNotEmpty($this->controller->validationErrors);
+				array_push($asserts, array(
+					'method' => 'assertNotEmpty', 'value' => $this->controller->validationErrors
+				));
+				array_push($asserts, array(
+					'method' => 'assertTextContains', 'expected' => $validationError['message']
+				));
 			}
 		}
+
+		//チェック
+		$this->asserts($asserts,  $this->contents);
 
 		//ログアウト
 		TestAuthGeneral::logout($this);
@@ -210,7 +229,9 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
  * @param string $method リクエストメソッド（get or post or put）
  * @param array $data 登録データ
  * @param bool $validationError validationErrorの有無
- * @dataProvider dataProviderByEdit
+ * @dataProvider dataProviderEdit
+ * @return void
+ * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
  */
 	public function testEdit($method, $data = null, $validationError = false) {
 		//ログイン
@@ -219,6 +240,10 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 		$frameId = '6';
 		$blockId = '4';
 		$roomId = '1';
+		if ($validationError) {
+			$data = Hash::remove($data, $validationError['field']);
+			$data = Hash::insert($data, $validationError['field'], $validationError['value']);
+		}
 
 		//アクション実行
 		$url = NetCommonsUrl::actionUrl(array(
@@ -238,20 +263,10 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 		//チェック
 		if ($method === 'put' && ! $validationError) {
 			$header = $this->controller->response->header();
-			$this->assertNotEmpty($header['Location']);
+			$asserts = array(
+				array('method' => 'assertNotEmpty', 'value' => $header['Location'])
+			);
 		} else {
-			$this->assertRegExp('/<form.*?action=".*?' . preg_quote($url, '/') . '.*?">/', $this->contents);
-			$this->assertRegExp(
-				'/<input.*?name="' . preg_quote('data[Frame][id]', '/') . '".*?value="' . $frameId . '".*?>/', $this->contents
-			);
-			$this->assertRegExp(
-				'/<input.*?name="' . preg_quote('data[Block][id]', '/') . '".*?value="' . $blockId . '".*?>/', $this->contents
-			);
-			$this->assertRegExp(
-				'/<input.*?name="' . preg_quote('data[Block][room_id]', '/') . '".*?value="' . $roomId . '".*?>/', $this->contents
-			);
-			$this->assertRegExp('/<button.*?name="save.*?type="submit".*?>/', $this->contents);
-
 			//削除フォームの確認
 			$deleteUrl = NetCommonsUrl::actionUrl(array(
 				'plugin' => $this->plugin,
@@ -260,14 +275,29 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 				'frame_id' => $frameId,
 				'block_id' => $blockId
 			));
-			$this->assertRegExp('/<form.*?action=".*?' . preg_quote($deleteUrl, '/') . '.*?">/', $this->contents);
-			$this->assertRegExp('/<button.*?name="delete".*?>/', $this->contents);
+
+			$asserts = array(
+				array('method' => 'assertInput', 'type' => 'form', 'name' => null, 'value' => $url),
+				array('method' => 'assertInput', 'type' => 'input', 'name' => 'data[Frame][id]', 'value' => $frameId),
+				array('method' => 'assertInput', 'type' => 'input', 'name' => 'data[Block][id]', 'value' => $blockId),
+				array('method' => 'assertInput', 'type' => 'input', 'name' => 'data[Block][room_id]', 'value' => $roomId),
+				array('method' => 'assertInput', 'type' => 'form', 'name' => null, 'value' => $deleteUrl),
+				array('method' => 'assertInput', 'type' => 'button', 'name' => 'delete', 'value' => null),
+			);
 
 			//バリデーションエラー
 			if ($validationError) {
-				$this->assertNotEmpty($this->controller->validationErrors);
+				array_push($asserts, array(
+					'method' => 'assertNotEmpty', 'value' => $this->controller->validationErrors
+				));
+				array_push($asserts, array(
+					'method' => 'assertTextContains', 'expected' => $validationError['message']
+				));
 			}
 		}
+
+		//チェック
+		$this->asserts($asserts,  $this->contents);
 
 		//ログアウト
 		TestAuthGeneral::logout($this);
@@ -277,7 +307,7 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
  * delete()のテスト
  *
  * @param array $data 登録データ
- * @dataProvider dataProviderByDelete
+ * @dataProvider dataProviderDelete
  * @return void
  */
 	public function testDelete($data) {
