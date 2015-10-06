@@ -44,6 +44,10 @@ class BlocksControllerTest extends NetCommonsControllerTestCase {
 /**
  * ロールチェックDataProvider
  *
+ * ### 戻り値
+ *  - role: ロール
+ *  - isException: Exceptionの有無
+ *
  * @return array
  */
 	public function dataProviderRoleAccess() {
@@ -61,6 +65,11 @@ class BlocksControllerTest extends NetCommonsControllerTestCase {
 
 /**
  * ページネーションDataProvider
+ *
+ * ### 戻り値
+ *  - page: ページ番号
+ *  - isFirst: 最初のページかどうか
+ *  - isLast: 最後のページかどうか
  *
  * @return array
  */

@@ -45,10 +45,16 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 /**
  * ロールチェックdataProvider
  *
+ * ### 戻り値
+ *  - action: アクション名
+ *  - method: リクエストメソッド（get or post or put）
+ *  - expected: 期待するviewファイル
+ *  - role: ロール名
+ *  - exception: Exception
+ *
  * @return array
  */
 	public function dataProviderRoleAccess() {
-		//$action, $method, $expect, $role, $exception, $data
 		$data = array(
 			//addアクション
 			array('add', 'get', 'edit', Role::ROOM_ROLE_KEY_CHIEF_EDITOR, false),
@@ -162,7 +168,7 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
  *
  * @param string $method リクエストメソッド（get or post or put）
  * @param array $data 登録データ
- * @param bool $validationError validationErrorの有無
+ * @param bool $validationError バリデーションエラー
  * @dataProvider dataProviderAdd
  * @return void
  * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
@@ -228,7 +234,7 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
  *
  * @param string $method リクエストメソッド（get or post or put）
  * @param array $data 登録データ
- * @param bool $validationError validationErrorの有無
+ * @param bool $validationError バリデーションエラー
  * @dataProvider dataProviderEdit
  * @return void
  * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
@@ -306,7 +312,7 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 /**
  * delete()のテスト
  *
- * @param array $data 登録データ
+ * @param array $data 削除データ
  * @dataProvider dataProviderDelete
  * @return void
  */
