@@ -78,9 +78,9 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
  *
  * @param string $action アクション名
  * @param string $method リクエストメソッド（get or post or put）
- * @param string $expect 期待するviewファイル
+ * @param string $expected 期待するviewファイル
  * @param string $role ロール名
- * @param bool $exception Exceptionの有無
+ * @param string $exception Exception
  * @dataProvider dataProviderRoleAccess
  * @return void
  */
@@ -217,7 +217,7 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 		}
 
 		//チェック
-		$this->asserts($asserts,  $this->contents);
+		$this->asserts($asserts, $this->contents);
 
 		//ログアウト
 		TestAuthGeneral::logout($this);
@@ -297,7 +297,7 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 		}
 
 		//チェック
-		$this->asserts($asserts,  $this->contents);
+		$this->asserts($asserts, $this->contents);
 
 		//ログアウト
 		TestAuthGeneral::logout($this);
