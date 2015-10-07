@@ -10,6 +10,7 @@
  */
 
 App::uses('NetCommonsControllerTestCase', 'NetCommons.TestSuite');
+App::uses('WorkflowComponent', 'Workflow.Controller/Component');
 
 /**
  * BlocksControllerTest

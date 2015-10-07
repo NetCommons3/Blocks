@@ -10,6 +10,7 @@
  */
 
 App::uses('NetCommonsControllerTestCase', 'NetCommons.TestSuite');
+App::uses('WorkflowComponent', 'Workflow.Controller/Component');
 
 /**
  * BlocksControllerTest
@@ -89,46 +90,40 @@ class BlocksControllerTest extends NetCommonsControllerTestCase {
  * @return void
  */
 	public function testIndex() {
+		//ログイン
 		TestAuthGeneral::login($this);
 
-		//アクション実行
+		//テスト実施
 		$frameId = '6';
-		$url = NetCommonsUrl::actionUrl(array(
+		$url = array(
 			'plugin' => $this->plugin,
 			'controller' => $this->_controller,
 			'action' => 'index',
 			'frame_id' => $frameId
-		));
-		$this->testAction($url, array('method' => 'get', 'return' => 'view'));
+		);
+		$result = $this->_testNcAction($url, array('method' => 'get'));
 
 		//チェック
 		//--追加ボタンチェック
-		$expect = NetCommonsUrl::actionUrl(array(
-			'plugin' => $this->plugin,
-			'controller' => $this->_controller,
-			'action' => 'add',
-			'frame_id' => $frameId
-		));
+		$addLink = $url;
+		$addLink['action'] = 'add';
 		$this->assertRegExp(
-			'/<a href=".*?' . preg_quote($expect, '/') . '.*?".*?>/', $this->contents
+			'/<a href=".*?' . preg_quote(NetCommonsUrl::actionUrl($addLink), '/') . '.*?".*?>/', $result
 		);
 
 		//--編集ボタンチェック
 		$blockId = '2';
-		$expect = NetCommonsUrl::actionUrl(array(
-			'plugin' => $this->plugin,
-			'controller' => $this->_controller,
-			'action' => 'edit',
-			'frame_id' => $frameId,
-			'block_id' => $blockId
-		));
+		$editLink = $url;
+		$editLink['action'] = 'edit';
+		$editLink['block_id'] = $blockId;
 		$this->assertRegExp(
-			'/<a href=".*?' . preg_quote($expect, '/') . '.*?".*?>/', $this->contents
+			'/<a href=".*?' . preg_quote(NetCommonsUrl::actionUrl($editLink), '/') . '.*?".*?>/', $result
 		);
 
 		//--カレントブロックラジオボタン
-		$this->assertInput('input', 'data[Frame][block_id]', null, $this->contents);
+		$this->assertInput('input', 'data[Frame][block_id]', null, $result);
 
+		//ログアウト
 		TestAuthGeneral::logout($this);
 	}
 
@@ -138,21 +133,23 @@ class BlocksControllerTest extends NetCommonsControllerTestCase {
  * @return void
  */
 	public function testIndexNoneBlock() {
+		//ログイン
 		TestAuthGeneral::login($this);
 
-		//アクション実行
+		//テスト実施
 		$frameId = '18';
-		$url = NetCommonsUrl::actionUrl(array(
+		$url = array(
 			'plugin' => $this->plugin,
 			'controller' => $this->_controller,
 			'action' => 'index',
-			'frame_id' => $frameId
-		));
-		$this->testAction($url, array('method' => 'get', 'return' => 'view'));
+			'frame_id' => $frameId,
+		);
+		$result = $this->_testNcAction($url, array('method' => 'get'), null, 'viewFile');
 
 		//チェック
-		$this->assertTextEquals($this->controller->view, 'Blocks.Blocks/not_found');
+		$this->assertTextEquals($result, 'Blocks.Blocks/not_found');
 
+		//ログアウト
 		TestAuthGeneral::logout($this);
 	}
 
@@ -165,25 +162,28 @@ class BlocksControllerTest extends NetCommonsControllerTestCase {
  * @return void
  */
 	public function testAccessPermission($role, $isException) {
-		if ($isException) {
-			$this->setExpectedException('ForbiddenException');
-		}
 		if (isset($role)) {
 			TestAuthGeneral::login($this, $role);
 		}
 
-		//アクション実行
+		if ($isException) {
+			$exception = 'ForbiddenException';
+		} else {
+			$exception = null;
+		}
+
+		//テスト実施
 		$frameId = '6';
-		$url = NetCommonsUrl::actionUrl(array(
+		$url = array(
 			'plugin' => $this->plugin,
 			'controller' => $this->_controller,
 			'action' => 'index',
-			'frame_id' => $frameId
-		));
-		$this->testAction($url, array('method' => 'get', 'return' => 'view'));
+			'frame_id' => $frameId,
+		);
+		$result = $this->_testNcAction($url, array('method' => 'get'), $exception, 'viewFile');
 
 		//チェック
-		$this->assertTextEquals('index', $this->controller->view);
+		$this->assertTextEquals('index', $result);
 	}
 
 /**
@@ -198,34 +198,33 @@ class BlocksControllerTest extends NetCommonsControllerTestCase {
 	public function testIndexPaginator($page, $isFirst, $isLast) {
 		TestAuthGeneral::login($this);
 
-		//アクション実行
+		//テスト実施
 		$frameId = '16';
-		$options = array();
-		if (! $isFirst) {
-			$options = array('page:' . $page);
-		}
-		$url = NetCommonsUrl::actionUrl(Hash::merge(array(
+		$url = array(
 			'plugin' => $this->plugin,
 			'controller' => $this->_controller,
 			'action' => 'index',
-			'frame_id' => $frameId
-		), $options));
-		$this->testAction($url, array('method' => 'get', 'return' => 'view'));
+			'frame_id' => $frameId,
+		);
+		if (! $isFirst) {
+			$url[] = 'page:' . $page;
+		}
+		$result = $this->_testNcAction($url, array('method' => 'get'));
 
 		//チェック
 		$this->assertRegExp(
-			'/' . preg_quote('<ul class="pagination">', '/') . '/', $this->contents
+			'/' . preg_quote('<ul class="pagination">', '/') . '/', $result
 		);
 		if ($isFirst) {
-			$this->assertNotRegExp('/<li><a.*?rel="first".*?<\/a><\/li>/', $this->contents);
+			$this->assertNotRegExp('/<li><a.*?rel="first".*?<\/a><\/li>/', $result);
 		} else {
-			$this->assertRegExp('/<li><a.*?rel="first".*?<\/a><\/li>/', $this->contents);
+			$this->assertRegExp('/<li><a.*?rel="first".*?<\/a><\/li>/', $result);
 		}
-		$this->assertRegExp('/<li class="active"><a>' . $page . '<\/a><\/li>/', $this->contents);
+		$this->assertRegExp('/<li class="active"><a>' . $page . '<\/a><\/li>/', $result);
 		if ($isLast) {
-			$this->assertNotRegExp('/<li><a.*?rel="last".*?<\/a><\/li>/', $this->contents);
+			$this->assertNotRegExp('/<li><a.*?rel="last".*?<\/a><\/li>/', $result);
 		} else {
-			$this->assertRegExp('/<li><a.*?rel="last".*?<\/a><\/li>/', $this->contents);
+			$this->assertRegExp('/<li><a.*?rel="last".*?<\/a><\/li>/', $result);
 		}
 
 		TestAuthGeneral::logout($this);
