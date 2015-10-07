@@ -43,8 +43,8 @@ class BlockTabsComponent extends Component {
  * @throws ForbiddenException
  */
 	public function startup(Controller $controller) {
-		if (! in_array('Blocks.Block', $controller->helpers)) {
-			$controller->helpers[] = 'Blocks.Block';
+		if (! in_array('Blocks.BlockTabs', $controller->helpers)) {
+			$controller->helpers[] = 'Blocks.BlockTabs';
 		}
 	}
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * Block Helper
+ * BlockTabs Helper
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
@@ -12,12 +12,12 @@
 App::uses('AppHelper', 'View/Helper');
 
 /**
- * Block Helper
+ * BlockTabs Helper
  *
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Blocks\View\Helper
  */
-class BlockHelper extends AppHelper {
+class BlockTabsHelper extends AppHelper {
 
 /**
  * Output main tabs
@@ -25,7 +25,7 @@ class BlockHelper extends AppHelper {
  * @param string $active Active tab
  * @return string HTML tags
  */
-	public function mainTabs($active) {
+	public function main($active) {
 		return $this->_View->element('Blocks.main_tabs', array(
 			'tabs' => $this->_View->viewVars['settingTabs'],
 			'active' => $active
@@ -38,7 +38,7 @@ class BlockHelper extends AppHelper {
  * @param string $active Active tab
  * @return string HTML tags
  */
-	public function blockTabs($active) {
+	public function block($active) {
 		return $this->_View->element('Blocks.block_tabs', array(
 			'tabs' => $this->_View->viewVars['blockSettingTabs'],
 			'active' => $active
