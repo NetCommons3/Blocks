@@ -65,6 +65,8 @@ class BlockTabsComponentTest extends NetCommonsControllerTestCase {
  * @return void
  */
 	public function setUp() {
+		parent::setUp();
+
 		//テストコントローラ読み込み
 		$CakeRequest = new CakeRequest();
 		$CakeResponse = new CakeResponse();
@@ -75,8 +77,6 @@ class BlockTabsComponentTest extends NetCommonsControllerTestCase {
 
 		//カレントデータセット
 		Current::initialize($this->__controller->request);
-
-		parent::setUp();
 	}
 
 /**
