@@ -98,7 +98,7 @@ class BlockTabsComponentTest extends NetCommonsControllerTestCase {
  */
 	public function testStartup() {
 		$this->__component->startup($this->__controller);
-		$this->assertTrue(in_array('Blocks.Block', $this->__controller->helpers, true));
+		$this->assertTrue(in_array('Blocks.BlockTabs', $this->__controller->helpers, true));
 	}
 
 /**
