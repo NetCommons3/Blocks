@@ -10,14 +10,14 @@
  */
 ?>
 
-<?php echo $this->Form->hidden('Frame.id'); ?>
+<?php echo $this->NetCommonsForm->hidden('Frame.id'); ?>
 
-<?php echo $this->Form->hidden('Block.id'); ?>
+<?php echo $this->NetCommonsForm->hidden('Block.id'); ?>
 
-<?php echo $this->Form->hidden('Block.key'); ?>
+<?php echo $this->NetCommonsForm->hidden('Block.key'); ?>
 
-<?php echo $this->Form->hidden('Block.language_id'); ?>
+<?php echo $this->NetCommonsForm->hidden('Block.language_id'); ?>
 
-<?php echo $this->Form->hidden('Block.room_id'); ?>
+<?php echo $this->NetCommonsForm->hidden('Block.room_id'); ?>
 
-<?php echo $this->Form->hidden('Block.plugin_key');
+<?php echo $this->NetCommonsForm->hidden('Block.plugin_key');

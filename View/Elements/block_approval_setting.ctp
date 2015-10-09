@@ -61,16 +61,16 @@ $this->request->data[$model]['approval_type'] = $approvalType;
 		<div class="panel-body">
 			<div class="form-group">
 				<?php if (isset($useWorkflow)) : ?>
-					<?php echo $this->Form->hidden($model . '.' . $useWorkflow, array('ng-value' => 'useWorkflow')); ?>
-					<?php $this->Form->unlockField($model . '.' . $useWorkflow); ?>
+					<?php echo $this->NetCommonsForm->hidden($model . '.' . $useWorkflow, array('ng-value' => 'useWorkflow')); ?>
+					<?php $this->NetCommonsForm->unlockField($model . '.' . $useWorkflow); ?>
 				<?php endif; ?>
 
 				<?php if (isset($useCommentApproval)) : ?>
-					<?php echo $this->Form->hidden($model . '.' . $useCommentApproval, array('ng-value' => 'useCommentApproval')); ?>
-					<?php $this->Form->unlockField($model . '.' . $useCommentApproval); ?>
+					<?php echo $this->NetCommonsForm->hidden($model . '.' . $useCommentApproval, array('ng-value' => 'useCommentApproval')); ?>
+					<?php $this->NetCommonsForm->unlockField($model . '.' . $useCommentApproval); ?>
 				<?php endif; ?>
 
-				<?php echo $this->Form->radio($model . '.approval_type', $options, array(
+				<?php echo $this->NetCommonsForm->radio($model . '.approval_type', $options, array(
 						'legend' => false,
 						'separator' => '<br>',
 						'ng-click' => 'clickApprovalType($event)'
@@ -79,7 +79,7 @@ $this->request->data[$model]['approval_type'] = $approvalType;
 
 			<?php foreach ($settingPermissions as $permission => $label) : ?>
 				<div class="form-group">
-					<?php echo $this->Form->label('BlockRolePermission.' . $permission, h($label)); ?>
+					<?php echo $this->NetCommonsForm->label('BlockRolePermission.' . $permission, h($label)); ?>
 					<?php echo $this->BlockRolePermissionForm->checkboxBlockRolePermission('BlockRolePermission.' . $permission); ?>
 				</div>
 			<?php endforeach; ?>

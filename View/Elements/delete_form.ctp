@@ -20,7 +20,7 @@ if (! isset($options)) {
 	$options = array();
 }
 if (isset($action)) {
-	$options['action'] = $action;
+	$options['url'] = $action;
 }
 ?>
 
@@ -38,5 +38,5 @@ if (isset($action)) {
 				<?php echo $this->element($callback, (isset($callbackOptions) ? $callbackOptions : array())); ?>
 			</accordion-group>
 		</accordion>
-	<?php echo $this->Form->end(); ?>
+	<?php echo $this->NetCommonsForm->end(); ?>
 </div>
