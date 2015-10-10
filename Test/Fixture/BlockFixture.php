@@ -172,6 +172,8 @@ e.g.) ルーム管理者、またはそれに準ずるユーザ: ルーム管理
 			'to' => null,
 		),
 
+		//11-20は、各プラグインで設定関係のテストで使う
+
 		//101-200まで、ページ遷移のためのテスト
 	);
 
@@ -181,6 +183,17 @@ e.g.) ルーム管理者、またはそれに準ずるユーザ: ルーム管理
  * @return void
  */
 	public function init() {
+		for ($i = 11; $i <= 20; $i++) {
+			$this->records[$i] = array(
+				'id' => $i,
+				'language_id' => '2',
+				'room_id' => '1',
+				'plugin_key' => 'test_plugin',
+				'key' => 'block_' . $i,
+				'name' => 'Block name ' . $i,
+				'public_type' => '1',
+			);
+		}
 		for ($i = 101; $i <= 200; $i++) {
 			$this->records[$i] = array(
 				'id' => $i,
