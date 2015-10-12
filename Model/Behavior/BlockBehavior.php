@@ -78,63 +78,6 @@ class BlockBehavior extends ModelBehavior {
 	}
 
 /**
- * Set block field
- *
- * @param Model $model Model using this behavior
- * @param array &$data Model data
- * @param string $field Update field
- * @param string $key Recursive key
- * @param string $value Update value
- * @return void
- */
-	private function __setRecursiveBlockField(Model $model, &$data, $field, $key, $value) {
-		if (is_string($data[$key])) {
-			return;
-		}
-
-		if (isset($model->$key)) {
-			if ($model->$key->hasField($field)) {
-				$data[$key][$field] = $value;
-			}
-			return;
-		}
-
-		foreach (array_keys($data[$key]) as $key2) {
-			$this->__setRecursiveBlockField($model, $data[$key], $field, $key2, $value);
-		}
-	}
-
-/**
- * savePrepare
- *
- * @param Model $model Model using this behavior
- * @param array $frame Frame data
- * @return void
- * @throws InternalErrorException
- */
-	private function __saveBlock(Model $model, $frame) {
-		$model->data['Block']['room_id'] = $frame['Frame']['room_id'];
-		$model->data['Block']['language_id'] = $frame['Frame']['language_id'];
-
-		if (isset($model->data['Block']['name']) && $model->data['Block']['name']) {
-			//値があれば、何もしない
-		} elseif (isset($this->settings['name'])) {
-			list($alias, $filed) = pluginSplit($this->settings['name']);
-			$model->data['Block']['name'] = mb_strimwidth(strip_tags($model->data[$alias][$filed]), 0, self::NAME_LENGTH);
-		} else {
-			$model->data['Block']['name'] = sprintf(__d('blocks', 'Block %s'), date('YmdHis'));
-		}
-
-		$model->data['Block']['plugin_key'] = Inflector::underscore($model->plugin);
-
-		//blocksの登録
-		if (! $block = $model->Block->save($model->data['Block'], false)) {
-			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-		}
-		$model->data['Block'] = $block['Block'];
-	}
-
-/**
  * beforeSave is called before a model is saved. Returning false from a beforeSave callback
  * will abort the save operation.
  *
@@ -189,6 +132,65 @@ class BlockBehavior extends ModelBehavior {
 		}
 
 		return parent::beforeSave($model, $options);
+	}
+
+/**
+ * Set block field
+ *
+ * @param Model $model Model using this behavior
+ * @param array &$data Model data
+ * @param string $field Update field
+ * @param string $key Recursive key
+ * @param string $value Update value
+ * @return void
+ */
+	private function __setRecursiveBlockField(Model $model, &$data, $field, $key, $value) {
+		if (is_string($data[$key])) {
+			return;
+		}
+
+		if (isset($model->$key)) {
+			if ($model->$key->hasField($field)) {
+				$data[$key][$field] = $value;
+			}
+			return;
+		}
+
+		foreach (array_keys($data[$key]) as $key2) {
+			$this->__setRecursiveBlockField($model, $data[$key], $field, $key2, $value);
+		}
+	}
+
+/**
+ * savePrepare
+ *
+ * @param Model $model Model using this behavior
+ * @param array $frame Frame data
+ * @return void
+ * @throws InternalErrorException
+ */
+	private function __saveBlock(Model $model, $frame) {
+		$model->data['Block']['room_id'] = $frame['Frame']['room_id'];
+		$model->data['Block']['language_id'] = $frame['Frame']['language_id'];
+
+		if (isset($model->data['Block']['name']) && $model->data['Block']['name']) {
+			//値があれば、何もしない
+		} elseif (isset($this->settings['name'])) {
+			list($alias, $filed) = pluginSplit($this->settings['name']);
+			$model->data['Block']['name'] = mb_strimwidth(strip_tags($model->data[$alias][$filed]), 0, self::NAME_LENGTH);
+		} else {
+			$model->data['Block']['name'] = sprintf(__d('blocks', 'Block %s'), date('YmdHis'));
+		}
+
+		$model->data['Block']['plugin_key'] = Inflector::underscore($model->plugin);
+
+		//blocksの登録
+		if (! $block = $model->Block->save($model->data['Block'], false)) {
+			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+		}
+		$model->data['Block'] = $block['Block'];
+		Current::$current['Block'] = $block['Block'];
+		CurrentFrame::setM17n();
 	}
 
 /**
