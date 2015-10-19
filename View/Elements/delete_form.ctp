@@ -14,8 +14,6 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-$this->NetCommonsHtml->css('/blocks/css/style.css');
-
 if (! isset($options)) {
 	$options = array();
 }
@@ -24,7 +22,7 @@ if (isset($action)) {
 }
 ?>
 
-<div class="block-danger-zone" ng-init="dangerZone=false;">
+<div class="nc-danger-zone" ng-init="dangerZone=false;">
 	<?php echo $this->NetCommonsForm->create($model, Hash::merge(array('type' => 'delete'), $options)); ?>
 		<accordion close-others="false">
 			<accordion-group is-open="dangerZone" class="panel-danger">
