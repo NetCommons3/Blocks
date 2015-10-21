@@ -29,6 +29,13 @@ class BlocksControllerTest extends NetCommonsControllerTestCase {
 	protected $_controller;
 
 /**
+ * Edit controller name
+ *
+ * @var string
+ */
+	protected $_editController;
+
+/**
  * setUp method
  *
  * @return void
@@ -39,6 +46,11 @@ class BlocksControllerTest extends NetCommonsControllerTestCase {
 		if (! $this->_controller) {
 			$this->_controller = Inflector::singularize($this->plugin) . '_' . 'blocks';
 		}
+
+		if (! $this->_editController) {
+			$this->_editController = $this->_controller;
+		}
+
 		$this->generateNc(Inflector::camelize($this->_controller));
 	}
 
@@ -106,6 +118,7 @@ class BlocksControllerTest extends NetCommonsControllerTestCase {
 		//チェック
 		//--追加ボタンチェック
 		$addLink = $url;
+		$addLink['controller'] = $this->_editController;
 		$addLink['action'] = 'add';
 		$this->assertRegExp(
 			'/<a href=".*?' . preg_quote(NetCommonsUrl::actionUrl($addLink), '/') . '.*?".*?>/', $result
@@ -114,6 +127,7 @@ class BlocksControllerTest extends NetCommonsControllerTestCase {
 		//--編集ボタンチェック
 		$blockId = '2';
 		$editLink = $url;
+		$editLink['controller'] = $this->_editController;
 		$editLink['action'] = 'edit';
 		$editLink['block_id'] = $blockId;
 		$this->assertRegExp(
