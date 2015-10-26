@@ -24,7 +24,7 @@ class BlockBehavior extends ModelBehavior {
  *
  * @var int
  */
-	const NAME_LENGTH = 50;
+	const NAME_LENGTH = 255;
 
 /**
  * Setup this behavior with the specified configuration settings.
