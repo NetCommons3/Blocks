@@ -145,7 +145,7 @@ class BlockBehavior extends ModelBehavior {
  * @return void
  */
 	private function __setRecursiveBlockField(Model $model, &$data, $field, $key, $value) {
-		if (is_string($data[$key])) {
+		if (!is_array($data[$key])) {
 			return;
 		}
 
