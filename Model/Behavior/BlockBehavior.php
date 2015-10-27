@@ -45,7 +45,7 @@ App::uses('ModelBehavior', 'Model');
  * ブロックデータを取得する場合の条件<br>
  * [getBlockConditions](https://github.com/kteraguchi/test/blob/master/README.md#getblockconditions)<br>
  * [getBlockConditionById](https://github.com/kteraguchi/test/blob/master/README.md#getblockconditionbyid)<br>
-
+ *
  * 登録時は自動的に登録しますが、削除は明示的に呼び出してください。<br>
  * [deleteBlock](https://github.com/kteraguchi/test/blob/master/README.md#deleteblock)<br>
  *
