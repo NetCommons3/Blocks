@@ -33,7 +33,7 @@ class BlockRolePermissionFormHelper extends FormHelper {
  * @return string Formatted RADIO element
  * @link http://book.cakephp.org/2.0/en/core-libraries/helpers/form.html#options-for-select-checkbox-and-radio-inputs
  */
-	public function checkboxBlockRolePermission($fieldName, $attributes = array('inline' => true)) {
+	public function checkboxBlockRolePermission($fieldName, $attributes = array()) {
 		list($model, $permission) = explode('.', $fieldName);
 		$html = '';
 

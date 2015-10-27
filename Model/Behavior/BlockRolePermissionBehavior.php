@@ -14,6 +14,58 @@ App::uses('ModelBehavior', 'Model');
 /**
  * BlockRolePermission Behavior
  *
+ * ブロックモデルにアソシエーションがあるモデルのビヘイビアです。<br>
+ * ブロックデータの内、ブロック権限にかかわる項目（コンテンツ作成有無など）を処理します。<br>
+ * BlockRolePermissionFormHelperで作成される権限配列を登録します。
+ *
+ * #### 配列サンプル
+ * ```
+ * $model->data = array(
+ * 	'BlockRolePermission' => array(
+ * 		'content_creatable' => array(
+ * 			general_user' => array(
+ * 				'id' => '999',
+ * 				'roles_room_id' => '99',
+ * 				'block_key' => 'abcdefg',
+ * 				'permission' => 'content_creatable'
+ * 				'value' => '0'
+ * 			),
+ * 		'content_comment_creatable' => array(
+ * 			'editor' => array(
+ * 				'id' => '998',
+ * 				'roles_room_id' =>'98'
+ * 				'block_key' =>  'abcdefg',
+ * 				'permission' => 'content_comment_creatable'
+ * 				'value' => '1'
+ * 			),
+ * 			'general_user' => array(
+ * 				'id' => '997',
+ * 				'roles_room_id' =>'97'
+ * 				'block_key' =>  'abcdefg',
+ * 				'permission' => 'content_comment_creatable'
+ * 				'value' => '0'
+ * 			),
+ * 			'visitor' => array(
+ * 				'id' => '996',
+ * 				'roles_room_id' =>'96'
+ * 				'block_key' =>  'abcdefg',
+ * 				'permission' => 'content_comment_creatable'
+ * 				'value' => '0'
+ * 			),
+ * 		),
+ * 		'content_comment_publishable' => array(
+ * 			'editor' => array(
+ * 				'id' => '995',
+ * 				'roles_room_id' =>'98'
+ * 				'block_key' =>  'abcdefg',
+ * 				'permission' => 'content_comment_publishable'
+ * 				'value' => '0'
+ * 			),
+ * 		),
+ * 	),
+ * )
+ * ```
+ *
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Blocks\Model\Behavior
  */
