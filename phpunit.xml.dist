@@ -4,13 +4,13 @@
         <whitelist addUncoveredFilesFromWhitelist="true">
             <directory suffix=".ctp">app/Plugin/Blocks</directory>
             <directory suffix=".php">app/Plugin/Blocks</directory>
-			<exclude>
-				<directory suffix=".php">app/Plugin/Blocks/Config/Migration</directory>
-				<directory suffix=".php">app/Plugin/Blocks/Config/Schema</directory>
-				<directory suffix=".php">app/Plugin/Blocks/Test/Case</directory>
-				<directory suffix=".php">app/Plugin/Blocks/Test/Fixture</directory>
-				<directory suffix=".php">app/Plugin/Blocks/TestSuite</directory>
-			</exclude>
+            <exclude>
+                <directory suffix=".php">app/Plugin/Blocks/Config/Migration</directory>
+                <directory suffix=".php">app/Plugin/Blocks/Config/Schema</directory>
+                <directory suffix=".php">app/Plugin/Blocks/Test/Case</directory>
+                <directory suffix=".php">app/Plugin/Blocks/Test/Fixture</directory>
+                <directory suffix=".php">app/Plugin/Blocks/TestSuite</directory>
+            </exclude>
         </whitelist>
     </filter>
     <logging>
