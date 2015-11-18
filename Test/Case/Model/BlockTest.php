@@ -11,6 +11,7 @@
 
 App::uses('Block', 'Blocks.Model');
 App::uses('YACakeTestCase', 'NetCommons.TestSuite');
+App::uses('NetCommonsTime', 'NetCommons.Utility');
 
 /**
  * Block Test Case
@@ -210,5 +211,82 @@ class BlockTest extends YACakeTestCase {
 		//$result = $this->Block->validateBlock($data);
 		//
 		//$this->assertFalse($result);
+	}
+
+/**
+ * isVisibleテスト
+ *
+ * @param array $data テストデータ
+ * @param bool $result isVisibleの期待値
+ * @return void
+ * @dataProvider dataProviderIsVisible
+ */
+	public function testIsVisible($data, $result) {
+		$nowProperty = new ReflectionProperty('NetCommonsTime', '_now');
+		$nowProperty->setAccessible(true);
+		$nowProperty->setValue(strtotime('2010-01-01 00:00:00'));
+
+		$this->assertEquals($result, $this->Block->isVisible($data));
+
+		$nowProperty->setValue(null); // 現在日時変更が他のテストに影響を与えないようにnullにもどし
+	}
+
+/**
+ * isVisibleテスト用のデータ
+ *
+ * @return array Blockデータ
+ */
+	public function dataProviderIsVisible() {
+		$notPublic = [
+				'Block' => [
+						'public_type' => 0,
+						'from' => null,
+						'to' => null,
+				]
+		];
+		$public = [
+				'Block' => [
+						'public_type' => 1,
+						'from' => null,
+						'to' => null,
+				]
+		];
+		$limitedWithNull = [
+				'Block' => [
+						'public_type' => 2,
+						'from' => null,
+						'to' => null,
+				]
+		];
+		$limitedInPeriod = [
+				'Block' => [
+						'public_type' => 2,
+						'from' => '2000-01-01',
+						'to' => '2100-12-31',
+				]
+		];
+		$limitedBeforeFrom = [
+				'Block' => [
+						'public_type' => 2,
+						'from' => '2100-12-31',
+						'to' => null,
+				]
+		];
+		$limitedAfterTo = [
+				'Block' => [
+						'public_type' => 2,
+						'from' => null,
+						'to' => '2000-01-01',
+				]
+		];
+
+		return [
+				[$notPublic, false],
+				[$public, true],
+				[$limitedWithNull, true],
+				[$limitedInPeriod, true],
+				[$limitedBeforeFrom, false],
+				[$limitedAfterTo, false],
+		];
 	}
 }
