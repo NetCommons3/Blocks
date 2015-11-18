@@ -150,4 +150,36 @@ class Block extends BlocksAppModel {
 
 		return parent::beforeValidate($options);
 	}
+
+/**
+ * ブロックの公開設定をもとに現在見られるブロックなら trueを返す
+ *
+ * @param array $block ブロックデータ
+ * @return bool
+ */
+	public function isVisible($block) {
+		$result = true;
+		switch ($block['Block']['public_type']) {
+			case 0:
+				// 非表示
+				$result = false;
+				break;
+			case 1:
+				// 表示
+				break;
+			case 2:
+				// 期間限定
+				$now = NetCommonsTime::getNowDatetime();
+				$start = $block['Block']['from'];
+				$end = $block['Block']['to'];
+				if ($start !== null && $start > $now) {
+					$result = false;
+				}
+				if ($end !== null && $end < $now) {
+					$result = false;
+				}
+				break;
+		}
+		return $result;
+	}
 }
