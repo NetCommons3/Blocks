@@ -37,7 +37,7 @@
 	<?php endif; ?>
 
 	<?php if (isset($tabs['role_permissions'])) : ?>
-		<?php if ($blockPermissionEditable) : ?>
+		<?php if (Current::permission('block_permission_editable')) : ?>
 			<li class="<?php echo ($active === 'role_permissions' ? 'active' : ''); ?>">
 				<a href="<?php echo $this->Html->url($tabs['role_permissions']['url']); ?>">
 					<?php echo __d('net_commons', 'Role permission settings'); ?>
