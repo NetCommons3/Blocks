@@ -36,8 +36,8 @@ class BlockFixture extends CakeTestFixture {
 e.g.) ルーム管理者、またはそれに準ずるユーザ: ルーム管理者、編集長
 
 期間限定公開の場合、現在時刻がfrom-toカラムの範囲内の時に公開。'),
-		'from' => array('type' => 'datetime', 'null' => true, 'default' => null, 'comment' => 'Datetime display frame from.'),
-		'to' => array('type' => 'datetime', 'null' => true, 'default' => null, 'comment' => 'Datetime display frame to.'),
+		'publish_start' => array('type' => 'datetime', 'null' => true, 'default' => null, 'comment' => 'Datetime display frame from.'),
+		'publish_end' => array('type' => 'datetime', 'null' => true, 'default' => null, 'comment' => 'Datetime display frame to.'),
 		'created_user' => array('type' => 'integer', 'null' => true, 'default' => null, 'unsigned' => false),
 		'created' => array('type' => 'datetime', 'null' => true, 'default' => null),
 		'modified_user' => array('type' => 'integer', 'null' => true, 'default' => null, 'unsigned' => false),
@@ -63,8 +63,8 @@ e.g.) ルーム管理者、またはそれに準ずるユーザ: ルーム管理
 			'key' => 'block_1',
 			'name' => 'Block name 1',
 			'public_type' => '1',
-			'from' => null,
-			'to' => null,
+			'publish_start' => null,
+			'publish_end' => null,
 		),
 		array(
 			'id' => '2',
@@ -74,8 +74,8 @@ e.g.) ルーム管理者、またはそれに準ずるユーザ: ルーム管理
 			'key' => 'block_1',
 			'name' => 'Block name 1',
 			'public_type' => '1',
-			'from' => null,
-			'to' => null,
+			'publish_start' => null,
+			'publish_end' => null,
 		),
 		//非公開データ
 		array(
@@ -86,8 +86,8 @@ e.g.) ルーム管理者、またはそれに準ずるユーザ: ルーム管理
 			'key' => 'block_2',
 			'name' => 'Block name 2',
 			'public_type' => '0',
-			'from' => null,
-			'to' => null,
+			'publish_start' => null,
+			'publish_end' => null,
 		),
 		array(
 			'id' => '4',
@@ -97,8 +97,8 @@ e.g.) ルーム管理者、またはそれに準ずるユーザ: ルーム管理
 			'key' => 'block_2',
 			'name' => 'Block name 2',
 			'public_type' => '0',
-			'from' => null,
-			'to' => null,
+			'publish_start' => null,
+			'publish_end' => null,
 		),
 		//期間限定公開(範囲内)
 		array(
@@ -109,8 +109,8 @@ e.g.) ルーム管理者、またはそれに準ずるユーザ: ルーム管理
 			'key' => 'block_3',
 			'name' => 'Block name 3',
 			'public_type' => '2',
-			'from' => null,
-			'to' => null,
+			'publish_start' => null,
+			'publish_end' => null,
 		),
 		array(
 			'id' => '6',
@@ -120,8 +120,8 @@ e.g.) ルーム管理者、またはそれに準ずるユーザ: ルーム管理
 			'key' => 'block_3',
 			'name' => 'Block name 3',
 			'public_type' => '2',
-			'from' => null,
-			'to' => null,
+			'publish_start' => null,
+			'publish_end' => null,
 		),
 
 		//期間限定公開(過去)
@@ -133,8 +133,8 @@ e.g.) ルーム管理者、またはそれに準ずるユーザ: ルーム管理
 			'key' => 'block_4',
 			'name' => 'Block name 4',
 			'public_type' => '2',
-			'from' => null,
-			'to' => null,
+			'publish_start' => null,
+			'publish_end' => null,
 		),
 		array(
 			'id' => '8',
@@ -144,8 +144,8 @@ e.g.) ルーム管理者、またはそれに準ずるユーザ: ルーム管理
 			'key' => 'block_4',
 			'name' => 'Block name 4',
 			'public_type' => '2',
-			'from' => null,
-			'to' => null,
+			'publish_start' => null,
+			'publish_end' => null,
 		),
 
 		//期間限定公開(未来)
@@ -157,8 +157,8 @@ e.g.) ルーム管理者、またはそれに準ずるユーザ: ルーム管理
 			'key' => 'block_5',
 			'name' => 'Block name 5',
 			'public_type' => '2',
-			'from' => null,
-			'to' => null,
+			'publish_start' => null,
+			'publish_end' => null,
 		),
 		array(
 			'id' => '10',
@@ -168,8 +168,8 @@ e.g.) ルーム管理者、またはそれに準ずるユーザ: ルーム管理
 			'key' => 'block_5',
 			'name' => 'Block name 5',
 			'public_type' => '2',
-			'from' => null,
-			'to' => null,
+			'publish_start' => null,
+			'publish_end' => null,
 		),
 
 		//11-20は、各プラグインで設定関係のテストで使う

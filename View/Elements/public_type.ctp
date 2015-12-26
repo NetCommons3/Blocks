@@ -1,10 +1,6 @@
 <?php
 /**
  * Element of public type form
- *   - $block: Block data.
- *       - publicType: The `public_type` field of blocks table.
- *       - from: The `from` field of blocks table.
- *       - to: The `to` field of blocks table.
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
@@ -39,7 +35,7 @@
 	<div class="col-xs-offset-1 col-xs-11">
 		<div class="input-group inline-block" style="margin-left: 20px;">
 			<div class="input-group">
-				<?php echo $this->NetCommonsForm->time('Block.from', array(
+				<?php echo $this->NetCommonsForm->time('Block.publish_start', array(
 					'label' => false,
 					'class' => 'form-control',
 					'placeholder' => 'yyyy-mm-dd hh:nn'
@@ -49,7 +45,7 @@
 					<span class="glyphicon glyphicon-minus"></span>
 				</span>
 
-				<?php echo $this->NetCommonsForm->time('Block.to', array(
+				<?php echo $this->NetCommonsForm->time('Block.publish_end', array(
 					'label' => false,
 					'class' => 'form-control',
 					'placeholder' => 'yyyy-mm-dd hh:nn'

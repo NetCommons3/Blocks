@@ -240,43 +240,43 @@ class BlockTest extends YACakeTestCase {
 		$notPublic = [
 				'Block' => [
 						'public_type' => 0,
-						'from' => null,
-						'to' => null,
+						'publish_start' => null,
+						'publish_end' => null,
 				]
 		];
 		$public = [
 				'Block' => [
 						'public_type' => 1,
-						'from' => null,
-						'to' => null,
+						'publish_start' => null,
+						'publish_end' => null,
 				]
 		];
 		$limitedWithNull = [
 				'Block' => [
 						'public_type' => 2,
-						'from' => null,
-						'to' => null,
+						'publish_start' => null,
+						'publish_end' => null,
 				]
 		];
 		$limitedInPeriod = [
 				'Block' => [
 						'public_type' => 2,
-						'from' => '2000-01-01',
-						'to' => '2100-12-31',
+						'publish_start' => '2000-01-01',
+						'publish_end' => '2100-12-31',
 				]
 		];
 		$limitedBeforeFrom = [
 				'Block' => [
 						'public_type' => 2,
-						'from' => '2100-12-31',
-						'to' => null,
+						'publish_start' => '2100-12-31',
+						'publish_end' => null,
 				]
 		];
 		$limitedAfterTo = [
 				'Block' => [
 						'public_type' => 2,
-						'from' => null,
-						'to' => '2000-01-01',
+						'publish_start' => null,
+						'publish_end' => '2000-01-01',
 				]
 		];
 
