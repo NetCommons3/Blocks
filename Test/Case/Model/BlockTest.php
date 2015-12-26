@@ -268,7 +268,7 @@ class BlockTest extends YACakeTestCase {
 		$limitedBeforeFrom = [
 				'Block' => [
 						'public_type' => 2,
-						'from' => '2100-12-31',
+						'publish_start' => '2100-12-31',
 						'publish_end' => null,
 				]
 		];
