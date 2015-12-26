@@ -170,8 +170,8 @@ class Block extends BlocksAppModel {
 			case 2:
 				// 期間限定
 				$now = NetCommonsTime::getNowDatetime();
-				$start = $block['Block']['from'];
-				$end = $block['Block']['to'];
+				$start = $block['Block']['publish_start'];
+				$end = $block['Block']['publish_end'];
 				if ($start !== null && $start > $now) {
 					$result = false;
 				}

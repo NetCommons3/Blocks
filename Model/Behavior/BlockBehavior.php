@@ -94,10 +94,10 @@ class BlockBehavior extends ModelBehavior {
 
 		if (isset($model->data['Block']['public_type'])) {
 			if ($model->data['Block']['public_type'] === Block::TYPE_LIMITED) {
-				//$data['Block']['from'] = implode('-', $data['Block']['from']);
-				//$data['Block']['to'] = implode('-', $data['Block']['to']);
+				//$data['Block']['publish_start'] = implode('-', $data['Block']['publish_start']);
+				//$data['Block']['publish_end'] = implode('-', $data['Block']['publish_end']);
 			} else {
-				unset($model->data['Block']['from'], $model->data['Block']['to']);
+				unset($model->data['Block']['publish_start'], $model->data['Block']['publish_end']);
 			}
 		}
 
