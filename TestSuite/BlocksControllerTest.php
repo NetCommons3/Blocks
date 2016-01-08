@@ -77,26 +77,6 @@ class BlocksControllerTest extends NetCommonsControllerTestCase {
 	}
 
 /**
- * ページネーションDataProvider
- *
- * ### 戻り値
- *  - page: ページ番号
- *  - isFirst: 最初のページかどうか
- *  - isLast: 最後のページかどうか
- *
- * @return array
- */
-	public function dataProviderPaginator() {
-		//$page, $isFirst, $isLast
-		$data = array(
-			array(1, true, false),
-			array(3, false, false),
-			array(5, false, true),
-		);
-		return $data;
-	}
-
-/**
  * index()のテスト
  *
  * @return void
@@ -198,50 +178,6 @@ class BlocksControllerTest extends NetCommonsControllerTestCase {
 
 		//チェック
 		$this->assertTextEquals('index', $result);
-	}
-
-/**
- * index()のページネーションテスト
- *
- * @param int $page ページ番号
- * @param bool $isFirst 最初のページかどうか
- * @param bool $isLast 最後のページかどうか
- * @dataProvider dataProviderPaginator
- * @return void
- */
-	public function testIndexPaginator($page, $isFirst, $isLast) {
-		TestAuthGeneral::login($this);
-
-		//テスト実施
-		$frameId = '16';
-		$url = array(
-			'plugin' => $this->plugin,
-			'controller' => $this->_controller,
-			'action' => 'index',
-			'frame_id' => $frameId,
-		);
-		if (! $isFirst) {
-			$url[] = 'page:' . $page;
-		}
-		$result = $this->_testNcAction($url, array('method' => 'get'));
-
-		//チェック
-		$this->assertRegExp(
-			'/' . preg_quote('<ul class="pagination">', '/') . '/', $result
-		);
-		if ($isFirst) {
-			$this->assertNotRegExp('/<li><a.*?rel="first".*?<\/a><\/li>/', $result);
-		} else {
-			$this->assertRegExp('/<li><a.*?rel="first".*?<\/a><\/li>/', $result);
-		}
-		$this->assertRegExp('/<li class="active"><a>' . $page . '<\/a><\/li>/', $result);
-		if ($isLast) {
-			$this->assertNotRegExp('/<li><a.*?rel="last".*?<\/a><\/li>/', $result);
-		} else {
-			$this->assertRegExp('/<li><a.*?rel="last".*?<\/a><\/li>/', $result);
-		}
-
-		TestAuthGeneral::logout($this);
 	}
 
 }
