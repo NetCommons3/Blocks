@@ -22,15 +22,6 @@ App::uses('WorkflowComponent', 'Workflow.Controller/Component');
 class BlocksControllerPaginatorTest extends NetCommonsControllerTestCase {
 
 /**
- * Fixtures
- *
- * @var array
- */
-	private $__fixtures = array(
-		'plugin.blocks.block4paginator',
-	);
-
-/**
  * Controller name
  *
  * @var string
@@ -53,11 +44,10 @@ class BlocksControllerPaginatorTest extends NetCommonsControllerTestCase {
  * @return void
  */
 	public function __construct($name = null, array $data = array(), $dataName = '') {
+		$this->fixtures = array_merge($this->fixtures, array(
+			'plugin.blocks.block4paginator',
+		));
 		parent::__construct($name, $data, $dataName);
-		$this->fixtures = array_merge($this->fixtures, $this->__fixtures);
-		$index = array_search('plugin.blocks.block', $this->fixtures, true);
-		unset($this->fixtures[$index]);
-		debug($this->fixtures);
 	}
 
 /**
