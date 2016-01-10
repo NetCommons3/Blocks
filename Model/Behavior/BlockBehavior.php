@@ -10,6 +10,7 @@
  */
 
 App::uses('ModelBehavior', 'Model');
+App::uses('Block', 'Blocks.Model');
 
 /**
  * Block Behavior

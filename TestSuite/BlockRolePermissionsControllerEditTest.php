@@ -23,24 +23,15 @@ App::uses('RolesRoomFixture', 'Rooms.Test/Fixture');
 class BlockRolePermissionsControllerEditTest extends NetCommonsControllerTestCase {
 
 /**
- * Controller name
- *
- * @var string
- */
-	protected $_controller;
-
-/**
  * setUp method
  *
  * @return void
  */
 	public function setUp() {
-		parent::setUp();
-
 		if (! $this->_controller) {
 			$this->_controller = Inflector::singularize($this->plugin) . '_' . 'block_role_permissions';
 		}
-		$this->generateNc(Inflector::camelize($this->_controller));
+		parent::setUp();
 	}
 
 /**
