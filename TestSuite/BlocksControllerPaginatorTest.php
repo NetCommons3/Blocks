@@ -22,13 +22,6 @@ App::uses('WorkflowComponent', 'Workflow.Controller/Component');
 class BlocksControllerPaginatorTest extends NetCommonsControllerTestCase {
 
 /**
- * Controller name
- *
- * @var string
- */
-	protected $_controller;
-
-/**
  * Edit controller name
  *
  * @var string
@@ -56,17 +49,14 @@ class BlocksControllerPaginatorTest extends NetCommonsControllerTestCase {
  * @return void
  */
 	public function setUp() {
-		parent::setUp();
-
 		if (! $this->_controller) {
 			$this->_controller = Inflector::singularize($this->plugin) . '_' . 'blocks';
 		}
-
 		if (! $this->_editController) {
 			$this->_editController = $this->_controller;
 		}
 
-		$this->generateNc(Inflector::camelize($this->_controller));
+		parent::setUp();
 	}
 
 /**

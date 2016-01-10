@@ -22,24 +22,15 @@ App::uses('WorkflowComponent', 'Workflow.Controller/Component');
 class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 
 /**
- * Controller name
- *
- * @var string
- */
-	protected $_controller;
-
-/**
  * setUp method
  *
  * @return void
  */
 	public function setUp() {
-		parent::setUp();
-
 		if (! $this->_controller) {
 			$this->_controller = Inflector::singularize($this->plugin) . '_' . 'blocks';
 		}
-		$this->generateNc(Inflector::camelize($this->_controller));
+		parent::setUp();
 	}
 
 /**
