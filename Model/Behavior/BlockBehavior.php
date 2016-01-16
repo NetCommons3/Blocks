@@ -228,7 +228,7 @@ class BlockBehavior extends ModelBehavior {
 		}
 		$model->data['Block'] = $block['Block'];
 		Current::$current['Block'] = $block['Block'];
-		CurrentFrame::setM17n();
+		(new CurrentFrame())->setM17n();
 	}
 
 /**
