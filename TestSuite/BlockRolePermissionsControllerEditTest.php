@@ -98,44 +98,64 @@ class BlockRolePermissionsControllerEditTest extends NetCommonsControllerTestCas
  * テストDataの取得
  *
  * @param bool $isPost POSTかどうか
+ * @param bool $isCommentApproval コメント承認の有無
  * @return array
  */
-	protected function _getPermissionData($isPost) {
+	protected function _getPermissionData($isPost, $isCommentApproval) {
 		if ($isPost) {
-			$data = array(
-				'content_creatable' => array(
-					Role::ROOM_ROLE_KEY_GENERAL_USER,
-				),
-				'content_comment_creatable' => array(
-					Role::ROOM_ROLE_KEY_EDITOR,
-					Role::ROOM_ROLE_KEY_GENERAL_USER,
-					Role::ROOM_ROLE_KEY_VISITOR,
-				),
-				'content_comment_publishable' => array(
-					Role::ROOM_ROLE_KEY_EDITOR,
-				)
-			);
+			if ($isCommentApproval) {
+				$data = array(
+					'content_creatable' => array(
+						Role::ROOM_ROLE_KEY_GENERAL_USER,
+					),
+					'content_comment_creatable' => array(
+						Role::ROOM_ROLE_KEY_EDITOR,
+						Role::ROOM_ROLE_KEY_GENERAL_USER,
+						Role::ROOM_ROLE_KEY_VISITOR,
+					),
+					'content_comment_publishable' => array(
+						Role::ROOM_ROLE_KEY_EDITOR,
+					)
+				);
+			} else {
+				$data = array(
+					'content_creatable' => array(
+						Role::ROOM_ROLE_KEY_GENERAL_USER,
+					),
+				);
+			}
 		} else {
-			$data = array(
-				'content_creatable' => array(
-					Role::ROOM_ROLE_KEY_ROOM_ADMINISTRATOR,
-					Role::ROOM_ROLE_KEY_CHIEF_EDITOR,
-					Role::ROOM_ROLE_KEY_EDITOR,
-					Role::ROOM_ROLE_KEY_GENERAL_USER,
-				),
-				'content_comment_creatable' => array(
-					Role::ROOM_ROLE_KEY_ROOM_ADMINISTRATOR,
-					Role::ROOM_ROLE_KEY_CHIEF_EDITOR,
-					Role::ROOM_ROLE_KEY_EDITOR,
-					Role::ROOM_ROLE_KEY_GENERAL_USER,
-					Role::ROOM_ROLE_KEY_VISITOR,
-				),
-				'content_comment_publishable' => array(
-					Role::ROOM_ROLE_KEY_ROOM_ADMINISTRATOR,
-					Role::ROOM_ROLE_KEY_CHIEF_EDITOR,
-					Role::ROOM_ROLE_KEY_EDITOR,
-				)
-			);
+			if ($isCommentApproval) {
+				$data = array(
+					'content_creatable' => array(
+						Role::ROOM_ROLE_KEY_ROOM_ADMINISTRATOR,
+						Role::ROOM_ROLE_KEY_CHIEF_EDITOR,
+						Role::ROOM_ROLE_KEY_EDITOR,
+						Role::ROOM_ROLE_KEY_GENERAL_USER,
+					),
+					'content_comment_creatable' => array(
+						Role::ROOM_ROLE_KEY_ROOM_ADMINISTRATOR,
+						Role::ROOM_ROLE_KEY_CHIEF_EDITOR,
+						Role::ROOM_ROLE_KEY_EDITOR,
+						Role::ROOM_ROLE_KEY_GENERAL_USER,
+						Role::ROOM_ROLE_KEY_VISITOR,
+					),
+					'content_comment_publishable' => array(
+						Role::ROOM_ROLE_KEY_ROOM_ADMINISTRATOR,
+						Role::ROOM_ROLE_KEY_CHIEF_EDITOR,
+						Role::ROOM_ROLE_KEY_EDITOR,
+					)
+				);
+			} else {
+				$data = array(
+					'content_creatable' => array(
+						Role::ROOM_ROLE_KEY_ROOM_ADMINISTRATOR,
+						Role::ROOM_ROLE_KEY_CHIEF_EDITOR,
+						Role::ROOM_ROLE_KEY_EDITOR,
+						Role::ROOM_ROLE_KEY_GENERAL_USER,
+					),
+				);
+			}
 		}
 
 		return $data;
@@ -149,7 +169,7 @@ class BlockRolePermissionsControllerEditTest extends NetCommonsControllerTestCas
  * @return void
  */
 	protected function _assertEditGetPermission($approvalFields, $result) {
-		$permissions = $this->_getPermissionData(false);
+		$permissions = $this->_getPermissionData(false, Hash::check($approvalFields, '{s}.use_comment_approval'));
 
 		//チェック
 		foreach ($permissions as $permission => $roles) {
@@ -233,7 +253,7 @@ class BlockRolePermissionsControllerEditTest extends NetCommonsControllerTestCas
 		$blockId = '4';
 		$blockKey = 'block_2';
 		$roomId = '1';
-		$permissions = $this->_getPermissionData(true);
+		$permissions = $this->_getPermissionData(true, Hash::check($data, '{s}.use_comment_approval'));
 
 		$RolesRoomFixture = new RolesRoomFixture();
 		$rolesRooms = Hash::extract($RolesRoomFixture->records, '{n}[room_id=' . $roomId . ']');
