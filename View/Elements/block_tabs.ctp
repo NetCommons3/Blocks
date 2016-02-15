@@ -43,7 +43,7 @@
 	<?php if ($tabs) : ?>
 		<?php foreach ($tabs as $tabKey => $tab) : ?>
 			<li class="<?php echo ($active === $tabKey ? 'active' : ''); ?>">
-				<a href="<?php echo $this->Html->url($tab['url']); ?>">
+				<a href="<?php echo $this->NetCommonsHtml->url($tab['url']); ?>">
 					<?php echo (isset($tab['label']) ? $tab['label'] : $tabKey); ?>
 				</a>
 			</li>
