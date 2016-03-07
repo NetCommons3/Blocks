@@ -40,6 +40,21 @@
 		?>
 	<?php endif; ?>
 
+	<?php if (isset($tabs['mail_settings'])) : ?>
+		<?php /* 暫定対応 */ ?>
+		<?php //if (Current::permission('mail_editable')) : ?>
+		<?php if (Current::permission('block_editable')) : ?>
+			<?php if ($this->request->params['action'] === 'edit') : ?>
+				<li class="<?php echo ($active === 'mail_settings' ? 'active' : ''); ?>">
+					<a href="<?php echo $this->Html->url($tabs['mail_settings']['url']); ?>">
+						<?php echo __d('mails', 'Mail settings'); ?>
+					</a>
+				</li>
+			<?php endif; ?>
+		<?php endif; ?>
+		<?php unset($tabs['mail_settings']); ?>
+	<?php endif; ?>
+
 	<?php if ($tabs) : ?>
 		<?php foreach ($tabs as $tabKey => $tab) : ?>
 			<li class="<?php echo ($active === $tabKey ? 'active' : ''); ?>">

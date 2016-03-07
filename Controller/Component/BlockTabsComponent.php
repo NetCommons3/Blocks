@@ -33,7 +33,8 @@ class BlockTabsComponent extends Component {
  * @var string
  */
 	const BLOCK_TAB_SETTING = 'block_settings',
-			BLOCK_TAB_PERMISSION = 'role_permissions';
+			BLOCK_TAB_PERMISSION = 'role_permissions',
+			BLOCK_TAB_MAIL = 'mail_settings';
 
 /**
  * Called after the Controller::beforeFilter() and before the controller action
@@ -149,6 +150,13 @@ class BlockTabsComponent extends Component {
 			self::BLOCK_TAB_PERMISSION => array(
 				'plugin' => $controller->params['plugin'],
 				'controller' => Inflector::singularize($controller->params['plugin']) . '_block_role_permissions',
+				'action' => 'edit',
+				'frame_id' => Current::read('Frame.id'),
+				'block_id' => Current::read('Block.id'),
+			),
+			self::BLOCK_TAB_MAIL => array(
+				'plugin' => $controller->params['plugin'],
+				'controller' => Inflector::singularize($controller->params['plugin']) . '_mail_settings',
 				'action' => 'edit',
 				'frame_id' => Current::read('Frame.id'),
 				'block_id' => Current::read('Block.id'),
