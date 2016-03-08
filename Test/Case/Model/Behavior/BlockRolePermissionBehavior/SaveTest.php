@@ -1,6 +1,6 @@
 <?php
 /**
- * BlockRolePermissionBehavior::validates()のテスト
+ * BlockRolePermissionBehavior::save()のテスト
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
@@ -10,15 +10,15 @@
  */
 
 App::uses('NetCommonsModelTestCase', 'NetCommons.TestSuite');
-App::uses('TestBlockRolePermissionBehaviorValidatesModelFixture', 'Blocks.Test/Fixture');
+App::uses('TestBlockRolePermissionBehaviorSaveModelFixture', 'Blocks.Test/Fixture');
 
 /**
- * BlockRolePermissionBehavior::validates()のテスト
+ * BlockRolePermissionBehavior::save()のテスト
  *
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Blocks\Test\Case\Model\Behavior\BlockRolePermissionBehavior
  */
-class BlockRolePermissionBehaviorValidatesTest extends NetCommonsModelTestCase {
+class BlockRolePermissionBehaviorSaveTest extends NetCommonsModelTestCase {
 
 /**
  * Fixtures
@@ -26,7 +26,7 @@ class BlockRolePermissionBehaviorValidatesTest extends NetCommonsModelTestCase {
  * @var array
  */
 	public $fixtures = array(
-		'plugin.blocks.test_block_role_permission_behavior_validates_model',
+		'plugin.blocks.test_block_role_permission_behavior_save_model',
 	);
 
 /**
@@ -46,7 +46,10 @@ class BlockRolePermissionBehaviorValidatesTest extends NetCommonsModelTestCase {
 
 		//テストプラグインのロード
 		NetCommonsCakeTestCase::loadTestPlugin($this, 'Blocks', 'TestBlocks');
-		$this->TestModel = ClassRegistry::init('TestBlocks.TestBlockRolePermissionBehaviorValidatesModel');
+		$this->TestModel = ClassRegistry::init('TestBlocks.TestBlockRolePermissionBehaviorSaveModel');
+
+		//事前チェック用のモデル
+		$this->BlockRolePermission = ClassRegistry::init('Blocks.BlockRolePermission');
 	}
 
 /**
@@ -57,7 +60,7 @@ class BlockRolePermissionBehaviorValidatesTest extends NetCommonsModelTestCase {
 	private function __data() {
 		//テストデータ
 		$data = array(
-			'TestBlockRolePermissionBehaviorValidatesModel' => (new TestBlockRolePermissionBehaviorValidatesModelFixture())->records[0],
+			'TestBlockRolePermissionBehaviorSaveModel' => (new TestBlockRolePermissionBehaviorSaveModelFixture())->records[0],
 			'BlockRolePermission' => array(
 				'content_creatable' => array(
 					'general_user' => array(
@@ -98,55 +101,71 @@ class BlockRolePermissionBehaviorValidatesTest extends NetCommonsModelTestCase {
 	}
 
 /**
- * validates()のテスト
+ * save()のテスト
  *
  * @return void
  */
-	public function testValidates() {
+	public function testSave() {
 		//テストデータ
 		$data = $this->__data();
 
+		//事前チェック
+		$count = $this->BlockRolePermission->find('count', array(
+			'recursive' => -1,
+		));
+		$this->assertEquals(1, $count);
+
 		//テスト実施
-		$this->TestModel->set($data);
-		$result = $this->TestModel->validates();
-		$this->assertTrue($result);
+		$result = $this->TestModel->save($data);
+		$this->assertNotEmpty($result);
+
+		//チェック
+		$count = $this->TestModel->BlockRolePermission->find('count', array(
+			'recursive' => -1,
+		));
+		$this->assertEquals(4, $count);
 	}
 
 /**
- * validates()のテスト(BlockRolePermissionなし)
+ * save()のテスト(BlockRolePermissionなし)
  *
  * @return void
  */
-	public function testValidatesWOBlockRolePermission() {
+	public function testSaveWOBlockRolePermission() {
 		//テストデータ
 		$data = $this->__data();
 		unset($data['BlockRolePermission']);
 
+		//事前チェック
+		$count = $this->BlockRolePermission->find('count', array(
+			'recursive' => -1,
+		));
+		$this->assertEquals(1, $count);
+
 		//テスト実施
-		$this->TestModel->set($data);
-		$result = $this->TestModel->validates();
-		$this->assertTrue($result);
+		$result = $this->TestModel->save($data);
+		$this->assertNotEmpty($result);
+
+		//チェック
+		$count = $this->BlockRolePermission->find('count', array(
+			'recursive' => -1,
+		));
+		$this->assertEquals(1, $count);
 	}
 
 /**
- * validates()のValidationErrorテスト
+ * save()のテスト(BlockRolePermissionなし)
  *
  * @return void
  */
-	public function testValidatesOnValidationError() {
+	public function testSaveOnExceptionError() {
 		//テストデータ
 		$data = $this->__data();
-		$data = Hash::remove($data, 'BlockRolePermission.content_creatable.general_user.permission');
+		$this->_mockForReturnFalse('TestModel', 'Blocks.BlockRolePermission', 'saveMany');
 
 		//テスト実施
-		$this->TestModel->set($data);
-		$result = $this->TestModel->validates();
-		$this->assertFalse($result);
-
-		//チェック
-		$this->assertEquals(
-			__d('net_commons', 'Invalid request.'), Hash::get($this->TestModel->validationErrors, 'general_user.permission.0')
-		);
+		$this->setExpectedException('InternalErrorException');
+		$this->TestModel->save($data);
 	}
 
 }
