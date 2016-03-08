@@ -66,7 +66,7 @@ class BlockTabsHelperSetBlockTabsTest extends NetCommonsHelperTestCase {
 			'mail_settings', 'role_permissions',
 			'original' => array(
 				'url' => '/original_plugin/controller/original_ctrl/edit',
-				'label' => array('original', 'Original settings')
+				'label' => array('original_plugin', 'Original settings')
 			)
 		);
 

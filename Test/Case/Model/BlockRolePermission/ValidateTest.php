@@ -66,8 +66,6 @@ class BlockRolePermissionValidateTest extends NetCommonsValidateTest {
 	public function dataProviderValidationError() {
 		$data['BlockRolePermission'] = (new BlockRolePermissionFixture())->records[0];
 
-		//TODO:テストパタンを書く
-		debug($data);
 		return array(
 			// * roles_room_id
 			array('data' => $data, 'field' => 'roles_room_id', 'value' => '',
