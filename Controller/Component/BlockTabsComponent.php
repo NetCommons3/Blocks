@@ -42,16 +42,10 @@ class BlockTabsComponent extends Component {
  *
  * @param Controller $controller Controller with components to startup
  * @return void
- * @throws ForbiddenException
  */
 	public function startup(Controller $controller) {
 		//BlockTabsComponent->BlockTabsHelper一本化するため、Noticeを表示する
-		if (! Hash::get($controller->helpers, 'Blocks.BlockTabs')) {
-			trigger_error('Changed to BlockTabsHelper from BlockTabsComponent.', E_USER_WARNING);
-		}
-		if (in_array('Blocks.BlockTabs', $controller->helpers, true)) {
-			unset($controller->helpers['Blocks.BlockTabs']);
-		}
+		trigger_error('Changed to BlockTabsHelper from BlockTabsComponent.', E_USER_WARNING);
 
 		if (! Hash::get($controller->helpers, 'Blocks.BlockTabs')) {
 			$controller->helpers['Blocks.BlockTabs'] = array(

@@ -20,22 +20,53 @@ App::uses('AppHelper', 'View/Helper');
 class BlockTabsHelper extends AppHelper {
 
 /**
- * Const of main tab
+ * メインタブの定数(一覧表示)
  *
  * @var string
  */
-	const MAIN_TAB_BLOCK_INDEX = 'block_index',
-			MAIN_TAB_FRAME_SETTING = 'frame_settings',
-			MAIN_TAB_PERMISSION = 'role_permissions';
+	const MAIN_TAB_BLOCK_INDEX = 'block_index';
 
 /**
- * Const of main tab
+ * メインタブの定数(表示方法変更)
  *
  * @var string
  */
-	const BLOCK_TAB_SETTING = 'block_settings',
-			BLOCK_TAB_PERMISSION = 'role_permissions',
-			BLOCK_TAB_MAIL = 'mail_settings';
+	const MAIN_TAB_FRAME_SETTING = 'frame_settings';
+
+/**
+ * メインタブの定数(メール通知)
+ *
+ * @var string
+ */
+	const MAIN_TAB_MAIL_SETTING = 'mail_settings';
+
+/**
+ * メインタブの定数(権限設定)
+ *
+ * @var string
+ */
+	const MAIN_TAB_PERMISSION = 'role_permissions';
+
+/**
+ * ブロック設定タブ(ブロック設定)
+ *
+ * @var string
+ */
+	const BLOCK_TAB_SETTING = 'block_settings';
+
+/**
+ * ブロック設定タブ(メール通知)
+ *
+ * @var string
+ */
+	const BLOCK_TAB_MAIL_SETTING = 'mail_settings';
+
+/**
+ * ブロック設定タブ(権限設定)
+ *
+ * @var string
+ */
+	const BLOCK_TAB_PERMISSION = 'role_permissions';
 
 /**
  * Default Constructor
@@ -80,6 +111,13 @@ class BlockTabsHelper extends AppHelper {
 				'controller' => Inflector::singularize($this->_View->params['plugin']) . '_frame_settings',
 				'action' => 'edit',
 				'frame_id' => Current::read('Frame.id'),
+			),
+			self::MAIN_TAB_MAIL_SETTING => array(
+				'plugin' => $this->_View->params['plugin'],
+				'controller' => Inflector::singularize($this->_View->params['plugin']) . '_mail_settings',
+				'action' => 'edit',
+				'frame_id' => Current::read('Frame.id'),
+				'block_id' => Current::read('Block.id'),
 			),
 			self::MAIN_TAB_PERMISSION => array(
 				'plugin' => $this->_View->params['plugin'],
@@ -144,7 +182,7 @@ class BlockTabsHelper extends AppHelper {
 				'frame_id' => Current::read('Frame.id'),
 				'block_id' => Current::read('Block.id'),
 			),
-			self::BLOCK_TAB_MAIL => array(
+			self::BLOCK_TAB_MAIL_SETTING => array(
 				'plugin' => $this->_View->params['plugin'],
 				'controller' => Inflector::singularize($this->_View->params['plugin']) . '_mail_settings',
 				'action' => 'edit',
