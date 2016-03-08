@@ -22,13 +22,18 @@ App::uses('BlocksAppModel', 'Blocks.Model');
 class BlockRolePermission extends BlocksAppModel {
 
 /**
- * Value
+ * value値（使わない）
  *
  * @var int
  */
-	const
-		VALUE_DISUSE = '0',
-		VALUE_USE = '1';
+	const VALUE_DISUSE = '0';
+
+/**
+ * value値（使う）
+ *
+ * @var int
+ */
+	const VALUE_USE = '1';
 
 /**
  * Validation rules
