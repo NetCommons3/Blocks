@@ -42,7 +42,6 @@ class TestSuiteBlocksControllerEditTest extends BlocksControllerEditTest {
 		//テストコントローラ生成
 		$this->generateNc('TestBlocks.TestSuiteBlocksControllerEditTest');
 		parent::setUp();
-		return $this;
 	}
 
 /**
