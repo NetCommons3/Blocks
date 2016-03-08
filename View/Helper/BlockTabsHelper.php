@@ -177,16 +177,16 @@ class BlockTabsHelper extends AppHelper {
 				'frame_id' => Current::read('Frame.id'),
 				'block_id' => Current::read('Block.id'),
 			),
-			self::BLOCK_TAB_PERMISSION => array(
+			self::BLOCK_TAB_MAIL_SETTING => array(
 				'plugin' => $this->_View->params['plugin'],
-				'controller' => Inflector::singularize($this->_View->params['plugin']) . '_block_role_permissions',
+				'controller' => Inflector::singularize($this->_View->params['plugin']) . '_mail_settings',
 				'action' => 'edit',
 				'frame_id' => Current::read('Frame.id'),
 				'block_id' => Current::read('Block.id'),
 			),
-			self::BLOCK_TAB_MAIL_SETTING => array(
+			self::BLOCK_TAB_PERMISSION => array(
 				'plugin' => $this->_View->params['plugin'],
-				'controller' => Inflector::singularize($this->_View->params['plugin']) . '_mail_settings',
+				'controller' => Inflector::singularize($this->_View->params['plugin']) . '_block_role_permissions',
 				'action' => 'edit',
 				'frame_id' => Current::read('Frame.id'),
 				'block_id' => Current::read('Block.id'),
