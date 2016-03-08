@@ -64,7 +64,7 @@ class BlockTabsComponentStartupTest extends NetCommonsControllerTestCase {
  */
 	public function testStartup() {
 		//テストコントローラ生成
-		$this->generateNc('TestBlocks.TestBlockTabsComponentWarning');
+		$this->generateNc('TestBlocks.TestBlockTabsComponent');
 
 		//ログイン
 		TestAuthGeneral::login($this);
@@ -74,7 +74,7 @@ class BlockTabsComponentStartupTest extends NetCommonsControllerTestCase {
 		set_error_handler(function($no, $str, $file, $line, $context) {}, E_USER_WARNING);
 
 		//テスト実行
-		$this->_testGetAction('/test_blocks/test_block_tabs_component_warning/index',
+		$this->_testGetAction('/test_blocks/test_block_tabs_component/index',
 				array('method' => 'assertNotEmpty'), null, 'view');
 
 		set_error_handler(null);
@@ -125,13 +125,13 @@ class BlockTabsComponentStartupTest extends NetCommonsControllerTestCase {
  */
 	public function testStartupWarning() {
 		//テストコントローラ生成
-		$this->generateNc('TestBlocks.TestBlockTabsComponentWarning');
+		$this->generateNc('TestBlocks.TestBlockTabsComponent');
 
 		//ログイン
 		TestAuthGeneral::login($this);
 
 		//テスト実行
-		$this->_testGetAction('/test_blocks/test_block_tabs_component_warning/index',
+		$this->_testGetAction('/test_blocks/test_block_tabs_component/index',
 				array('method' => 'assertNotEmpty'), null, 'view');
 	}
 
