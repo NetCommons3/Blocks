@@ -69,13 +69,15 @@ class BlockTabsHelper extends AppHelper {
 	const BLOCK_TAB_PERMISSION = 'role_permissions';
 
 /**
- * Default Constructor
+ * Before render callback. beforeRender is called before the view file is rendered.
  *
- * @param View $View The View this helper is being attached to.
- * @param array $settings Configuration settings for the helper.
+ * Overridden in subclasses.
+ *
+ * @param string $viewFile The view file that is going to be rendered
+ * @return void
  */
-	public function __construct(View $View, $settings = array()) {
-		parent::__construct($View, $settings);
+	public function beforeRender($viewFile) {
+		parent::beforeRender($viewFile);
 
 		//ブロックのメインタブ
 		if (! isset($this->settings['mainTabs'])) {
