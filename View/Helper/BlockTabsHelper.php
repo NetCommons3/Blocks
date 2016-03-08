@@ -69,6 +69,15 @@ class BlockTabsHelper extends AppHelper {
 	const BLOCK_TAB_PERMISSION = 'role_permissions';
 
 /**
+ * 使用ヘルパー
+ *
+ * @var array
+ */
+	public $helpers = array(
+		'NetCommons.NetCommonsHtml',
+	);
+
+/**
  * Before render callback. beforeRender is called before the view file is rendered.
  *
  * Overridden in subclasses.
@@ -103,30 +112,43 @@ class BlockTabsHelper extends AppHelper {
 
 		$defaultUrls = array(
 			self::MAIN_TAB_BLOCK_INDEX => array(
-				'plugin' => $this->_View->params['plugin'],
-				'controller' => Inflector::singularize($this->_View->params['plugin']) . '_blocks',
-				'action' => 'index',
-				'frame_id' => Current::read('Frame.id'),
+				'url' => array(
+					'plugin' => $this->_View->params['plugin'],
+					'controller' => Inflector::singularize($this->_View->params['plugin']) . '_blocks',
+					'action' => 'index',
+					'frame_id' => Current::read('Frame.id'),
+				),
+				'label' => array('net_commons', 'List'),
 			),
 			self::MAIN_TAB_FRAME_SETTING => array(
-				'plugin' => $this->_View->params['plugin'],
-				'controller' => Inflector::singularize($this->_View->params['plugin']) . '_frame_settings',
-				'action' => 'edit',
-				'frame_id' => Current::read('Frame.id'),
+				'url' => array(
+					'plugin' => $this->_View->params['plugin'],
+					'controller' => Inflector::singularize($this->_View->params['plugin']) . '_frame_settings',
+					'action' => 'edit',
+					'frame_id' => Current::read('Frame.id'),
+				),
+				'label' => array('net_commons', 'Frame settings'),
 			),
 			self::MAIN_TAB_MAIL_SETTING => array(
-				'plugin' => $this->_View->params['plugin'],
-				'controller' => Inflector::singularize($this->_View->params['plugin']) . '_mail_settings',
-				'action' => 'edit',
-				'frame_id' => Current::read('Frame.id'),
-				'block_id' => Current::read('Block.id'),
+				'url' => array(
+					'plugin' => $this->_View->params['plugin'],
+					'controller' => Inflector::singularize($this->_View->params['plugin']) . '_mail_settings',
+					'action' => 'edit',
+					'frame_id' => Current::read('Frame.id'),
+					'block_id' => Current::read('Block.id'),
+				),
+				'label' => array('mails', 'Mail settings'),
 			),
 			self::MAIN_TAB_PERMISSION => array(
-				'plugin' => $this->_View->params['plugin'],
-				'controller' => Inflector::singularize($this->_View->params['plugin']) . '_block_role_permissions',
-				'action' => 'edit',
-				'frame_id' => Current::read('Frame.id'),
-				'block_id' => Current::read('Block.id'),
+				'url' => array(
+					'plugin' => $this->_View->params['plugin'],
+					'controller' => Inflector::singularize($this->_View->params['plugin']) . '_block_role_permissions',
+					'action' => 'edit',
+					'frame_id' => Current::read('Frame.id'),
+					'block_id' => Current::read('Block.id'),
+				),
+				'label' => array('net_commons', 'Role permission settings'),
+				'permission' => 'block_permission_editable',
 			),
 		);
 
@@ -144,16 +166,17 @@ class BlockTabsHelper extends AppHelper {
 			}
 
 			if (isset($this->settings['mainTabs'][$key]['url']['plugin'])) {
-				$defaultUrls[$key]['plugin'] = $this->settings['mainTabs'][$key]['url']['plugin'];
+				$defaultUrls[$key]['url']['plugin'] = $this->settings['mainTabs'][$key]['url']['plugin'];
 			}
 			if (isset($this->settings['mainTabs'][$key]['url']['controller'])) {
-				$defaultUrls[$key]['controller'] = $this->settings['mainTabs'][$key]['url']['controller'];
+				$defaultUrls[$key]['url']['controller'] = $this->settings['mainTabs'][$key]['url']['controller'];
 			}
 			if (isset($this->settings['mainTabs'][$key]['url']['action'])) {
-				$defaultUrls[$key]['action'] = $this->settings['mainTabs'][$key]['url']['action'];
+				$defaultUrls[$key]['url']['action'] = $this->settings['mainTabs'][$key]['url']['action'];
 			}
+			$settings[$key]['url'] = NetCommonsUrl::actionUrl($defaultUrls[$key]['url']);
 
-			$settings[$key]['url'] = NetCommonsUrl::actionUrl($defaultUrls[$key]);
+			$settings[$key] = Hash::merge($settings[$key], $defaultUrls[$key]);
 		}
 
 		$this->_View->viewVars['settingTabs'] = $settings;
@@ -171,25 +194,35 @@ class BlockTabsHelper extends AppHelper {
 		//ブロック設定のタブ
 		$defaultUrls = array(
 			self::BLOCK_TAB_SETTING => array(
-				'plugin' => $this->_View->params['plugin'],
-				'controller' => Inflector::singularize($this->_View->params['plugin']) . '_blocks',
-				'action' => $this->_View->params['action'],
-				'frame_id' => Current::read('Frame.id'),
-				'block_id' => Current::read('Block.id'),
+				'url' => array(
+					'plugin' => $this->_View->params['plugin'],
+					'controller' => Inflector::singularize($this->_View->params['plugin']) . '_blocks',
+					'action' => $this->_View->params['action'],
+					'frame_id' => Current::read('Frame.id'),
+					'block_id' => Current::read('Block.id'),
+				),
+				'label' => array('blocks', 'Block settings'),
 			),
 			self::BLOCK_TAB_MAIL_SETTING => array(
-				'plugin' => $this->_View->params['plugin'],
-				'controller' => Inflector::singularize($this->_View->params['plugin']) . '_mail_settings',
-				'action' => 'edit',
-				'frame_id' => Current::read('Frame.id'),
-				'block_id' => Current::read('Block.id'),
+				'url' => array(
+					'plugin' => $this->_View->params['plugin'],
+					'controller' => Inflector::singularize($this->_View->params['plugin']) . '_mail_settings',
+					'action' => 'edit',
+					'frame_id' => Current::read('Frame.id'),
+					'block_id' => Current::read('Block.id'),
+				),
+				'label' => array('mails', 'Mail settings'),
+				'permission' => 'block_permission_editable',
 			),
 			self::BLOCK_TAB_PERMISSION => array(
-				'plugin' => $this->_View->params['plugin'],
-				'controller' => Inflector::singularize($this->_View->params['plugin']) . '_block_role_permissions',
-				'action' => 'edit',
-				'frame_id' => Current::read('Frame.id'),
-				'block_id' => Current::read('Block.id'),
+				'url' => array(
+					'plugin' => $this->_View->params['plugin'],
+					'controller' => Inflector::singularize($this->_View->params['plugin']) . '_block_role_permissions',
+					'action' => 'edit',
+					'frame_id' => Current::read('Frame.id'),
+					'block_id' => Current::read('Block.id'),
+				),
+				'label' => array('net_commons', 'Role permission settings'),
 			),
 		);
 
@@ -207,16 +240,17 @@ class BlockTabsHelper extends AppHelper {
 			}
 
 			if (isset($this->settings['blockTabs'][$key]['url']['plugin'])) {
-				$defaultUrls[$key]['plugin'] = $this->settings['blockTabs'][$key]['url']['plugin'];
+				$defaultUrls[$key]['url']['plugin'] = $this->settings['blockTabs'][$key]['url']['plugin'];
 			}
 			if (isset($this->settings['blockTabs'][$key]['url']['controller'])) {
-				$defaultUrls[$key]['controller'] = $this->settings['blockTabs'][$key]['url']['controller'];
+				$defaultUrls[$key]['url']['controller'] = $this->settings['blockTabs'][$key]['url']['controller'];
 			}
 			if (isset($this->settings['blockTabs'][$key]['url']['action'])) {
-				$defaultUrls[$key]['action'] = $this->settings['blockTabs'][$key]['url']['action'];
+				$defaultUrls[$key]['url']['action'] = $this->settings['blockTabs'][$key]['url']['action'];
 			}
+			$settings[$key]['url'] = NetCommonsUrl::actionUrl($defaultUrls[$key]['url']);
 
-			$settings[$key]['url'] = NetCommonsUrl::actionUrl($defaultUrls[$key]);
+			$settings[$key] = Hash::merge($settings[$key], $defaultUrls[$key]);
 		}
 		$this->_View->viewVars['blockSettingTabs'] = $settings;
 	}
@@ -228,10 +262,40 @@ class BlockTabsHelper extends AppHelper {
  * @return string HTML tags
  */
 	public function main($active) {
-		return $this->_View->element('Blocks.main_tabs', array(
-			'tabs' => $this->_View->viewVars['settingTabs'],
-			'active' => $active
-		));
+		$tabs = $this->_View->viewVars['settingTabs'];
+
+		$html = '';
+		$html .= '<ul class="nav nav-tabs" role="tablist">';
+
+		//一覧表示
+		if (isset($tabs[self::MAIN_TAB_BLOCK_INDEX])) {
+			$html .= $this->__listTag($active, self::MAIN_TAB_BLOCK_INDEX, $tabs[self::MAIN_TAB_BLOCK_INDEX]);
+			unset($tabs[self::MAIN_TAB_BLOCK_INDEX]);
+		}
+		//表示方法変更
+		if (isset($tabs[self::MAIN_TAB_FRAME_SETTING])) {
+			$html .= $this->__listTag($active, self::MAIN_TAB_FRAME_SETTING, $tabs[self::MAIN_TAB_FRAME_SETTING]);
+			unset($tabs[self::MAIN_TAB_FRAME_SETTING]);
+		}
+		//メール通知
+		if (isset($tabs[self::MAIN_TAB_MAIL_SETTING])) {
+			$html .= $this->__listTag($active, self::MAIN_TAB_MAIL_SETTING, $tabs[self::MAIN_TAB_MAIL_SETTING]);
+			unset($tabs[self::MAIN_TAB_MAIL_SETTING]);
+		}
+		//権限設定
+		if (isset($tabs[self::MAIN_TAB_PERMISSION])) {
+			$html .= $this->__listTag($active, self::MAIN_TAB_PERMISSION, $tabs[self::MAIN_TAB_PERMISSION]);
+			unset($tabs[self::MAIN_TAB_PERMISSION]);
+		}
+		//その他のタブ
+		if ($tabs) {
+			foreach ($tabs as $key => $tab) {
+				$html .= $this->__listTag($active, $key, $tab);
+			}
+		}
+
+		$html .= '</ul><br>';
+		return $html;
 	}
 
 /**
@@ -241,9 +305,64 @@ class BlockTabsHelper extends AppHelper {
  * @return string HTML tags
  */
 	public function block($active) {
-		return $this->_View->element('Blocks.block_tabs', array(
-			'tabs' => $this->_View->viewVars['blockSettingTabs'],
-			'active' => $active
-		));
+		$tabs = $this->_View->viewVars['blockSettingTabs'];
+
+		$html = '';
+		$html .= '<ul class="nav nav-pills" role="tablist">';
+
+		//ブロック設定
+		if (isset($tabs[self::BLOCK_TAB_SETTING])) {
+			$html .= $this->__listTag($active, self::BLOCK_TAB_SETTING, $tabs[self::BLOCK_TAB_SETTING]);
+			unset($tabs[self::BLOCK_TAB_SETTING]);
+		}
+
+		if ($this->_View->request->params['action'] === 'edit') {
+			//メール通知
+			if (isset($tabs[self::BLOCK_TAB_MAIL_SETTING])) {
+				$html .= $this->__listTag($active, self::BLOCK_TAB_MAIL_SETTING, $tabs[self::BLOCK_TAB_MAIL_SETTING]);
+				unset($tabs[self::BLOCK_TAB_MAIL_SETTING]);
+			}
+			//権限設定
+			if (isset($tabs[self::BLOCK_TAB_PERMISSION])) {
+				$html .= $this->__listTag($active, self::BLOCK_TAB_PERMISSION, $tabs[self::BLOCK_TAB_PERMISSION]);
+				unset($tabs[self::BLOCK_TAB_PERMISSION]);
+			}
+			//その他のタブ
+			if ($tabs) {
+				foreach ($tabs as $key => $tab) {
+					$html .= $this->__listTag($active, $key, $tab);
+				}
+			}
+		}
+
+		$html .= '</ul><br>';
+		return $html;
 	}
+
+/**
+ * <li>の出力
+ *
+ * @param string $active アクティブタブ
+ * @param string $key タブキー
+ * @param array $tab タブデータ
+ * @return string <li>タグの出力
+ */
+	private function __listTag($active, $key, $tab) {
+		$html = '';
+
+		if ($active === $key) {
+			$activeCss = 'active';
+		} else {
+			$activeCss = '';
+		}
+
+		if (Current::permission(Hash::get($tab, 'permission', 'block_editable'))) {
+			$html .= '<li class="' . $activeCss . '">';
+			$html .= $this->NetCommonsHtml->link(__d($tab['label'][0], $tab['label'][1]), $tab['url']);
+			$html .= '</li>';
+		}
+
+		return $html;
+	}
+
 }
