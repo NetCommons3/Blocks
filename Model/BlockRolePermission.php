@@ -71,8 +71,6 @@ class BlockRolePermission extends BlocksAppModel {
 					'message' => __d('net_commons', 'Invalid request.'),
 					'allowEmpty' => false,
 					'required' => true,
-					//'last' => false, // Stop validation after this rule
-					//'on' => 'create', // Limit validation to 'create' or 'update' operations
 				),
 			),
 			'block_key' => array(
@@ -81,8 +79,6 @@ class BlockRolePermission extends BlocksAppModel {
 					'message' => __d('net_commons', 'Invalid request.'),
 					'allowEmpty' => false,
 					'required' => true,
-					//'last' => false, // Stop validation after this rule
-					//'on' => 'create', // Limit validation to 'create' or 'update' operations
 				),
 			),
 			'permission' => array(
@@ -91,18 +87,12 @@ class BlockRolePermission extends BlocksAppModel {
 					'message' => __d('net_commons', 'Invalid request.'),
 					'allowEmpty' => false,
 					'required' => true,
-					//'last' => false, // Stop validation after this rule
-					//'on' => 'create', // Limit validation to 'create' or 'update' operations
 				),
 			),
 			'value' => array(
 				'boolean' => array(
 					'rule' => array('boolean'),
 					'message' => __d('net_commons', 'Invalid request.'),
-					//'allowEmpty' => false,
-					//'required' => false,
-					//'last' => false, // Stop validation after this rule
-					//'on' => 'create', // Limit validation to 'create' or 'update' operations
 				),
 			),
 		));
