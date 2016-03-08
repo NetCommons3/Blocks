@@ -58,12 +58,12 @@ class TestSuiteBlockRolePermissionsControllerEditTestDataProviderRoleAccessTest 
 
 		//チェック
 		$expected = array(
-			0 => array('room_administrator', null),
-			1 => array('chief_editor', 'ForbiddenException'),
-			2 => array('editor', 'ForbiddenException'),
-			3 => array('general_user', 'ForbiddenException'),
-			4 => array('visitor','ForbiddenException'),
-			5 => array(null, 'ForbiddenException')
+			array('room_administrator', null),
+			array('chief_editor', 'ForbiddenException'),
+			array('editor', 'ForbiddenException'),
+			array('general_user', 'ForbiddenException'),
+			array('visitor','ForbiddenException'),
+			array(null, 'ForbiddenException')
 		);
 		$this->assertEquals($expected, $result);
 	}

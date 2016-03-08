@@ -36,6 +36,9 @@ class BlocksControllerPaginatorTest extends NetCommonsControllerTestCase {
  * @return void
  */
 	public function __construct($name = null, array $data = array(), $dataName = '') {
+		if (! isset($this->fixtures)) {
+			$this->fixtures = array();
+		}
 		$this->fixtures = array_merge($this->fixtures, array(
 			'plugin.blocks.block4paginator',
 		));

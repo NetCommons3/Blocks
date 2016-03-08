@@ -58,22 +58,22 @@ class TestSuiteBlocksControllerEditTestDataProviderRoleAccessTest extends NetCom
 
 		//チェック
 		$expected = array(
-			0 => array( 'add', 'get', 'edit', 'chief_editor', false),
-			1 => array( 'add', 'get', 'edit', 'editor', 'ForbiddenException'),
-			2 => array( 'add', 'get', 'edit', 'general_user', 'ForbiddenException'),
-			3 => array( 'add', 'get', 'edit', 'visitor', 'ForbiddenException'),
-			4 => array( 'add', 'get', 'edit', null, 'ForbiddenException'),
-			5 => array( 'edit', 'get', 'edit', 'chief_editor', false),
-			6 => array( 'edit', 'get', 'edit', 'editor', 'ForbiddenException'),
-			7 => array( 'edit', 'get', 'edit', 'general_user', 'ForbiddenException'),
-			8 => array( 'edit', 'get', 'edit', 'visitor', 'ForbiddenException'),
-			9 => array( 'edit', 'get', 'edit', null, 'ForbiddenException'),
-			10 => array( 'delete', 'get', 'delete', 'room_administrator', 'BadRequestException'),
-			11 => array( 'delete', 'get', 'delete', 'chief_editor', 'BadRequestException'),
-			12 => array( 'delete', 'get', 'delete', 'editor', 'ForbiddenException'),
-			13 => array( 'delete', 'get', 'delete', 'general_user', 'ForbiddenException'),
-			14 => array( 'delete', 'get', 'delete', 'visitor', 'ForbiddenException'),
-			15 => array( 'delete', 'get', 'delete', null, 'ForbiddenException')
+			array( 'add', 'get', 'edit', 'chief_editor', false),
+			array( 'add', 'get', 'edit', 'editor', 'ForbiddenException'),
+			array( 'add', 'get', 'edit', 'general_user', 'ForbiddenException'),
+			array( 'add', 'get', 'edit', 'visitor', 'ForbiddenException'),
+			array( 'add', 'get', 'edit', null, 'ForbiddenException'),
+			array( 'edit', 'get', 'edit', 'chief_editor', false),
+			array( 'edit', 'get', 'edit', 'editor', 'ForbiddenException'),
+			array( 'edit', 'get', 'edit', 'general_user', 'ForbiddenException'),
+			array( 'edit', 'get', 'edit', 'visitor', 'ForbiddenException'),
+			array( 'edit', 'get', 'edit', null, 'ForbiddenException'),
+			array( 'delete', 'get', 'delete', 'room_administrator', 'BadRequestException'),
+			array( 'delete', 'get', 'delete', 'chief_editor', 'BadRequestException'),
+			array( 'delete', 'get', 'delete', 'editor', 'ForbiddenException'),
+			array( 'delete', 'get', 'delete', 'general_user', 'ForbiddenException'),
+			array( 'delete', 'get', 'delete', 'visitor', 'ForbiddenException'),
+			array( 'delete', 'get', 'delete', null, 'ForbiddenException')
 		);
 		$this->assertEquals($expected, $result);
 	}
