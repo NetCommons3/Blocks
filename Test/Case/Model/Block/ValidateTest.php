@@ -70,12 +70,19 @@ class BlockValidateTest extends NetCommonsValidateTest {
 			// * language_id
 			array('data' => $data, 'field' => 'language_id', 'value' => '',
 				'message' => __d('net_commons', 'Invalid request.')),
-			array('data' => $data, 'field' => 'language_id', 'value' => 'aaa',
+			array('data' => $data, 'field' => 'language_id', 'value' => 'a',
 				'message' => __d('net_commons', 'Invalid request.')),
 			// * room_id
 			array('data' => $data, 'field' => 'room_id', 'value' => '',
 				'message' => __d('net_commons', 'Invalid request.')),
-			array('data' => $data, 'field' => 'room_id', 'value' => 'aaa',
+			array('data' => $data, 'field' => 'room_id', 'value' => 'a',
+				'message' => __d('net_commons', 'Invalid request.')),
+			// * public_type
+			array('data' => $data, 'field' => 'public_type', 'value' => '',
+				'message' => __d('net_commons', 'Invalid request.')),
+			array('data' => $data, 'field' => 'public_type', 'value' => 'a',
+				'message' => __d('net_commons', 'Invalid request.')),
+			array('data' => $data, 'field' => 'public_type', 'value' => '3',
 				'message' => __d('net_commons', 'Invalid request.')),
 		);
 	}

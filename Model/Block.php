@@ -151,6 +151,20 @@ class Block extends BlocksAppModel {
 					'message' => __d('net_commons', 'Invalid request.'),
 				),
 			),
+			'public_type' => array(
+				'numeric' => array(
+					'rule' => array('numeric'),
+					'message' => __d('net_commons', 'Invalid request.'),
+				),
+				'inList' => array(
+					'rule' => array('inList', array(
+						self::TYPE_PRIVATE,
+						self::TYPE_PUBLIC,
+						self::TYPE_LIMITED
+					)),
+					'message' => __d('net_commons', 'Invalid request.'),
+				)
+			),
 			//'name' => array(
 			//	'notBlank' => array(
 			//		'rule' => array('notBlank'),
