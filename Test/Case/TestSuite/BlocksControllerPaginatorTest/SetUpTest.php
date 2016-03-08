@@ -1,6 +1,6 @@
 <?php
 /**
- * BlocksControllerEditTest::setUp()のテスト
+ * BlocksControllerPaginatorTest::setUp()のテスト
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
@@ -12,12 +12,12 @@
 App::uses('NetCommonsControllerTestCase', 'NetCommons.TestSuite');
 
 /**
- * BlocksControllerEditTest::setUp()のテスト
+ * BlocksControllerPaginatorTest::setUp()のテスト
  *
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
- * @package NetCommons\Blocks\Test\Case\TestSuite\BlocksControllerEditTest
+ * @package NetCommons\Blocks\Test\Case\TestSuite\BlocksControllerPaginatorTest
  */
-class TestSuiteBlocksControllerEditTestSetUpTest extends NetCommonsControllerTestCase {
+class TestSuiteBlocksControllerPaginatorTestSetUpTest extends NetCommonsControllerTestCase {
 
 /**
  * Fixtures
@@ -43,8 +43,8 @@ class TestSuiteBlocksControllerEditTestSetUpTest extends NetCommonsControllerTes
 
 		//テストプラグインのロード
 		NetCommonsCakeTestCase::loadTestPlugin($this, 'Blocks', 'TestBlocks');
-		App::uses('TestSuiteBlocksControllerEditSetUpTest', 'TestBlocks.TestSuite');
-		$this->TestSuite = new TestSuiteBlocksControllerEditSetUpTest();
+		App::uses('TestSuiteBlocksControllerPaginatorSetUpTest', 'TestBlocks.TestSuite');
+		$this->TestSuite = new TestSuiteBlocksControllerPaginatorSetUpTest();
 	}
 
 /**
@@ -57,7 +57,7 @@ class TestSuiteBlocksControllerEditTestSetUpTest extends NetCommonsControllerTes
 		$result = $this->TestSuite->setUp();
 
 		//チェック
-		$this->assertEquals('test_block_blocks', $result);
+		$this->assertEquals(array('test_block_blocks', 'test_block_blocks'), $result);
 	}
 
 }

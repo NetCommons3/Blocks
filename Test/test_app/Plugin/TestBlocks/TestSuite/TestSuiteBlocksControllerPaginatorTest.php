@@ -42,7 +42,6 @@ class TestSuiteBlocksControllerPaginatorTest extends BlocksControllerPaginatorTe
 		//テストコントローラ生成
 		$this->generateNc('TestBlocks.TestSuiteBlocksControllerPaginatorTest');
 		parent::setUp();
-		return $this;
 	}
 
 /**
