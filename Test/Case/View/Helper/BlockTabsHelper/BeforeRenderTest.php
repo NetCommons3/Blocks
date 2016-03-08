@@ -108,18 +108,81 @@ class BlockTabsHelperBeforeRenderTest extends NetCommonsControllerTestCase {
 		$this->assertRegExp($pattern, $this->view);
 
 		$pattern = 'settingTabs = array (' .
-						'\'block_index\' => array (\'url\' => \'/test_blocks/test_block_blocks\',),' .
-						'\'frame_settings\' => array (\'url\' => \'/test_blocks/test_block_frame_settings/edit\',),' .
-						'\'mail_settings\' => array (\'url\' => \'/test_blocks/test_block_mail_settings/edit\',),' .
-						'\'role_permissions\' => array (\'url\' => \'/test_blocks/test_block_block_role_permissions/edit\',),' .
-					')';
+			'\'block_index\' => array (' .
+				'\'url\' => array (' .
+					'\'plugin\' => \'test_blocks\',' .
+					'\'controller\' => \'test_block_blocks\',' .
+					'\'action\' => \'index\',' .
+					'\'frame_id\' => NULL,' .
+				'),' .
+				'\'label\' => array (0 => \'net_commons\',1 => \'List\',),' .
+			'),' .
+			'\'frame_settings\' => array (' .
+				'\'url\' => array (' .
+					'\'plugin\' => \'test_blocks\',' .
+					'\'controller\' => \'test_block_frame_settings\',' .
+					'\'action\' => \'edit\',' .
+					'\'frame_id\' => NULL,' .
+				'),' .
+				'\'label\' => array (0 => \'net_commons\',1 => \'Frame settings\',),' .
+			'),' .
+			'\'mail_settings\' => array (' .
+				'\'url\' => array (' .
+					'\'plugin\' => \'test_blocks\',' .
+					'\'controller\' => \'test_block_mail_settings\',' .
+					'\'action\' => \'edit\',' .
+					'\'frame_id\' => NULL,' .
+					'\'block_id\' => NULL,' .
+				'),' .
+				'\'label\' => array (0 => \'mails\',1 => \'Mail settings\',),' .
+			'),' .
+			'\'role_permissions\' => array (' .
+				'\'url\' => array (' .
+					'\'plugin\' => \'test_blocks\',' .
+					'\'controller\' => \'test_block_block_role_permissions\',' .
+					'\'action\' => \'edit\',' .
+					'\'frame_id\' => NULL,' .
+					'\'block_id\' => NULL,' .
+				'),' .
+				'\'label\' => array (0 => \'net_commons\',1 => \'Role permission settings\',),' .
+				'\'permission\' => \'block_permission_editable\',' .
+			'),' .
+		')';
 		$this->$methodMainTabs($pattern, $this->view);
 
 		$pattern = 'blockSettingTabs = array (' .
-						'\'block_settings\' => array (\'url\' => \'/test_blocks/test_block_blocks\',),' .
-						'\'role_permissions\' => array (\'url\' => \'/test_blocks/test_block_block_role_permissions/edit\',),' .
-						'\'mail_settings\' => array (\'url\' => \'/test_blocks/test_block_mail_settings/edit\',),' .
-					')';
+			'\'block_settings\' => array (' .
+				'\'url\' => array (' .
+					'\'plugin\' => \'test_blocks\',' .
+					'\'controller\' => \'test_block_blocks\',' .
+					'\'action\' => \'index\',' .
+					'\'frame_id\' => NULL,' .
+					'\'block_id\' => NULL,' .
+				'),' .
+				'\'label\' => array (0 => \'blocks\',1 => \'Block settings\',),' .
+			'),' .
+			'\'role_permissions\' => array (' .
+				'\'url\' => array (' .
+					'\'plugin\' => \'test_blocks\',' .
+					'\'controller\' => \'test_block_block_role_permissions\',' .
+					'\'action\' => \'edit\',' .
+					'\'frame_id\' => NULL,' .
+					'\'block_id\' => NULL,' .
+				'),' .
+				'\'label\' => array (0 => \'net_commons\',1 => \'Role permission settings\',),' .
+			'),' .
+			'\'mail_settings\' => array (' .
+				'\'url\' => array (' .
+					'\'plugin\' => \'test_blocks\',' .
+					'\'controller\' => \'test_block_mail_settings\',' .
+					'\'action\' => \'edit\',' .
+					'\'frame_id\' => NULL,' .
+					'\'block_id\' => NULL,' .
+				'),' .
+				'\'label\' => array (0 => \'mails\',1 => \'Mail settings\',),' .
+				'\'permission\' => \'block_permission_editable\',' .
+			'),' .
+		')';
 		$this->$methodBlockTabs($pattern, $this->view);
 	}
 

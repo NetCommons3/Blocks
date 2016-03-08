@@ -165,18 +165,18 @@ class BlockTabsHelper extends AppHelper {
 				continue;
 			}
 
-			if (isset($this->settings['mainTabs'][$key]['url']['plugin'])) {
-				$defaultUrls[$key]['url']['plugin'] = $this->settings['mainTabs'][$key]['url']['plugin'];
-			}
-			if (isset($this->settings['mainTabs'][$key]['url']['controller'])) {
-				$defaultUrls[$key]['url']['controller'] = $this->settings['mainTabs'][$key]['url']['controller'];
-			}
-			if (isset($this->settings['mainTabs'][$key]['url']['action'])) {
-				$defaultUrls[$key]['url']['action'] = $this->settings['mainTabs'][$key]['url']['action'];
-			}
-			$settings[$key]['url'] = NetCommonsUrl::actionUrl($defaultUrls[$key]['url']);
+			//if (isset($this->settings['mainTabs'][$key]['url']['plugin'])) {
+			//	$defaultUrls[$key]['url']['plugin'] = $this->settings['mainTabs'][$key]['url']['plugin'];
+			//}
+			//if (isset($this->settings['mainTabs'][$key]['url']['controller'])) {
+			//	$defaultUrls[$key]['url']['controller'] = $this->settings['mainTabs'][$key]['url']['controller'];
+			//}
+			//if (isset($this->settings['mainTabs'][$key]['url']['action'])) {
+			//	$defaultUrls[$key]['url']['action'] = $this->settings['mainTabs'][$key]['url']['action'];
+			//}
+			//$settings[$key]['url'] = NetCommonsUrl::actionUrl($defaultUrls[$key]['url']);
 
-			$settings[$key] = Hash::merge($settings[$key], $defaultUrls[$key]);
+			$settings[$key] = Hash::merge($defaultUrls[$key], $settings[$key]);
 		}
 
 		$this->_View->viewVars['settingTabs'] = $settings;
@@ -239,18 +239,18 @@ class BlockTabsHelper extends AppHelper {
 				continue;
 			}
 
-			if (isset($this->settings['blockTabs'][$key]['url']['plugin'])) {
-				$defaultUrls[$key]['url']['plugin'] = $this->settings['blockTabs'][$key]['url']['plugin'];
-			}
-			if (isset($this->settings['blockTabs'][$key]['url']['controller'])) {
-				$defaultUrls[$key]['url']['controller'] = $this->settings['blockTabs'][$key]['url']['controller'];
-			}
-			if (isset($this->settings['blockTabs'][$key]['url']['action'])) {
-				$defaultUrls[$key]['url']['action'] = $this->settings['blockTabs'][$key]['url']['action'];
-			}
-			$settings[$key]['url'] = NetCommonsUrl::actionUrl($defaultUrls[$key]['url']);
+			//if (isset($this->settings['blockTabs'][$key]['url']['plugin'])) {
+			//	$defaultUrls[$key]['url']['plugin'] = $this->settings['blockTabs'][$key]['url']['plugin'];
+			//}
+			//if (isset($this->settings['blockTabs'][$key]['url']['controller'])) {
+			//	$defaultUrls[$key]['url']['controller'] = $this->settings['blockTabs'][$key]['url']['controller'];
+			//}
+			//if (isset($this->settings['blockTabs'][$key]['url']['action'])) {
+			//	$defaultUrls[$key]['url']['action'] = $this->settings['blockTabs'][$key]['url']['action'];
+			//}
+			//$settings[$key]['url'] = NetCommonsUrl::actionUrl($defaultUrls[$key]['url']);
 
-			$settings[$key] = Hash::merge($settings[$key], $defaultUrls[$key]);
+			$settings[$key] = Hash::merge($defaultUrls[$key], $settings[$key]);
 		}
 		$this->_View->viewVars['blockSettingTabs'] = $settings;
 	}

@@ -65,7 +65,8 @@ class BlockTabsHelperSetMainTabsTest extends NetCommonsHelperTestCase {
 			),
 			'frame_settings', 'mail_settings', 'role_permissions',
 			'original' => array(
-				'url' => '/original_plugin/controller/original_ctrl/edit'
+				'url' => '/original_plugin/controller/original_ctrl/edit',
+				'label' => array('original', 'Original settings')
 			)
 		);
 
@@ -75,19 +76,47 @@ class BlockTabsHelperSetMainTabsTest extends NetCommonsHelperTestCase {
 		//チェック
 		$expected = array('settingTabs' => array(
 			'block_index' => array(
-				'url' => '/test_plugin/test_ctrl/test'
+				'url' => array(
+					'plugin' => 'test_plugin',
+					'controller' => 'test_ctrl',
+					'action' => 'test',
+					'frame_id' => null
+				),
+				'label' => array(0 => 'net_commons', 1 => 'List')
 			),
 			'frame_settings' => array(
-				'url' => '/test_blocks/test_block_frame_settings/edit'
+				'url' => array(
+					'plugin' => 'test_blocks',
+					'controller' => 'test_block_frame_settings',
+					'action' => 'edit',
+					'frame_id' => null
+				),
+				'label' => array(0 => 'net_commons', 1 => 'Frame settings')
 			),
 			'mail_settings' => array(
-				'url' => '/test_blocks/test_block_mail_settings/edit'
+				'url' => array(
+					'plugin' => 'test_blocks',
+					'controller' => 'test_block_mail_settings',
+					'action' => 'edit',
+					'frame_id' => null,
+					'block_id' => null
+				),
+				'label' => array(0 => 'mails', 1 => 'Mail settings')
 			),
 			'role_permissions' => array(
-				'url' => '/test_blocks/test_block_block_role_permissions/edit'
+				'url' => array(
+					'plugin' => 'test_blocks',
+					'controller' => 'test_block_block_role_permissions',
+					'action' => 'edit',
+					'frame_id' => null,
+					'block_id' => null
+				),
+				'label' => array(0 => 'net_commons', 1 => 'Role permission settings'),
+				'permission' => 'block_permission_editable'
 			),
 			'original' => array(
-				'url' => '/original_plugin/controller/original_ctrl/edit'
+				'url' => '/original_plugin/controller/original_ctrl/edit',
+				'label' => array(0 => 'original_plugin', 1 => 'Original settings'),
 			)
 		));
 		$this->assertEquals($expected, $this->BlockTabs->_View->viewVars);
