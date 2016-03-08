@@ -14,6 +14,7 @@
  */
 
 App::uses('BlocksAppModel', 'Blocks.Model');
+App::uses('NetCommonsTime', 'NetCommons.Utility');
 
 /**
  * Block Model
@@ -172,7 +173,7 @@ class Block extends BlocksAppModel {
  * @return bool
  */
 	public function isVisible($block) {
-		$result = false; //デフォルト見せない
+		$result = true;
 
 		switch (Hash::get($block, 'Block.public_type', self::TYPE_PRIVATE)) {
 			case self::TYPE_PRIVATE:
@@ -194,6 +195,8 @@ class Block extends BlocksAppModel {
 					$result = false;
 				}
 				break;
+			default:
+				$result = false;
 		}
 		return $result;
 	}
