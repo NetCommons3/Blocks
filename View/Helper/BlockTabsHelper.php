@@ -165,17 +165,6 @@ class BlockTabsHelper extends AppHelper {
 				continue;
 			}
 
-			//if (isset($this->settings['mainTabs'][$key]['url']['plugin'])) {
-			//	$defaultUrls[$key]['url']['plugin'] = $this->settings['mainTabs'][$key]['url']['plugin'];
-			//}
-			//if (isset($this->settings['mainTabs'][$key]['url']['controller'])) {
-			//	$defaultUrls[$key]['url']['controller'] = $this->settings['mainTabs'][$key]['url']['controller'];
-			//}
-			//if (isset($this->settings['mainTabs'][$key]['url']['action'])) {
-			//	$defaultUrls[$key]['url']['action'] = $this->settings['mainTabs'][$key]['url']['action'];
-			//}
-			//$settings[$key]['url'] = NetCommonsUrl::actionUrl($defaultUrls[$key]['url']);
-
 			$settings[$key] = Hash::merge($defaultUrls[$key], $settings[$key]);
 		}
 
@@ -239,17 +228,6 @@ class BlockTabsHelper extends AppHelper {
 				continue;
 			}
 
-			//if (isset($this->settings['blockTabs'][$key]['url']['plugin'])) {
-			//	$defaultUrls[$key]['url']['plugin'] = $this->settings['blockTabs'][$key]['url']['plugin'];
-			//}
-			//if (isset($this->settings['blockTabs'][$key]['url']['controller'])) {
-			//	$defaultUrls[$key]['url']['controller'] = $this->settings['blockTabs'][$key]['url']['controller'];
-			//}
-			//if (isset($this->settings['blockTabs'][$key]['url']['action'])) {
-			//	$defaultUrls[$key]['url']['action'] = $this->settings['blockTabs'][$key]['url']['action'];
-			//}
-			//$settings[$key]['url'] = NetCommonsUrl::actionUrl($defaultUrls[$key]['url']);
-
 			$settings[$key] = Hash::merge($defaultUrls[$key], $settings[$key]);
 		}
 		$this->_View->viewVars['blockSettingTabs'] = $settings;
@@ -258,10 +236,10 @@ class BlockTabsHelper extends AppHelper {
 /**
  * メインタブの出力
  *
- * @param string $active Active tab
+ * @param string $activeTab Active tab
  * @return string HTML tags
  */
-	public function main($active) {
+	public function main($activeTab) {
 		$tabs = $this->_View->viewVars['settingTabs'];
 
 		$html = '';
@@ -269,28 +247,28 @@ class BlockTabsHelper extends AppHelper {
 
 		//一覧表示
 		if (isset($tabs[self::MAIN_TAB_BLOCK_INDEX])) {
-			$html .= $this->__listTag($active, self::MAIN_TAB_BLOCK_INDEX, $tabs[self::MAIN_TAB_BLOCK_INDEX]);
+			$html .= $this->__listTag($activeTab, self::MAIN_TAB_BLOCK_INDEX, $tabs[self::MAIN_TAB_BLOCK_INDEX]);
 			unset($tabs[self::MAIN_TAB_BLOCK_INDEX]);
 		}
 		//表示方法変更
 		if (isset($tabs[self::MAIN_TAB_FRAME_SETTING])) {
-			$html .= $this->__listTag($active, self::MAIN_TAB_FRAME_SETTING, $tabs[self::MAIN_TAB_FRAME_SETTING]);
+			$html .= $this->__listTag($activeTab, self::MAIN_TAB_FRAME_SETTING, $tabs[self::MAIN_TAB_FRAME_SETTING]);
 			unset($tabs[self::MAIN_TAB_FRAME_SETTING]);
 		}
 		//メール通知
 		if (isset($tabs[self::MAIN_TAB_MAIL_SETTING])) {
-			$html .= $this->__listTag($active, self::MAIN_TAB_MAIL_SETTING, $tabs[self::MAIN_TAB_MAIL_SETTING]);
+			$html .= $this->__listTag($activeTab, self::MAIN_TAB_MAIL_SETTING, $tabs[self::MAIN_TAB_MAIL_SETTING]);
 			unset($tabs[self::MAIN_TAB_MAIL_SETTING]);
 		}
 		//権限設定
 		if (isset($tabs[self::MAIN_TAB_PERMISSION])) {
-			$html .= $this->__listTag($active, self::MAIN_TAB_PERMISSION, $tabs[self::MAIN_TAB_PERMISSION]);
+			$html .= $this->__listTag($activeTab, self::MAIN_TAB_PERMISSION, $tabs[self::MAIN_TAB_PERMISSION]);
 			unset($tabs[self::MAIN_TAB_PERMISSION]);
 		}
 		//その他のタブ
 		if ($tabs) {
 			foreach ($tabs as $key => $tab) {
-				$html .= $this->__listTag($active, $key, $tab);
+				$html .= $this->__listTag($activeTab, $key, $tab);
 			}
 		}
 
@@ -301,10 +279,10 @@ class BlockTabsHelper extends AppHelper {
 /**
  * ブロック設定タブの出力
  *
- * @param string $active Active tab
+ * @param string $activeTab Active tab
  * @return string HTML tags
  */
-	public function block($active) {
+	public function block($activeTab) {
 		$tabs = $this->_View->viewVars['blockSettingTabs'];
 
 		$html = '';
@@ -312,25 +290,25 @@ class BlockTabsHelper extends AppHelper {
 
 		//ブロック設定
 		if (isset($tabs[self::BLOCK_TAB_SETTING])) {
-			$html .= $this->__listTag($active, self::BLOCK_TAB_SETTING, $tabs[self::BLOCK_TAB_SETTING]);
+			$html .= $this->__listTag($activeTab, self::BLOCK_TAB_SETTING, $tabs[self::BLOCK_TAB_SETTING]);
 			unset($tabs[self::BLOCK_TAB_SETTING]);
 		}
 
 		if ($this->_View->request->params['action'] === 'edit') {
 			//メール通知
 			if (isset($tabs[self::BLOCK_TAB_MAIL_SETTING])) {
-				$html .= $this->__listTag($active, self::BLOCK_TAB_MAIL_SETTING, $tabs[self::BLOCK_TAB_MAIL_SETTING]);
+				$html .= $this->__listTag($activeTab, self::BLOCK_TAB_MAIL_SETTING, $tabs[self::BLOCK_TAB_MAIL_SETTING]);
 				unset($tabs[self::BLOCK_TAB_MAIL_SETTING]);
 			}
 			//権限設定
 			if (isset($tabs[self::BLOCK_TAB_PERMISSION])) {
-				$html .= $this->__listTag($active, self::BLOCK_TAB_PERMISSION, $tabs[self::BLOCK_TAB_PERMISSION]);
+				$html .= $this->__listTag($activeTab, self::BLOCK_TAB_PERMISSION, $tabs[self::BLOCK_TAB_PERMISSION]);
 				unset($tabs[self::BLOCK_TAB_PERMISSION]);
 			}
 			//その他のタブ
 			if ($tabs) {
 				foreach ($tabs as $key => $tab) {
-					$html .= $this->__listTag($active, $key, $tab);
+					$html .= $this->__listTag($activeTab, $key, $tab);
 				}
 			}
 		}
@@ -342,22 +320,22 @@ class BlockTabsHelper extends AppHelper {
 /**
  * <li>の出力
  *
- * @param string $active アクティブタブ
+ * @param string $activeTab アクティブタブ
  * @param string $key タブキー
  * @param array $tab タブデータ
  * @return string <li>タグの出力
  */
-	private function __listTag($active, $key, $tab) {
+	private function __listTag($activeTab, $key, $tab) {
 		$html = '';
 
-		if ($active === $key) {
-			$activeCss = 'active';
+		if ($activeTab === $key) {
+			$activeTabCss = 'active';
 		} else {
-			$activeCss = '';
+			$activeTabCss = '';
 		}
 
 		if (Current::permission(Hash::get($tab, 'permission', 'block_editable'))) {
-			$html .= '<li class="' . $activeCss . '">';
+			$html .= '<li class="' . $activeTabCss . '">';
 			$html .= $this->NetCommonsHtml->link(__d($tab['label'][0], $tab['label'][1]), $tab['url']);
 			$html .= '</li>';
 		}
