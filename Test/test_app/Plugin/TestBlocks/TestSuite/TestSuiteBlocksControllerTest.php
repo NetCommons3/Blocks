@@ -96,4 +96,19 @@ class TestSuiteBlocksControllerTest extends BlocksControllerTest {
 		return $this;
 	}
 
+/**
+ * index()のアクセス許可テスト
+ *
+ * @param string $role ロール名
+ * @param bool $isException Exceptionの有無
+ * @dataProvider dataProviderRoleAccess
+ * @return mixed テスト結果
+ */
+	public function testAccessPermissionError($role, $isException) {
+		//テストコントローラ生成
+		$this->generateNc('TestBlocks.TestSuiteBlocksControllerTestError');
+		parent::testAccessPermission($role, $isException);
+		return $this;
+	}
+
 }

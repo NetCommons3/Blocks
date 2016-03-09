@@ -57,7 +57,7 @@ class TestSuiteBlocksControllerEditTestTestAccessPermissionTest extends NetCommo
 		$action = 'edit';
 		$method = 'get';
 		$expected = 'edit';
-		$role = 'general_user';
+		$role = 'chief_editor';
 		$exception = null;
 
 		//テスト実施
@@ -67,7 +67,7 @@ class TestSuiteBlocksControllerEditTestTestAccessPermissionTest extends NetCommo
 		$pattern = '/' . preg_quote('TestSuite/BlocksControllerEditTest/edit.ctp', '/') . '/';
 		$this->assertRegExp($pattern, $result->view);
 
-		$this->assertEquals('general_user', $result->controller->viewVars['username']);
+		$this->assertEquals('chief_editor', $result->controller->viewVars['username']);
 	}
 
 /**
@@ -104,7 +104,7 @@ class TestSuiteBlocksControllerEditTestTestAccessPermissionTest extends NetCommo
 		$action = 'edit_exception_error';
 		$method = 'get';
 		$expected = 'edit';
-		$role = null;
+		$role = 'chief_editor';
 		$exception = 'BadRequestException';
 
 		//テスト実施
