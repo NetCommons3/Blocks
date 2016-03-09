@@ -102,7 +102,7 @@ class BlockTabsHelperBlockTest extends NetCommonsHelperTestCase {
 	}
 
 /**
- * main()のテスト用DataProvider
+ * block()のテスト用DataProvider
  *
  * ### 戻り値
  *  - activeTab アクティブタブ
