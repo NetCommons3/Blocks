@@ -201,7 +201,6 @@ class BlockTabsHelper extends AppHelper {
 					'block_id' => Current::read('Block.id'),
 				),
 				'label' => array('mails', 'Mail settings'),
-				'permission' => 'block_permission_editable',
 			),
 			self::BLOCK_TAB_PERMISSION => array(
 				'url' => array(
@@ -212,6 +211,7 @@ class BlockTabsHelper extends AppHelper {
 					'block_id' => Current::read('Block.id'),
 				),
 				'label' => array('net_commons', 'Role permission settings'),
+				'permission' => 'block_permission_editable',
 			),
 		);
 

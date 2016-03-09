@@ -1,6 +1,6 @@
 <?php
 /**
- * BlockTabsHelper::main()のテスト
+ * BlockTabsHelper::block()のテスト
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
@@ -12,12 +12,12 @@
 App::uses('NetCommonsHelperTestCase', 'NetCommons.TestSuite');
 
 /**
- * BlockTabsHelper::main()のテスト
+ * BlockTabsHelper::block()のテスト
  *
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Blocks\Test\Case\View\Helper\BlockTabsHelper
  */
-class BlockTabsHelperMainTest extends NetCommonsHelperTestCase {
+class BlockTabsHelperBlockTest extends NetCommonsHelperTestCase {
 
 /**
  * Fixtures
@@ -53,24 +53,16 @@ class BlockTabsHelperMainTest extends NetCommonsHelperTestCase {
 	private function __getViewVars() {
 		//テストデータ生成
 		$viewVars = array(
-			'settingTabs' => array(
-				'block_index' => array(
+			'blockSettingTabs' => array(
+				'block_settings' => array(
 					'url' => array(
 						'plugin' => 'test_plugin',
 						'controller' => 'test_ctrl',
 						'action' => 'test',
-						'frame_id' => '6'
+						'frame_id' => '6',
+						'block_id' => null
 					),
-					'label' => array(0 => 'net_commons', 1 => 'List')
-				),
-				'frame_settings' => array(
-					'url' => array(
-						'plugin' => 'test_blocks',
-						'controller' => 'test_block_frame_settings',
-						'action' => 'edit',
-						'frame_id' => '6'
-					),
-					'label' => array(0 => 'net_commons', 1 => 'Frame settings')
+					'label' => array(0 => 'blocks', 1 => 'Block settings')
 				),
 				'mail_settings' => array(
 					'url' => array(
@@ -80,7 +72,7 @@ class BlockTabsHelperMainTest extends NetCommonsHelperTestCase {
 						'frame_id' => '6',
 						'block_id' => null
 					),
-					'label' => array(0 => 'mails', 1 => 'Mail settings')
+					'label' => array(0 => 'mails', 1 => 'Mail settings'),
 				),
 				'role_permissions' => array(
 					'url' => array(
@@ -120,8 +112,7 @@ class BlockTabsHelperMainTest extends NetCommonsHelperTestCase {
  */
 	public function dataProvider() {
 		return array(
-			array('activeTab' =>  'block_index', 'blockPermission' => true),
-			array('activeTab' =>  'frame_settings', 'blockPermission' => true),
+			array('activeTab' =>  'block_settings', 'blockPermission' => true),
 			array('activeTab' =>  'mail_settings', 'blockPermission' => true),
 			array('activeTab' =>  'role_permissions', 'blockPermission' => true),
 			array('activeTab' =>  'role_permissions', 'blockPermission' => false),
@@ -130,18 +121,18 @@ class BlockTabsHelperMainTest extends NetCommonsHelperTestCase {
 	}
 
 /**
- * main()のテスト
+ * block()のテスト
  *
  * @param string $activeTab アクティブタブ
  * @param bool $blockPermission ブロックパーミッションの値
  * @dataProvider dataProvider
  * @return void
  */
-	public function testMain($activeTab, $blockPermission) {
+	public function testBlock($activeTab, $blockPermission) {
 		//Helperロード
 		$viewVars = $this->__getViewVars();
 		$requestData = array();
-		$params = array();
+		$params = array('action' => 'edit');
 		$this->loadHelper('Blocks.BlockTabs', $viewVars, $requestData, $params);
 
 		//データ生成
@@ -149,14 +140,11 @@ class BlockTabsHelperMainTest extends NetCommonsHelperTestCase {
 		Current::$current['Permission']['block_permission_editable']['value'] = $blockPermission;
 
 		//テスト実施
-		$result = $this->BlockTabs->main($activeTab);
+		$result = $this->BlockTabs->block($activeTab);
 
 		//チェック
-		$this->__assertListTag($result, $activeTab, 'block_index',
-				'/test_plugin/test_ctrl/test', __d('net_commons', 'List'));
-
-		$this->__assertListTag($result, $activeTab, 'frame_settings',
-				'/test_blocks/test_block_frame_settings/edit', __d('net_commons', 'Frame settings'));
+		$this->__assertListTag($result, $activeTab, 'block_settings',
+				'/test_plugin/test_ctrl/test', __d('blocks', 'Block settings'));
 
 		$this->__assertListTag($result, $activeTab, 'mail_settings',
 				'/test_blocks/test_block_mail_settings/edit', __d('mails', 'Mail settings'));
@@ -170,6 +158,35 @@ class BlockTabsHelperMainTest extends NetCommonsHelperTestCase {
 
 		$this->__assertListTag($result, $activeTab, 'original',
 				'/original_plugin/original_ctrl/edit', 'Original settings(lang)'); //言語が読まれているかチェックするため固定する
+	}
+
+/**
+ * block()のテスト(addアクション)
+ *
+ * @return void
+ */
+	public function testBlockAdd() {
+		//Helperロード
+		$viewVars = $this->__getViewVars();
+		$requestData = array();
+		$params = array('action' => 'add');
+		$this->loadHelper('Blocks.BlockTabs', $viewVars, $requestData, $params);
+
+		//データ生成
+		$activeTab = 'block_settings';
+		Current::$current['Permission']['block_editable']['value'] = true;
+		Current::$current['Permission']['block_permission_editable']['value'] = true;
+
+		//テスト実施
+		$result = $this->BlockTabs->block($activeTab);
+
+		//チェック
+		$this->__assertListTag($result, $activeTab, 'block_settings',
+				'/test_plugin/test_ctrl/test', __d('blocks', 'Block settings'));
+
+		$this->assertTextNotContains('mail_settings', $result);
+		$this->assertTextNotContains('role_permissions', $result);
+		$this->assertTextNotContains('original', $result);
 	}
 
 /**
@@ -190,4 +207,5 @@ class BlockTabsHelperMainTest extends NetCommonsHelperTestCase {
 		$pattern = '<li class="' . $activeCss . '"><a href="' . $url . '?frame_id=6">' . $lang . '</a></li>';
 		$this->assertTextContains($pattern, $result);
 	}
+
 }
