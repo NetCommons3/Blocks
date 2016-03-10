@@ -34,6 +34,24 @@ class TestSuiteBlockRolePermissionsControllerEditTest extends BlockRolePermissio
 	protected $_controller = 'TestSuiteBlockRolePermissionsControllerEditTest';
 
 /**
+ * Controller name
+ *
+ * @var string
+ */
+	public $asserts = array();
+
+/**
+ * $this->asserts()のチェック用メソッド
+ *
+ * @param array $asserts テストAssert
+ * @param string $result Result data
+ * @return void
+ */
+	public function asserts($asserts, $result) {
+		$this->asserts[] = $asserts;
+	}
+
+/**
  * setUp method
  *
  * @return mixed テスト結果
