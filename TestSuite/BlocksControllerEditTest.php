@@ -293,7 +293,10 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 
 		//チェック
 		$header = $this->controller->response->header();
-		$this->assertNotEmpty($header['Location']);
+		$asserts = array(
+			array('method' => 'assertNotEmpty', 'value' => $header['Location'])
+		);
+		$this->asserts($asserts, $this->contents);
 
 		//ログアウト
 		TestAuthGeneral::logout($this);

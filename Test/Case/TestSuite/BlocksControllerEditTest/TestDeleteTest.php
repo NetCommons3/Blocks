@@ -64,6 +64,15 @@ class TestSuiteBlocksControllerEditTestTestDeleteTest extends NetCommonsControll
 		$result = $this->TestSuite->testDelete($data);
 
 		//チェック
+		$expected = array(
+			0 => array(
+				0 => array(
+					'method' => 'assertNotEmpty',
+					'value' => '/test_blocks/test_suite_blocks_controller_edit_test/index'
+				),
+			)
+		);
+		$this->assertEquals($expected, $this->TestSuite->asserts);
 		$this->assertEquals($data, $result->controller->data);
 	}
 
