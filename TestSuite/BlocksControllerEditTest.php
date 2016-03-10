@@ -118,42 +118,6 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 	}
 
 /**
- * delete()のGET(json)パラメータテスト
- *
- * @return void
- */
-	public function testDeleteGetJson() {
-		//ログイン
-		TestAuthGeneral::login($this);
-
-		$frameId = '6';
-		$blockId = '4';
-
-		//アクション実行
-		$url = NetCommonsUrl::actionUrl(array(
-			'plugin' => $this->plugin,
-			'controller' => $this->_controller,
-			'action' => 'delete',
-			'frame_id' => $frameId,
-			'block_id' => $blockId
-		));
-		$params = array(
-			'method' => 'get',
-			'return' => 'view',
-			'type' => 'json'
-		);
-		$this->testAction($url, $params);
-
-		//チェック
-		$result = json_decode($this->contents, true);
-		$this->assertArrayHasKey('code', $result);
-		$this->assertEquals(400, $result['code']);
-
-		//ログアウト
-		TestAuthGeneral::logout($this);
-	}
-
-/**
  * add()のテスト
  *
  * @param string $method リクエストメソッド（get or post or put）
