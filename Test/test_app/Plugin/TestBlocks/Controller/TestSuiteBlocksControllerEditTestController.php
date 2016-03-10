@@ -20,6 +20,28 @@ App::uses('AppController', 'Controller');
 class TestSuiteBlocksControllerEditTestController extends AppController {
 
 /**
+ * index
+ *
+ * @return void
+ */
+	public function index() {
+		$this->autoRender = true;
+	}
+
+/**
+ * edit
+ *
+ * @return void
+ */
+	public function add() {
+		$this->autoRender = true;
+		$this->set('username', Current::read('User.username'));
+		$this->redirect('index');
+
+		$this->validationErrors = 'Validation error message';
+	}
+
+/**
  * edit
  *
  * @return void
@@ -27,6 +49,18 @@ class TestSuiteBlocksControllerEditTestController extends AppController {
 	public function edit() {
 		$this->autoRender = true;
 		$this->set('username', Current::read('User.username'));
+		$this->redirect('index');
+	}
+
+/**
+ * edit
+ *
+ * @return void
+ */
+	public function delete() {
+		$this->autoRender = true;
+		$this->set('username', Current::read('User.username'));
+		$this->redirect('index');
 	}
 
 /**

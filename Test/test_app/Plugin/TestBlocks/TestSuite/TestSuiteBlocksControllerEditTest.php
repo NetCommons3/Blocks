@@ -34,6 +34,21 @@ class TestSuiteBlocksControllerEditTest extends BlocksControllerEditTest {
 	protected $_controller = 'TestSuiteBlocksControllerEditTest';
 
 /**
+ * $this->asserts()のチェック用メソッド
+ *
+ * @param array $asserts テストAssert
+ * @param string $result Result data
+ * @return void
+ */
+	public function asserts($asserts, $result) {
+		$path = '/test_blocks/test_suite_blocks_controller_edit_test/index';
+		if (substr(Hash::get($asserts[0], 'value'), -1 * strlen($path)) === $path) {
+			$asserts[0] = Hash::insert($asserts[0], 'value', $path);
+		}
+		$this->asserts[] = $asserts;
+	}
+
+/**
  * setUp method
  *
  * @return mixed テスト結果

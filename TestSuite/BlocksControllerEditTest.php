@@ -134,7 +134,6 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 		$frameId = '6';
 		$roomId = '1';
 		if ($validationError) {
-			$data = Hash::remove($data, $validationError['field']);
 			$data = Hash::insert($data, $validationError['field'], $validationError['value']);
 		}
 
