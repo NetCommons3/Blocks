@@ -20,6 +20,15 @@ App::uses('AppController', 'Controller');
 class TestSuiteBlockRolePermissionsControllerEditTestController extends AppController {
 
 /**
+ * index
+ *
+ * @return void
+ */
+	public function index() {
+		$this->autoRender = true;
+	}
+
+/**
  * edit
  *
  * @return void
@@ -27,6 +36,7 @@ class TestSuiteBlockRolePermissionsControllerEditTestController extends AppContr
 	public function edit() {
 		$this->autoRender = true;
 		$this->set('username', Current::read('User.username'));
+		$this->redirect('index');
 	}
 
 }
