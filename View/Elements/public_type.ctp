@@ -35,20 +35,26 @@
 	<div class="col-xs-offset-1 col-xs-11">
 		<div class="input-group inline-block" style="margin-left: 20px;">
 			<div class="input-group">
-				<?php echo $this->NetCommonsForm->time('Block.publish_start', array(
+				<?php echo $this->NetCommonsForm->input('Block.publish_start', array(
+					'type' => 'datetime',
 					'label' => false,
 					'class' => 'form-control',
-					'placeholder' => 'yyyy-mm-dd hh:nn'
+					'placeholder' => 'yyyy-mm-dd hh:nn',
+					'div' => false,
+					'error' => false,
 				)); ?>
 
 				<span class="input-group-addon">
 					<span class="glyphicon glyphicon-minus"></span>
 				</span>
 
-				<?php echo $this->NetCommonsForm->time('Block.publish_end', array(
+				<?php echo $this->NetCommonsForm->input('Block.publish_end', array(
+					'type' => 'datetime',
 					'label' => false,
 					'class' => 'form-control',
-					'placeholder' => 'yyyy-mm-dd hh:nn'
+					'placeholder' => 'yyyy-mm-dd hh:nn',
+					'div' => false,
+					'error' => false,
 				)); ?>
 			</div>
 		</div>
