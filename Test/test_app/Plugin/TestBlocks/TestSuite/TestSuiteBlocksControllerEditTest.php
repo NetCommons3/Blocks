@@ -34,6 +34,13 @@ class TestSuiteBlocksControllerEditTest extends BlocksControllerEditTest {
 	protected $_controller = 'TestSuiteBlocksControllerEditTest';
 
 /**
+ * asserts()チェック用配列
+ *
+ * @var string
+ */
+	public $asserts = array();
+
+/**
  * $this->asserts()のチェック用メソッド
  *
  * @param array $asserts テストAssert
