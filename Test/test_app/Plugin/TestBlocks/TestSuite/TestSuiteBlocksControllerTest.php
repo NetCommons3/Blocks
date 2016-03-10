@@ -34,6 +34,68 @@ class TestSuiteBlocksControllerTest extends BlocksControllerTest {
 	protected $_controller = 'TestSuiteBlocksControllerTest';
 
 /**
+ * assertRegExp()チェック用配列
+ *
+ * @var string
+ */
+	protected static $_assertRegExp = array();
+
+/**
+ * assertTextEquals()チェック用配列
+ *
+ * @var string
+ */
+	protected $_assertTextEquals = array();
+
+/**
+ * assertInput()チェック用配列
+ *
+ * @var string
+ */
+	protected $_assertInput = array();
+
+/**
+ * $this->assertRegExp()のオーバライド
+ * ※$this->assertRegExp()のチェック用メソッド
+ *
+ * @param string $pattern パターン
+ * @param string $string 文字列
+ * @param string $message メッセージ
+ * @return void
+ */
+	public static function assertRegExp($pattern, $string, $message = '') {
+		self::$_assertRegExp[] = $pattern;
+	}
+
+/**
+ * $this->assertTextEquals()のオーバライド
+ * ※$this->assertTextEquals()のチェック用メソッド
+ *
+ * @param string $expected 期待値
+ * @param string $result 結果
+ * @param string $message メッセージ
+ * @return void
+ */
+	public function assertTextEquals($expected, $result, $message = '') {
+		$this->_assertTextEquals[] = $expected;
+	}
+
+/**
+ * $this->assertInput()のオーバライド
+ * ※$this->assertInput()のチェック用メソッド
+ *
+ * @param string $tagType タグタイプ(input or textearea or button)
+ * @param string $name inputタグのname属性
+ * @param string $value inputタグのvalue値
+ * @param string $result Result data
+ * @param string $message メッセージ
+ * @return void
+ */
+	public function assertInput($tagType, $name, $value, $result, $message = null) {
+		$$this->_assertInput[] = array($tagType, $name, $value);
+	}
+
+/**
  * setUp method
  *
  * @return mixed テスト結果
@@ -66,7 +128,15 @@ class TestSuiteBlocksControllerTest extends BlocksControllerTest {
 		//テストコントローラ生成
 		$this->generateNc('TestBlocks.TestSuiteBlocksControllerTest');
 		parent::testIndex();
-		return $this;
+
+		$assertRegExp = self::$_ssertRegExp;
+		$assertInput = $this->_assertInput;
+		$result = array($assertRegExp, $assertInput);
+
+		self::$_assertNotRegExp = array();
+		$this->_assertInput = array();
+
+		return $result;
 	}
 
 /**
@@ -78,7 +148,13 @@ class TestSuiteBlocksControllerTest extends BlocksControllerTest {
 		//テストコントローラ生成
 		$this->generateNc('TestBlocks.TestSuiteBlocksControllerTest');
 		parent::testIndexNoneBlock();
-		return $this;
+
+		$assertTextEquals = $this->_assertTextEquals;
+		$result = array($assertTextEquals);
+
+		$this->_assertTextEquals = array();
+
+		return $result;
 	}
 
 /**

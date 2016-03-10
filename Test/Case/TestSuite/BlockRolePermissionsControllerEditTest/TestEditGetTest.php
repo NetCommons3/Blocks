@@ -137,7 +137,7 @@ class TestSuiteBlockRolePermissionsControllerEditTestTestEditGetTest extends Net
 				'method' => 'assertInput', 'type' => 'input', 'value' => null
 			)),
 		);
-		$this->assertEquals($expected, $result->asserts);
+		$this->assertEquals($expected, $result);
 	}
 
 /**
@@ -193,7 +193,7 @@ class TestSuiteBlockRolePermissionsControllerEditTestTestEditGetTest extends Net
 				'method' => 'assertInput', 'type' => 'input', 'value' => null
 			)),
 		);
-		$this->assertEquals($expected, $result->asserts);
+		$this->assertEquals($expected, $result);
 	}
 
 }

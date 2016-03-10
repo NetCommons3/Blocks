@@ -38,7 +38,7 @@ class TestSuiteBlockRolePermissionsControllerEditTest extends BlockRolePermissio
  *
  * @var string
  */
-	public $asserts = array();
+	protected $_asserts = array();
 
 /**
  * $this->asserts()のチェック用メソッド
@@ -48,7 +48,7 @@ class TestSuiteBlockRolePermissionsControllerEditTest extends BlockRolePermissio
  * @return void
  */
 	public function asserts($asserts, $result) {
-		$this->asserts[] = $asserts;
+		$this->_asserts[] = $asserts;
 	}
 
 /**
@@ -105,7 +105,7 @@ class TestSuiteBlockRolePermissionsControllerEditTest extends BlockRolePermissio
 		//テストコントローラ生成
 		$this->generateNc('TestBlocks.TestSuiteBlockRolePermissionsControllerEditTest');
 		parent::testEditGet($approvalFields, $exception, $return);
-		return $this;
+		return $this->_asserts;
 	}
 
 /**

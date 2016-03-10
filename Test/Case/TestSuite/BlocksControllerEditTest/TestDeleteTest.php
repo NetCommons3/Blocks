@@ -72,8 +72,7 @@ class TestSuiteBlocksControllerEditTestTestDeleteTest extends NetCommonsControll
 				),
 			)
 		);
-		$this->assertEquals($expected, $this->TestSuite->asserts);
-		$this->assertEquals($data, $result->controller->data);
+		$this->assertEquals($expected, $result);
 	}
 
 }

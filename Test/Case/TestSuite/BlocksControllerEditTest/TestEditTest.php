@@ -59,11 +59,11 @@ class TestSuiteBlocksControllerEditTestTestEditTest extends NetCommonsController
 		$validationError = false;
 
 		//テスト実施
-		$this->TestSuite->testEdit($method, $data, $validationError);
+		$result = $this->TestSuite->testEdit($method, $data, $validationError);
 
 		//チェック
 		$expected = $this->__expectedByGet();
-		$this->assertEquals($expected, $this->TestSuite->asserts);
+		$this->assertEquals($expected, $result);
 	}
 
 /**
@@ -143,8 +143,7 @@ class TestSuiteBlocksControllerEditTestTestEditTest extends NetCommonsController
 				),
 			)
 		);
-		$this->assertEquals($expected, $this->TestSuite->asserts);
-		$this->assertEquals($data, $result->controller->data);
+		$this->assertEquals($expected, $result);
 	}
 
 /**
@@ -168,7 +167,7 @@ class TestSuiteBlocksControllerEditTestTestEditTest extends NetCommonsController
 		);
 
 		//テスト実施
-		$this->TestSuite->testEdit($method, $data, $validationError);
+		$result = $this->TestSuite->testEdit($method, $data, $validationError);
 
 		//チェック
 		$expected = $this->__expectedByGet();
@@ -180,7 +179,7 @@ class TestSuiteBlocksControllerEditTestTestEditTest extends NetCommonsController
 			'method' => 'assertTextContains',
 			'expected' => 'Validation error message'
 		);
-		$this->assertEquals($expected, $this->TestSuite->asserts);
+		$this->assertEquals($expected, $result);
 	}
 
 }

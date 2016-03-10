@@ -36,9 +36,9 @@ class TestSuiteBlocksControllerEditTest extends BlocksControllerEditTest {
 /**
  * asserts()チェック用配列
  *
- * @var string
+ * @var array
  */
-	public $asserts = array();
+	protected $_asserts = array();
 
 /**
  * $this->asserts()のチェック用メソッド
@@ -52,7 +52,7 @@ class TestSuiteBlocksControllerEditTest extends BlocksControllerEditTest {
 		if (substr(Hash::get($asserts[0], 'value'), -1 * strlen($path)) === $path) {
 			$asserts[0] = Hash::insert($asserts[0], 'value', $path);
 		}
-		$this->asserts[] = $asserts;
+		$this->_asserts[] = $asserts;
 	}
 
 /**
@@ -101,18 +101,6 @@ class TestSuiteBlocksControllerEditTest extends BlocksControllerEditTest {
 	}
 
 /**
- * delete()のGET(json)パラメータテスト
- *
- * @return mixed テスト結果
- */
-	public function testDeleteGetJson() {
-		//テストコントローラ生成
-		$this->generateNc('TestBlocks.TestSuiteBlocksControllerEditTest');
-		parent::testDeleteGetJson();
-		return $this;
-	}
-
-/**
  * add()のテスト
  *
  * @param string $method リクエストメソッド（get or post or put）
@@ -126,7 +114,7 @@ class TestSuiteBlocksControllerEditTest extends BlocksControllerEditTest {
 		//テストコントローラ生成
 		$this->generateNc('TestBlocks.TestSuiteBlocksControllerEditTest');
 		parent::testAdd($method, $data, $validationError);
-		return $this;
+		return $this->_asserts;
 	}
 
 /**
@@ -143,7 +131,7 @@ class TestSuiteBlocksControllerEditTest extends BlocksControllerEditTest {
 		//テストコントローラ生成
 		$this->generateNc('TestBlocks.TestSuiteBlocksControllerEditTest');
 		parent::testEdit($method, $data, $validationError);
-		return $this;
+		return $this->_asserts;
 	}
 
 /**
@@ -155,7 +143,7 @@ class TestSuiteBlocksControllerEditTest extends BlocksControllerEditTest {
 		//テストコントローラ生成
 		$this->generateNc('TestBlocks.TestSuiteBlocksControllerEditTest');
 		parent::testDelete($data);
-		return $this;
+		return $this->_asserts;
 	}
 
 }

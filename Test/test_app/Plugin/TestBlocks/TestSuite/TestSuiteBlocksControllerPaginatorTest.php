@@ -38,39 +38,39 @@ class TestSuiteBlocksControllerPaginatorTest extends BlocksControllerPaginatorTe
  *
  * @var string
  */
-	public static $assertNotRegExp = array();
+	protected static $_assertNotRegExp = array();
 
 /**
  * assertRegExp()チェック用配列
  *
  * @var string
  */
-	public static $assertRegExp = array();
+	protected static $_assertRegExp = array();
 
 /**
  * $this->assertNotRegExp()のオーバライド
  * ※$this->assertNotRegExp()のチェック用メソッド
  *
- * @param string $parttern パターン
+ * @param string $pattern パターン
  * @param string $string 文字列
  * @param string $message メッセージ
  * @return void
  */
 	public static function assertNotRegExp($pattern, $string, $message = '') {
-		self::$assertNotRegExp[] = $pattern;
+		self::$_assertNotRegExp[] = $pattern;
 	}
 
 /**
  * $this->assertRegExp()のオーバライド
  * ※$this->assertRegExp()のチェック用メソッド
  *
- * @param string $parttern パターン
+ * @param string $pattern パターン
  * @param string $string 文字列
  * @param string $message メッセージ
  * @return void
  */
 	public static function assertRegExp($pattern, $string, $message = '') {
-		self::$assertRegExp[] = $pattern;
+		self::$_assertRegExp[] = $pattern;
 	}
 
 /**
@@ -112,12 +112,12 @@ class TestSuiteBlocksControllerPaginatorTest extends BlocksControllerPaginatorTe
 		$this->generateNc('TestBlocks.TestSuiteBlocksControllerPaginatorTest');
 		parent::testIndexPaginator($page, $isFirst, $isLast);
 
-		$assertNotRegExp = self::$assertNotRegExp;
-		$assertRegExp = self::$assertRegExp;
+		$assertNotRegExp = self::$_assertNotRegExp;
+		$assertRegExp = self::$_assertRegExp;
 		$result = array($assertNotRegExp, $assertRegExp);
 
-		self::$assertNotRegExp = array();
-		self::$assertRegExp = array();
+		self::$_assertNotRegExp = array();
+		self::$_assertRegExp = array();
 
 		return $result;
 	}
