@@ -92,7 +92,7 @@ class TestSuiteBlocksControllerTest extends BlocksControllerTest {
  * @return void
  */
 	public function assertInput($tagType, $name, $value, $result, $message = null) {
-		$$this->_assertInput[] = array($tagType, $name, $value);
+		$this->_assertInput[] = array($tagType, $name, $value);
 	}
 
 /**
@@ -129,11 +129,11 @@ class TestSuiteBlocksControllerTest extends BlocksControllerTest {
 		$this->generateNc('TestBlocks.TestSuiteBlocksControllerTest');
 		parent::testIndex();
 
-		$assertRegExp = self::$_ssertRegExp;
+		$assertRegExp = self::$_assertRegExp;
 		$assertInput = $this->_assertInput;
 		$result = array($assertRegExp, $assertInput);
 
-		self::$_assertNotRegExp = array();
+		self::$_assertRegExp = array();
 		$this->_assertInput = array();
 
 		return $result;
