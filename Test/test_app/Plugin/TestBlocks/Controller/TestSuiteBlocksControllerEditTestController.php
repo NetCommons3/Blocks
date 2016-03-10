@@ -50,6 +50,8 @@ class TestSuiteBlocksControllerEditTestController extends AppController {
 		$this->autoRender = true;
 		$this->set('username', Current::read('User.username'));
 		$this->redirect('index');
+
+		$this->validationErrors = 'Validation error message';
 	}
 
 /**
