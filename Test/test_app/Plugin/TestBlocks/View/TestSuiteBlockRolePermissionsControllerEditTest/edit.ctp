@@ -10,14 +10,4 @@
  */
 ?>
 
-<?php echo $this->NetCommonsForm->create('TestSuiteBlockRolePermissionsControllerEditTestModel', array(
-	'url' => '/test_blocks/TestSuiteBlockRolePermissionsControllerEditTest/edit/4?frame_id=6'
-)); ?>
-
-
 TestSuite/BlockRolePermissionsControllerEditTest/edit.ctp
-
-
-<?php echo $this->NetCommonsForm->hidden('Block.id'); ?>
-
-<?php echo $this->NetCommonsForm->end();
