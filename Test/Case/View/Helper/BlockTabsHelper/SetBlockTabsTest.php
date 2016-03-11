@@ -94,7 +94,6 @@ class BlockTabsHelperSetBlockTabsTest extends NetCommonsHelperTestCase {
 					'block_id' => null
 				),
 				'label' => array(0 => 'mails', 1 => 'Mail settings'),
-				'permission' => 'block_permission_editable'
 			),
 			'role_permissions' => array(
 				'url' => array(
@@ -104,11 +103,12 @@ class BlockTabsHelperSetBlockTabsTest extends NetCommonsHelperTestCase {
 					'frame_id' => null,
 					'block_id' => null
 				),
-				'label' => array(0 => 'net_commons', 1 => 'Role permission settings')
+				'label' => array(0 => 'net_commons', 1 => 'Role permission settings'),
+				'permission' => 'block_permission_editable'
 			),
 			'original' => array(
 				'url' => '/original_plugin/controller/original_ctrl/edit',
-				'label' => array(0 => 'original', 1 => 'Original settings')
+				'label' => array(0 => 'original_plugin', 1 => 'Original settings')
 			)
 		));
 		$this->assertEquals($expected, $this->BlockTabs->_View->viewVars);

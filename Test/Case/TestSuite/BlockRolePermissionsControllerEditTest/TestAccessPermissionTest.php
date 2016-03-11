@@ -61,7 +61,7 @@ class TestSuiteBlockRolePermissionsControllerEditTestTestAccessPermissionTest ex
 		$result = $this->TestSuite->testAccessPermission($role, $exception);
 
 		//チェック
-		$pattern = '/' . preg_quote('TestSuite/BlockRolePermissionsControllerEditTest/edit.ctp', '/') . '/';
+		$pattern = '/' . preg_quote('TestSuite/BlockRolePermissionsControllerEditTestPermission/edit.ctp', '/') . '/';
 		$this->assertRegExp($pattern, $result->view);
 		$this->assertEquals('chief_editor', $result->controller->viewVars['username']);
 	}
@@ -80,7 +80,7 @@ class TestSuiteBlockRolePermissionsControllerEditTestTestAccessPermissionTest ex
 		$result = $this->TestSuite->testAccessPermission($role, $exception);
 
 		//チェック
-		$pattern = '/' . preg_quote('TestSuite/BlockRolePermissionsControllerEditTest/edit.ctp', '/') . '/';
+		$pattern = '/' . preg_quote('TestSuite/BlockRolePermissionsControllerEditTestPermission/edit.ctp', '/') . '/';
 		$this->assertRegExp($pattern, $result->view);
 		$this->assertNull($result->controller->viewVars['username']);
 	}

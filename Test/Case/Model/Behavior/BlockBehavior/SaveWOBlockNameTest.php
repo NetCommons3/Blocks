@@ -27,7 +27,7 @@ class BlockBehaviorSaveWOBlockNameTest extends NetCommonsModelTestCase {
  */
 	public $fixtures = array(
 		'plugin.blocks.test_block_behavior_save_model',
-		'plugin.blocks.test_block_behavior_save_model_many',
+		'plugin.blocks.test_block_behavior_save_many_model',
 	);
 
 /**

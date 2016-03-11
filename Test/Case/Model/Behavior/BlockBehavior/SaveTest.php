@@ -17,6 +17,7 @@ App::uses('TestBlockBehaviorSaveModelFixture', 'Blocks.Test/Fixture');
  *
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Blocks\Test\Case\Model\Behavior\BlockBehavior
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
 class BlockBehaviorSaveTest extends NetCommonsModelTestCase {
 

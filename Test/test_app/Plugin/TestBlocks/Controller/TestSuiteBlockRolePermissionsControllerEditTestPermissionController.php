@@ -1,6 +1,6 @@
 <?php
 /**
- * BlocksControllerTestテスト用Controller
+ * BlockRolePermissionsControllerEditTestテスト用Controller
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
@@ -12,22 +12,21 @@
 App::uses('AppController', 'Controller');
 
 /**
- * BlocksControllerTestテスト用Controller
+ * BlockRolePermissionsControllerEditTestテスト用Controller
  *
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Blocks\Test\test_app\Plugin\TestBlocks\Controller
  */
-class TestSuiteBlocksControllerTestErrorController extends AppController {
+class TestSuiteBlockRolePermissionsControllerEditTestPermissionController extends AppController {
 
 /**
- * index
+ * edit
  *
  * @return void
- * @throws ForbiddenException
  */
-	public function index() {
+	public function edit() {
 		$this->autoRender = true;
-		throw new ForbiddenException(__d('net_commons', 'Permission denied'));
+		$this->set('username', Current::read('User.username'));
 	}
 
 }

@@ -95,7 +95,7 @@ class TestSuiteBlocksControllerEditTest extends BlocksControllerEditTest {
  */
 	public function testAccessPermission($action, $method, $expected, $role, $exception) {
 		//テストコントローラ生成
-		$this->generateNc('TestBlocks.TestSuiteBlocksControllerEditTest');
+		$this->generateNc('TestBlocks.TestSuiteBlocksControllerEditTestPermission');
 		parent::testAccessPermission($action, $method, $expected, $role, $exception);
 		return $this;
 	}
@@ -135,8 +135,9 @@ class TestSuiteBlocksControllerEditTest extends BlocksControllerEditTest {
 	}
 
 /**
- * delete()のGET(json)パラメータテスト
+ * delete()のテスト
  *
+ * @param array $data 登録データ
  * @return mixed テスト結果
  */
 	public function testDelete($data) {

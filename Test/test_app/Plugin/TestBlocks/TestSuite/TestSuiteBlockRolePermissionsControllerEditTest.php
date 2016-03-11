@@ -87,7 +87,7 @@ class TestSuiteBlockRolePermissionsControllerEditTest extends BlockRolePermissio
  */
 	public function testAccessPermission($role, $exception) {
 		//テストコントローラ生成
-		$this->generateNc('TestBlocks.TestSuiteBlockRolePermissionsControllerEditTest');
+		$this->generateNc('TestBlocks.TestSuiteBlockRolePermissionsControllerEditTestPermission');
 		parent::testAccessPermission($role, $exception);
 		return $this;
 	}

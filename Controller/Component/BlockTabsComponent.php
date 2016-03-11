@@ -45,7 +45,7 @@ class BlockTabsComponent extends Component {
  */
 	public function startup(Controller $controller) {
 		//BlockTabsComponent->BlockTabsHelper一本化するため、Noticeを表示する
-		//trigger_error('Changed to BlockTabsHelper from BlockTabsComponent.', E_USER_WARNING);
+		trigger_error('Changed to BlockTabsHelper from BlockTabsComponent.', E_USER_WARNING);
 
 		if (! Hash::get($controller->helpers, 'Blocks.BlockTabs')) {
 			$controller->helpers['Blocks.BlockTabs'] = array(

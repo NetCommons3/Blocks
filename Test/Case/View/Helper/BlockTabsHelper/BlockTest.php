@@ -112,11 +112,11 @@ class BlockTabsHelperBlockTest extends NetCommonsHelperTestCase {
  */
 	public function dataProvider() {
 		return array(
-			array('activeTab' =>  'block_settings', 'blockPermission' => true),
-			array('activeTab' =>  'mail_settings', 'blockPermission' => true),
-			array('activeTab' =>  'role_permissions', 'blockPermission' => true),
-			array('activeTab' =>  'role_permissions', 'blockPermission' => false),
-			array('activeTab' =>  'original', 'blockPermission' => true),
+			array('activeTab' => 'block_settings', 'blockPermission' => true),
+			array('activeTab' => 'mail_settings', 'blockPermission' => true),
+			array('activeTab' => 'role_permissions', 'blockPermission' => true),
+			array('activeTab' => 'role_permissions', 'blockPermission' => false),
+			array('activeTab' => 'original', 'blockPermission' => true),
 		);
 	}
 
@@ -195,6 +195,7 @@ class BlockTabsHelperBlockTest extends NetCommonsHelperTestCase {
  * @param string $result 結果
  * @param string $activeTab アクティブタブ
  * @param string $url URL
+ * @param string $key タブキー
  * @param string $lang タブデータ
  * @return string <li>タグの出力
  */

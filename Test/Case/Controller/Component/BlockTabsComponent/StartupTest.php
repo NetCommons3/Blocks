@@ -71,7 +71,8 @@ class BlockTabsComponentStartupTest extends NetCommonsControllerTestCase {
 
 		//Warningを無視する
 		$no = $str = $file = $line = $context = null;
-		set_error_handler(function($no, $str, $file, $line, $context) {}, E_USER_WARNING);
+		set_error_handler(function ($no, $str, $file, $line, $context) {
+		}, E_USER_WARNING);
 
 		//テスト実行
 		$this->_testGetAction('/test_blocks/test_block_tabs_component/index',
@@ -100,7 +101,8 @@ class BlockTabsComponentStartupTest extends NetCommonsControllerTestCase {
 
 		//Warningを無視する
 		$no = $str = $file = $line = $context = null;
-		set_error_handler(function($no, $str, $file, $line, $context) {}, E_USER_WARNING);
+		set_error_handler(function ($no, $str, $file, $line, $context) {
+		}, E_USER_WARNING);
 
 		//テスト実行
 		$this->_testGetAction('/test_blocks/test_block_tabs_component_in_array_helper/index',

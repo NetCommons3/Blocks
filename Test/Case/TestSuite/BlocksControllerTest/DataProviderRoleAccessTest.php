@@ -59,7 +59,6 @@ class TestSuiteBlocksControllerTestDataProviderRoleAccessTest extends NetCommons
 		$result = $this->TestSuite->dataProviderRoleAccess();
 
 		//チェック
-		//TODO:assertを書く
 		$expected = array(
 			array('room_administrator', false),
 			array('chief_editor', false),

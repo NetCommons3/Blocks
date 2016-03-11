@@ -64,7 +64,7 @@ class TestSuiteBlocksControllerEditTestTestAccessPermissionTest extends NetCommo
 		$result = $this->TestSuite->testAccessPermission($action, $method, $expected, $role, $exception);
 
 		//チェック
-		$pattern = '/' . preg_quote('TestSuite/BlocksControllerEditTest/edit.ctp', '/') . '/';
+		$pattern = '/' . preg_quote('TestSuite/BlocksControllerEditTestPermission/edit.ctp', '/') . '/';
 		$this->assertRegExp($pattern, $result->view);
 
 		$this->assertEquals('chief_editor', $result->controller->viewVars['username']);
@@ -87,7 +87,7 @@ class TestSuiteBlocksControllerEditTestTestAccessPermissionTest extends NetCommo
 		$result = $this->TestSuite->testAccessPermission($action, $method, $expected, $role, $exception);
 
 		//チェック
-		$pattern = '/' . preg_quote('TestSuite/BlocksControllerEditTest/edit.ctp', '/') . '/';
+		$pattern = '/' . preg_quote('TestSuite/BlocksControllerEditTestPermission/edit.ctp', '/') . '/';
 		$this->assertRegExp($pattern, $result->view);
 
 		$this->assertNull($result->controller->viewVars['username']);

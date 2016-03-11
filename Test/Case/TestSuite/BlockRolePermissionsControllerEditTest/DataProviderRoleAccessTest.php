@@ -62,7 +62,7 @@ class TestSuiteBlockRolePermissionsControllerEditTestDataProviderRoleAccessTest 
 			array('chief_editor', 'ForbiddenException'),
 			array('editor', 'ForbiddenException'),
 			array('general_user', 'ForbiddenException'),
-			array('visitor','ForbiddenException'),
+			array('visitor', 'ForbiddenException'),
 			array(null, 'ForbiddenException')
 		);
 		$this->assertEquals($expected, $result);

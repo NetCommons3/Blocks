@@ -81,7 +81,7 @@ class TestSuiteBlocksControllerPaginatorTestTestIndexPaginatorTest extends NetCo
 			)),
 			array('page' => '5', 'isFirst' => false, 'isLast' => true, 'expected' => array(
 				0 => array(
-					0=> '/<li><a.*?rel="last".*?<\/a><\/li>/'
+					0 => '/<li><a.*?rel="last".*?<\/a><\/li>/'
 				),
 				1 => array(
 					0 => '/\<ul class\="pagination"\>/',

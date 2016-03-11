@@ -161,16 +161,6 @@ class BlockTabsHelperBeforeRenderTest extends NetCommonsControllerTestCase {
 				'),' .
 				'\'label\' => array (0 => \'blocks\',1 => \'Block settings\',),' .
 			'),' .
-			'\'role_permissions\' => array (' .
-				'\'url\' => array (' .
-					'\'plugin\' => \'test_blocks\',' .
-					'\'controller\' => \'test_block_block_role_permissions\',' .
-					'\'action\' => \'edit\',' .
-					'\'frame_id\' => NULL,' .
-					'\'block_id\' => NULL,' .
-				'),' .
-				'\'label\' => array (0 => \'net_commons\',1 => \'Role permission settings\',),' .
-			'),' .
 			'\'mail_settings\' => array (' .
 				'\'url\' => array (' .
 					'\'plugin\' => \'test_blocks\',' .
@@ -180,6 +170,16 @@ class BlockTabsHelperBeforeRenderTest extends NetCommonsControllerTestCase {
 					'\'block_id\' => NULL,' .
 				'),' .
 				'\'label\' => array (0 => \'mails\',1 => \'Mail settings\',),' .
+			'),' .
+			'\'role_permissions\' => array (' .
+				'\'url\' => array (' .
+					'\'plugin\' => \'test_blocks\',' .
+					'\'controller\' => \'test_block_block_role_permissions\',' .
+					'\'action\' => \'edit\',' .
+					'\'frame_id\' => NULL,' .
+					'\'block_id\' => NULL,' .
+				'),' .
+				'\'label\' => array (0 => \'net_commons\',1 => \'Role permission settings\',),' .
 				'\'permission\' => \'block_permission_editable\',' .
 			'),' .
 		')';
