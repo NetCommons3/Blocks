@@ -1,6 +1,6 @@
 <?php
 /**
- * BlockBehavior::getBlockConditionById()のテスト
+ * BlockBehavior::getBlockConditions()のテスト
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
@@ -12,12 +12,12 @@
 App::uses('NetCommonsModelTestCase', 'NetCommons.TestSuite');
 
 /**
- * BlockBehavior::getBlockConditionById()のテスト
+ * BlockBehavior::getBlockConditions()のテスト
  *
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Blocks\Test\Case\Model\Behavior\BlockBehavior
  */
-class BlockBehaviorGetBlockConditionByIdTest extends NetCommonsModelTestCase {
+class BlockBehaviorGetBlockConditionsTest extends NetCommonsModelTestCase {
 
 /**
  * Fixtures
@@ -49,7 +49,7 @@ class BlockBehaviorGetBlockConditionByIdTest extends NetCommonsModelTestCase {
 	}
 
 /**
- * getBlockConditionById()テストのDataProvider
+ * getBlockConditions()テストのDataProvider
  *
  * ### 戻り値
  *  - conditions Model::find conditions default value
@@ -64,29 +64,30 @@ class BlockBehaviorGetBlockConditionByIdTest extends NetCommonsModelTestCase {
 	}
 
 /**
- * getBlockConditionById()のテスト
+ * getBlockConditions()のテスト
  *
  * @param array $conditions Model::find conditions default value
  * @dataProvider dataProvider
  * @return void
  */
-	public function testGetBlockConditionById($conditions) {
+	public function testGetBlockConditions($conditions) {
 		//テストデータ
 		Current::$current = Hash::insert(Current::$current, 'Room.id', '1');
-		Current::$current = Hash::insert(Current::$current, 'Block.id', '2');
+		Current::$current = Hash::insert(Current::$current, 'Plugin.key', 'blocks');
 
 		//テスト実施
-		$conditions = $this->TestModel->getBlockConditionById($conditions);
+		$conditions = $this->TestModel->getBlockConditions($conditions);
 		$expected = array(
-			'Block.id' => '2',
+			'Block.language_id' => '2',
 			'Block.room_id' => '1',
+			'Block.plugin_key' => 'blocks',
 			'TestBlockBehaviorModel.key' => 'content_1'
 		);
 		$this->assertEquals($expected, $conditions);
 
 		$result = $this->TestModel->find('all', array(
 			'recursive' => -1,
-			'conditions' => $this->TestModel->getBlockConditionById($conditions),
+			'conditions' => $conditions,
 			'joins' => array(
 				array(
 					'table' => $this->TestModel->Block->table,
