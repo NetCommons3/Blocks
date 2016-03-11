@@ -92,10 +92,7 @@ class BlockBehavior extends ModelBehavior {
 		}
 
 		if (isset($model->data['Block']['public_type'])) {
-			if ($model->data['Block']['public_type'] === Block::TYPE_LIMITED) {
-				//$data['Block']['publish_start'] = implode('-', $data['Block']['publish_start']);
-				//$data['Block']['publish_end'] = implode('-', $data['Block']['publish_end']);
-			} else {
+			if ($model->data['Block']['public_type'] !== Block::TYPE_LIMITED) {
 				unset($model->data['Block']['publish_start'], $model->data['Block']['publish_end']);
 			}
 		}
@@ -104,8 +101,7 @@ class BlockBehavior extends ModelBehavior {
 			'Block' => 'Blocks.Block',
 		));
 		$model->Block->set($model->data['Block']);
-		$model->Block->validates();
-		if ($model->Block->validationErrors) {
+		if (! $model->Block->validates()) {
 			$model->validationErrors = Hash::merge($model->validationErrors, $model->Block->validationErrors);
 			return false;
 		}
