@@ -1,12 +1,12 @@
 <?php
 /**
- * Element of block edit form
- *   - $model: Model for edit request.
- *   - $action: Action for delete request.
- *   - $callback: Callback element for parameters and messages.
- *   - $callbackOptions: Callback options for element.
- *   - $cancelUrl: Cancel url.
- *   - $options: Options array for Form->create()
+ * ブロック設定のElement
+ *  - $model: モデル名
+ *  - $action: アクションURL
+ *  - $callback: コールバックelement
+ *  - $callbackOptions: コールバックオプション
+ *  - $cancelUrl: キャンセルURL
+ *  - $options: Form->create()のオプション
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
