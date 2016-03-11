@@ -73,9 +73,7 @@ class BlockBehavior extends ModelBehavior {
  */
 	public function setup(Model $model, $config = array()) {
 		$this->settings = Hash::merge($this->settings, $config);
-		if (! isset($this->settings['loadModels'])) {
-			$this->settings['loadModels'] = array();
-		}
+		$this->settings['loadModels'] = Hash::get($this->settings, 'loadModels', array());
 	}
 
 /**
@@ -186,15 +184,26 @@ class BlockBehavior extends ModelBehavior {
 		if (!is_array($data[$key])) {
 			return;
 		}
-
-		if (isset($model->$key)) {
-			if ($model->$key->hasField($field)) {
-				$data[$key][$field] = $value;
+		if ($model->alias === $key) {
+			if (! $model->hasField($field)) {
+				return;
 			}
+		} elseif (is_object($model->$key)) {
+			if (! $model->$key->hasField($field)) {
+				return;
+			}
+		}
+
+		if (isset($data[$key][$field])) {
+			$data[$key][$field] = $value;
 			return;
 		}
 
 		foreach (array_keys($data[$key]) as $key2) {
+			if (is_numeric($key2) && isset($data[$key][$key2][$field])) {
+				$data[$key][$key2][$field] = $value;
+				continue;
+			}
 			$this->__setRecursiveBlockField($model, $data[$key], $field, $key2, $value);
 		}
 	}
@@ -211,7 +220,7 @@ class BlockBehavior extends ModelBehavior {
 		$model->data['Block']['room_id'] = $frame['Frame']['room_id'];
 		$model->data['Block']['language_id'] = $frame['Frame']['language_id'];
 
-		if (isset($model->data['Block']['name']) && $model->data['Block']['name']) {
+		if (Hash::get($model->data, 'Block.name')) {
 			//値があれば、何もしない
 		} elseif (isset($this->settings['name'])) {
 			list($alias, $filed) = pluginSplit($this->settings['name']);
@@ -223,7 +232,8 @@ class BlockBehavior extends ModelBehavior {
 		$model->data['Block']['plugin_key'] = Inflector::underscore($model->plugin);
 
 		//blocksの登録
-		if (! $block = $model->Block->save($model->data['Block'], false)) {
+		$block = $model->Block->save($model->data['Block'], false);
+		if (! $block) {
 			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 		}
 		$model->data['Block'] = $block['Block'];
