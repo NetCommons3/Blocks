@@ -633,6 +633,41 @@ class BlockBehaviorSaveTest extends NetCommonsModelTestCase {
 	}
 
 /**
+ * save()のテスト
+ *
+ * #### テストケース2
+ * ```
+ * $data = array(
+ * 		'Block' => テストケース1と同じ,
+ * 		'Frame' => テストケース1と同じ,
+ * 		'TestBlockBehaviorSaveModel' => array(
+ * 			'id' => '',
+ * 			'language_id' => '2',
+ * 			'key' => 'key_1',
+ * 			'name' => 'New Name'
+ * 		)
+ * 	);
+ * ```
+ *
+ * @param array $data 登録データ
+ * @dataProvider dataProviderNew
+ * @return void
+ */
+	public function testSaveCaseWOBlockIdAndKey($data) {
+		//テストデータ作成
+		unset($data[$this->TestModel->alias]['block_id']);
+		unset($data[$this->TestModel->alias]['block_key']);
+
+		//テスト実施
+		$result = $this->TestModel->save($data);
+
+		//チェック
+		$data['Block']['name'] = $data[$this->TestModel->alias]['name'];
+		$this->__assertBlock($data, $result);
+		$this->__assertTestModel($data, $result);
+	}
+
+/**
  * Blockのチェック
  *
  * @param array $data 登録データ
