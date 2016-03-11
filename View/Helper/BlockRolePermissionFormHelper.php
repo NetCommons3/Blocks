@@ -9,21 +9,23 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('FormHelper', 'View/Helper');
+App::uses('AppHelper', 'View/Helper');
 
 /**
  * BlockRolePermissionForm Helper
  *
  * @package NetCommons\Blocks\View\Helper
  */
-class BlockRolePermissionFormHelper extends FormHelper {
+class BlockRolePermissionFormHelper extends AppHelper {
 
 /**
  * Other helpers used by FormHelper
  *
  * @var array
  */
-	public $helpers = array('Form');
+	public $helpers = array(
+		'NetCommons.NetCommonsForm'
+	);
 
 /**
  * Outputs room roles radio
