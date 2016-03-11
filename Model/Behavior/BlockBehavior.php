@@ -67,7 +67,7 @@ class BlockBehavior extends ModelBehavior {
 /**
  * Setup this behavior with the specified configuration settings.
  *
- * @param Model $model Model using this behavior
+ * @param Model $model ビヘイビアの呼び出しのモデル
  * @param array $config Configuration settings for $model
  * @return void
  */
@@ -81,7 +81,7 @@ class BlockBehavior extends ModelBehavior {
  * add behavior validation rules into a models validate array. Returning false
  * will allow you to make the validation fail.
  *
- * @param Model $model Model using this behavior
+ * @param Model $model ビヘイビアの呼び出しのモデル
  * @param array $options Options passed from Model::save().
  * @return mixed False or null will abort the operation. Any other result will continue.
  * @see Model::save()
@@ -113,7 +113,7 @@ class BlockBehavior extends ModelBehavior {
  * beforeSave is called before a model is saved. Returning false from a beforeSave callback
  * will abort the save operation.
  *
- * @param Model $model Model using this behavior
+ * @param Model $model ビヘイビアの呼び出しのモデル
  * @param array $options Options passed from Model::save().
  * @return mixed False if the operation should abort. Any other result will continue.
  * @see Model::save()
@@ -166,13 +166,13 @@ class BlockBehavior extends ModelBehavior {
 	}
 
 /**
- * Set block field
+ * $model->dataのblock_idとblock_keyに値をセットする
  *
- * @param Model $model Model using this behavior
- * @param array &$data Model data
- * @param string $field Update field
- * @param string $key Recursive key
- * @param string $value Update value
+ * @param Model $model ビヘイビアの呼び出しのモデル
+ * @param array &$data セットするデータ
+ * @param string $field フィールド名
+ * @param string $key 再帰処理するKey
+ * @param string $value 更新する値
  * @return void
  */
 	private function __setRecursiveBlockField(Model $model, &$data, $field, $key, $value) {
@@ -206,8 +206,8 @@ class BlockBehavior extends ModelBehavior {
 /**
  * savePrepare
  *
- * @param Model $model Model using this behavior
- * @param array $frame Frame data
+ * @param Model $model ビヘイビアの呼び出しのモデル
+ * @param array $frame Frameデータ
  * @return void
  * @throws InternalErrorException
  */
@@ -257,7 +257,7 @@ class BlockBehavior extends ModelBehavior {
  * 	);
  * ```
  *
- * @param Model $model Model using this behavior
+ * @param Model $model ビヘイビアの呼び出しのモデル
  * @param array $conditions Model::find conditions default value
  * @return array Conditions data
  */
@@ -282,7 +282,7 @@ class BlockBehavior extends ModelBehavior {
  * ));
  * ```
  *
- * @param Model $model Model using this behavior
+ * @param Model $model ビヘイビアの呼び出しのモデル
  * @param array $conditions Model::find conditions default value
  * @return array Conditions data
  */
@@ -316,7 +316,7 @@ class BlockBehavior extends ModelBehavior {
  * }
  * ```
  *
- * @param Model $model Model using this behavior
+ * @param Model $model ビヘイビアの呼び出しのモデル
  * @param string $blockKey blocks.key
  * @return void
  * @throws InternalErrorException
