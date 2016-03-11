@@ -109,8 +109,8 @@ e.g.) ルーム管理者、またはそれに準ずるユーザ: ルーム管理
 			'key' => 'block_3',
 			'name' => 'Block name 3',
 			'public_type' => '2',
-			'publish_start' => null,
-			'publish_end' => null,
+			'publish_start' => '2014-01-01 00:00:00',
+			'publish_end' => '2014-35-31 00:00:00',
 		),
 		array(
 			'id' => '6',
@@ -120,8 +120,8 @@ e.g.) ルーム管理者、またはそれに準ずるユーザ: ルーム管理
 			'key' => 'block_3',
 			'name' => 'Block name 3',
 			'public_type' => '2',
-			'publish_start' => null,
-			'publish_end' => null,
+			'publish_start' => '2014-01-01 00:00:00',
+			'publish_end' => '2035-12-31 00:00:00',
 		),
 
 		//期間限定公開(過去)

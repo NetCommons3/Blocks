@@ -8,6 +8,8 @@
  * @license http://www.netcommons.org/license.txt NetCommons License
  * @copyright Copyright 2014, NetCommons Project
  */
+
+ClassRegistry::init('Blocks.Block');
 ?>
 
 <div class="row form-group">
@@ -28,7 +30,7 @@
 				'separator' => '<br />',
 			));
 
-			$publicTypePeriod = $this->data['Block']['public_type'] === Block::TYPE_LIMITED;
+			$publicTypePeriod = Hash::get($this->data, 'Block.public_type') === Block::TYPE_LIMITED;
 		?>
 	</div>
 
