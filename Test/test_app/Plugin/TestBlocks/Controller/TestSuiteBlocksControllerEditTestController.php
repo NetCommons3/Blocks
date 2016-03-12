@@ -20,15 +20,6 @@ App::uses('AppController', 'Controller');
 class TestSuiteBlocksControllerEditTestController extends AppController {
 
 /**
- * index
- *
- * @return void
- */
-	public function index() {
-		$this->autoRender = true;
-	}
-
-/**
  * edit
  *
  * @return void
@@ -63,16 +54,6 @@ class TestSuiteBlocksControllerEditTestController extends AppController {
 		$this->autoRender = true;
 		$this->set('username', Current::read('User.username'));
 		$this->redirect('index');
-	}
-
-/**
- * add_validation_error
- *
- * @return void
- */
-	public function edit_exception_error() {
-		$this->autoRender = true;
-		$this->throwBadRequest();
 	}
 
 }

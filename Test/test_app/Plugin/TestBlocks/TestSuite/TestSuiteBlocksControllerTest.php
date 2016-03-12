@@ -96,17 +96,6 @@ class TestSuiteBlocksControllerTest extends BlocksControllerTest {
 	}
 
 /**
- * setUp method
- *
- * @return mixed テスト結果
- */
-	public function setUp() {
-		//テストコントローラ生成
-		$this->generateNc('TestBlocks.TestSuiteBlocksControllerTest');
-		parent::setUp();
-	}
-
-/**
  * ロールチェックDataProvider
  *
  * ### 戻り値
@@ -183,8 +172,7 @@ class TestSuiteBlocksControllerTest extends BlocksControllerTest {
 	public function testAccessPermissionError($role, $isException) {
 		//テストコントローラ生成
 		$this->generateNc('TestBlocks.TestSuiteBlocksControllerTestError');
-		parent::testAccessPermission($role, $isException);
-		return $this;
+		return parent::testAccessPermission($role, $isException);
 	}
 
 }

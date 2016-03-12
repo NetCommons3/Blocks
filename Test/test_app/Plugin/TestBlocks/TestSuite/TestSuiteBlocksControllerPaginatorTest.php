@@ -74,17 +74,6 @@ class TestSuiteBlocksControllerPaginatorTest extends BlocksControllerPaginatorTe
 	}
 
 /**
- * setUp method
- *
- * @return mixed テスト結果
- */
-	public function setUp() {
-		//テストコントローラ生成
-		$this->generateNc('TestBlocks.TestSuiteBlocksControllerPaginatorTest');
-		parent::setUp();
-	}
-
-/**
  * ページネーションDataProvider
  *
  * ### 戻り値

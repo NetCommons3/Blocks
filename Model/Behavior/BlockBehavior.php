@@ -152,6 +152,25 @@ class BlockBehavior extends ModelBehavior {
 		}
 
 		//block_id, block_keyのセット
+		$this->__setBlockFields($model);
+
+		return parent::beforeSave($model, $options);
+	}
+
+/**
+ * $model->dataのblock_idとblock_keyに値をセットする
+ *
+ * @param Model $model ビヘイビアの呼び出しのモデル
+ * @return void
+ */
+	private function __setBlockFields(Model $model) {
+		if ($model->hasField('block_id')) {
+			$model->data[$model->alias]['block_id'] = $model->data['Block']['id'];
+		}
+		if ($model->hasField('block_key')) {
+			$model->data[$model->alias]['block_key'] = $model->data['Block']['key'];
+		}
+
 		$keys = array_keys($model->data);
 		foreach ($keys as $key) {
 			if ($key === 'Frame') {
@@ -161,8 +180,6 @@ class BlockBehavior extends ModelBehavior {
 			$this->__setRecursiveBlockField($model, $model->data, 'block_id', $key, $model->data['Block']['id']);
 			$this->__setRecursiveBlockField($model, $model->data, 'block_key', $key, $model->data['Block']['key']);
 		}
-
-		return parent::beforeSave($model, $options);
 	}
 
 /**
@@ -179,11 +196,7 @@ class BlockBehavior extends ModelBehavior {
 		if (!is_array($data[$key])) {
 			return;
 		}
-		if ($model->alias === $key) {
-			if (! $model->hasField($field)) {
-				return;
-			}
-		} elseif (is_object($model->$key)) {
+		if (is_object($model->$key)) {
 			if (! $model->$key->hasField($field)) {
 				return;
 			}

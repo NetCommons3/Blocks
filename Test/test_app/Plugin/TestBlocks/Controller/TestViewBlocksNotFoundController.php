@@ -1,6 +1,6 @@
 <?php
 /**
- * BlocksControllerEditTestテスト用Controller
+ * View/Blocks/not_foundテスト用Controller
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
@@ -12,30 +12,34 @@
 App::uses('AppController', 'Controller');
 
 /**
- * BlocksControllerEditTestテスト用Controller
+ * View/Blocks/not_foundテスト用Controller
  *
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Blocks\Test\test_app\Plugin\TestBlocks\Controller
  */
-class TestSuiteBlocksControllerEditTestPermissionController extends AppController {
+class TestViewBlocksNotFoundController extends AppController {
 
 /**
- * edit
+ * 使用ヘルパー
+ *
+ * @var array
+ */
+	public $helpers = array(
+		'Blocks.BlockTabs' => array(
+			'mainTabs' => array('block_index', 'frame_settings', 'mail_settings', 'role_permissions'),
+			'blockTabs' => array('block_settings', 'mail_settings', 'role_permissions'),
+		)
+	);
+
+/**
+ * form_hidden
  *
  * @return void
  */
-	public function edit() {
+	public function index() {
 		$this->autoRender = true;
-		$this->set('username', Current::read('User.username'));
+
+		$this->view = 'Blocks.Blocks/not_found';
 	}
 
-/**
- * add_validation_error
- *
- * @return void
- */
-	public function edit_exception_error() {
-		$this->autoRender = true;
-		return $this->throwBadRequest();
-	}
 }

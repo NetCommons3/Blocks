@@ -205,7 +205,7 @@ class BlockRolePermissionFormHelperCheckboxBlockRolePermissionTest extends NetCo
  * @param string $checked inputのchecked属性
  * @return void
  */
-	public function __assertInput($result, $type, $name, $value, $disabled = '', $checked = '') {
+	private function __assertInput($result, $type, $name, $value, $disabled = '', $checked = '') {
 		preg_match('/data\[(.+)?]/', preg_replace('/\]\[/', '_', $name), $matches);
 		$domId = Inflector::camelize($matches[1]);
 

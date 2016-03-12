@@ -19,13 +19,4 @@ App::uses('AppController', 'Controller');
  */
 class TestBlockBlocksController extends AppController {
 
-/**
- * edit
- *
- * @return void
- */
-	public function edit() {
-		$this->autoRender = true;
-	}
-
 }

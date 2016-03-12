@@ -52,17 +52,6 @@ class TestSuiteBlockRolePermissionsControllerEditTest extends BlockRolePermissio
 	}
 
 /**
- * setUp method
- *
- * @return mixed テスト結果
- */
-	public function setUp() {
-		//テストコントローラ生成
-		$this->generateNc('TestBlocks.TestSuiteBlockRolePermissionsControllerEditTest');
-		parent::setUp();
-	}
-
-/**
  * ロールチェックdataProvider
  *
  * ### 戻り値

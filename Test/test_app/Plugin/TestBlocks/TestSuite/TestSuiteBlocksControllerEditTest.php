@@ -56,17 +56,6 @@ class TestSuiteBlocksControllerEditTest extends BlocksControllerEditTest {
 	}
 
 /**
- * setUp method
- *
- * @return mixed テスト結果
- */
-	public function setUp() {
-		//テストコントローラ生成
-		$this->generateNc('TestBlocks.TestSuiteBlocksControllerEditTest');
-		parent::setUp();
-	}
-
-/**
  * ロールチェックdataProvider
  *
  * ### 戻り値

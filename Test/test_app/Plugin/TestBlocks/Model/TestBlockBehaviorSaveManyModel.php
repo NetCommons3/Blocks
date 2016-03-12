@@ -9,7 +9,7 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('AppModel', 'Model');
+//App::uses('AppModel', 'Model');
 
 /**
  * BlockBehavior::save()テスト用Model
