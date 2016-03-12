@@ -125,16 +125,16 @@ class BlockTabsComponentStartupTest extends NetCommonsControllerTestCase {
  * @expectedException PHPUnit_Framework_Error_Warning
  * @expectedExceptionMessage Changed to BlockTabsHelper from BlockTabsComponent.
  */
-	//public function testStartupWarning() {
-	//	//テストコントローラ生成
-	//	$this->generateNc('TestBlocks.TestBlockTabsComponent');
-	//
-	//	//ログイン
-	//	TestAuthGeneral::login($this);
-	//
-	//	//テスト実行
-	//	$this->_testGetAction('/test_blocks/test_block_tabs_component/index',
-	//			array('method' => 'assertNotEmpty'), null, 'view');
-	//}
+	public function testStartupWarning() {
+		//テストコントローラ生成
+		$this->generateNc('TestBlocks.TestBlockTabsComponent');
+
+		//ログイン
+		TestAuthGeneral::login($this);
+
+		//テスト実行
+		$this->_testGetAction('/test_blocks/test_block_tabs_component/index',
+				array('method' => 'assertNotEmpty'), null, 'view');
+	}
 
 }
