@@ -318,7 +318,7 @@ class BlockBehavior extends ModelBehavior {
  *
  * @param Model $model ビヘイビアの呼び出しのモデル
  * @param string $blockKey blocks.key
- * @return void
+ * @return bool 成否
  * @throws InternalErrorException
  */
 	public function deleteBlock(Model $model, $blockKey) {
@@ -373,6 +373,8 @@ class BlockBehavior extends ModelBehavior {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
 		}
+
+		return true;
 	}
 
 }
