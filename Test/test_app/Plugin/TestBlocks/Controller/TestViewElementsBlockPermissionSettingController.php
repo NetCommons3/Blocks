@@ -1,6 +1,6 @@
 <?php
 /**
- * View/Elements/block_creatable_settingテスト用Controller
+ * View/Elements/block_permission_settingテスト用Controller
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
@@ -12,12 +12,12 @@
 App::uses('AppController', 'Controller');
 
 /**
- * View/Elements/block_creatable_settingテスト用Controller
+ * View/Elements/block_permission_settingテスト用Controller
  *
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Blocks\Test\test_app\Plugin\TestBlocks\Controller
  */
-class TestViewElementsBlockCreatableSettingController extends AppController {
+class TestViewElementsBlockPermissionSettingController extends AppController {
 
 /**
  * use helpers
@@ -29,25 +29,21 @@ class TestViewElementsBlockCreatableSettingController extends AppController {
 	);
 
 /**
- * block_creatable_setting
+ * block_permission_setting
  *
  * @return void
  */
-	public function block_creatable_setting() {
+	public function block_permission_setting() {
 		$this->autoRender = true;
 
 		$permissions = $this->Workflow->getBlockRolePermissions(
-			array('content_creatable', 'content_comment_creatable')
+			array('content_creatable')
 		);
 		$this->set('roles', $permissions['Roles']);
 
 		$viewVars['settingPermissions'] = array(
 			'content_creatable' => 'Label content_creatable',
-			'content_comment_creatable' => 'Label content_comment_creatable',
 		);
-		if ($this->request->query['panel_label']) {
-			$viewVars['panelLabel'] = 'Modified label';
-		}
 
 		$this->set('viewVars', $viewVars);
 

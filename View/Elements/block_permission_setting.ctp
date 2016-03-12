@@ -8,8 +8,10 @@
  * ### サンプル
  * ```
  * 	echo $this->element('Blocks.block_permission_setting', array(
- * 			'mail_content_receivable' => __d('mails', 'Notification to the authority'),
- * 		));
+ *			'settingPermissions' => array(
+ *				'mail_content_receivable' => __d('mails', 'Notification to the authority'),
+ *			)
+ *		);
  * ```
  *
  * @author Noriko Arai <arai@nii.ac.jp>

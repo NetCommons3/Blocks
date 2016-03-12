@@ -54,10 +54,35 @@ class BlocksViewElementsBlockCreatableSettingTest extends NetCommonsControllerTe
  */
 	public function testBlockCreatableSetting() {
 		//テスト実行
-		$this->_testGetAction('/test_blocks/test_view_elements_block_creatable_setting/block_creatable_setting/2?frame_id=6',
+		$this->_testGetAction('/test_blocks/test_view_elements_block_creatable_setting/block_creatable_setting/2?frame_id=6&panel_label=0',
 				array('method' => 'assertNotEmpty'), null, 'view');
 
 		//チェック
+		$this->__assertView();
+		$this->assertTextContains(__d('blocks', 'Creatable settings'), $this->view);
+	}
+
+/**
+ * View/Elements/block_creatable_settingのテスト(パネルラベル変更)
+ *
+ * @return void
+ */
+	public function testBlockCreatableSettingWithPanelLabel() {
+		//テスト実行
+		$this->_testGetAction('/test_blocks/test_view_elements_block_creatable_setting/block_creatable_setting/2?frame_id=6&panel_label=1',
+				array('method' => 'assertNotEmpty'), null, 'view');
+
+		//チェック
+		$this->__assertView();
+		$this->assertTextContains('Modified label', $this->view);
+	}
+
+/**
+ * View/Elements/block_creatable_settingのチェック
+ *
+ * @return void
+ */
+	private function __assertView() {
 		$pattern = '/' . preg_quote('View/Elements/block_creatable_setting', '/') . '/';
 		$this->assertRegExp($pattern, $this->view);
 
