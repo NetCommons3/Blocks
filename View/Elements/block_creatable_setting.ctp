@@ -1,12 +1,21 @@
 <?php
 /**
- * Element of block role setting
- *   - $roles:
- *       The results `Roles` data of NetCommonsBlockComponent->getBlockRolePermissions().
- *   - $settingPermissions: Permissions data of creatable panel
- *       - key: permission
- *       - value: label
- *   - $panelLabel: Panel Label
+ * コンテンツの作成権限設定Element
+ * WorkflowComponent->getBlockRolePermissions())で取得した結果をもとにセットする
+ *
+ * - settingPermissions: パーミッションデータ(key: パーミッション名、value: ラベル)
+ * - panelLabel: パネルのタイトル
+ *
+ * ### サンプル
+ * ```
+ * 	$this->element('Blocks.block_creatable_setting', array(
+ * 			'settingPermissions' => array(
+ * 				'content_creatable' => __d('blocks', 'Content creatable roles'),
+ * 				'content_comment_creatable' => __d('blocks', 'Content comment creatable roles'),
+ * 			),
+ * 			'panelLabel' => __d('blocks', 'Creatable settings')
+ * 		));
+ * ```
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
