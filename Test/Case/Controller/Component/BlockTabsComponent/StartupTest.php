@@ -80,9 +80,8 @@ class BlockTabsComponentStartupTest extends NetCommonsControllerTestCase {
 
 		//@codeCoverageIgnoreStart
 		//後で当処理は削除するため、今回は除外する
-		try {
+		if (version_compare(phpversion(), '5.5.0', '>=')) {
 			set_error_handler(null);
-		} catch (Exception $ex) {
 		}
 		//@codeCoverageIgnoreEnd
 
@@ -116,9 +115,8 @@ class BlockTabsComponentStartupTest extends NetCommonsControllerTestCase {
 
 		//@codeCoverageIgnoreStart
 		//後で当処理は削除するため、今回は除外する
-		try {
+		if (version_compare(phpversion(), '5.5.0', '>=')) {
 			set_error_handler(null);
-		} catch (Exception $ex) {
 		}
 		//@codeCoverageIgnoreEnd
 
