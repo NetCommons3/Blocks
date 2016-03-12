@@ -78,7 +78,13 @@ class BlockTabsComponentStartupTest extends NetCommonsControllerTestCase {
 		$this->_testGetAction('/test_blocks/test_block_tabs_component/index',
 				array('method' => 'assertNotEmpty'), null, 'view');
 
-		set_error_handler(null);
+		//@codeCoverageIgnoreStart
+		//後で当処理は削除するため、今回は除外する
+		try {
+			set_error_handler(null);
+		} catch (Exception $ex) {
+		}
+		//@codeCoverageIgnoreEnd
 
 		//チェック
 		$pattern = '/' . preg_quote('Controller/Component/TestBlockTabsComponent/index', '/') . '/';
@@ -108,7 +114,13 @@ class BlockTabsComponentStartupTest extends NetCommonsControllerTestCase {
 		$this->_testGetAction('/test_blocks/test_block_tabs_component_in_array_helper/index',
 				array('method' => 'assertNotEmpty'), null, 'view');
 
-		set_error_handler(null);
+		//@codeCoverageIgnoreStart
+		//後で当処理は削除するため、今回は除外する
+		try {
+			set_error_handler(null);
+		} catch (Exception $ex) {
+		}
+		//@codeCoverageIgnoreEnd
 
 		//チェック
 		$pattern = '/' . preg_quote('Controller/Component/TestBlockTabsComponent/index', '/') . '/';
