@@ -1,15 +1,42 @@
 <?php
 /**
- * Element of block role setting
- *   - $roles:
- *       The results `Roles` data of NetCommonsBlockComponent->getBlockRolePermissions().
- *   - $settingPermissions: Permissions of approval panel
- *       - key: permission
- *       - value: label
- *   - $model: Model name
- *   - $useWorkflow: Field name for use workflow. It is underscore format
- *   - $useCommentApproval: Field name for use comment approval. It is underscore format
- *   - $panelLabel: Panel Label
+ * コンテンツの承認権限設定Element
+ * WorkflowComponent->getBlockRolePermissions())で取得した結果をもとにセットする
+ *
+ * - settingPermissions: 設定するパーミッションデータ(key: パーミッション名、value: ラベル)
+ * - model: モデル名
+ * - useWorkflow: コンテンツ承認使用有無のフィールド名
+ * - useCommentApproval: コンテンツコメント承認使用有無のフィールド名
+ * - panelLabel: パネルのタイトル名
+ *
+ * ### サンプル1（コメントあり）
+ * ```
+ * 	echo $this->element('Blocks.block_approval_setting', array(
+ * 			'model' => 'BbsSetting',
+ * 			'useWorkflow' => 'use_workflow',
+ * 			'useCommentApproval' => 'use_comment_approval',
+ * 			'settingPermissions' => array(
+ * 				'content_comment_publishable' => __d('blocks', 'Content comment publishable roles'),
+ * 			),
+ * 			'options' => array(
+ * 				Block::NEED_APPROVAL => __d('blocks', 'Need approval in both %s and comments ', __d('bbses', 'articles')),
+ * 				Block::NEED_COMMENT_APPROVAL => __d('blocks', 'Need only comments approval'),
+ * 				Block::NOT_NEED_APPROVAL => __d('blocks', 'Not need approval'),
+ * 			),
+ * 		));
+ * ```
+ *
+ * ### サンプル2（コメントなし）
+ * ```
+ * 	echo $this->element('Blocks.block_approval_setting', array(
+ * 			'model' => 'FaqSetting',
+ * 			'useWorkflow' => 'use_workflow',
+ * 			'options' => array(
+ * 				Block::NEED_APPROVAL => __d('blocks', 'Need approval'),
+ * 				Block::NOT_NEED_APPROVAL => __d('blocks', 'Not need approval'),
+ * 			),
+ * 		));
+ * ```
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>

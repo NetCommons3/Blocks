@@ -66,7 +66,13 @@ class BlocksViewElementsBlockCreatableSettingTest extends NetCommonsControllerTe
 		$pattern = '<label for="BlockRolePermissionContentCreatable">Label content_creatable</label>';
 		$this->assertTextContains($pattern, $this->view);
 
+		$pattern = 'data[BlockRolePermission][content_creatable][room_administrator][value]';
+		$this->assertTextContains($pattern, $this->view);
+
 		$pattern = '<label for="BlockRolePermissionContentCommentCreatable">Label content_comment_creatable</label>';
+		$this->assertTextContains($pattern, $this->view);
+
+		$pattern = 'data[BlockRolePermission][content_comment_creatable][room_administrator][value]';
 		$this->assertTextContains($pattern, $this->view);
 	}
 

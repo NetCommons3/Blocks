@@ -1,12 +1,16 @@
 <?php
 /**
- * Element of block role permission setting inline
- *   - $roles:
- *       The results `Roles` data of NetCommonsBlockComponent->getBlockRolePermissions().
- *   - $settingPermissions: Permissions data of creatable panel
- *       - key: permission
- *       - value: label
- *   - $panelLabel: Panel Label
+ * ブロックのパーミッション設定Element
+ * WorkflowComponent->getBlockRolePermissions())で取得した結果をもとにセットする
+ *
+ * - settingPermissions: 設定するパーミッションデータ(key: パーミッション名、value: ラベル)
+ *
+ * ### サンプル
+ * ```
+ * 	echo $this->element('Blocks.block_permission_setting', array(
+ * 			'mail_content_receivable' => __d('mails', 'Notification to the authority'),
+ * 		));
+ * ```
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
