@@ -9,29 +9,30 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('FormHelper', 'View/Helper');
+App::uses('AppHelper', 'View/Helper');
 
 /**
  * BlockForm Helper
  *
  * @package NetCommons\Blocks\View\Helper
  */
-class BlockFormHelper extends FormHelper {
+class BlockFormHelper extends AppHelper {
 
 /**
  * Other helpers used by FormHelper
  *
  * @var array
  */
-	public $helpers = array('NetCommonsForm');
+	public $helpers = array(
+		'NetCommons.NetCommonsForm'
+	);
 
 /**
- * Output setting display frame radio
+ * ブロック一覧のラジオボタン
  *
- * @param string $fieldName Name attribute of the RADIO
- * @param int $blockId Block.id
- * @return string Formatted RADIO element
- * @link http://book.cakephp.org/2.0/en/core-libraries/helpers/form.html#options-for-select-checkbox-and-radio-inputs
+ * @param string $fieldName フィールド名(Model.field)
+ * @param int $blockId ブロックID
+ * @return string ラジオボタン
  */
 	public function displayFrame($fieldName, $blockId) {
 		return $this->NetCommonsForm->radio($fieldName, array($blockId => ''), array(

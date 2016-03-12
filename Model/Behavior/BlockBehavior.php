@@ -67,15 +67,13 @@ class BlockBehavior extends ModelBehavior {
 /**
  * Setup this behavior with the specified configuration settings.
  *
- * @param Model $model Model using this behavior
+ * @param Model $model ビヘイビアの呼び出しのモデル
  * @param array $config Configuration settings for $model
  * @return void
  */
 	public function setup(Model $model, $config = array()) {
 		$this->settings = Hash::merge($this->settings, $config);
-		if (! isset($this->settings['loadModels'])) {
-			$this->settings['loadModels'] = array();
-		}
+		$this->settings['loadModels'] = Hash::get($this->settings, 'loadModels', array());
 	}
 
 /**
@@ -83,7 +81,7 @@ class BlockBehavior extends ModelBehavior {
  * add behavior validation rules into a models validate array. Returning false
  * will allow you to make the validation fail.
  *
- * @param Model $model Model using this behavior
+ * @param Model $model ビヘイビアの呼び出しのモデル
  * @param array $options Options passed from Model::save().
  * @return mixed False or null will abort the operation. Any other result will continue.
  * @see Model::save()
@@ -94,10 +92,7 @@ class BlockBehavior extends ModelBehavior {
 		}
 
 		if (isset($model->data['Block']['public_type'])) {
-			if ($model->data['Block']['public_type'] === Block::TYPE_LIMITED) {
-				//$data['Block']['publish_start'] = implode('-', $data['Block']['publish_start']);
-				//$data['Block']['publish_end'] = implode('-', $data['Block']['publish_end']);
-			} else {
+			if ($model->data['Block']['public_type'] !== Block::TYPE_LIMITED) {
 				unset($model->data['Block']['publish_start'], $model->data['Block']['publish_end']);
 			}
 		}
@@ -106,8 +101,7 @@ class BlockBehavior extends ModelBehavior {
 			'Block' => 'Blocks.Block',
 		));
 		$model->Block->set($model->data['Block']);
-		$model->Block->validates();
-		if ($model->Block->validationErrors) {
+		if (! $model->Block->validates()) {
 			$model->validationErrors = Hash::merge($model->validationErrors, $model->Block->validationErrors);
 			return false;
 		}
@@ -119,7 +113,7 @@ class BlockBehavior extends ModelBehavior {
  * beforeSave is called before a model is saved. Returning false from a beforeSave callback
  * will abort the save operation.
  *
- * @param Model $model Model using this behavior
+ * @param Model $model ビヘイビアの呼び出しのモデル
  * @param array $options Options passed from Model::save().
  * @return mixed False if the operation should abort. Any other result will continue.
  * @see Model::save()
@@ -158,6 +152,25 @@ class BlockBehavior extends ModelBehavior {
 		}
 
 		//block_id, block_keyのセット
+		$this->__setBlockFields($model);
+
+		return parent::beforeSave($model, $options);
+	}
+
+/**
+ * $model->dataのblock_idとblock_keyに値をセットする
+ *
+ * @param Model $model ビヘイビアの呼び出しのモデル
+ * @return void
+ */
+	private function __setBlockFields(Model $model) {
+		if ($model->hasField('block_id')) {
+			$model->data[$model->alias]['block_id'] = $model->data['Block']['id'];
+		}
+		if ($model->hasField('block_key')) {
+			$model->data[$model->alias]['block_key'] = $model->data['Block']['key'];
+		}
+
 		$keys = array_keys($model->data);
 		foreach ($keys as $key) {
 			if ($key === 'Frame') {
@@ -165,36 +178,40 @@ class BlockBehavior extends ModelBehavior {
 			}
 
 			$this->__setRecursiveBlockField($model, $model->data, 'block_id', $key, $model->data['Block']['id']);
-
 			$this->__setRecursiveBlockField($model, $model->data, 'block_key', $key, $model->data['Block']['key']);
 		}
-
-		return parent::beforeSave($model, $options);
 	}
 
 /**
- * Set block field
+ * $model->dataのblock_idとblock_keyに値をセットする
  *
- * @param Model $model Model using this behavior
- * @param array &$data Model data
- * @param string $field Update field
- * @param string $key Recursive key
- * @param string $value Update value
+ * @param Model $model ビヘイビアの呼び出しのモデル
+ * @param array &$data セットするデータ
+ * @param string $field フィールド名
+ * @param string $key 再帰処理するKey
+ * @param string $value 更新する値
  * @return void
  */
 	private function __setRecursiveBlockField(Model $model, &$data, $field, $key, $value) {
 		if (!is_array($data[$key])) {
 			return;
 		}
-
-		if (isset($model->$key)) {
-			if ($model->$key->hasField($field)) {
-				$data[$key][$field] = $value;
+		if (is_object($model->$key)) {
+			if (! $model->$key->hasField($field)) {
+				return;
 			}
+		}
+
+		if (isset($data[$key][$field])) {
+			$data[$key][$field] = $value;
 			return;
 		}
 
 		foreach (array_keys($data[$key]) as $key2) {
+			if (is_numeric($key2) && isset($data[$key][$key2][$field])) {
+				$data[$key][$key2][$field] = $value;
+				continue;
+			}
 			$this->__setRecursiveBlockField($model, $data[$key], $field, $key2, $value);
 		}
 	}
@@ -202,8 +219,8 @@ class BlockBehavior extends ModelBehavior {
 /**
  * savePrepare
  *
- * @param Model $model Model using this behavior
- * @param array $frame Frame data
+ * @param Model $model ビヘイビアの呼び出しのモデル
+ * @param array $frame Frameデータ
  * @return void
  * @throws InternalErrorException
  */
@@ -211,7 +228,7 @@ class BlockBehavior extends ModelBehavior {
 		$model->data['Block']['room_id'] = $frame['Frame']['room_id'];
 		$model->data['Block']['language_id'] = $frame['Frame']['language_id'];
 
-		if (isset($model->data['Block']['name']) && $model->data['Block']['name']) {
+		if (Hash::get($model->data, 'Block.name')) {
 			//値があれば、何もしない
 		} elseif (isset($this->settings['name'])) {
 			list($alias, $filed) = pluginSplit($this->settings['name']);
@@ -223,12 +240,21 @@ class BlockBehavior extends ModelBehavior {
 		$model->data['Block']['plugin_key'] = Inflector::underscore($model->plugin);
 
 		//blocksの登録
-		if (! $block = $model->Block->save($model->data['Block'], false)) {
+		$block = $model->Block->save($model->data['Block'], false);
+		if (! $block) {
 			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 		}
 		$model->data['Block'] = $block['Block'];
 		Current::$current['Block'] = $block['Block'];
 		(new CurrentFrame())->setM17n();
+
+		//Behaviorをセットしているモデルに対してblock_idとblock_keyをセットする
+		if ($model->hasField('block_id') && ! Hash::check($model->data, $model->alias . '.block_id')) {
+			$model->data[$model->alias]['block_id'] = $model->data['Block']['id'];
+		}
+		if ($model->hasField('block_key') && ! Hash::check($model->data, $model->alias . '.block_key')) {
+			$model->data[$model->alias]['block_key'] = $model->data['Block']['key'];
+		}
 	}
 
 /**
@@ -244,7 +270,7 @@ class BlockBehavior extends ModelBehavior {
  * 	);
  * ```
  *
- * @param Model $model Model using this behavior
+ * @param Model $model ビヘイビアの呼び出しのモデル
  * @param array $conditions Model::find conditions default value
  * @return array Conditions data
  */
@@ -269,7 +295,7 @@ class BlockBehavior extends ModelBehavior {
  * ));
  * ```
  *
- * @param Model $model Model using this behavior
+ * @param Model $model ビヘイビアの呼び出しのモデル
  * @param array $conditions Model::find conditions default value
  * @return array Conditions data
  */
@@ -303,9 +329,9 @@ class BlockBehavior extends ModelBehavior {
  * }
  * ```
  *
- * @param Model $model Model using this behavior
+ * @param Model $model ビヘイビアの呼び出しのモデル
  * @param string $blockKey blocks.key
- * @return void
+ * @return bool 成否
  * @throws InternalErrorException
  */
 	public function deleteBlock(Model $model, $blockKey) {
@@ -360,6 +386,8 @@ class BlockBehavior extends ModelBehavior {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
 		}
+
+		return true;
 	}
 
 }

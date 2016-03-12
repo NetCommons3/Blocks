@@ -115,6 +115,10 @@ class BlockRolePermissionBehavior extends ModelBehavior {
 			return true;
 		}
 
+		$model->loadModels(array(
+			'BlockRolePermission' => 'Blocks.BlockRolePermission',
+		));
+
 		foreach ($model->data['BlockRolePermission'] as $permission) {
 			if (! $model->BlockRolePermission->saveMany($permission, ['validate' => false])) {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));

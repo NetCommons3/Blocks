@@ -9,21 +9,23 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('FormHelper', 'View/Helper');
+App::uses('AppHelper', 'View/Helper');
 
 /**
  * BlockRolePermissionForm Helper
  *
  * @package NetCommons\Blocks\View\Helper
  */
-class BlockRolePermissionFormHelper extends FormHelper {
+class BlockRolePermissionFormHelper extends AppHelper {
 
 /**
  * Other helpers used by FormHelper
  *
  * @var array
  */
-	public $helpers = array('Form');
+	public $helpers = array(
+		'NetCommons.NetCommonsForm'
+	);
 
 /**
  * Outputs room roles radio
@@ -50,10 +52,10 @@ class BlockRolePermissionFormHelper extends FormHelper {
 			$html .= '<span class="checkbox-separator"></span>';
 			$html .= '<div class="form-group">';
 			if (! $role['fixed']) {
-				$html .= $this->Form->hidden($fieldName . '.' . $roleKey . '.id');
-				$html .= $this->Form->hidden($fieldName . '.' . $roleKey . '.roles_room_id');
-				$html .= $this->Form->hidden($fieldName . '.' . $roleKey . '.block_key');
-				$html .= $this->Form->hidden($fieldName . '.' . $roleKey . '.permission');
+				$html .= $this->NetCommonsForm->hidden($fieldName . '.' . $roleKey . '.id');
+				$html .= $this->NetCommonsForm->hidden($fieldName . '.' . $roleKey . '.roles_room_id');
+				$html .= $this->NetCommonsForm->hidden($fieldName . '.' . $roleKey . '.block_key');
+				$html .= $this->NetCommonsForm->hidden($fieldName . '.' . $roleKey . '.permission');
 			}
 
 			$options = Hash::merge(array(
@@ -63,9 +65,9 @@ class BlockRolePermissionFormHelper extends FormHelper {
 			if (! $options['disabled']) {
 				$options['ng-click'] = 'clickRole($event, \'' . $permission . '\', \'' . Inflector::variable($roleKey) . '\')';
 			}
-			$html .= $this->Form->checkbox($fieldName . '.' . $roleKey . '.value', $options);
+			$html .= $this->NetCommonsForm->checkbox($fieldName . '.' . $roleKey . '.value', $options);
 
-			$html .= $this->Form->label($fieldName . '.' . $roleKey . '.value', h($this->_View->viewVars['roles'][$roleKey]['name']));
+			$html .= $this->NetCommonsForm->label($fieldName . '.' . $roleKey . '.value', h($this->_View->viewVars['roles'][$roleKey]['name']));
 			$html .= '</div>';
 		}
 		$html .= '</div>';

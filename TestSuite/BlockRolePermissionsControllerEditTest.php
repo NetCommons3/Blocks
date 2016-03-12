@@ -18,7 +18,6 @@ App::uses('RolesRoomFixture', 'Rooms.Test/Fixture');
  *
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Blocks\TestSuite
- * @codeCoverageIgnore
  */
 class BlockRolePermissionsControllerEditTest extends NetCommonsControllerTestCase {
 
@@ -169,7 +168,8 @@ class BlockRolePermissionsControllerEditTest extends NetCommonsControllerTestCas
  * @return void
  */
 	protected function _assertEditGetPermission($approvalFields, $result) {
-		$permissions = $this->_getPermissionData(false, Hash::check($approvalFields, '{s}.use_comment_approval'));
+		$isCommentApproval = in_array('use_comment_approval', Hash::get(array_values($approvalFields), '0'), true);
+		$permissions = $this->_getPermissionData(false, $isCommentApproval);
 
 		//チェック
 		foreach ($permissions as $permission => $roles) {

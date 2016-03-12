@@ -17,7 +17,6 @@ App::uses('WorkflowComponent', 'Workflow.Controller/Component');
  *
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Blocks\TestSuite
- * @codeCoverageIgnore
  */
 class BlocksControllerTest extends NetCommonsControllerTestCase {
 
@@ -130,7 +129,7 @@ class BlocksControllerTest extends NetCommonsControllerTestCase {
 		$result = $this->_testNcAction($url, array('method' => 'get'), null, 'viewFile');
 
 		//チェック
-		$this->assertTextEquals($result, 'Blocks.Blocks/not_found');
+		$this->assertTextEquals('Blocks.Blocks/not_found', $result);
 
 		//ログアウト
 		TestAuthGeneral::logout($this);

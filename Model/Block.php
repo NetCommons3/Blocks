@@ -14,6 +14,7 @@
  */
 
 App::uses('BlocksAppModel', 'Blocks.Model');
+App::uses('NetCommonsTime', 'NetCommons.Utility');
 
 /**
  * Block Model
@@ -24,24 +25,46 @@ App::uses('BlocksAppModel', 'Blocks.Model');
 class Block extends BlocksAppModel {
 
 /**
- * Block type
+ * ブロック公開のタイプ(非公開)
  *
  * @var int
  */
-	const
-		TYPE_PRIVATE = '0',
-		TYPE_PUBLIC = '1',
-		TYPE_LIMITED = '2';
+	const TYPE_PRIVATE = '0';
 
 /**
- * Approval type
+ * ブロック公開のタイプ(公開)
  *
  * @var int
  */
-	const
-		NOT_NEED_APPROVAL = '0',
-		NEED_APPROVAL = '1',
-		NEED_COMMENT_APPROVAL = '2';
+	const TYPE_PUBLIC = '1';
+
+/**
+ * ブロック公開のタイプ(期限付き公開)
+ *
+ * @var int
+ */
+	const TYPE_LIMITED = '2';
+
+/**
+ * 承認フラグ(承認不要)
+ *
+ * @var int
+ */
+	const NOT_NEED_APPROVAL = '0';
+
+/**
+ * 承認フラグ(コンテンツ、コメントの承認必要)
+ *
+ * @var int
+ */
+	const NEED_APPROVAL = '1';
+
+/**
+  * 承認フラグ(コメントのみ承認必要)
+ *
+ * @var int
+ */
+	const NEED_COMMENT_APPROVAL = '2';
 
 /**
  * use behaviors
@@ -120,21 +143,27 @@ class Block extends BlocksAppModel {
 				'numeric' => array(
 					'rule' => array('numeric'),
 					'message' => __d('net_commons', 'Invalid request.'),
-					//'allowEmpty' => false,
-					//'required' => false,
-					//'last' => false, // Stop validation after this rule
-					//'on' => 'create', // Limit validation to 'create' or 'update' operations
 				),
 			),
 			'room_id' => array(
 				'numeric' => array(
 					'rule' => array('numeric'),
 					'message' => __d('net_commons', 'Invalid request.'),
-					//'allowEmpty' => false,
-					//'required' => false,
-					//'last' => false, // Stop validation after this rule
-					//'on' => 'create', // Limit validation to 'create' or 'update' operations
 				),
+			),
+			'public_type' => array(
+				'numeric' => array(
+					'rule' => array('numeric'),
+					'message' => __d('net_commons', 'Invalid request.'),
+				),
+				'inList' => array(
+					'rule' => array('inList', array(
+						self::TYPE_PRIVATE,
+						self::TYPE_PUBLIC,
+						self::TYPE_LIMITED
+					)),
+					'message' => __d('net_commons', 'Invalid request.'),
+				)
 			),
 			//'name' => array(
 			//	'notBlank' => array(
@@ -159,15 +188,16 @@ class Block extends BlocksAppModel {
  */
 	public function isVisible($block) {
 		$result = true;
-		switch ($block['Block']['public_type']) {
-			case 0:
+
+		switch (Hash::get($block, 'Block.public_type', self::TYPE_PRIVATE)) {
+			case self::TYPE_PRIVATE:
 				// 非表示
 				$result = false;
 				break;
-			case 1:
+			case self::TYPE_PUBLIC:
 				// 表示
 				break;
-			case 2:
+			case self::TYPE_LIMITED:
 				// 期間限定
 				$now = NetCommonsTime::getNowDatetime();
 				$start = $block['Block']['publish_start'];
@@ -179,6 +209,8 @@ class Block extends BlocksAppModel {
 					$result = false;
 				}
 				break;
+			default:
+				$result = false;
 		}
 		return $result;
 	}
