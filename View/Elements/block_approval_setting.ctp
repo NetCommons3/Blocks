@@ -59,22 +59,40 @@ if (! isset($panelLabel)) {
 $initializeParams = array(
 	'roles' => $roles
 );
-if (isset($useWorkflow)) {
-	$initializeParams['useWorkflow'] = (int)$this->request->data[$model][$useWorkflow];
-}
-if (isset($useCommentApproval)) {
-	$initializeParams['useCommentApproval'] = (int)$this->request->data[$model][$useCommentApproval];
-}
 
 //承認ラジオボタンの値セット
 if (isset($useWorkflow) && $this->request->data[$model][$useWorkflow]) {
-	$approvalType = Block::NEED_APPROVAL;
+	if (Current::read('Room.need_approval')) {
+		$approvalType = Block::NEED_APPROVAL;
+	} else {
+		$approvalType = Block::NOT_NEED_APPROVAL;
+	}
 } elseif (isset($useCommentApproval) && $this->request->data[$model][$useCommentApproval]) {
 	$approvalType = Block::NEED_COMMENT_APPROVAL;
 } else {
 	$approvalType = Block::NOT_NEED_APPROVAL;
 }
 $this->request->data[$model]['approval_type'] = $approvalType;
+
+if (isset($useWorkflow)) {
+	if ($approvalType === Block::NEED_APPROVAL) {
+		$initializeParams['useWorkflow'] = 1;
+		$this->request->data[$model][$useWorkflow] = 1;
+	} else {
+		$initializeParams['useWorkflow'] = 0;
+		$this->request->data[$model][$useWorkflow] = 0;
+	}
+}
+if (isset($useCommentApproval)) {
+	if ($approvalType === Block::NEED_APPROVAL ||
+			$approvalType === Block::NEED_COMMENT_APPROVAL) {
+		$initializeParams['useCommentApproval'] = 1;
+		$this->request->data[$model][$useCommentApproval] = 1;
+	} else {
+		$initializeParams['useCommentApproval'] = 0;
+		$this->request->data[$model][$useCommentApproval] = 0;
+	}
+}
 ?>
 
 <div ng-controller="BlockRolePermissions"
@@ -97,11 +115,17 @@ $this->request->data[$model]['approval_type'] = $approvalType;
 					<?php $this->NetCommonsForm->unlockField($model . '.' . $useCommentApproval); ?>
 				<?php endif; ?>
 
-				<?php echo $this->NetCommonsForm->radio($model . '.approval_type', $options, array(
-						'legend' => false,
-						'separator' => '<br>',
-						'ng-click' => 'clickApprovalType($event)'
-					)); ?>
+
+				<?php
+					foreach ($options as $key => $label) {
+						echo $this->NetCommonsForm->radio($model . '.approval_type', array($key => $label), array(
+							'legend' => false,
+							'ng-click' => 'clickApprovalType($event)',
+							'disabled' => Current::read('Room.need_approval') && $key !== Block::NEED_APPROVAL
+						));
+						echo '<br>';
+					}
+				?>
 			</div>
 
 			<?php foreach ($settingPermissions as $permission => $label) : ?>
