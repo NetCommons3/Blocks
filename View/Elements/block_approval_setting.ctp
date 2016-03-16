@@ -72,7 +72,7 @@ if (isset($useWorkflow) && $this->request->data[$model][$useWorkflow]) {
 } else {
 	$approvalType = Block::NOT_NEED_APPROVAL;
 }
-$this->request->data[$model]['approval_type'] = $approvalType;
+$this->request->data['Block']['approval_type'] = $approvalType;
 
 if (isset($useWorkflow)) {
 	if ($approvalType === Block::NEED_APPROVAL) {
@@ -118,7 +118,7 @@ if (isset($useCommentApproval)) {
 
 				<?php
 					foreach ($options as $key => $label) {
-						echo $this->NetCommonsForm->radio($model . '.approval_type', array($key => $label), array(
+						echo $this->NetCommonsForm->radio('Block.approval_type', array($key => $label), array(
 							'legend' => false,
 							'ng-click' => 'clickApprovalType($event)',
 							'disabled' => Current::read('Room.need_approval') && $key !== Block::NEED_APPROVAL
