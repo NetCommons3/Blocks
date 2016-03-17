@@ -114,44 +114,39 @@ class BlockRolePermissionBehavior extends ModelBehavior {
 			return true;
 		}
 
-		if (! isset($model->data['Block']['approval_type'])) {
+		if (! isset($model->data[$model->alias]['approval_type'])) {
 			return true;
 		}
-		$approvalType = $model->data['Block']['approval_type'];
+		$approvalType = $model->data[$model->alias]['approval_type'];
 
-		if (! in_array($approvalType, [Block::NOT_NEED_APPROVAL, Block::NEED_APPROVAL, Block::NOT_NEED_APPROVAL], true)) {
+		if (! in_array($approvalType, [Block::NOT_NEED_APPROVAL, Block::NEED_APPROVAL, Block::NEED_COMMENT_APPROVAL], true)) {
 			return true;
 		}
 
-		$permission = Hash::get($model->data['BlockRolePermission'], 'content_creatable', array());
+		$permission = Hash::get($model->data['BlockRolePermission'], 'content_publishable', array());
 		foreach ($permission as $roleKey => $role) {
-			$model->data['BlockRolePermission']['content_publishable'][$roleKey] = $role;
-			if (in_array($approvalType, [Block::NOT_NEED_APPROVAL], true)) {
-				$model->data['BlockRolePermission'] = Hash::insert(
-					$model->data['BlockRolePermission'], 'content_publishable.' . $roleKey . '.value', Hash::get($role, 'value')
-				);
+			if (in_array($approvalType, [Block::NOT_NEED_APPROVAL, Block::NEED_COMMENT_APPROVAL])) {
+				$value = Hash::get($model->data['BlockRolePermission'], 'content_creatable.' . $roleKey . '.value', true);
 			} else {
-				$model->data['BlockRolePermission'] = Hash::insert(
-					$model->data['BlockRolePermission'], 'content_publishable.' . $roleKey . '.value', false
-				);
+				$value = false;
 			}
+			$model->data['BlockRolePermission'] = Hash::insert(
+				$model->data['BlockRolePermission'], 'content_publishable.' . $roleKey . '.value', $value
+			);
 		}
 
-		$permission = Hash::get($model->data['BlockRolePermission'], 'content_comment_creatable', array());
+		$permission = Hash::get($model->data['BlockRolePermission'], 'content_comment_publishable', array());
 		foreach ($permission as $roleKey => $role) {
-			$model->data['BlockRolePermission']['content_comment_publishable'][$roleKey] = $role;
-			if (in_array((string)Hash::get($model->data, 'Block.approval_type'),
-					[Block::NOT_NEED_APPROVAL, Block::NEED_COMMENT_APPROVAL], true)) {
-
-				$model->data['BlockRolePermission'] = Hash::insert(
-					$model->data['BlockRolePermission'], 'content_comment_publishable.' . $roleKey . '.value', Hash::get($role, 'value')
-				);
-
+			if ($approvalType === Block::NOT_NEED_APPROVAL) {
+				$value = Hash::get($model->data['BlockRolePermission'], 'content_comment_creatable.' . $roleKey . '.value', true);
+			} elseif ($approvalType === Block::NEED_COMMENT_APPROVAL) {
+				$value = Hash::get($model->data['BlockRolePermission'], 'content_comment_publishable.' . $roleKey . '.value', false);
 			} else {
-				$model->data['BlockRolePermission'] = Hash::insert(
-					$model->data['BlockRolePermission'], 'content_comment_publishable.' . $roleKey . '.value', false
-				);
+				$value = false;
 			}
+			$model->data['BlockRolePermission'] = Hash::insert(
+				$model->data['BlockRolePermission'], 'content_comment_publishable.' . $roleKey . '.value', $value
+			);
 		}
 
 		return true;
@@ -171,6 +166,7 @@ class BlockRolePermissionBehavior extends ModelBehavior {
 		if (! isset($model->data['BlockRolePermission'])) {
 			return true;
 		}
+CakeLog::debug(var_export($model->data, true));
 
 		$model->loadModels(array(
 			'BlockRolePermission' => 'Blocks.BlockRolePermission',

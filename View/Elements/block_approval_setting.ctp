@@ -115,7 +115,6 @@ if (isset($useCommentApproval)) {
 					<?php $this->NetCommonsForm->unlockField($model . '.' . $useCommentApproval); ?>
 				<?php endif; ?>
 
-
 				<?php
 					foreach ($options as $key => $label) {
 						echo $this->NetCommonsForm->radio($model . '.approval_type', array($key => $label), array(
