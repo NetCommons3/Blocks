@@ -61,7 +61,9 @@ class BlockRolePermissionFormHelper extends AppHelper {
 /**
  * BlockRolePermissionのチェックボックス表示
  *
- * @param string $fieldName フィールド名
+ * @param string $model モデル名
+ * @param string $permission パーミッション
+ * @param string $roleKey ロールキー
  * @param array $attributes Formヘルパーのオプション
  * @return string HTML
  */
@@ -71,7 +73,7 @@ class BlockRolePermissionFormHelper extends AppHelper {
 		$fieldName = $model . '.' . $permission . '.' . $roleKey;
 		if ($permission === 'content_creatable') {
 			$pubFieldName = $model . '.' . 'content_publishable' . '.' . $roleKey;
-		} else if ($permission === 'content_comment_creatable') {
+		} elseif ($permission === 'content_comment_creatable') {
 			$pubFieldName = $model . '.' . 'content_comment_publishable' . '.' . $roleKey;
 		} else {
 			$pubFieldName = '';

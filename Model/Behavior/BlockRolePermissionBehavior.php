@@ -10,6 +10,7 @@
  */
 
 App::uses('ModelBehavior', 'Model');
+App::uses('Block', 'Blocks.Model');
 
 /**
  * BlockRolePermission Behavior
@@ -166,8 +167,6 @@ class BlockRolePermissionBehavior extends ModelBehavior {
 		if (! isset($model->data['BlockRolePermission'])) {
 			return true;
 		}
-CakeLog::debug(var_export($model->data, true));
-
 		$model->loadModels(array(
 			'BlockRolePermission' => 'Blocks.BlockRolePermission',
 		));

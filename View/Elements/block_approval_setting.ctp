@@ -61,12 +61,10 @@ $initializeParams = array(
 );
 
 //承認ラジオボタンの値セット
-if (isset($useWorkflow) && $this->request->data[$model][$useWorkflow]) {
-	if (Current::read('Room.need_approval')) {
-		$approvalType = Block::NEED_APPROVAL;
-	} else {
-		$approvalType = Block::NOT_NEED_APPROVAL;
-	}
+if (Current::read('Room.need_approval')) {
+	$approvalType = Block::NEED_APPROVAL;
+} elseif (isset($useWorkflow) && $this->request->data[$model][$useWorkflow]) {
+	$approvalType = Block::NEED_APPROVAL;
 } elseif (isset($useCommentApproval) && $this->request->data[$model][$useCommentApproval]) {
 	$approvalType = Block::NEED_COMMENT_APPROVAL;
 } else {
@@ -119,8 +117,9 @@ if (isset($useCommentApproval)) {
 					foreach ($options as $key => $label) {
 						echo $this->NetCommonsForm->radio($model . '.approval_type', array($key => $label), array(
 							'legend' => false,
+							'value' => $approvalType,
 							'ng-click' => 'clickApprovalType($event)',
-							'disabled' => Current::read('Room.need_approval') && $key !== Block::NEED_APPROVAL
+							'disabled' => Current::read('Room.need_approval') && (string)$key !== Block::NEED_APPROVAL
 						));
 						echo '<br>';
 					}

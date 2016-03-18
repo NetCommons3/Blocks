@@ -42,16 +42,16 @@ class BlockTabsComponent extends Component {
  *
  * @param Controller $controller Controller with components to startup
  * @return void
+ * @codeCoverageIgnore
  */
 	public function startup(Controller $controller) {
-		//BlockTabsComponent->BlockTabsHelper一本化するため、Noticeを表示する
-		trigger_error('Changed to BlockTabsHelper from BlockTabsComponent.', E_USER_WARNING);
-
 		if (! Hash::get($controller->helpers, 'Blocks.BlockTabs')) {
 			$controller->helpers['Blocks.BlockTabs'] = array(
 				'mainTabs' => Hash::get($this->settings, 'mainTabs'),
 				'blockTabs' => Hash::get($this->settings, 'blockTabs'),
 			);
 		}
+		//BlockTabsComponent->BlockTabsHelper一本化するため、Noticeを表示する
+		trigger_error('Changed to BlockTabsHelper from BlockTabsComponent.', E_USER_WARNING);
 	}
 }

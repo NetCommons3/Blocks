@@ -96,6 +96,7 @@ class BlockRolePermissionBehaviorSaveTest extends NetCommonsModelTestCase {
 				),
 			),
 		);
+		$data['TestBlockRolePermissionBehaviorSaveModel']['approval_type'] = '1';
 
 		return $data;
 	}
