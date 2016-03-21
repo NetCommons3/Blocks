@@ -90,7 +90,7 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 
 		//アクション実行
 		$frameId = '6';
-		$blockId = '4';
+		$blockId = '2';
 
 		$url = array(
 			'plugin' => $this->plugin,

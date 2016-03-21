@@ -35,6 +35,7 @@ class TestViewElementsBlockApprovalSettingController extends AppController {
  */
 	public function block_approval_setting() {
 		$this->autoRender = true;
+		Current::$current = Hash::insert(Current::$current, 'Room.need_approval', $this->request->query['need_approval']);
 
 		$viewVars['model'] = 'TestBlockSetting';
 		$viewVars['useWorkflow'] = 'use_workflow';

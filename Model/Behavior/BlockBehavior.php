@@ -202,7 +202,7 @@ class BlockBehavior extends ModelBehavior {
 			}
 		}
 
-		if (isset($data[$key][$field])) {
+		if (array_key_exists($field, $data[$key])) {
 			$data[$key][$field] = $value;
 			return;
 		}

@@ -68,6 +68,7 @@ class BlockRolePermissionFormHelperCheckboxBlockRolePermissionTest extends NetCo
 				'block_key' => 'block_1',
 				'permission' => 'content_creatable',
 				'fixed' => true,
+				'default' => '1',
 			),
 			'chief_editor' => array(
 				'id' => '2',
@@ -76,6 +77,7 @@ class BlockRolePermissionFormHelperCheckboxBlockRolePermissionTest extends NetCo
 				'block_key' => 'block_1',
 				'permission' => 'content_creatable',
 				'fixed' => true,
+				'default' => '1',
 			),
 			'editor' => array(
 				'id' => '3',
@@ -84,6 +86,7 @@ class BlockRolePermissionFormHelperCheckboxBlockRolePermissionTest extends NetCo
 				'block_key' => 'block_1',
 				'permission' => 'content_creatable',
 				'fixed' => false,
+				'default' => '1',
 			),
 			'general_user' => array(
 				'roles_room_id' => '4',
@@ -91,6 +94,7 @@ class BlockRolePermissionFormHelperCheckboxBlockRolePermissionTest extends NetCo
 				'block_key' => 'block_1',
 				'permission' => 'content_creatable',
 				'fixed' => false,
+				'default' => '0',
 			),
 			'visitor' => array(
 				'roles_room_id' => '5',
@@ -98,6 +102,7 @@ class BlockRolePermissionFormHelperCheckboxBlockRolePermissionTest extends NetCo
 				'block_key' => 'block_1',
 				'permission' => 'content_creatable',
 				'fixed' => true,
+				'default' => '0',
 			),
 		));
 		$params = array();

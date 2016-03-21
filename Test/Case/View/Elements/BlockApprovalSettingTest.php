@@ -53,16 +53,22 @@ class BlocksViewElementsBlockApprovalSettingTest extends NetCommonsControllerTes
  * ### 戻り値
  *  - approvalType 承認タイプ
  *  - useComment コメント有無
+ *  - needApproval 承認が必要かどうか
  *
  * @return array テストデータ
  */
 	public function dataProvider() {
 		return array(
-			array('approvalType' => '2', 'useComment' => '1'),
-			array('approvalType' => '1', 'useComment' => '0'),
-			array('approvalType' => '1', 'useComment' => '1'),
-			array('approvalType' => '0', 'useComment' => '0'),
-			array('approvalType' => '0', 'useComment' => '1'),
+			array('approvalType' => '2', 'useComment' => '1', 'needApproval' => '1'),
+			array('approvalType' => '1', 'useComment' => '0', 'needApproval' => '1'),
+			array('approvalType' => '1', 'useComment' => '1', 'needApproval' => '1'),
+			array('approvalType' => '0', 'useComment' => '0', 'needApproval' => '1'),
+			array('approvalType' => '0', 'useComment' => '1', 'needApproval' => '1'),
+			array('approvalType' => '2', 'useComment' => '1', 'needApproval' => '0'),
+			array('approvalType' => '1', 'useComment' => '0', 'needApproval' => '0'),
+			array('approvalType' => '1', 'useComment' => '1', 'needApproval' => '0'),
+			array('approvalType' => '0', 'useComment' => '0', 'needApproval' => '0'),
+			array('approvalType' => '0', 'useComment' => '1', 'needApproval' => '0'),
 		);
 	}
 
@@ -71,13 +77,14 @@ class BlocksViewElementsBlockApprovalSettingTest extends NetCommonsControllerTes
  *
  * @param int $approvalType 承認タイプ
  * @param int $useComment コメント有無
+ * @param bool $needApproval 承認が必要かどうか
  * @dataProvider dataProvider
  * @return void
  */
-	public function testBlockApprovalSetting($approvalType, $useComment) {
+	public function testBlockApprovalSetting($approvalType, $useComment, $needApproval) {
 		//テスト実行
 		$this->_testGetAction(
-				'/test_blocks/test_view_elements_block_approval_setting/block_approval_setting/2?frame_id=6' .
+				'/test_blocks/test_view_elements_block_approval_setting/block_approval_setting/2?frame_id=6&need_approval=' . $needApproval .
 								'&use_comment=' . $useComment . '&approval_type=' . $approvalType,
 				array('method' => 'assertNotEmpty'), null, 'view');
 
@@ -87,9 +94,9 @@ class BlocksViewElementsBlockApprovalSettingTest extends NetCommonsControllerTes
 
 		$this->assertTextContains('ng-controller="BlockRolePermissions"', $this->view);
 
-		$this->__assertWorkflow($approvalType);
+		$this->__assertWorkflow($approvalType, $needApproval);
 		if ($useComment) {
-			$this->__assertComment($approvalType);
+			$this->__assertComment($approvalType, $needApproval);
 		}
 	}
 
@@ -97,11 +104,12 @@ class BlocksViewElementsBlockApprovalSettingTest extends NetCommonsControllerTes
  * コンテンツ承認有無のチェック
  *
  * @param int $approvalType 承認タイプ
+ * @param bool $needApproval 承認が必要かどうか
  * @return void
  */
-	private function __assertWorkflow($approvalType) {
+	private function __assertWorkflow($approvalType, $needApproval) {
 		// * ワークフロー承認の有無
-		if (in_array($approvalType, ['1'], true)) {
+		if ($needApproval || in_array($approvalType, ['1'], true)) {
 			$pattern = '<input type="hidden"' .
 								' name="' . preg_quote('data[TestBlockSetting][use_workflow]', '/') . '"' .
 								' (value="1" ng-value="useWorkflow"|ng-value="useWorkflow" value="1")';
@@ -113,11 +121,17 @@ class BlocksViewElementsBlockApprovalSettingTest extends NetCommonsControllerTes
 		$this->assertRegExp('/' . $pattern . '/', $this->view);
 
 		// * 承認設定のラジオボタン
-		if ($approvalType === '1') {
+		if ($approvalType === '1' || $needApproval) {
 			$checked = 'checked="checked" ';
 		} else {
 			$checked = '';
 		}
+		if ($needApproval) {
+			$disabled = 'disabled="disabled" ';
+		} else {
+			$disabled = '';
+		}
+
 		$pattern = '<input type="radio" ' .
 							'name="' . preg_quote('data[TestBlockSetting][approval_type]', '/') . '" ' .
 							'id=".*?" value="1" ' . $checked .
@@ -127,14 +141,14 @@ class BlocksViewElementsBlockApprovalSettingTest extends NetCommonsControllerTes
 		$pattern = '<label for="TestBlockSettingApprovalType1">Label need_approval</label>';
 		$this->assertTextContains($pattern, $this->view);
 
-		if ($approvalType === '0') {
+		if ($approvalType === '0' && ! $needApproval) {
 			$checked = 'checked="checked" ';
 		} else {
 			$checked = '';
 		}
 		$pattern = '<input type="radio" ' .
 							'name="' . preg_quote('data[TestBlockSetting][approval_type]', '/') . '" ' .
-							'id=".*?" value="0" ' . $checked .
+							'id=".*?" value="0" ' . $disabled . $checked .
 							'ng-click="' . preg_quote('clickApprovalType($event)', '/') . '"';
 		$this->assertRegExp('/' . $pattern . '/', $this->view);
 
@@ -146,11 +160,12 @@ class BlocksViewElementsBlockApprovalSettingTest extends NetCommonsControllerTes
  * コンテンツ承認有無のチェック
  *
  * @param int $approvalType 承認タイプ
+ * @param bool $needApproval 承認が必要かどうか
  * @return void
  */
-	private function __assertComment($approvalType) {
+	private function __assertComment($approvalType, $needApproval) {
 		// * コメント承認の有無
-		if (in_array($approvalType, ['1', '2'], true)) {
+		if ($needApproval || in_array($approvalType, ['1', '2'], true)) {
 			$pattern = '<input type="hidden"' .
 								' name="' . preg_quote('data[TestBlockSetting][use_comment_approval]', '/') . '"' .
 								' (value="1" ng-value="useCommentApproval"|ng-value="useCommentApproval" value="1")';
@@ -162,14 +177,20 @@ class BlocksViewElementsBlockApprovalSettingTest extends NetCommonsControllerTes
 		$this->assertRegExp('/' . $pattern . '/', $this->view);
 
 		// * 承認設定のラジオボタン
-		if ($approvalType === '2') {
+		if ($approvalType === '2' && ! $needApproval) {
 			$checked = 'checked="checked" ';
 		} else {
 			$checked = '';
 		}
+		if ($needApproval) {
+			$disabled = 'disabled="disabled" ';
+		} else {
+			$disabled = '';
+		}
+
 		$pattern = '<input type="radio" ' .
 							'name="' . preg_quote('data[TestBlockSetting][approval_type]', '/') . '" ' .
-							'id=".*?" value="2" ' . $checked .
+							'id=".*?" value="2" ' . $disabled . $checked .
 							'ng-click="' . preg_quote('clickApprovalType($event)', '/') . '"';
 		$this->assertRegExp('/' . $pattern . '/', $this->view);
 
