@@ -232,7 +232,13 @@ class BlockBehavior extends ModelBehavior {
 			//値があれば、何もしない
 		} elseif (isset($this->settings['name'])) {
 			list($alias, $filed) = pluginSplit($this->settings['name']);
-			$model->data['Block']['name'] = mb_strimwidth(strip_tags($model->data[$alias][$filed]), 0, self::NAME_LENGTH);
+
+			$name = trim(mb_strimwidth(strip_tags($model->data[$alias][$filed]), 0, self::NAME_LENGTH));
+			if ($name) {
+				$model->data['Block']['name'] = $name;
+			} else {
+				$model->data['Block']['name'] = trim(mb_strimwidth($model->data[$alias][$filed], 0, self::NAME_LENGTH));
+			}
 		} else {
 			$model->data['Block']['name'] = sprintf(__d('blocks', 'Block %s'), date('YmdHis'));
 		}
