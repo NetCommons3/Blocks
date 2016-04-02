@@ -31,13 +31,4 @@ class TestBlockTabsComponentController extends AppController {
 		)
 	);
 
-/**
- * index
- *
- * @return void
- */
-	public function index() {
-		$this->autoRender = true;
-	}
-
 }
