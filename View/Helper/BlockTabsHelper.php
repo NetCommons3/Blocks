@@ -272,7 +272,7 @@ class BlockTabsHelper extends AppHelper {
 			}
 		}
 
-		$html .= '</ul><br>';
+		$html .= '</ul>';
 		return $html;
 	}
 
@@ -313,7 +313,7 @@ class BlockTabsHelper extends AppHelper {
 			}
 		}
 
-		$html .= '</ul><br>';
+		$html .= '</ul>';
 		return $html;
 	}
 
