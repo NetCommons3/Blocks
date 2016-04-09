@@ -12,30 +12,22 @@
 ClassRegistry::init('Blocks.Block');
 ?>
 
-<div class="row form-group">
-	<div class="col-xs-12">
-		<?php echo $this->NetCommonsForm->label('Block.public_type', __d('blocks', 'Publishing setting')); ?>
-	</div>
+<div class="form-group">
+	<?php echo $this->NetCommonsForm->label('Block.public_type', __d('blocks', 'Publishing setting')); ?>
 
-	<div class="col-xs-offset-1 col-xs-11">
+	<div class="form-input-outer">
 		<?php
 			$options = array(
 				Block::TYPE_PRIVATE => __d('blocks', 'Private'),
 				Block::TYPE_PUBLIC => __d('blocks', 'Public'),
 				Block::TYPE_LIMITED => __d('blocks', 'Limited'),
 			);
-
-			echo $this->NetCommonsForm->radio('Block.public_type', $options, array(
-				'legend' => false,
-				'separator' => '<br />',
-			));
+			echo $this->NetCommonsForm->radio('Block.public_type', $options);
 
 			$publicTypePeriod = Hash::get($this->data, 'Block.public_type') === Block::TYPE_LIMITED;
 		?>
-	</div>
 
-	<div class="col-xs-offset-1 col-xs-11">
-		<div class="input-group inline-block" style="margin-left: 20px;">
+		<div class="input-group inline-block input-indent">
 			<div class="input-group">
 				<?php echo $this->NetCommonsForm->input('Block.publish_start', array(
 					'type' => 'datetime',
