@@ -47,9 +47,7 @@ class BlockRolePermissionFormHelper extends AppHelper {
 			if (! $role['default'] && $role['fixed']) {
 				continue;
 			}
-
 			$html .= $this->__inputBlockRolePermission($model, $permission, $roleKey, $attributes);
-			$html .= '<span class="checkbox-separator"></span>';
 		}
 		$html .= '</div>';
 
