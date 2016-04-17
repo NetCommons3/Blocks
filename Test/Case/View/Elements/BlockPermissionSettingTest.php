@@ -63,9 +63,6 @@ class BlocksViewElementsBlockPermissionSettingTest extends NetCommonsControllerT
 
 		$this->assertTextContains('ng-controller="BlockRolePermissions"', $this->view);
 
-		$pattern = '<label for="BlockRolePermissionContentCreatable">Label content_creatable</label>';
-		$this->assertTextContains($pattern, $this->view);
-
 		$pattern = 'data[BlockRolePermission][content_creatable][room_administrator][value]';
 		$this->assertTextContains($pattern, $this->view);
 	}

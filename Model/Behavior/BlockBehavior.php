@@ -102,7 +102,9 @@ class BlockBehavior extends ModelBehavior {
 		));
 		$model->Block->set($model->data['Block']);
 		if (! $model->Block->validates()) {
-			$model->validationErrors = Hash::merge($model->validationErrors, $model->Block->validationErrors);
+			$model->validationErrors = Hash::merge(
+				$model->validationErrors, $model->Block->validationErrors
+			);
 			return false;
 		}
 
@@ -177,8 +179,12 @@ class BlockBehavior extends ModelBehavior {
 				continue;
 			}
 
-			$this->__setRecursiveBlockField($model, $model->data, 'block_id', $key, $model->data['Block']['id']);
-			$this->__setRecursiveBlockField($model, $model->data, 'block_key', $key, $model->data['Block']['key']);
+			$this->__setRecursiveBlockField(
+				$model, $model->data, 'block_id', $key, $model->data['Block']['id']
+			);
+			$this->__setRecursiveBlockField(
+				$model, $model->data, 'block_key', $key, $model->data['Block']['key']
+			);
 		}
 	}
 
@@ -234,11 +240,10 @@ class BlockBehavior extends ModelBehavior {
 			list($alias, $filed) = pluginSplit($this->settings['name']);
 
 			$name = trim(mb_strimwidth(strip_tags($model->data[$alias][$filed]), 0, self::NAME_LENGTH));
-			if ($name) {
-				$model->data['Block']['name'] = $name;
-			} else {
-				$model->data['Block']['name'] = trim(mb_strimwidth($model->data[$alias][$filed], 0, self::NAME_LENGTH));
+			if (! $name) {
+				$name = trim(mb_strimwidth($model->data[$alias][$filed], 0, self::NAME_LENGTH));
 			}
+			$model->data['Block']['name'] = $name;
 		} else {
 			$model->data['Block']['name'] = sprintf(__d('blocks', 'Block %s'), date('YmdHis'));
 		}
@@ -383,10 +388,12 @@ class BlockBehavior extends ModelBehavior {
 			$result = true;
 
 			if ($model->$class->hasField('block_id')) {
-				$result = $model->$class->deleteAll(array($model->$class->alias . '.block_id' => $blockIds), false);
+				$conditions = array($model->$class->alias . '.block_id' => $blockIds);
+				$result = $model->$class->deleteAll($conditions, false);
 			}
 			if ($model->$class->hasField('block_key')) {
-				$result = $model->$class->deleteAll(array($model->$class->alias . '.block_key' => $blockKey), false);
+				$conditions = array($model->$class->alias . '.block_key' => $blockKey);
+				$result = $model->$class->deleteAll($conditions, false);
 			}
 			if (! $result) {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));

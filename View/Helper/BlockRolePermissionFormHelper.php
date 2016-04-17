@@ -87,7 +87,8 @@ class BlockRolePermissionFormHelper extends AppHelper {
 			'disabled' => (bool)Hash::get($this->_View->request->data, $fieldName . '.fixed')
 		), $attributes);
 		if (! $options['disabled']) {
-			$options['ng-click'] = 'clickRole($event, \'' . $permission . '\', \'' . Inflector::variable($roleKey) . '\')';
+			$options['ng-click'] = 'clickRole($event, ' .
+							'\'' . $permission . '\', \'' . Inflector::variable($roleKey) . '\')';
 		}
 
 		$options['label'] = $this->_View->viewVars['roles'][$roleKey]['name'];

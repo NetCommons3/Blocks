@@ -138,9 +138,6 @@ class BlocksViewElementsBlockApprovalSettingTest extends NetCommonsControllerTes
 							'ng-click="' . preg_quote('clickApprovalType($event)', '/') . '"';
 		$this->assertRegExp('/' . $pattern . '/', $this->view);
 
-		$pattern = '<label for="TestBlockSettingApprovalType1">Label need_approval</label>';
-		$this->assertTextContains($pattern, $this->view);
-
 		if ($approvalType === '0' && ! $needApproval) {
 			$checked = 'checked="checked" ';
 		} else {
@@ -151,9 +148,6 @@ class BlocksViewElementsBlockApprovalSettingTest extends NetCommonsControllerTes
 							'id=".*?" value="0" ' . $disabled . $checked .
 							'ng-click="' . preg_quote('clickApprovalType($event)', '/') . '"';
 		$this->assertRegExp('/' . $pattern . '/', $this->view);
-
-		$pattern = '<label for="TestBlockSettingApprovalType0">Label not_need_approval</label>';
-		$this->assertTextContains($pattern, $this->view);
 	}
 
 /**
@@ -194,13 +188,7 @@ class BlocksViewElementsBlockApprovalSettingTest extends NetCommonsControllerTes
 							'ng-click="' . preg_quote('clickApprovalType($event)', '/') . '"';
 		$this->assertRegExp('/' . $pattern . '/', $this->view);
 
-		$pattern = '<label for="TestBlockSettingApprovalType2">Label comment_approval</label>';
-		$this->assertTextContains($pattern, $this->view);
-
 		//コメント承認権限の設定
-		$pattern = '<label for="BlockRolePermissionContentCommentPublishable">Label content_comment_publishable</label>';
-		$this->assertTextContains($pattern, $this->view);
-
 		$pattern = 'data[BlockRolePermission][content_comment_publishable][room_administrator][value]';
 		$this->assertTextContains($pattern, $this->view);
 	}
