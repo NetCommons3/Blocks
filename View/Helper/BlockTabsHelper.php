@@ -109,12 +109,13 @@ class BlockTabsHelper extends AppHelper {
  */
 	public function setMainTabs($mainTabs) {
 		$this->settings['mainTabs'] = $mainTabs;
+		$plugin = $this->_View->params['plugin'];
 
 		$defaultUrls = array(
 			self::MAIN_TAB_BLOCK_INDEX => array(
 				'url' => array(
-					'plugin' => $this->_View->params['plugin'],
-					'controller' => Inflector::singularize($this->_View->params['plugin']) . '_blocks',
+					'plugin' => $plugin,
+					'controller' => Inflector::singularize($plugin) . '_blocks',
 					'action' => 'index',
 					'frame_id' => Current::read('Frame.id'),
 				),
@@ -122,8 +123,8 @@ class BlockTabsHelper extends AppHelper {
 			),
 			self::MAIN_TAB_FRAME_SETTING => array(
 				'url' => array(
-					'plugin' => $this->_View->params['plugin'],
-					'controller' => Inflector::singularize($this->_View->params['plugin']) . '_frame_settings',
+					'plugin' => $plugin,
+					'controller' => Inflector::singularize($plugin) . '_frame_settings',
 					'action' => 'edit',
 					'frame_id' => Current::read('Frame.id'),
 				),
@@ -131,8 +132,8 @@ class BlockTabsHelper extends AppHelper {
 			),
 			self::MAIN_TAB_MAIL_SETTING => array(
 				'url' => array(
-					'plugin' => $this->_View->params['plugin'],
-					'controller' => Inflector::singularize($this->_View->params['plugin']) . '_mail_settings',
+					'plugin' => $plugin,
+					'controller' => Inflector::singularize($plugin) . '_mail_settings',
 					'action' => 'edit',
 					'frame_id' => Current::read('Frame.id'),
 					'block_id' => Current::read('Block.id'),
@@ -141,8 +142,8 @@ class BlockTabsHelper extends AppHelper {
 			),
 			self::MAIN_TAB_PERMISSION => array(
 				'url' => array(
-					'plugin' => $this->_View->params['plugin'],
-					'controller' => Inflector::singularize($this->_View->params['plugin']) . '_block_role_permissions',
+					'plugin' => $plugin,
+					'controller' => Inflector::singularize($plugin) . '_block_role_permissions',
 					'action' => 'edit',
 					'frame_id' => Current::read('Frame.id'),
 					'block_id' => Current::read('Block.id'),
@@ -179,13 +180,14 @@ class BlockTabsHelper extends AppHelper {
  */
 	public function setBlockTabs($blockTabs) {
 		$this->settings['blockTabs'] = $blockTabs;
+		$plugin = $this->_View->params['plugin'];
 
 		//ブロック設定のタブ
 		$defaultUrls = array(
 			self::BLOCK_TAB_SETTING => array(
 				'url' => array(
-					'plugin' => $this->_View->params['plugin'],
-					'controller' => Inflector::singularize($this->_View->params['plugin']) . '_blocks',
+					'plugin' => $plugin,
+					'controller' => Inflector::singularize($plugin) . '_blocks',
 					'action' => $this->_View->params['action'],
 					'frame_id' => Current::read('Frame.id'),
 					'block_id' => Current::read('Block.id'),
@@ -194,8 +196,8 @@ class BlockTabsHelper extends AppHelper {
 			),
 			self::BLOCK_TAB_MAIL_SETTING => array(
 				'url' => array(
-					'plugin' => $this->_View->params['plugin'],
-					'controller' => Inflector::singularize($this->_View->params['plugin']) . '_mail_settings',
+					'plugin' => $plugin,
+					'controller' => Inflector::singularize($plugin) . '_mail_settings',
 					'action' => 'edit',
 					'frame_id' => Current::read('Frame.id'),
 					'block_id' => Current::read('Block.id'),
@@ -204,8 +206,8 @@ class BlockTabsHelper extends AppHelper {
 			),
 			self::BLOCK_TAB_PERMISSION => array(
 				'url' => array(
-					'plugin' => $this->_View->params['plugin'],
-					'controller' => Inflector::singularize($this->_View->params['plugin']) . '_block_role_permissions',
+					'plugin' => $plugin,
+					'controller' => Inflector::singularize($plugin) . '_block_role_permissions',
 					'action' => 'edit',
 					'frame_id' => Current::read('Frame.id'),
 					'block_id' => Current::read('Block.id'),
@@ -247,22 +249,30 @@ class BlockTabsHelper extends AppHelper {
 
 		//一覧表示
 		if (isset($tabs[self::MAIN_TAB_BLOCK_INDEX])) {
-			$html .= $this->__listTag($activeTab, self::MAIN_TAB_BLOCK_INDEX, $tabs[self::MAIN_TAB_BLOCK_INDEX]);
+			$html .= $this->__listTag(
+				$activeTab, self::MAIN_TAB_BLOCK_INDEX, $tabs[self::MAIN_TAB_BLOCK_INDEX]
+			);
 			unset($tabs[self::MAIN_TAB_BLOCK_INDEX]);
 		}
 		//表示方法変更
 		if (isset($tabs[self::MAIN_TAB_FRAME_SETTING])) {
-			$html .= $this->__listTag($activeTab, self::MAIN_TAB_FRAME_SETTING, $tabs[self::MAIN_TAB_FRAME_SETTING]);
+			$html .= $this->__listTag(
+				$activeTab, self::MAIN_TAB_FRAME_SETTING, $tabs[self::MAIN_TAB_FRAME_SETTING]
+			);
 			unset($tabs[self::MAIN_TAB_FRAME_SETTING]);
 		}
 		//メール通知
 		if (isset($tabs[self::MAIN_TAB_MAIL_SETTING])) {
-			$html .= $this->__listTag($activeTab, self::MAIN_TAB_MAIL_SETTING, $tabs[self::MAIN_TAB_MAIL_SETTING]);
+			$html .= $this->__listTag(
+				$activeTab, self::MAIN_TAB_MAIL_SETTING, $tabs[self::MAIN_TAB_MAIL_SETTING]
+			);
 			unset($tabs[self::MAIN_TAB_MAIL_SETTING]);
 		}
 		//権限設定
 		if (isset($tabs[self::MAIN_TAB_PERMISSION])) {
-			$html .= $this->__listTag($activeTab, self::MAIN_TAB_PERMISSION, $tabs[self::MAIN_TAB_PERMISSION]);
+			$html .= $this->__listTag(
+				$activeTab, self::MAIN_TAB_PERMISSION, $tabs[self::MAIN_TAB_PERMISSION]
+			);
 			unset($tabs[self::MAIN_TAB_PERMISSION]);
 		}
 		//その他のタブ
@@ -290,19 +300,25 @@ class BlockTabsHelper extends AppHelper {
 
 		//ブロック設定
 		if (isset($tabs[self::BLOCK_TAB_SETTING])) {
-			$html .= $this->__listTag($activeTab, self::BLOCK_TAB_SETTING, $tabs[self::BLOCK_TAB_SETTING]);
+			$html .= $this->__listTag(
+				$activeTab, self::BLOCK_TAB_SETTING, $tabs[self::BLOCK_TAB_SETTING]
+			);
 			unset($tabs[self::BLOCK_TAB_SETTING]);
 		}
 
 		if ($this->_View->request->params['action'] === 'edit') {
 			//メール通知
 			if (isset($tabs[self::BLOCK_TAB_MAIL_SETTING])) {
-				$html .= $this->__listTag($activeTab, self::BLOCK_TAB_MAIL_SETTING, $tabs[self::BLOCK_TAB_MAIL_SETTING]);
+				$html .= $this->__listTag(
+					$activeTab, self::BLOCK_TAB_MAIL_SETTING, $tabs[self::BLOCK_TAB_MAIL_SETTING]
+				);
 				unset($tabs[self::BLOCK_TAB_MAIL_SETTING]);
 			}
 			//権限設定
 			if (isset($tabs[self::BLOCK_TAB_PERMISSION])) {
-				$html .= $this->__listTag($activeTab, self::BLOCK_TAB_PERMISSION, $tabs[self::BLOCK_TAB_PERMISSION]);
+				$html .= $this->__listTag(
+					$activeTab, self::BLOCK_TAB_PERMISSION, $tabs[self::BLOCK_TAB_PERMISSION]
+				);
 				unset($tabs[self::BLOCK_TAB_PERMISSION]);
 			}
 			//その他のタブ

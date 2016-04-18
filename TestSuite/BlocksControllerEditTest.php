@@ -159,10 +159,22 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 			);
 		} else {
 			$asserts = array(
-				array('method' => 'assertInput', 'type' => 'form', 'name' => null, 'value' => $url),
-				array('method' => 'assertInput', 'type' => 'input', 'name' => 'data[Frame][id]', 'value' => $frameId),
-				array('method' => 'assertInput', 'type' => 'input', 'name' => 'data[Block][id]', 'value' => null),
-				array('method' => 'assertInput', 'type' => 'input', 'name' => 'data[Block][room_id]', 'value' => $roomId),
+				array(
+					'method' => 'assertInput', 'type' => 'form',
+					'name' => null, 'value' => $url
+				),
+				array(
+					'method' => 'assertInput', 'type' => 'input',
+					'name' => 'data[Frame][id]', 'value' => $frameId
+				),
+				array(
+					'method' => 'assertInput', 'type' => 'input',
+					'name' => 'data[Block][id]', 'value' => null
+				),
+				array(
+					'method' => 'assertInput', 'type' => 'input',
+					'name' => 'data[Block][room_id]', 'value' => $roomId
+				),
 			);
 			//バリデーションエラー
 			if ($validationError) {
@@ -236,12 +248,30 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 			));
 
 			$asserts = array(
-				array('method' => 'assertInput', 'type' => 'form', 'name' => null, 'value' => $url),
-				array('method' => 'assertInput', 'type' => 'input', 'name' => 'data[Frame][id]', 'value' => $frameId),
-				array('method' => 'assertInput', 'type' => 'input', 'name' => 'data[Block][id]', 'value' => $blockId),
-				array('method' => 'assertInput', 'type' => 'input', 'name' => 'data[Block][room_id]', 'value' => $roomId),
-				array('method' => 'assertInput', 'type' => 'form', 'name' => null, 'value' => $deleteUrl),
-				array('method' => 'assertInput', 'type' => 'button', 'name' => 'delete', 'value' => null),
+				array(
+					'method' => 'assertInput', 'type' => 'form',
+					'name' => null, 'value' => $url
+				),
+				array(
+					'method' => 'assertInput', 'type' => 'input',
+					'name' => 'data[Frame][id]', 'value' => $frameId
+				),
+				array(
+					'method' => 'assertInput', 'type' => 'input',
+					'name' => 'data[Block][id]', 'value' => $blockId
+				),
+				array(
+					'method' => 'assertInput', 'type' => 'input',
+					'name' => 'data[Block][room_id]', 'value' => $roomId
+				),
+				array(
+					'method' => 'assertInput', 'type' => 'form',
+					'name' => null, 'value' => $deleteUrl
+				),
+				array(
+					'method' => 'assertInput', 'type' => 'button',
+					'name' => 'delete', 'value' => null
+				),
 			);
 
 			//バリデーションエラー

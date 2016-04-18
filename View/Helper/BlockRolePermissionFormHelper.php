@@ -42,16 +42,12 @@ class BlockRolePermissionFormHelper extends AppHelper {
 			return $html;
 		}
 
-		$html .= '<div class="form-inline">';
+		$html .= '<div class="form-input-outer form-inline">';
 		foreach ($this->_View->request->data[$model][$permission] as $roleKey => $role) {
 			if (! $role['default'] && $role['fixed']) {
 				continue;
 			}
-
-			$html .= '<span class="checkbox-separator"></span>';
-			$html .= '<div class="form-group">';
 			$html .= $this->__inputBlockRolePermission($model, $permission, $roleKey, $attributes);
-			$html .= '</div>';
 		}
 		$html .= '</div>';
 
@@ -91,10 +87,12 @@ class BlockRolePermissionFormHelper extends AppHelper {
 			'disabled' => (bool)Hash::get($this->_View->request->data, $fieldName . '.fixed')
 		), $attributes);
 		if (! $options['disabled']) {
-			$options['ng-click'] = 'clickRole($event, \'' . $permission . '\', \'' . Inflector::variable($roleKey) . '\')';
+			$options['ng-click'] = 'clickRole($event, ' .
+							'\'' . $permission . '\', \'' . Inflector::variable($roleKey) . '\')';
 		}
+
+		$options['label'] = $this->_View->viewVars['roles'][$roleKey]['name'];
 		$html .= $this->NetCommonsForm->checkbox($fieldName . '.value', $options);
-		$html .= $this->NetCommonsForm->label($fieldName . '.value', h($this->_View->viewVars['roles'][$roleKey]['name']));
 
 		if (! $pubFieldName) {
 			return $html;

@@ -168,14 +168,18 @@ class BlockRolePermissionsControllerEditTest extends NetCommonsControllerTestCas
  * @return void
  */
 	protected function _assertEditGetPermission($approvalFields, $result) {
-		$isCommentApproval = in_array('use_comment_approval', Hash::get(array_values($approvalFields), '0'), true);
+		$isCommentApproval = in_array(
+			'use_comment_approval', Hash::get(array_values($approvalFields), '0'), true
+		);
 		$permissions = $this->_getPermissionData(false, $isCommentApproval);
 
 		//チェック
 		foreach ($permissions as $permission => $roles) {
 			foreach ($roles as $role) {
-				$assert = array('name' => 'data[BlockRolePermission][' . $permission . '][' . $role . '][value]',
-					'method' => 'assertInput', 'type' => 'input', 'value' => null);
+				$assert = array(
+					'name' => 'data[BlockRolePermission][' . $permission . '][' . $role . '][value]',
+					'method' => 'assertInput', 'type' => 'input', 'value' => null
+				);
 				$this->asserts(array($assert), $result);
 			}
 		}
@@ -221,10 +225,16 @@ class BlockRolePermissionsControllerEditTest extends NetCommonsControllerTestCas
 
 		if (! $exception) {
 			//チェック
-			$assert = array('method' => 'assertInput', 'type' => 'form', 'name' => null, 'value' => NetCommonsUrl::actionUrl($url));
+			$assert = array(
+				'method' => 'assertInput', 'type' => 'form', 'name' => null,
+				'value' => NetCommonsUrl::actionUrl($url)
+			);
 			$this->asserts(array($assert), $result);
 
-			$assert = array('method' => 'assertInput', 'type' => 'input', 'name' => 'data[Block][id]', 'value' => $blockId);
+			$assert = array(
+				'method' => 'assertInput', 'type' => 'input', 'name' => 'data[Block][id]',
+				'value' => $blockId
+			);
 			$this->asserts(array($assert), $result);
 
 			$this->_assertEditGetPermission($approvalFields, $result);

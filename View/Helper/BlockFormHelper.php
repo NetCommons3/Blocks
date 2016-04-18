@@ -39,7 +39,8 @@ class BlockFormHelper extends AppHelper {
 			'hiddenField' => false,
 			'onclick' => 'submit()',
 			'ng-click' => 'sending=true',
-			'ng-disabled' => 'sending'
+			'ng-disabled' => 'sending',
+			'div' => array('class' => 'block-index'),
 		));
 	}
 

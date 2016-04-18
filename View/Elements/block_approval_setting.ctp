@@ -121,7 +121,6 @@ if (isset($useCommentApproval)) {
 							'ng-click' => 'clickApprovalType($event)',
 							'disabled' => Current::read('Room.need_approval') && (string)$key !== Block::NEED_APPROVAL
 						));
-						echo '<br>';
 					}
 				?>
 			</div>
