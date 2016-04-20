@@ -18,18 +18,16 @@ ClassRegistry::init('Blocks.Block');
 	</div>
 
 	<div class="col-xs-12">
-		<div class="form-input-outer">
-			<?php
-				$options = array(
-					Block::TYPE_PRIVATE => __d('blocks', 'Private'),
-					Block::TYPE_PUBLIC => __d('blocks', 'Public'),
-					Block::TYPE_LIMITED => __d('blocks', 'Limited'),
-				);
-				echo $this->NetCommonsForm->radio('Block.public_type', $options);
+		<?php
+			$options = array(
+				Block::TYPE_PRIVATE => __d('blocks', 'Private'),
+				Block::TYPE_PUBLIC => __d('blocks', 'Public'),
+				Block::TYPE_LIMITED => __d('blocks', 'Limited'),
+			);
+			echo $this->NetCommonsForm->radio('Block.public_type', $options, array('outer' => true));
 
-				$publicTypePeriod = Hash::get($this->data, 'Block.public_type') === Block::TYPE_LIMITED;
-			?>
-		</div>
+			$publicTypePeriod = Hash::get($this->data, 'Block.public_type') === Block::TYPE_LIMITED;
+		?>
 	</div>
 
 	<div class="col-xs-11 col-xs-offset-1">
