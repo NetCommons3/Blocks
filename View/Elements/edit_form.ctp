@@ -29,6 +29,7 @@ if (! isset($cancelUrl)) {
 <?php echo $this->NetCommonsForm->create($model, Hash::merge(array(), $options)); ?>
 	<div class="panel panel-default">
 		<div class="panel-body">
+			<?php echo $this->element('Blocks.form_hidden'); ?>
 			<?php echo $this->element($callback, (isset($callbackOptions) ? $callbackOptions : array())); ?>
 		</div>
 

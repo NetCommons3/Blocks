@@ -1,6 +1,6 @@
 <?php
 /**
- * BlockForm Helper
+ * ブロック編集画面用Helper
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
@@ -12,7 +12,7 @@
 App::uses('AppHelper', 'View/Helper');
 
 /**
- * BlockForm Helper
+ * ブロック編集画面用Helper
  *
  * @package NetCommons\Blocks\View\Helper
  */

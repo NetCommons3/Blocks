@@ -94,3 +94,9 @@ msgstr "ブロック設定"
 #: Questionnaires/View/Elements/QuestionnaireBlockRolePermissions/edit_form.ctp:33
 msgid "Need approval"
 msgstr "承認が必要"
+
+msgid "%sThe highlighted%s target, %s, is currently displayed."
+msgstr "%sハイライト%sされている%sが現在表示されています。<br>"
+"新しく作成するときは、%sをクリックしてください。<br>"
+"編集するときは、%sをクリックしてください。<br>"
+"削除するときは、編集画面から行ってください。"
