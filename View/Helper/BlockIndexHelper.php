@@ -25,12 +25,10 @@ class BlockIndexHelper extends AppHelper {
  */
 	public $helpers = array(
 		'NetCommons.Button',
-		'NetCommons.Date',
-		'NetCommons.LinkButton',
 		'NetCommons.MessageFlash',
 		'NetCommons.NetCommonsForm',
 		'NetCommons.NetCommonsHtml',
-		'Users.DisplayUser',
+		'NetCommons.TableList',
 	);
 
 /**
@@ -43,18 +41,13 @@ class BlockIndexHelper extends AppHelper {
  * @return mixed
  */
 	public function __call($method, $params) {
-		if ($method === 'addLink') {
-			$helper = $this->Button;
-
-			$html = '<div class="text-right block-add">';
-			$html .= call_user_func_array(array($helper, $method), $params);
-			$html .= '</div>';
+		if (in_array($method, ['addLink', 'startTable', 'endTable', 'endTableRow'], true)) {
+			$helper = $this->TableList;
 		} else {
 			$helper = $this->NetCommonsForm;
-			$html = call_user_func_array(array($helper, $method), $params);
 		}
 
-		return $html;
+		return call_user_func_array(array($helper, $method), $params);
 	}
 
 /**
@@ -118,31 +111,6 @@ class BlockIndexHelper extends AppHelper {
 	}
 
 /**
- * ブロック一覧の`<table>`を表示する
- *
- * @return string HTML
- */
-	public function startTable() {
-		$html = '';
-
-		$html .= '<div class="table-responsive">';
-		$html .= '<table class="table table-hover">';
-		return $html;
-	}
-
-/**
- * ブロック一覧の`</table>`を表示する
- *
- * @return string HTML
- */
-	public function endTable() {
-		$html = '';
-		$html .= '</table>';
-		$html .= '</div>';
-		return $html;
-	}
-
-/**
  * ブロック一覧の`<tr>`を表示する
  *
  * @param int $blockId ブロックID
@@ -150,23 +118,7 @@ class BlockIndexHelper extends AppHelper {
  * @return string HTML
  */
 	public function startTableRow($blockId, $fieldName = 'Frame.block_id') {
-		if (Hash::get($this->_View->request->data, $fieldName) === $blockId) {
-			$active = ' class="active"';
-		} else {
-			$active = '';
-		}
-
-		$html = '<tr' . $active . '>';
-		return $html;
-	}
-
-/**
- * ブロック一覧の`</tr>`を表示する
- *
- * @return string HTML
- */
-	public function endTableRow() {
-		$html = '</tr>';
+		$html = $this->TableList->startTableRow($blockId, $fieldName);
 		return $html;
 	}
 
@@ -176,37 +128,16 @@ class BlockIndexHelper extends AppHelper {
  * @param string $fieldName フィールド名(Model.field)
  * @param string $title タイトル
  * @param array $options オプション
- * - type
- *   - false
- *   - text
- *   - datetime
- *   - numeric
- *   - center
- *   - right
- *   - link
- *   - handle
- * - sort<br>
- * ソートを表示するかどうか
  * @return string HTML
  */
 	public function tableHeader($fieldName, $title = '', $options = array()) {
-		$type = Hash::get($options, 'type', 'text');
-
 		if ($fieldName === 'Frame.block_id') {
-			$start = '<th>';
-		} elseif (in_array($type, ['text', 'datetime', 'numeric', 'center', 'right', 'link', 'handle'])) {
-			$start = '<th class="block-index-' . $type . '">';
+			$html = '<th></th>';
 		} else {
-			$start = '<th>';
+			$html = $this->TableList->tableHeader($fieldName, $title, $options);
 		}
 
-		if (Hash::get($options, 'sort', false)) {
-			$title = $this->_View->Paginator->sort($fieldName, $title);
-		}
-
-		$end = '</th>';
-
-		return $start . $title . $end;
+		return $html;
 	}
 
 /**
@@ -215,88 +146,26 @@ class BlockIndexHelper extends AppHelper {
  * @param string $fieldName フィールド名(Model.field)
  * @param string|array $value 値
  * @param array $options オプション
- * - type
- *   - false
- *   - text
- *   - datetime
- *   - numeric
- *   - center
- *   - right
- *   - link リンクを付ける
- *   - handle ハンドルを表示する
- * - escape
- * - block_id<br>
- * ブロックIDを指定した場合、編集ボタンを付与させる
- * - format（数値の場合のみ有効）<br>
- * 出力のフォーマット。詳しくは、[__dn()](http://book.cakephp.org/2.0/ja/core-libraries/global-constants-and-functions.html#__dn)
- *   - domain
- *   - singular
- *   - plural
  * @return string HTML
  */
 	public function tableData($fieldName, $value = '', $options = array()) {
-		$type = Hash::get($options, 'type', 'text');
-
+		$html = '';
 		if ($fieldName === 'Frame.block_id') {
-			$start = '<td>';
-			$value = $this->NetCommonsForm->radio($fieldName, array($value => ''), array(
+			$html .= '<td>';
+			$html .= $this->NetCommonsForm->radio($fieldName, array($value => ''), array(
 				'hiddenField' => false,
 				'onclick' => 'submit()',
 				'ng-click' => 'sending=true',
 				'ng-disabled' => 'sending',
 				'div' => array('class' => 'block-index'),
 			));
-			$options = Hash::insert($options, 'escape', false);
-
-		} elseif ($type === 'datetime') {
-			$start = '<td class="block-index-' . $type . '">';
-			$value = $this->Date->dateFormat($value);
-
-		} elseif ($type === 'link') {
-			$start = '<td class="block-index-' . $type . '">';
-			$value = $this->NetCommonsHtml->link(
-				$value, $value, array('target' => '_blank')
-			);
-			$options = Hash::insert($options, 'escape', false);
-
-		} elseif ($type === 'handlename') {
-			$start = '<td class="block-index-' . $type . '">';
-			$value = $this->DisplayUser->handleLink($value, ['avatar' => true], [], $fieldName);
-			$options = Hash::insert($options, 'escape', false);
-
-		} elseif (in_array($type, ['text', 'numeric', 'center', 'right'])) {
-			$start = '<td class="block-index-' . $type . '">';
+			$html .= '</td>';
 
 		} else {
-			$start = '<td>';
+			$html .= $this->TableList->tableData($fieldName, $value, $options);
 		}
 
-		if (Hash::get($options, 'format')) {
-			$value = sprintf(
-				__dn(
-					Hash::get($options, 'format.domain', 'net_commons'),
-					Hash::get($options, 'format.singular', '%d'),
-					Hash::get($options, 'format.plural', '%d'),
-					(int)$value
-				),
-				(int)$value
-			);
-		}
-
-		if (Hash::get($options, 'escape', true)) {
-			$value = h($value);
-		}
-
-		if (Hash::get($options, 'blockId', false)) {
-			$value .= '  ' . $this->LinkButton->edit('',
-				array('block_id' => Hash::get($options, 'blockId')),
-				array('iconSize' => ' btn-xs block-edit')
-			);
-		}
-
-		$end = '</td>';
-
-		return $start . $value . $end;
+		return $html;
 	}
 
 }
