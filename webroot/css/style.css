@@ -29,20 +29,3 @@
 	padding: 1px 2px;
 	font-size: 0.8em;
 }
-
-.block-index-datetime,
-.block-index-numeric,
-.block-index-right {
-	text-align: right;
-}
-
-.block-index-center {
-	text-align: left;
-}
-
-.block-add {
-	margin-bottom: 5px
-}
-.block-edit {
-	margin-left: 5px
-}
