@@ -109,9 +109,6 @@ class BlockIndexHelper extends AppHelper {
 					'</button> ',
 					'<button class="btn btn-primary btn-xs">' .
 						'<span class="glyphicon glyphicon-edit"></span>' .
-					'</button> ',
-					'<button class="btn btn-primary btn-xs">' .
-						'<span class="glyphicon glyphicon-edit"></span>' .
 					'</button> '
 				) .
 			'</div>';
