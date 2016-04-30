@@ -94,6 +94,7 @@ class BlockIndexHelper extends AppHelper {
 /**
  * ブロック一覧の画面説明を表示する
  *
+ * @param string $message 説明文
  * @return string HTML
  */
 	public function description($message = null) {
