@@ -56,6 +56,16 @@ App::uses('Block', 'Blocks.Model');
 class BlockBehavior extends ModelBehavior {
 
 /**
+ * ビヘイビアの設定
+ *
+ * @var array
+ * @see ModelBehavior::$settings
+ */
+	public $settings = array(
+		'priority' => 7
+	);
+
+/**
  * Max length of content
  *
  * 名称が長い場合に切り取る文字数
