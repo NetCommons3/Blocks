@@ -7,6 +7,7 @@
  *  - $callbackOptions: コールバックオプション
  *  - $cancelUrl: キャンセルURL
  *  - $options: Form->create()のオプション
+ *  - `displayModified` 更新情報を表示するかどうか
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
@@ -24,14 +25,20 @@ if (isset($action)) {
 if (! isset($cancelUrl)) {
 	$cancelUrl = null;
 }
+if (! isset($callbackOptions)) {
+	$callbackOptions = array();
+}
+if (! isset($displayModified)) {
+	$displayModified = false;
+}
 ?>
 
 <?php echo $this->NetCommonsForm->create($model, Hash::merge(array(), $options)); ?>
 	<div class="panel panel-default">
 		<div class="panel-body">
 			<?php echo $this->element('Blocks.form_hidden'); ?>
-			<?php echo $this->element($callback, (isset($callbackOptions) ? $callbackOptions : array())); ?>
-			<?php echo $this->element('Blocks.modifed_info'); ?>
+			<?php echo $this->element($callback, $callbackOptions); ?>
+			<?php echo $this->element('Blocks.modifed_info', array('displayModified' => $displayModified)); ?>
 		</div>
 
 		<div class="panel-footer text-center">

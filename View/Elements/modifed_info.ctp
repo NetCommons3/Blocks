@@ -8,15 +8,20 @@
  * @license http://www.netcommons.org/license.txt NetCommons License
  * @copyright Copyright 2014, NetCommons Project
  */
+
+if (! isset($displayModified)) {
+	$displayModified = false;
+}
 ?>
 
-<?php if ($this->params['action'] !== 'add') : ?>
+<?php if ($this->params['action'] === 'edit' && $displayModified) : ?>
 	<div class="row form-group">
 		<div class="col-sm-6 col-xs-12">
 			<?php echo $this->NetCommonsForm->input('TrackableCreator', array(
 					'type' => 'handle',
 					'label' => __d('net_commons', 'Created user'),
 					'error' => false,
+					'div' => false,
 				)); ?>
 		</div>
 		<div class="col-sm-6 col-xs-12">
@@ -35,6 +40,7 @@
 					'type' => 'handle',
 					'label' => __d('net_commons', 'Modified user'),
 					'error' => false,
+					'div' => false,
 				)); ?>
 		</div>
 		<div class="col-sm-6 col-xs-12">
