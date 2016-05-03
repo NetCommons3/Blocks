@@ -31,6 +31,7 @@ if (! isset($cancelUrl)) {
 		<div class="panel-body">
 			<?php echo $this->element('Blocks.form_hidden'); ?>
 			<?php echo $this->element($callback, (isset($callbackOptions) ? $callbackOptions : array())); ?>
+			<?php echo $this->element('Blocks.modifed_info'); ?>
 		</div>
 
 		<div class="panel-footer text-center">
