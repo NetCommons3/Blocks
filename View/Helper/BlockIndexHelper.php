@@ -87,26 +87,40 @@ class BlockIndexHelper extends AppHelper {
 /**
  * ブロック一覧の画面説明を表示する
  *
- * @param string $message 説明文
  * @return string HTML
  */
-	public function description($message = null) {
-		if (! isset($message)) {
-			$message = '<div class="block-index-desc">' .
-				sprintf(
-					__d('blocks', '%sThe highlighted%s target, %s, is currently displayed.'),
-					'<table class="table"><tbody><tr class="active"><td>',
-					'</td></tr></tbody></table>',
-					Current::read('Plugin.name'),
-					'<button class="btn btn-success btn-xs">' .
-						'<span class="glyphicon glyphicon-plus"></span>' .
-					'</button> ',
-					'<button class="btn btn-primary btn-xs">' .
-						'<span class="glyphicon glyphicon-edit"></span>' .
-					'</button> '
-				) .
-			'</div>';
-		}
+	public function description() {
+		$message = '<div class="block-index-desc">' .
+			sprintf(
+				__d('blocks', '%sThe highlighted%s target, %s, is currently displayed.'),
+				'<table class="table"><tbody><tr class="active"><td>',
+				'</td></tr></tbody></table>',
+				Current::read('Plugin.name'),
+				'<button class="btn btn-success btn-xs">' .
+					'<span class="glyphicon glyphicon-plus"></span>' .
+				'</button> ',
+				'<button class="btn btn-primary btn-xs">' .
+					'<span class="glyphicon glyphicon-edit"></span>' .
+				'</button> '
+			) .
+		'</div>';
+		return $this->MessageFlash->description($message);
+	}
+
+/**
+ * NotFoundの時のブロック一覧の画面説明を表示する
+ *
+ * @return string HTML
+ */
+	public function notFoundDescription() {
+		$message = '<div class="block-index-desc">' .
+			sprintf(
+				__d('blocks', 'When you newly created, %s, please click.'),
+				'<button class="btn btn-success btn-xs">' .
+					'<span class="glyphicon glyphicon-plus"></span>' .
+				'</button> '
+			) .
+		'</div>';
 		return $this->MessageFlash->description($message);
 	}
 

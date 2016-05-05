@@ -13,6 +13,8 @@
 <div class="modal-body">
 	<?php echo $this->BlockTabs->main(BlockTabsHelper::MAIN_TAB_BLOCK_INDEX); ?>
 
+	<?php echo $this->BlockIndex->notFoundDescription(); ?>
+
 	<div class="tab-content">
 		<div class="text-right">
 			<?php echo $this->Button->addLink(); ?>

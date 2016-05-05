@@ -15,6 +15,8 @@ if (! isset($displayModified)) {
 ?>
 
 <?php if ($this->params['action'] === 'edit' && $displayModified) : ?>
+	<hr>
+
 	<div class="row form-group">
 		<div class="col-sm-6 col-xs-12">
 			<?php echo $this->NetCommonsForm->input('TrackableCreator', array(
