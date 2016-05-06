@@ -13,7 +13,16 @@
 <div class="modal-body">
 	<?php echo $this->BlockTabs->main(BlockTabsHelper::MAIN_TAB_BLOCK_INDEX); ?>
 
-	<?php echo $this->BlockIndex->notFoundDescription(); ?>
+	<?php echo $this->MessageFlash->description(
+			'<div class="block-index-desc">' .
+			sprintf(
+				__d('blocks', 'When you newly created, %s, please click.'),
+				'<button class="btn btn-success btn-xs">' .
+					'<span class="glyphicon glyphicon-plus"></span>' .
+				'</button> '
+			) .
+			'</div>'
+		); ?>
 
 	<div class="tab-content">
 		<div class="text-right">
