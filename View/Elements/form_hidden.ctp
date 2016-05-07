@@ -1,6 +1,6 @@
 <?php
 /**
- * announcements edit form element template
+ * ブロック編集のhiddenタグElement
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>

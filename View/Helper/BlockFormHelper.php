@@ -36,6 +36,7 @@ class BlockFormHelper extends AppHelper {
  * - `cancelUrl` キャンセルURL
  * - `callbackOptions` コールバックのオプション
  * - `options` Form->create()のオプション
+ * - `displayModified` 更新情報を表示するかどうか
  * @return string HTML
  */
 	public function displayEditForm($options = array()) {
