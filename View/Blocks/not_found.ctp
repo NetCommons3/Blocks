@@ -10,7 +10,7 @@
  */
 ?>
 
-<div class="modal-body">
+<div class="block-setting-body">
 	<?php echo $this->BlockTabs->main(BlockTabsHelper::MAIN_TAB_BLOCK_INDEX); ?>
 
 	<?php echo $this->MessageFlash->description(
