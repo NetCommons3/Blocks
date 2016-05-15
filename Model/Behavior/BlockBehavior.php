@@ -370,11 +370,6 @@ class BlockBehavior extends ModelBehavior {
 			'conditions' => $conditions,
 		));
 
-		//Blockデータ削除
-		if (! $model->Block->deleteAll($conditions, false)) {
-			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-		}
-
 		$blockIds = array_keys($blocks);
 		foreach ($blockIds as $blockId) {
 			if (! $model->Frame->updateAll(
@@ -398,16 +393,27 @@ class BlockBehavior extends ModelBehavior {
 			$result = true;
 
 			if ($model->$class->hasField('block_id')) {
+				$model->$class->blockId = $blockIds;
+				$model->$class->blockKey = $blockKey;
 				$conditions = array($model->$class->alias . '.block_id' => $blockIds);
-				$result = $model->$class->deleteAll($conditions, false);
+				$result = $model->$class->deleteAll($conditions, false, true);
 			}
 			if ($model->$class->hasField('block_key')) {
+				$model->$class->blockKey = $blockKey;
 				$conditions = array($model->$class->alias . '.block_key' => $blockKey);
-				$result = $model->$class->deleteAll($conditions, false);
+				$result = $model->$class->deleteAll($conditions, false, true);
 			}
 			if (! $result) {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
+		}
+
+		//Blockデータ削除
+		$conditions = array(
+			$model->Block->alias . '.key' => $blockKey
+		);
+		if (! $model->Block->deleteAll($conditions, false)) {
+			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 		}
 
 		return true;
