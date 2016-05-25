@@ -177,8 +177,8 @@ class BlockTabsHelperMainTest extends NetCommonsHelperTestCase {
  *
  * @param string $result 結果
  * @param string $activeTab アクティブタブ
- * @param string $url URL
  * @param string $key タブキー
+ * @param string $url URL
  * @param string $lang タブデータ
  * @return string <li>タグの出力
  */
