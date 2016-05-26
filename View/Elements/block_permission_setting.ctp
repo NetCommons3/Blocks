@@ -13,6 +13,16 @@
  *			)
  *		);
  * ```
+ * ```
+ * 	echo $this->element('Blocks.block_permission_setting', array(
+ *			'settingPermissions' => array(
+ *				'mail_content_receivable' => [
+ *					'label' => __d('mails', 'Notification to the authority'),
+ *					'help' => 'ヘルプブロック' or false
+ *				],
+ *			)
+ *		);
+ * ```
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
@@ -33,8 +43,19 @@ $initializeParams = NetCommonsAppController::camelizeKeyRecursive(array('roles' 
 
 	<?php foreach ($settingPermissions as $permission => $label) : ?>
 		<div class="form-group">
+			<?php
+				$help = false;
+				if (is_array($label)) {
+					$message = $label;
+					$label = Hash::get($message, 'label', '');
+					$help = Hash::get($message, 'help', false);
+				}
+			?>
 			<?php echo $this->NetCommonsForm->label('BlockRolePermission.' . $permission, h($label)); ?>
 			<?php echo $this->BlockRolePermissionForm->checkboxBlockRolePermission('BlockRolePermission.' . $permission); ?>
+			<?php if ($help) : ?>
+				<?php echo $this->NetCommonsForm->help($help); ?>
+			<?php endif; ?>
 		</div>
 	<?php endforeach; ?>
 </div>
