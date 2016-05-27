@@ -15,9 +15,6 @@ ClassRegistry::init('Blocks.Block');
 <div class="row form-group">
 	<div class="col-xs-12">
 		<?php echo $this->NetCommonsForm->label('Block.public_type', __d('blocks', 'Publishing setting')); ?>
-	</div>
-
-	<div class="col-xs-12">
 		<?php
 			$options = array(
 				Block::TYPE_PRIVATE => __d('blocks', 'Private'),
