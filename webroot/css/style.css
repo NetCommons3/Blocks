@@ -16,6 +16,10 @@
 .block-index .radio {
 	margin-bottom: 0px;
 }
+.block-index .radio input {
+	width: 20px;
+	height: 20px;
+}
 
 .block-index-desc table {
 	display: inline;
