@@ -97,7 +97,7 @@ msgstr "承認が必要"
 
 msgid "%sThe highlighted%s target, %s, is currently displayed."
 msgstr "%sハイライト%sされている%sが現在表示されています。<br>"
-"新しく作成するときは、%sを押してください。<br>"
+"新しく作成するときは、%sを押してください。"
 "編集もしくは削除するときは、%sを押してください。"
 
 msgid "When you newly created, %s, please click."
