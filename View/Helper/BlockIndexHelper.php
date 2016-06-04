@@ -104,7 +104,7 @@ class BlockIndexHelper extends AppHelper {
 				'</button> '
 			) .
 		'</div>';
-		return $this->MessageFlash->description($message, ['class' => 'alert alert-info']);
+		return $this->MessageFlash->description($message);
 	}
 
 /**

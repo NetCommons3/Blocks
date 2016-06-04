@@ -24,12 +24,16 @@
 .block-index-desc table {
 	display: inline;
 	margin-bottom: 0px;
+	margin-right: 2px;
+	vertical-align: text-top;
 }
 .block-index-desc table > tbody > tr > td {
-	padding: 0px;
+	padding: 1px;
+	border: 1px solid #ddd;
 }
 .block-index-desc > button.btn {
 	line-height: 1.0;
 	padding: 1px 2px;
 	font-size: 0.8em;
+	vertical-align: text-top;
 }
