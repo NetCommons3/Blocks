@@ -18,7 +18,7 @@ msgstr ""
 #: Announcements/View/AnnouncementBlocks/index.ctp:40
 #: Blocks/View/Elements/public_type.ctp:19
 msgid "Publishing setting"
-msgstr "公開設定"
+msgstr "公開状態"
 
 #: Announcements/View/AnnouncementBlocks/index.ctp:71
 #: Blocks/View/Elements/public_type.ctp:25
