@@ -175,6 +175,25 @@ class BlockIndexHelper extends AppHelper {
 			));
 			$html .= '</td>';
 
+		} elseif ($fieldName === 'Block.public_type') {
+			$html .= '<td class="nc-table-center">';
+
+			$now = date('Y-m-d H:i:s');
+			$publicType = Hash::get($value, 'Block.public_type');
+			if ($publicType === Block::TYPE_PRIVATE) {
+				$html .= __d('blocks', 'Private');
+			} elseif ($publicType === Block::TYPE_PUBLIC) {
+				$html .= __d('blocks', 'Public');
+			} elseif ($now < Hash::get($value, 'Block.publish_start')) {
+				$html .= __d('blocks', 'Public before');
+			} elseif ($now > Hash::get($value, 'Block.publish_end')) {
+				$html .= __d('blocks', 'Public end');
+			} else {
+				$html .= __d('blocks', 'Limited');
+			}
+
+			$html .= '</td>';
+
 		} else {
 			$html .= $this->TableList->tableData($fieldName, $value, $options);
 		}
