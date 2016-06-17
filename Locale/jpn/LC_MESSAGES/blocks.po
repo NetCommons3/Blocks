@@ -30,6 +30,12 @@ msgstr "非公開"
 msgid "Public"
 msgstr "公開"
 
+msgid "Public before"
+msgstr "公開前"
+
+msgid "Public end"
+msgstr "公開終了"
+
 #: Announcements/View/AnnouncementBlocks/index.ctp:75
 #: Blocks/View/Elements/public_type.ctp:27
 msgid "Limited"
