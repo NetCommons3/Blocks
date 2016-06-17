@@ -306,6 +306,43 @@ class BlockBehavior extends ModelBehavior {
 	}
 
 /**
+ * ブロック一覧データを取得するsettingsを返す。
+ *
+ * #### サンプルコード（Faqモデル）
+ * ```
+ * $this->Paginator->settings = array(
+ * 	'Faq' => $this->Faq->getBlockIndexSettings();
+ * ```
+ *
+ * @param Model $model ビヘイビアの呼び出しのモデル
+ * @param array $options Model::find conditions default value
+ * @return array Conditions data
+ */
+	public function getBlockIndexSettings(Model $model, $options = array()) {
+		$model->loadModels([
+			'Frame' => 'Frames.Frame',
+		]);
+
+		$options['order'] = Hash::merge(
+			['Frame.block_id' => 'desc', 'Block.id' => 'asc'],
+			Hash::get($options, 'order', [])
+		);
+		$options['conditions'] = $this->getBlockConditions($model, Hash::get($options, 'conditions', []));
+		$options['joins'] = array(
+			array(
+				'table' => $model->Frame->table,
+				'alias' => $model->Frame->alias,
+				'type' => 'LEFT',
+				'conditions' => array(
+					'Frame.block_id = Block.id',
+				)
+			),
+		);
+
+		return $options;
+	}
+
+/**
  * ブロックデータを取得する場合の条件を返します。
  *
  * #### サンプルコード（Faqモデル）
