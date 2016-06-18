@@ -147,6 +147,9 @@ class BlockIndexHelper extends AppHelper {
 	public function tableHeader($fieldName, $title = '', $options = array()) {
 		if ($fieldName === 'Frame.block_id') {
 			$html = '<th></th>';
+		} elseif ($fieldName === 'Block.public_type') {
+			$options['type'] = 'center';
+			$html = $this->TableList->tableHeader($fieldName, $title, $options);
 		} else {
 			$html = $this->TableList->tableHeader($fieldName, $title, $options);
 		}
