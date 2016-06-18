@@ -15,42 +15,31 @@ if (! isset($displayModified)) {
 ?>
 
 <?php if ($this->params['action'] === 'edit' && $displayModified) : ?>
-	<hr>
+	<div class="text-right clearfix small text-muted">
+		<?php
+			echo '<label>' . __d('blocks', 'Created:') . '</label> ';
+			echo $this->NetCommonsHtml->handleLink($this->request->data, ['avatar' => true], [], 'TrackableCreator');
+			echo '<div class="pull-right block-created">' .
+					'(' . $this->NetCommonsHtml->dateFormat(Hash::get($this->request->data, 'Block.created')) . ')' .
+				'</div>';
 
-	<div class="row form-group">
-		<div class="col-sm-6 col-xs-12">
-			<?php echo $this->NetCommonsForm->input('TrackableCreator', array(
-					'type' => 'handle',
-					'label' => __d('net_commons', 'Created user'),
-					'error' => false,
-					'div' => false,
-				)); ?>
-		</div>
-		<div class="col-sm-6 col-xs-12">
-			<?php echo $this->NetCommonsForm->input('Block.created', array(
-					'type' => 'label',
-					'label' => __d('net_commons', 'Created datetime'),
-					'error' => false,
-					'div' => false,
-				)); ?>
-		</div>
+			echo $this->NetCommonsForm->hidden('Block.created');
+			echo $this->NetCommonsForm->hidden('TrackableCreator.id');
+			echo $this->NetCommonsForm->hidden('TrackableCreator.handlename');
+		?>
 	</div>
 
-	<div class="row form-group">
-		<div class="col-sm-6 col-xs-12">
-			<?php echo $this->NetCommonsForm->input('TrackableUpdater', array(
-					'type' => 'handle',
-					'label' => __d('net_commons', 'Modified user'),
-					'error' => false,
-					'div' => false,
-				)); ?>
-		</div>
-		<div class="col-sm-6 col-xs-12">
-			<?php echo $this->NetCommonsForm->input('Block.modified', array(
-					'type' => 'label',
-					'label' => __d('net_commons', 'Modified datetime'),
-					'error' => false,
-				)); ?>
-		</div>
+	<div class="text-right clearfix small text-muted">
+		<?php
+			echo '<label>' . __d('blocks', 'Modified:') . '</label> ';
+			echo $this->NetCommonsHtml->handleLink($this->request->data, ['avatar' => true], [], 'TrackableUpdater');
+			echo '<div class="pull-right block-modified">' .
+					'(' . $this->NetCommonsHtml->dateFormat(Hash::get($this->request->data, 'Block.modified')) . ')' .
+				'</div>';
+
+			echo $this->NetCommonsForm->hidden('Block.modified');
+			echo $this->NetCommonsForm->hidden('TrackableUpdater.id');
+			echo $this->NetCommonsForm->hidden('TrackableUpdater.handlename');
+		?>
 	</div>
 <?php endif;
