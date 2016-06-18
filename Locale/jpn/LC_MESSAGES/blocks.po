@@ -108,3 +108,14 @@ msgstr "%sハイライト%sされている%sが現在表示されています。
 
 msgid "When you newly created, %s, please click."
 msgstr "新しく作成するときは、%sをクリックしてください。"
+
+#
+#: ブロック設定
+#
+
+msgid "Created:"
+msgstr "作成:"
+
+msgid "Modified:"
+msgstr "更新:"
+

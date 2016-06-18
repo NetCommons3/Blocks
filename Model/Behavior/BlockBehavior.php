@@ -244,6 +244,8 @@ class BlockBehavior extends ModelBehavior {
 		$model->data['Block']['room_id'] = $frame['Frame']['room_id'];
 		$model->data['Block']['language_id'] = $frame['Frame']['language_id'];
 
+		$model->data['Block'] = Hash::insert($model->data['Block'], 'modified', null);
+
 		if (Hash::get($model->data, 'Block.name')) {
 			//値があれば、何もしない
 		} elseif (isset($this->settings['name'])) {
