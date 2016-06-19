@@ -10,7 +10,7 @@
  * @param {string} Controller name
  * @param {function($scope)} Controller
  */
-NetCommonsApp.controller('BlockRolePermissions', function($scope) {
+NetCommonsApp.controller('BlockRolePermissions', ['$scope', function($scope) {
 
   /**
    * Not need approval
@@ -120,4 +120,4 @@ NetCommonsApp.controller('BlockRolePermissions', function($scope) {
     }
   };
 
-});
+}]);
