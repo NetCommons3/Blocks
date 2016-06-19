@@ -87,9 +87,13 @@ class BlockIndexHelper extends AppHelper {
 /**
  * ブロック一覧の画面説明を表示する
  *
+ * @param string $addMsg 追加メッセージ
  * @return string HTML
  */
-	public function description() {
+	public function description($addMsg = '') {
+		if (!empty($addMsg)) {
+			$addMsg = '<br />' . $addMsg;
+		}
 		$message = '<div class="block-index-desc">' .
 			sprintf(
 				__d('blocks', '%sThe highlighted%s target, %s, is currently displayed.'),
@@ -103,6 +107,7 @@ class BlockIndexHelper extends AppHelper {
 					'<span class="glyphicon glyphicon-edit"></span>' .
 				'</button> '
 			) .
+			$addMsg .
 		'</div>';
 		return $this->MessageFlash->description($message);
 	}
