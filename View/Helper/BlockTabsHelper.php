@@ -331,7 +331,8 @@ class BlockTabsHelper extends AppHelper {
 
 		$html .= '</ul>';
 
-		$html .= $this->NetCommonsHtml->tag('h2', Current::read('Block.name'), ['class' => 'block-title']);
+		$blockName = Current::read('Block.name');
+		$html .= $this->NetCommonsHtml->tag('h2', $blockName, ['class' => 'block-title']);
 		return $html;
 	}
 
