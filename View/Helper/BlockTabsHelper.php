@@ -332,7 +332,7 @@ class BlockTabsHelper extends AppHelper {
 		$html .= '</ul>';
 
 		$blockName = Current::read('Block.name');
-		if ($blockName) {
+		if ($this->_View->request->params['action'] === 'edit' && $blockName) {
 			$html .= $this->NetCommonsHtml->tag('h2', $blockName, ['class' => 'block-title']);
 		}
 		return $html;
