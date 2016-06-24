@@ -17,8 +17,8 @@ ClassRegistry::init('Blocks.Block');
 		<?php echo $this->NetCommonsForm->label('Block.public_type', __d('blocks', 'Publishing setting')); ?>
 		<?php
 			$options = array(
-				Block::TYPE_PRIVATE => __d('blocks', 'Private'),
 				Block::TYPE_PUBLIC => __d('blocks', 'Public'),
+				Block::TYPE_PRIVATE => __d('blocks', 'Private'),
 				Block::TYPE_LIMITED => __d('blocks', 'Limited'),
 			);
 			echo $this->NetCommonsForm->radio('Block.public_type', $options, array('outer' => true));
