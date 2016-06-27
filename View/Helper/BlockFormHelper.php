@@ -96,4 +96,33 @@ class BlockFormHelper extends AppHelper {
 		));
 	}
 
+/**
+ * input hiddenタグ
+ *
+ * @param string $modelName モデル名
+ * @param string $filedName 項目名
+ * @return string HTML
+ */
+	public function inputHidden($modelName, $filedName) {
+		$output = '';
+
+		//		$requestKey = strtr($key, SiteManagerComponent::STRTR_FROM, SiteManagerComponent::STRTR_TO);
+		//		if (! isset($this->_View->request->data[$model][$requestKey])) {
+		//			return $output;
+		//		}
+
+		//$inputValue = $model . '.' . $requestKey . '.' . $languageId;
+		$inputValue = $modelName . '.' . $filedName;
+
+		$output .= $this->NetCommonsForm->hidden($inputValue . '.id');
+		$output .= $this->NetCommonsForm->hidden($inputValue . '.plugin_key');
+		$output .= $this->NetCommonsForm->hidden($inputValue . '.room_id');
+		$output .= $this->NetCommonsForm->hidden($inputValue . '.block_key');
+		$output .= $this->NetCommonsForm->hidden($inputValue . '.field_name');
+		$output .= $this->NetCommonsForm->hidden($inputValue . '.type');
+		// リクエストにセットして、同じパスなら自動的に値セットされそう。
+
+		return $output;
+	}
+
 }

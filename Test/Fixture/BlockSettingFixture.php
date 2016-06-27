@@ -26,6 +26,7 @@ class BlockSettingFixture extends CakeTestFixture {
 		'block_key' => array('type' => 'string', 'null' => true, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'charset' => 'utf8mb4'),
 		'field_name' => array('type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'charset' => 'utf8mb4'),
 		'value' => array('type' => 'string', 'null' => true, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'charset' => 'utf8mb4'),
+		'type' => array('type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'charset' => 'utf8mb4'),
 		'created_user' => array('type' => 'integer', 'null' => true, 'default' => null, 'unsigned' => false),
 		'created' => array('type' => 'datetime', 'null' => true, 'default' => null),
 		'modified_user' => array('type' => 'integer', 'null' => true, 'default' => null, 'unsigned' => false),
@@ -66,6 +67,7 @@ class BlockSettingFixture extends CakeTestFixture {
 			'block_key' => null,
 			'field_name' => 'use_comment',
 			'value' => 1,
+			'type' => 'boolean',
 		),
 		array(
 			'plugin_key' => 'dummy',
@@ -73,6 +75,7 @@ class BlockSettingFixture extends CakeTestFixture {
 			'block_key' => null,
 			'field_name' => 'use_like',
 			'value' => 1,
+			'type' => 'boolean',
 		),
 		array(
 			'plugin_key' => 'dummy',
@@ -80,6 +83,7 @@ class BlockSettingFixture extends CakeTestFixture {
 			'block_key' => null,
 			'field_name' => 'use_unlike',
 			'value' => 0,
+			'type' => 'boolean',
 		),
 		array(
 			'plugin_key' => 'dummy',
@@ -87,6 +91,7 @@ class BlockSettingFixture extends CakeTestFixture {
 			'block_key' => null,
 			'field_name' => 'auto_play',
 			'value' => 0,
+			'type' => 'numeric',
 		),
 		// ブロック設定後 - room_idあり、block_keyあり
 		array(
@@ -95,6 +100,7 @@ class BlockSettingFixture extends CakeTestFixture {
 			'block_key' => 'block_1',
 			'field_name' => 'use_comment',
 			'value' => 0,
+			'type' => 'boolean',
 		),
 		array(
 			'plugin_key' => 'dummy',
@@ -102,6 +108,7 @@ class BlockSettingFixture extends CakeTestFixture {
 			'block_key' => 'block_1',
 			'field_name' => 'use_like',
 			'value' => 1,
+			'type' => 'boolean',
 		),
 		array(
 			'plugin_key' => 'dummy',
@@ -109,6 +116,7 @@ class BlockSettingFixture extends CakeTestFixture {
 			'block_key' => 'block_1',
 			'field_name' => 'use_unlike',
 			'value' => 1,
+			'type' => 'boolean',
 		),
 		array(
 			'plugin_key' => 'dummy',
@@ -116,6 +124,7 @@ class BlockSettingFixture extends CakeTestFixture {
 			'block_key' => 'block_1',
 			'field_name' => 'auto_play',
 			'value' => 1,
+			'type' => 'numeric',
 		),
 	);
 

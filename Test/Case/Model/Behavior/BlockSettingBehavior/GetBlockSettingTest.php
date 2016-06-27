@@ -24,7 +24,9 @@ class BlockSettingBehaviorGetBlockSettingTest extends NetCommonsModelTestCase {
  *
  * @var array
  */
-	public $fixtures = array();
+	public $fixtures = array(
+		'plugin.blocks.block_setting',
+	);
 
 /**
  * Plugin name
@@ -46,39 +48,84 @@ class BlockSettingBehaviorGetBlockSettingTest extends NetCommonsModelTestCase {
 		$this->TestModel = ClassRegistry::init('TestBlocks.TestBlockSettingBehaviorModel');
 	}
 
-/**
- * getBlockSetting()テストのDataProvider
- *
- * ### 戻り値
- *  - roomId ルームID
- *  - blockKey ブロックキー
- *
- * @return array データ
- */
-	public function dataProvider() {
-		//TODO:テストパタンを書く
-		$result[0] = array();
-		$result[0]['roomId'] = null;
-		$result[0]['blockKey'] = null;
-
-		return $result;
-	}
+	///**
+	// * getBlockSetting()テストのDataProvider
+	// *
+	// * ### 戻り値
+	// *  - roomId ルームID
+	// *  - blockKey ブロックキー
+	// *
+	// * @return array データ
+	// */
+	//	public function dataProvider() {
+	//		$result[0] = array();
+	//		$result[0]['roomId'] = null;
+	//		$result[0]['blockKey'] = null;
+	//
+	//		return $result;
+	//	}
+	//* @param int $roomId ルームID
+	//* @param string $blockKey ブロックキー
+	//* @dataProvider dataProvider
 
 /**
  * getBlockSetting()のテスト
  *
- * @param int $roomId ルームID
- * @param string $blockKey ブロックキー
- * @dataProvider dataProvider
  * @return void
  */
-	public function testGetBlockSetting($roomId, $blockKey) {
+	public function testGetBlockSetting() {
+		$isRow = 0;
+		$roomId = 1;
+		$blockKey = 'block_1';
+		Current::write('Plugin.key', 'dummy');
+
 		//テスト実施
-		$result = $this->TestModel->getBlockSetting($roomId, $blockKey);
+		$result = $this->TestModel->getBlockSetting($isRow, $roomId, $blockKey);
 
 		//チェック
-		//TODO:Assertを書く
-		debug($result);
+		//debug($result);
+		// データあり
+		$this->assertArrayHasKey('use_like', $result['BlockSetting']);
 	}
+
+/**
+ * getBlockSetting()のテスト 横持ち
+ *
+ * @return void
+ */
+	public function testGetBlockSettingRow() {
+		$isRow = 1;
+		$roomId = 1;
+		$blockKey = 'block_1';
+		Current::write('Plugin.key', 'dummy');
+
+		//テスト実施
+		$result = $this->TestModel->getBlockSetting($isRow, $roomId, $blockKey);
+
+		//チェック
+		//debug($result);
+		// データあり
+		$this->assertArrayHasKey('use_like', $result['BlockSetting']);
+	}
+
+	///**
+	// * getBlockSetting()のテスト - 空
+	// *
+	// * @return void
+	// */
+	//	public function testGetBlockSettingEmpty() {
+	//		$isRow = 1;
+	//		$roomId = 1;
+	//		$blockKey = 'block_999';	// データがないブロックID
+	//		Current::write('Plugin.key', 'dummy');
+	//
+	//		//テスト実施
+	//		$result = $this->TestModel->getBlockSetting($isRow, $roomId, $blockKey);
+	//
+	//		//チェック
+	//		debug($result);
+	//		// データあり
+	//		//$this->assertEmpty($result);
+	//	}
 
 }

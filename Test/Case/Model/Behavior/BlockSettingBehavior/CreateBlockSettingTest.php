@@ -63,19 +63,39 @@ class BlockSettingBehaviorCreateBlockSettingTest extends NetCommonsModelTestCase
 	//
 	//  * @dataProvider dataProvider
 
+	///**
+	// * createBlockSetting()のテスト - 列持ち（横持ち）
+	// *
+	// * @return void
+	// */
+	//	public function testCreateBlockSettingRow() {
+	//		Current::write('Plugin.key', 'dummy');
+	//		$isRow = 1;
+	//
+	//		//テスト実施
+	//		$result = $this->TestModel->createBlockSetting($isRow);
+	//
+	//		//チェック
+	//		//debug($result);
+	//		$this->assertArrayHasKey('use_like', $result['BlockSetting']);
+	//	}
+
 /**
- * createBlockSetting()のテスト
+ * createBlockSetting()のテスト - 行持ち（縦持ち）
  *
  * @return void
  */
-	public function testCreateBlockSetting() {
+	public function testCreateBlockSettingCol() {
 		Current::write('Plugin.key', 'dummy');
+		$isRow = 0;
 
 		//テスト実施
-		$result = $this->TestModel->createBlockSetting();
+		$result = $this->TestModel->createBlockSetting($isRow);
 
 		//チェック
-		debug($result);
+		//debug($result);
+		$this->assertArrayHasKey('field_name', $result[0]['BlockSetting']);
+		$this->assertArrayHasKey('value', $result[0]['BlockSetting']);
 	}
 
 }
