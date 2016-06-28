@@ -88,6 +88,7 @@ e.g.) ルーム管理者、またはそれに準ずるユーザ: ルーム管理
 期間限定公開の場合、現在時刻がfrom-toカラムの範囲内の時に公開。'),
 		'publish_start' => array('type' => 'datetime', 'null' => true, 'default' => null, 'comment' => 'Datetime display frame from.'),
 		'publish_end' => array('type' => 'datetime', 'null' => true, 'default' => null, 'comment' => 'Datetime display frame to.'),
+		'content_count' => array('type' => 'integer', 'null' => false, 'default' => '0', 'unsigned' => false),
 		'created_user' => array('type' => 'integer', 'null' => true, 'default' => null, 'unsigned' => false),
 		'created' => array('type' => 'datetime', 'null' => true, 'default' => null),
 		'modified_user' => array('type' => 'integer', 'null' => true, 'default' => null, 'unsigned' => false),

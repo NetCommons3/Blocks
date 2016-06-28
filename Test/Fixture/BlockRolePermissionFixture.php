@@ -18,27 +18,6 @@
 class BlockRolePermissionFixture extends CakeTestFixture {
 
 /**
- * Fields
- *
- * @var array
- */
-	public $fields = array(
-		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary'),
-		'roles_room_id' => array('type' => 'integer', 'null' => false, 'default' => null),
-		'block_key' => array('type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'permission' => array('type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => 'Permission name  e.g.) create_content,  post_top_article', 'charset' => 'utf8'),
-		'value' => array('type' => 'boolean', 'null' => false, 'default' => null),
-		'created_user' => array('type' => 'integer', 'null' => true, 'default' => null),
-		'created' => array('type' => 'datetime', 'null' => true, 'default' => null),
-		'modified_user' => array('type' => 'integer', 'null' => true, 'default' => null),
-		'modified' => array('type' => 'datetime', 'null' => true, 'default' => null),
-		'indexes' => array(
-			'PRIMARY' => array('column' => 'id', 'unique' => 1)
-		),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
-	);
-
-/**
  * Records
  *
  * @var array
@@ -52,5 +31,17 @@ class BlockRolePermissionFixture extends CakeTestFixture {
 			'value' => true,
 		),
 	);
+
+/**
+ * Initialize the fixture.
+ *
+ * @return void
+ */
+	public function init() {
+		require_once App::pluginPath('Blocks') . 'Config' . DS . 'Schema' . DS . 'schema.php';
+		$this->fields = (new BlocksSchema())->tables['block_role_permissions'];
+
+		parent::init();
+	}
 
 }
