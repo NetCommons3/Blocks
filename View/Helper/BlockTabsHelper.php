@@ -78,9 +78,49 @@ class BlockTabsHelper extends AppHelper {
 	);
 
 /**
- * Before render callback. beforeRender is called before the view file is rendered.
+ * ブロックタブの設定
  *
- * Overridden in subclasses.
+ * ### サンプル1
+ * ```
+ *	public $helpers = array(
+ *		'Blocks.BlockTabs' => array(
+ *			'mainTabs' => array('block_index', 'frame_settings'),
+ *			'blockTabs' => array('block_settings', 'mail_settings', 'role_permissions'),
+ *		)
+ *	);
+ * ```
+ *
+ * ### サンプル2（urlを指定する場合）
+ * ```
+ *	public $helpers = array(
+ *		'Blocks.BlockTabs' => array(
+ *			'mainTabs' => array(
+ *				'block_index' => array('url' => array('controller' => 'blog_blocks')),
+ *				'frame_settings' => array('url' => array('controller' => 'blog_frame_settings')),
+ *			),
+ *			'blockTabs' => array(
+ *				'block_settings' => array('url' => array('controller' => 'blog_blocks')),
+ *				'mail_settings',
+ *				'role_permissions' => array('url' => array('controller' => 'blog_block_role_permissions')),
+ *			),
+ *		),
+ *	);
+ * ```
+ *
+ * ### サンプル3（labelを指定する場合）
+ * ```
+ *	public $helpers = array(
+ *		'Blocks.BlockTabs' => array(
+ *			'mainTabs' => array(
+ *				'block_index' => array('label' => array('blocks' => 'Block list')),
+ *				'frame_settings',
+ *			),
+ *			'blockTabs' => array(
+ *				'block_settings', 'mail_settings', 'role_permissions',
+ *			),
+ *		),
+ *	);
+ * ```
  *
  * @param string $viewFile The view file that is going to be rendered
  * @return void
