@@ -132,8 +132,23 @@ class BlockBehavior extends ModelBehavior {
  * @throws InternalErrorException
  */
 	public function beforeSave(Model $model, $options = array()) {
-		if (! isset($model->data['Frame']['id'])) {
+		if ($this->saveBlock($model)) {
 			return parent::beforeSave($model, $options);
+		} else {
+			return false;
+		}
+	}
+
+/**
+ * Blockの登録処理
+ *
+ * @param Model $model ビヘイビアの呼び出しのモデル
+ * @return bool
+ * @throws InternalErrorException
+ */
+	public function saveBlock(Model $model) {
+		if (! isset($model->data['Frame']['id'])) {
+			return true;
 		}
 
 		$model->loadModels(array(
@@ -151,7 +166,7 @@ class BlockBehavior extends ModelBehavior {
 		}
 
 		if (! isset($model->data['Block']) && $frame['Frame']['block_id']) {
-			return parent::beforeSave($model, $options);
+			return true;
 		}
 
 		//blocksの登録
@@ -166,7 +181,7 @@ class BlockBehavior extends ModelBehavior {
 		//block_id, block_keyのセット
 		$this->__setBlockFields($model);
 
-		return parent::beforeSave($model, $options);
+		return true;
 	}
 
 /**
