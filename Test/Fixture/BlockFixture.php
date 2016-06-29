@@ -34,7 +34,6 @@ class BlockFixture extends CakeTestFixture {
 			'public_type' => '1',
 			'publish_start' => null,
 			'publish_end' => null,
-			'content_count' => '0',
 		),
 		array(
 			'id' => '2',
@@ -46,7 +45,6 @@ class BlockFixture extends CakeTestFixture {
 			'public_type' => '1',
 			'publish_start' => null,
 			'publish_end' => null,
-			'content_count' => '0',
 		),
 		//非公開データ
 		array(
@@ -59,7 +57,6 @@ class BlockFixture extends CakeTestFixture {
 			'public_type' => '0',
 			'publish_start' => null,
 			'publish_end' => null,
-			'content_count' => '0',
 		),
 		array(
 			'id' => '4',
@@ -71,7 +68,6 @@ class BlockFixture extends CakeTestFixture {
 			'public_type' => '0',
 			'publish_start' => null,
 			'publish_end' => null,
-			'content_count' => '0',
 		),
 		//期間限定公開(範囲内)
 		array(
@@ -84,7 +80,6 @@ class BlockFixture extends CakeTestFixture {
 			'public_type' => '2',
 			'publish_start' => '2014-01-01 00:00:00',
 			'publish_end' => '2014-35-31 00:00:00',
-			'content_count' => '0',
 		),
 		array(
 			'id' => '6',
@@ -96,7 +91,6 @@ class BlockFixture extends CakeTestFixture {
 			'public_type' => '2',
 			'publish_start' => '2014-01-01 00:00:00',
 			'publish_end' => '2035-12-31 00:00:00',
-			'content_count' => '0',
 		),
 
 		//期間限定公開(過去)
@@ -110,7 +104,6 @@ class BlockFixture extends CakeTestFixture {
 			'public_type' => '2',
 			'publish_start' => null,
 			'publish_end' => null,
-			'content_count' => '0',
 		),
 		array(
 			'id' => '8',
@@ -122,7 +115,6 @@ class BlockFixture extends CakeTestFixture {
 			'public_type' => '2',
 			'publish_start' => null,
 			'publish_end' => null,
-			'content_count' => '0',
 		),
 
 		//期間限定公開(未来)
@@ -136,7 +128,6 @@ class BlockFixture extends CakeTestFixture {
 			'public_type' => '2',
 			'publish_start' => null,
 			'publish_end' => null,
-			'content_count' => '0',
 		),
 		array(
 			'id' => '10',
@@ -148,7 +139,6 @@ class BlockFixture extends CakeTestFixture {
 			'public_type' => '2',
 			'publish_start' => null,
 			'publish_end' => null,
-			'content_count' => '0',
 		),
 
 		//11-20は、各プラグインで設定関係のテストで使う
