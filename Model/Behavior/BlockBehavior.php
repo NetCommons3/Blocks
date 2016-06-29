@@ -129,7 +129,6 @@ class BlockBehavior extends ModelBehavior {
  * @param array $options Options passed from Model::save().
  * @return mixed False if the operation should abort. Any other result will continue.
  * @see Model::save()
- * @throws InternalErrorException
  */
 	public function beforeSave(Model $model, $options = array()) {
 		if ($this->saveBlock($model)) {
