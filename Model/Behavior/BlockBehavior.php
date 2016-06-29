@@ -255,8 +255,11 @@ class BlockBehavior extends ModelBehavior {
  * @throws InternalErrorException
  */
 	private function __saveBlock(Model $model, $frame) {
-		$model->data['Block']['room_id'] = $frame['Frame']['room_id'];
-		$model->data['Block']['language_id'] = $frame['Frame']['language_id'];
+		$roomId = Hash::get($model->data, 'Block.room_id', $frame['Frame']['room_id']);
+		$model->data['Block']['room_id'] = $roomId;
+
+		$langId = Hash::get($model->data, 'Block.language_id', $frame['Frame']['language_id']);
+		$model->data['Block']['language_id'] = $langId;
 
 		$model->data['Block'] = Hash::insert($model->data['Block'], 'modified', null);
 
