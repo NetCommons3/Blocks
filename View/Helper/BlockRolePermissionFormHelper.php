@@ -44,7 +44,7 @@ class BlockRolePermissionFormHelper extends AppHelper {
 
 		$html .= '<div class="form-inline">';
 		foreach ($this->_View->request->data[$model][$permission] as $roleKey => $role) {
-			if (! $role['default'] && $role['fixed']) {
+			if (! $role['default'] && $role['fixed'] || ! Hash::get($role, 'roles_room_id')) {
 				continue;
 			}
 			$html .= $this->__inputBlockRolePermission($model, $permission, $roleKey, $attributes);
