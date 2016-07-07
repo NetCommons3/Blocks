@@ -2,11 +2,11 @@
 /**
  * BlockSettingFixture
  *
-* @author Noriko Arai <arai@nii.ac.jp>
-* @author Your Name <yourname@domain.com>
-* @link http://www.netcommons.org NetCommons Project
-* @license http://www.netcommons.org/license.txt NetCommons License
-* @copyright Copyright 2014, NetCommons Project
+ * @author Noriko Arai <arai@nii.ac.jp>
+ * @author Mitsuru Mutaguchi <mutaguchi@opensource-workshop.jp>
+ * @link http://www.netcommons.org NetCommons Project
+ * @license http://www.netcommons.org/license.txt NetCommons License
+ * @copyright Copyright 2014, NetCommons Project
  */
 
 /**
@@ -66,7 +66,7 @@ class BlockSettingFixture extends CakeTestFixture {
 			'room_id' => null,
 			'block_key' => null,
 			'field_name' => 'use_comment',
-			'value' => 1,
+			'value' => '1',
 			'type' => 'boolean',
 		),
 		array(
@@ -74,7 +74,7 @@ class BlockSettingFixture extends CakeTestFixture {
 			'room_id' => null,
 			'block_key' => null,
 			'field_name' => 'use_like',
-			'value' => 1,
+			'value' => '1',
 			'type' => 'boolean',
 		),
 		array(
@@ -82,7 +82,7 @@ class BlockSettingFixture extends CakeTestFixture {
 			'room_id' => null,
 			'block_key' => null,
 			'field_name' => 'use_unlike',
-			'value' => 0,
+			'value' => '0',
 			'type' => 'boolean',
 		),
 		array(
@@ -90,7 +90,15 @@ class BlockSettingFixture extends CakeTestFixture {
 			'room_id' => null,
 			'block_key' => null,
 			'field_name' => 'auto_play',
-			'value' => 0,
+			'value' => '0',
+			'type' => 'boolean',
+		),
+		array(
+			'plugin_key' => 'dummy',
+			'room_id' => null,
+			'block_key' => null,
+			'field_name' => 'total_size',
+			'value' => '0',
 			'type' => 'numeric',
 		),
 		// ブロック設定後 - room_idあり、block_keyあり
@@ -99,7 +107,7 @@ class BlockSettingFixture extends CakeTestFixture {
 			'room_id' => 1,
 			'block_key' => 'block_1',
 			'field_name' => 'use_comment',
-			'value' => 0,
+			'value' => '0',
 			'type' => 'boolean',
 		),
 		array(
@@ -107,7 +115,7 @@ class BlockSettingFixture extends CakeTestFixture {
 			'room_id' => 1,
 			'block_key' => 'block_1',
 			'field_name' => 'use_like',
-			'value' => 1,
+			'value' => '1',
 			'type' => 'boolean',
 		),
 		array(
@@ -115,7 +123,7 @@ class BlockSettingFixture extends CakeTestFixture {
 			'room_id' => 1,
 			'block_key' => 'block_1',
 			'field_name' => 'use_unlike',
-			'value' => 1,
+			'value' => '1',
 			'type' => 'boolean',
 		),
 		array(
@@ -123,7 +131,15 @@ class BlockSettingFixture extends CakeTestFixture {
 			'room_id' => 1,
 			'block_key' => 'block_1',
 			'field_name' => 'auto_play',
-			'value' => 1,
+			'value' => '1',
+			'type' => 'boolean',
+		),
+		array(
+			'plugin_key' => 'dummy',
+			'room_id' => 1,
+			'block_key' => 'block_1',
+			'field_name' => 'total_size',
+			'value' => '100',
 			'type' => 'numeric',
 		),
 	);

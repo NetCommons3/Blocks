@@ -55,10 +55,11 @@ class BlockSettingBehavior extends ModelBehavior {
  * BlockSettingデータ新規作成
  *
  * @param Model $model モデル
- * @param int $isRow 列持ち（横持ち）にするか
  * @return array
  */
-	public function createBlockSetting(Model $model, $isRow = 1) {
+	public function createBlockSetting(Model $model) {
+		//public function createBlockSetting(Model $model, $isRow = 1) {
+		//* @param int $isRow 列持ち（横持ち）にするか
 		$pluginKey = Current::read('Plugin.key');
 
 		// room_idなし, block_keyなし
@@ -73,7 +74,7 @@ class BlockSettingBehavior extends ModelBehavior {
 			'recursive' => -1,
 			'conditions' => $conditions,
 		));
-//		if (!$isRow) {
+		//		if (!$isRow) {
 			// 縦持ち
 			// 新規登録時に不要な部分を除外
 			$blockSettings = Hash::remove($blockSettings, '{n}.{s}.id');
@@ -82,14 +83,14 @@ class BlockSettingBehavior extends ModelBehavior {
 			$blockSettings = Hash::remove($blockSettings, '{n}.{s}.modified');
 			$blockSettings = Hash::remove($blockSettings, '{n}.{s}.modified_user');
 			return $blockSettings;
-//		}
-//
-//		// 列持ち（横持ち）に変換
-//		$result['BlockSetting'] = Hash::combine($blockSettings,
-//			'{n}.BlockSetting.field_name',
-//			'{n}.BlockSetting.value');
-//
-//		return $result;
+		//		}
+		//
+		//		// 列持ち（横持ち）に変換
+		//		$result['BlockSetting'] = Hash::combine($blockSettings,
+		//			'{n}.BlockSetting.field_name',
+		//			'{n}.BlockSetting.value');
+		//
+		//		return $result;
 	}
 
 /**
@@ -123,20 +124,22 @@ class BlockSettingBehavior extends ModelBehavior {
 		));
 		if (!$blockSettings) {
 			// 縦持ちで取得
-			$blockSettings = $this->createBlockSetting($model, 0);
+			//$blockSettings = $this->createBlockSetting($model, 0);
+			$blockSettings = $this->createBlockSetting($model);
 		}
-		if (!$isRow) {
-			// 縦持ちでindexをfield_nameに変更
-			$result['BlockSetting'] = Hash::combine($blockSettings, '{n}.{s}.field_name', '{n}.{s}');
+		if ($isRow) {
+			// 横持ちに変換
+			$result['BlockSetting'] = Hash::combine($blockSettings,
+				'{n}.{s}.field_name',
+				'{n}.{s}.value');
 			return $result;
-			//			return $blockSettings;
 		}
 
-		// 横持ちに変換
-		$result['BlockSetting'] = Hash::combine($blockSettings,
-			'{n}.{s}.field_name',
-			'{n}.{s}.value');
+		// 縦持ちでindexをfield_nameに変更
+		$result['BlockSetting'] = Hash::combine($blockSettings, '{n}.{s}.field_name', '{n}.{s}');
 		return $result;
+		//			return $blockSettings;
+
 		//		if (!$blockSettings) {
 		//			return $blockSettings;
 		//		}
@@ -230,7 +233,7 @@ class BlockSettingBehavior extends ModelBehavior {
 			$saveData = Hash::extract($data, 'BlockSetting.{s}');
 
 			if ($saveData && ! $model->BlockSetting->saveMany($saveData, ['validate' => false])) {
-				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+				throw new InternalErrorException('Failed - BlockSetting ' . __METHOD__);
 			}
 
 			//トランザクションCommit

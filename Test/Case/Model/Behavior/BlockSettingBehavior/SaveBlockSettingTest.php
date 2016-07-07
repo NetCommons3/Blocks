@@ -24,7 +24,9 @@ class BlockSettingBehaviorSaveBlockSettingTest extends NetCommonsModelTestCase {
  *
  * @var array
  */
-	public $fixtures = array();
+	public $fixtures = array(
+		'plugin.blocks.block_setting',
+	);
 
 /**
  * Plugin name
@@ -46,39 +48,105 @@ class BlockSettingBehaviorSaveBlockSettingTest extends NetCommonsModelTestCase {
 		$this->TestModel = ClassRegistry::init('TestBlocks.TestBlockSettingBehaviorModel');
 	}
 
-/**
- * saveBlockSetting()テストのDataProvider
- *
- * ### 戻り値
- *  - data received post data
- *  - isBlockSetting ブロック設定画面か
- *
- * @return array データ
- */
-	public function dataProvider() {
-		//TODO:テストパタンを書く
-		$result[0] = array();
-		$result[0]['data'] = null;
-		$result[0]['isBlockSetting'] = null;
-
-		return $result;
-	}
+	///**
+	// * saveBlockSetting()テストのDataProvider
+	// *
+	// * ### 戻り値
+	// *  - data received post data
+	// *  - isBlockSetting ブロック設定画面か
+	// *
+	// * @return array データ
+	// */
+	//	public function dataProvider() {
+	//		$result[0] = array();
+	//		$result[0]['data'] = null;
+	//		$result[0]['isBlockSetting'] = null;
+	//
+	//		return $result;
+	//	}
+	//* @dataProvider dataProvider
 
 /**
  * saveBlockSetting()のテスト
  *
- * @param array $data received post data
- * @param bool $isBlockSetting ブロック設定画面か
- * @dataProvider dataProvider
  * @return void
  */
-	public function testSaveBlockSetting($data, $isBlockSetting) {
+	public function testSaveBlockSetting() {
+		//public function testSaveBlockSetting($data, $isBlockSetting) {
+		//* @param array $data received post data
+		//* @param bool $isBlockSetting ブロック設定画面か
+
+		// テストデータ
+		$isRow = 0;
+		$roomId = 1;
+		$blockKey = 'block_1';
+		Current::write('Plugin.key', 'dummy');
+
+		$result = $this->TestModel->getBlockSetting($isRow, $roomId, $blockKey);
+		//debug($result);
+		$result['BlockSetting']['use_comment']['value'] = '0';
+		$result['BlockSetting']['use_like']['value'] = '0';
+		$result['BlockSetting']['use_unlike']['value'] = '0';
+		$result['BlockSetting']['auto_play']['value'] = '0';
+		$result['BlockSetting']['total_size']['value'] = '200';
+		$data = $result;
+		//debug($result);
+
 		//テスト実施
-		$result = $this->TestModel->saveBlockSetting($data, $isBlockSetting);
+		//$result = $this->TestModel->saveBlockSetting($data, $isBlockSetting);
+		$result = $this->TestModel->saveBlockSetting($data);
 
 		//チェック
-		//TODO:Assertを書く
-		debug($result);
+		//debug($this->TestModel->validationErrors);
+		$this->assertTrue($result);
+
+		$result = $this->TestModel->getBlockSetting($isRow, $roomId, $blockKey);
+
+		$checks = array(
+			'use_comment',
+			'use_like',
+			'use_unlike',
+			'auto_play',
+			'total_size',
+		);
+		//debug($result);
+		foreach ($checks as $check) {
+			// 更新した値チェック
+			$this->assertEquals($data['BlockSetting'][$check]['value'],
+				$result['BlockSetting'][$check]['value']);
+			// 更新日時セットされてるよねチェック
+			$this->assertNotNull($result['BlockSetting'][$check]['modified']);
+		}
+	}
+
+/**
+ * saveBlockSetting()の Validate Error テスト
+ *
+ * @return void
+ */
+	public function testSaveBlockSettingValidateError() {
+		// テストデータ
+		$isRow = 0;
+		$roomId = 1;
+		$blockKey = 'block_1';
+		Current::write('Plugin.key', 'dummy');
+
+		$result = $this->TestModel->getBlockSetting($isRow, $roomId, $blockKey);
+		//debug($result);
+		$result['BlockSetting']['use_comment']['value'] = 0;
+		$result['BlockSetting']['use_like']['value'] = 0;
+		$result['BlockSetting']['use_unlike']['value'] = 0;
+		$result['BlockSetting']['auto_play']['value'] = 0;
+		$result['BlockSetting']['total_size']['value'] = 'xxx';
+		$data = $result;
+		//debug($result);
+
+		//テスト実施
+		$result = $this->TestModel->saveBlockSetting($data);
+
+		// チェック
+		//debug($this->TestModel->validationErrors);
+		$this->assertFalse($result);
 	}
 
 }

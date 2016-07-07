@@ -87,10 +87,11 @@ class BlockSettingBehaviorCreateBlockSettingTest extends NetCommonsModelTestCase
  */
 	public function testCreateBlockSettingCol() {
 		Current::write('Plugin.key', 'dummy');
-		$isRow = 0;
+		//$isRow = 0;
 
 		//テスト実施
-		$result = $this->TestModel->createBlockSetting($isRow);
+		//$result = $this->TestModel->createBlockSetting($isRow);
+		$result = $this->TestModel->createBlockSetting();
 
 		//チェック
 		//debug($result);

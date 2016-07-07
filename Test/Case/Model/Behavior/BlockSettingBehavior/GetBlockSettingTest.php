@@ -69,7 +69,7 @@ class BlockSettingBehaviorGetBlockSettingTest extends NetCommonsModelTestCase {
 	//* @dataProvider dataProvider
 
 /**
- * getBlockSetting()のテスト
+ * getBlockSetting()のテスト 縦持ち
  *
  * @return void
  */

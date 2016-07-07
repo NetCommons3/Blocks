@@ -48,6 +48,7 @@ class TestBlockSettingBehaviorModel extends AppModel {
 				'use_like',
 				'use_unlike',
 				'auto_play',
+				'total_size',
 			),
 		),
 	);
