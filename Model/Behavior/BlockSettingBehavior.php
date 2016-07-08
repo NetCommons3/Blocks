@@ -20,7 +20,7 @@ App::uses('ModelBehavior', 'Model');
 class BlockSettingBehavior extends ModelBehavior {
 
 /**
- * 承認機能の種類
+ * フィールド名
  *
  * @var string 承認機能を使用する
  * @var string いいねボタンを使用する
@@ -29,11 +29,21 @@ class BlockSettingBehavior extends ModelBehavior {
  * @var string コメント承認機能を使用する
  */
 	const
-		USE_WORKFLOW = 'use_workflow',
-		USE_LIKE = 'use_like',
-		USE_UNLIKE = 'use_unlike',
-		USE_COMMENT = 'use_comment',
-		USE_COMMENT_APPROVAL = 'use_comment_approval';
+		FIELD_USE_WORKFLOW = 'use_workflow',
+		FIELD_USE_LIKE = 'use_like',
+		FIELD_USE_UNLIKE = 'use_unlike',
+		FIELD_USE_COMMENT = 'use_comment',
+		FIELD_USE_COMMENT_APPROVAL = 'use_comment_approval';
+
+/**
+ * フィールド名の種類
+ *
+ * @var string true or false
+ * @var string 数字
+ */
+	const
+		TYPE_BOOLEAN = 'boolean',
+		TYPE_NUMERIC = 'numeric';
 
 /**
  * setup
@@ -276,14 +286,14 @@ class BlockSettingBehavior extends ModelBehavior {
 		//array_keys($this->settings['fields']);
 
 		foreach ($data['BlockSetting'] as $blockSetting) {
-			if ($blockSetting['type'] === 'boolean') {
+			if ($blockSetting['type'] === self::TYPE_BOOLEAN) {
 				if (! in_array($blockSetting['value'], ['0', '1'], true)) {
 					$fieldName = $blockSetting['field_name'];
 					$model->validationErrors['BlockSetting'][$fieldName]['value']
 						= array(__d('net_commons', 'Invalid request.'));
 				}
 
-			} elseif ($blockSetting['type'] === 'numeric') {
+			} elseif ($blockSetting['type'] === self::TYPE_NUMERIC) {
 				if (! is_numeric($blockSetting['value'])) {
 					$fieldName = $blockSetting['field_name'];
 					$model->validationErrors['BlockSetting'][$fieldName]['value']
