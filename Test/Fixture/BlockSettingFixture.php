@@ -42,18 +42,18 @@ class BlockSettingFixture extends CakeTestFixture {
 /**
  * Records
  *
- * #### BlockSettingBehaviorよりサンプルコードのコピー
- * ##### Model
+ * ##### フィクスチャーのデータに関連する、Modelのビヘイビア設定
  * ```php
  * public $actsAs = array(
  *	'Blocks.BlockSetting' => array(
  *		'fields' => array(
- *			'use_workflow',	// rooms.use_approvalによって値決まる。BlockSettingでデフォルト値設定しても無視される。
+ *			'use_workflow',	// rooms.need_approvalによって値決まる。BlockSettingでデフォルト値設定しても無視される。
  *			'use_comment',
- *			'use_comment_approval',	// rooms.use_approvalによって値決まる。BlockSettingでデフォルト値設定しても無視される。
+ *			'use_comment_approval',	// rooms.need_approvalによって値決まる。BlockSettingでデフォルト値設定しても無視される。
  *			'use_like',
  *			'use_unlike',
- *			'auto_play',	// 共通以外の項目もBlockSettingに持つ
+ *			'auto_play',
+ *			'total_size',
  *		),
  *	),
  * ),

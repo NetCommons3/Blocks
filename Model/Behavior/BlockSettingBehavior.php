@@ -22,17 +22,17 @@ class BlockSettingBehavior extends ModelBehavior {
 /**
  * フィールド名
  *
- * @var string 承認機能を使用する
  * @var string いいねボタンを使用する
  * @var string わるいねボタンも使用する
  * @var string コメントを使用する
+ * @var string 承認機能を使用する
  * @var string コメント承認機能を使用する
  */
 	const
-		FIELD_USE_WORKFLOW = 'use_workflow',
 		FIELD_USE_LIKE = 'use_like',
 		FIELD_USE_UNLIKE = 'use_unlike',
 		FIELD_USE_COMMENT = 'use_comment',
+		FIELD_USE_WORKFLOW = 'use_workflow',
 		FIELD_USE_COMMENT_APPROVAL = 'use_comment_approval';
 
 /**
@@ -77,6 +77,7 @@ class BlockSettingBehavior extends ModelBehavior {
 
 		//$model->Block = ClassRegistry::init('Blocks.Block', true);
 		$model->BlockSetting = ClassRegistry::init('Blocks.BlockSetting', true);
+		//$model->Room = ClassRegistry::init('Rooms.Room', true);
 	}
 
 /**
@@ -102,6 +103,16 @@ class BlockSettingBehavior extends ModelBehavior {
 			'recursive' => -1,
 			'conditions' => $conditions,
 		));
+
+		// use_workflow, use_comment_approval取得
+		//$room = $model->Room->findById($roomId);
+		//$needApproval = $room['Room']['need_approval'];
+		$needApproval = Current::read('Room.need_approval');
+		$blockSettings = self::_getDefaultApproval($blockSettings, $needApproval,
+			self::FIELD_USE_WORKFLOW);
+		$blockSettings = self::_getDefaultApproval($blockSettings, $needApproval,
+			self::FIELD_USE_COMMENT_APPROVAL);
+
 		//		if (!$isRow) {
 			// 縦持ち
 			// 新規登録時に不要な部分を除外
@@ -126,17 +137,18 @@ class BlockSettingBehavior extends ModelBehavior {
  *
  * @param Model $model モデル
  * @param int $isRow 列持ち（横持ち）にするか
- * @param int $roomId ルームID
- * @param string $blockKey ブロックキー
  * @return array
  */
-	public function getBlockSetting(Model $model, $isRow = 1, $roomId = null, $blockKey = null) {
-		if (is_null($roomId)) {
-			$roomId = Current::read('Room.id');
-		}
-		if (is_null($blockKey)) {
-			$blockKey = Current::read('Block.key');
-		}
+	public function getBlockSetting(Model $model, $isRow = 1) {
+		//	public function getBlockSetting(Model $model, $isRow = 1, $roomId = null, $blockKey = null) {
+		//* @param int $roomId ルームID
+		//* @param string $blockKey ブロックキー
+		//		if (is_null($roomId)) {
+		$roomId = Current::read('Room.id');
+		//		}
+		//		if (is_null($blockKey)) {
+		$blockKey = Current::read('Block.key');
+		//		}
 		$pluginKey = Current::read('Plugin.key');
 
 		// room_idあり, block_keyあり
@@ -150,11 +162,21 @@ class BlockSettingBehavior extends ModelBehavior {
 			'recursive' => -1,
 			'conditions' => $conditions,
 		));
-		if (!$blockSettings) {
-			// 縦持ちで取得
-			//$blockSettings = $this->createBlockSetting($model, 0);
-			$blockSettings = $this->createBlockSetting($model);
-		}
+		//		if (!$blockSettings) {
+		//			// 縦持ちで取得
+		//			//$blockSettings = $this->createBlockSetting($model, 0);
+		//			$blockSettings = $this->createBlockSetting($model);
+		//		}
+
+		// use_workflow, use_comment_approval取得
+		//$room = $model->Room->findById($roomId);
+		//$needApproval = $room['Room']['need_approval'];
+		$needApproval = Current::read('Room.need_approval');
+		$blockSettings = self::_getDefaultApproval($blockSettings, $needApproval,
+			self::FIELD_USE_WORKFLOW);
+		$blockSettings = self::_getDefaultApproval($blockSettings, $needApproval,
+			self::FIELD_USE_COMMENT_APPROVAL);
+
 		if ($isRow) {
 			// 横持ちに変換
 			$result['BlockSetting'] = Hash::combine($blockSettings,
@@ -190,6 +212,103 @@ class BlockSettingBehavior extends ModelBehavior {
 		//		$blockSetting = array();
 		//		$result = Hash::merge($block, $blockSetting);
 		//		return $result;
+	}
+
+/**
+ * use_workflow, use_comment_approvalの初期値取得
+ * room.need_approvalによって、値変わる
+ *
+ * @param array $blockSettings ブロックセッティングデータ
+ * @param array $needApproval ルーム承認する
+ * @param string $fieldName フィールド名
+ * @return array ブロックセッティングデータ
+ */
+	protected function _getDefaultApproval($blockSettings, $needApproval, $fieldName) {
+		// フィールドに指定なければ、何もしない
+		if (!in_array($fieldName, $this->settings['fields'])) {
+			return $blockSettings;
+		}
+
+		//$needApproval = Current::read('Room.need_approval');
+		$pluginKey = Current::read('Plugin.key');
+		$defaultBlockSetting = array(
+			'BlockSetting' => array(
+				'plugin_key' => $pluginKey,
+				'room_id' => null,
+				'block_key' => null,
+				'field_name' => $fieldName,
+				'value' => null,
+				'type' => BlockSettingBehavior::TYPE_BOOLEAN,
+			)
+		);
+
+		// ルーム承認する
+		if ($needApproval) {
+			$defaultBlockSetting['BlockSetting']['value'] = '1';
+			$blockSettings[] = $defaultBlockSetting;
+			return $blockSettings;
+		}
+
+		// ルーム承認しない & データあり
+		$fields = Hash::extract($blockSettings, '{n}.{s}.field_name');
+		if (in_array($fieldName, $fields, true)) {
+			// データありは、データを使う（つまり何もしない）
+			return $blockSettings;
+		}
+
+		// ルーム承認しない & データなし
+		// TODOO ルーム承認なしにしたら、承認なしデフォルトでOKだよね？
+		$defaultBlockSetting['BlockSetting']['value'] = '0';
+		$blockSettings[] = $defaultBlockSetting;
+		return $blockSettings;
+
+		//		if ($needApproval) {
+		//			// フィールドにuse_workflowあり
+		//			$blockSettings[] = array(
+		//				'BlockSetting' => array(
+		//					'plugin_key' => $pluginKey,
+		//					'room_id' => null,
+		//					'block_key' => null,
+		//					'field_name' => self::FIELD_USE_WORKFLOW,
+		//					'value' => '1',
+		//					'type' => BlockSettingBehavior::TYPE_BOOLEAN,
+		//				)
+		//			);
+		//			// フィールドにuse_comment_approvalあり
+		//			$blockSettings[] = array(
+		//				'BlockSetting' => array(
+		//					'plugin_key' => $pluginKey,
+		//					'room_id' => null,
+		//					'block_key' => null,
+		//					'field_name' => self::FIELD_USE_COMMENT_APPROVAL,
+		//					'value' => '1',
+		//					'type' => BlockSettingBehavior::TYPE_BOOLEAN,
+		//				)
+		//			);
+		//		} else {
+		//			// フィールドにuse_workflowあり
+		//			$blockSettings[] = array(
+		//				'BlockSetting' => array(
+		//					'plugin_key' => $pluginKey,
+		//					'room_id' => null,
+		//					'block_key' => null,
+		//					'field_name' => self::FIELD_USE_WORKFLOW,
+		//					'value' => '0',
+		//					'type' => BlockSettingBehavior::TYPE_BOOLEAN,
+		//				)
+		//			);
+		//			// フィールドにuse_comment_approvalあり
+		//			$blockSettings[] = array(
+		//				'BlockSetting' => array(
+		//					'plugin_key' => $pluginKey,
+		//					'room_id' => null,
+		//					'block_key' => null,
+		//					'field_name' => self::FIELD_USE_COMMENT_APPROVAL,
+		//					'value' => '0',
+		//					'type' => BlockSettingBehavior::TYPE_BOOLEAN,
+		//				)
+		//			);
+		//		}
 	}
 
 /**
