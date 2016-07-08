@@ -20,19 +20,37 @@ App::uses('ModelBehavior', 'Model');
 class BlockSettingBehavior extends ModelBehavior {
 
 /**
+ * 承認機能の種類
+ *
+ * @var string 承認機能を使用する
+ * @var string いいねボタンを使用する
+ * @var string わるいねボタンも使用する
+ * @var string コメントを使用する
+ * @var string コメント承認機能を使用する
+ */
+	const
+		USE_WORKFLOW = 'use_workflow',
+		USE_LIKE = 'use_like',
+		USE_UNLIKE = 'use_unlike',
+		USE_COMMENT = 'use_comment',
+		USE_COMMENT_APPROVAL = 'use_comment_approval';
+
+/**
  * setup
  *
  * #### サンプルコード
  * ##### Model
  * ```php
+ * App::uses('BlockSettingBehavior', 'Blocks.Model/Behavior');
+ *
  * public $actsAs = array(
  *	'Blocks.BlockSetting' => array(
  *		'fields' => array(
- *			'use_workflow',
- *			'use_comment',
- *			'use_comment_approval',
- *			'use_like',
- *			'use_unlike',
+ *			BlockSettingBehavior::USE_WORKFLOW,
+ *			BlockSettingBehavior::USE_LIKE,
+ *			BlockSettingBehavior::USE_UNLIKE,
+ *			BlockSettingBehavior::USE_COMMENT,
+ *			BlockSettingBehavior::USE_COMMENT_APPROVAL,
  *			'auto_play',
  *		),
  *	),

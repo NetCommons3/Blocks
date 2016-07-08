@@ -10,6 +10,7 @@
  */
 
 App::uses('AppModel', 'Model');
+App::uses('BlockSettingBehavior', 'Blocks.Model/Behavior');
 
 /**
  * BlockSettingBehaviorテスト用Model
@@ -42,11 +43,11 @@ class TestBlockSettingBehaviorModel extends AppModel {
 			//				'auto_play' => 'numeric',
 			//			),
 			'fields' => array(
-				'use_workflow',
-				'use_comment',
-				'use_comment_approval',
-				'use_like',
-				'use_unlike',
+				BlockSettingBehavior::USE_WORKFLOW,
+				BlockSettingBehavior::USE_LIKE,
+				BlockSettingBehavior::USE_UNLIKE,
+				BlockSettingBehavior::USE_COMMENT,
+				BlockSettingBehavior::USE_COMMENT_APPROVAL,
 				'auto_play',
 				'total_size',
 			),
