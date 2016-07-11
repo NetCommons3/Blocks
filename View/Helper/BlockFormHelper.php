@@ -99,11 +99,15 @@ class BlockFormHelper extends AppHelper {
 /**
  * input hiddenタグ
  *
- * @param string $modelName モデル名
- * @param string $filedName 項目名
+ * @param string $inputValue モデル名.項目名
+ * @param int $useValue valueのhidden項目も使う
  * @return string HTML
  */
-	public function inputHidden($modelName, $filedName) {
+	public function blockSettingHidden($inputValue, $useValue = 0) {
+		//public function inputHidden($inputValue) {
+		//public function inputHidden($modelName, $filedName) {
+		//* @param string $modelName モデル名
+		//* @param string $filedName 項目名
 		$output = '';
 
 		//		$requestKey = strtr($key, SiteManagerComponent::STRTR_FROM, SiteManagerComponent::STRTR_TO);
@@ -112,15 +116,26 @@ class BlockFormHelper extends AppHelper {
 		//		}
 
 		//$inputValue = $model . '.' . $requestKey . '.' . $languageId;
-		$inputValue = $modelName . '.' . $filedName;
+		//$inputValue = $modelName . '.' . $filedName;
 
+		// echo $this->NetCommonsForm->hidden('ContentComment.plugin_key', array('value' => $pluginKey));
 		$output .= $this->NetCommonsForm->hidden($inputValue . '.id');
-		$output .= $this->NetCommonsForm->hidden($inputValue . '.plugin_key');
-		$output .= $this->NetCommonsForm->hidden($inputValue . '.room_id');
-		$output .= $this->NetCommonsForm->hidden($inputValue . '.block_key');
+		$output .= $this->NetCommonsForm->hidden($inputValue . '.plugin_key',
+			array('value' => Current::read('Plugin.key')));
+		$output .= $this->NetCommonsForm->hidden($inputValue . '.room_id',
+			array('value' => Current::read('Room.id')));
+		//		$output .= $this->NetCommonsForm->hidden($inputValue . '.block_key',
+		//			array('value' => Current::read('Block.key')));
+		$blockKey = Hash::get($this->_View->request->data, 'Block.key');
+		//$output .= $this->NetCommonsForm->hidden($inputValue . '.block_key');
+		$output .= $this->NetCommonsForm->hidden($inputValue . '.block_key',
+			array('value' => $blockKey));
+
 		$output .= $this->NetCommonsForm->hidden($inputValue . '.field_name');
 		$output .= $this->NetCommonsForm->hidden($inputValue . '.type');
-		// リクエストにセットして、同じパスなら自動的に値セットされそう。
+		if ($useValue) {
+			$output .= $this->NetCommonsForm->hidden($inputValue . '.value');
+		}
 
 		return $output;
 	}
