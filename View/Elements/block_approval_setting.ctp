@@ -60,12 +60,15 @@ $initializeParams = array(
 	'roles' => $roles
 );
 
+$useWorkflowValue = Hash::get($this->request->data, $model . '.' . $useWorkflow);
+$useApprovalValue = Hash::get($this->request->data, $model . '.' . $useCommentApproval);
+
 //承認ラジオボタンの値セット
 if (Current::read('Room.need_approval')) {
 	$approvalType = Block::NEED_APPROVAL;
-} elseif (isset($useWorkflow) && $this->request->data[$model][$useWorkflow]) {
+} elseif (isset($useWorkflow) && $useWorkflowValue) {
 	$approvalType = Block::NEED_APPROVAL;
-} elseif (isset($useCommentApproval) && $this->request->data[$model][$useCommentApproval]) {
+} elseif (isset($useCommentApproval) && $useApprovalValue) {
 	$approvalType = Block::NEED_COMMENT_APPROVAL;
 } else {
 	$approvalType = Block::NOT_NEED_APPROVAL;
@@ -73,23 +76,21 @@ if (Current::read('Room.need_approval')) {
 $this->request->data[$model]['approval_type'] = $approvalType;
 
 if (isset($useWorkflow)) {
+	$setWorkflow = 0;
 	if ($approvalType === Block::NEED_APPROVAL) {
-		$initializeParams['useWorkflow'] = 1;
-		$this->request->data[$model][$useWorkflow] = 1;
-	} else {
-		$initializeParams['useWorkflow'] = 0;
-		$this->request->data[$model][$useWorkflow] = 0;
+		$setWorkflow = 1;
 	}
+	$initializeParams['useWorkflow'] = $setWorkflow;
+	$this->request->data = Hash::insert($this->request->data, $model . '.' . $useWorkflow, $setWorkflow);
 }
 if (isset($useCommentApproval)) {
+	$setCommentApproval = 0;
 	if ($approvalType === Block::NEED_APPROVAL ||
 			$approvalType === Block::NEED_COMMENT_APPROVAL) {
-		$initializeParams['useCommentApproval'] = 1;
-		$this->request->data[$model][$useCommentApproval] = 1;
-	} else {
-		$initializeParams['useCommentApproval'] = 0;
-		$this->request->data[$model][$useCommentApproval] = 0;
+		$setCommentApproval = 1;
 	}
+	$initializeParams['useCommentApproval'] = $setCommentApproval;
+	$this->request->data = Hash::insert($this->request->data, $model . '.' . $useCommentApproval, $setCommentApproval);
 }
 ?>
 
