@@ -81,6 +81,62 @@ class BlockSettingBehavior extends ModelBehavior {
 	}
 
 /**
+ * afterFind
+ *
+ * @param Model $model Model using this behavior
+ * @param mixed $results The results of the find operation
+ * @param bool $primary Whether this model is being queried directly (vs. being queried as an association)
+ * @return mixed An array value will replace the value of $results - any other value will be ignored.
+ */
+	public function afterFind(Model $model, $results, $primary = false) {
+		// count検索対応。Block.keyが無ければ、何もしない
+		//if (isset($results[0][0]['count'])) {
+		if (!Hash::check($results, '0.Block.key')) {
+			return $results;
+		}
+		//		$blockKeys = Hash::extract($results, '{n}.Block.key');
+		//var_dump($results, $blockKeys);
+		//		foreach ($blockKeys as $blockKey) {
+		foreach ($results as &$result) {
+			$blockSetting = $this->getBlockSetting($model, 0, $result['Block']['key']);
+			$result = Hash::merge($result, $blockSetting);
+		}
+		//var_dump($results);
+		return $results;
+	}
+
+/**
+ * beforeValidate
+ *
+ * @param Model $model Model using this behavior
+ * @param array $options Options passed from Model::save().
+ * @return mixed False or null will abort the operation. Any other result will continue.
+ * @see Model::save()
+ */
+	public function beforeValidate(Model $model, $options = array()) {
+		//return $this->validateBlockSetting($model, $model->data);
+		return $this->validateBlockSetting($model);
+		//		$result = $this->_validateBlock($model, $model->data);
+		//		if (! $result) {
+		//			return false;
+		//		}
+		//		return true;
+	}
+
+	///**
+	// * beforeSave
+	// *
+	// * @param Model $model Model using this behavior
+	// * @param array $options Options passed from Model::save().
+	// * @return mixed False if the operation should abort. Any other result will continue.
+	// * @see Model::save()
+	// */
+	//	public function beforeSave(Model $model, $options = array()) {
+	//		//return $this->saveBlockSetting($model, $model->data);
+	//		return $this->saveBlockSetting($model);
+	//	}
+
+/**
  * BlockSettingデータ新規作成
  *
  * @param Model $model モデル
@@ -114,14 +170,17 @@ class BlockSettingBehavior extends ModelBehavior {
 			self::FIELD_USE_COMMENT_APPROVAL);
 
 		//		if (!$isRow) {
-			// 縦持ち
-			// 新規登録時に不要な部分を除外
-			$blockSettings = Hash::remove($blockSettings, '{n}.{s}.id');
-			$blockSettings = Hash::remove($blockSettings, '{n}.{s}.created');
-			$blockSettings = Hash::remove($blockSettings, '{n}.{s}.created_user');
-			$blockSettings = Hash::remove($blockSettings, '{n}.{s}.modified');
-			$blockSettings = Hash::remove($blockSettings, '{n}.{s}.modified_user');
-			return $blockSettings;
+		// 縦持ち
+		// 新規登録時に不要な部分を除外
+		$blockSettings = Hash::remove($blockSettings, '{n}.{s}.id');
+		$blockSettings = Hash::remove($blockSettings, '{n}.{s}.created');
+		$blockSettings = Hash::remove($blockSettings, '{n}.{s}.created_user');
+		$blockSettings = Hash::remove($blockSettings, '{n}.{s}.modified');
+		$blockSettings = Hash::remove($blockSettings, '{n}.{s}.modified_user');
+
+		// 縦持ちでindexをfield_nameに変更
+		$result['BlockSetting'] = Hash::combine($blockSettings, '{n}.{s}.field_name', '{n}.{s}');
+		return $result;
 		//		}
 		//
 		//		// 列持ち（横持ち）に変換
@@ -137,17 +196,20 @@ class BlockSettingBehavior extends ModelBehavior {
  *
  * @param Model $model モデル
  * @param int $isRow 列持ち（横持ち）にするか
+ * @param string $blockKey ブロックキー
  * @return array
  */
-	public function getBlockSetting(Model $model, $isRow = 1) {
+	public function getBlockSetting(Model $model, $isRow = 0, $blockKey = null) {
 		//	public function getBlockSetting(Model $model, $isRow = 1, $roomId = null, $blockKey = null) {
 		//* @param int $roomId ルームID
 		//* @param string $blockKey ブロックキー
+		//var_dump($model->alias);
+		$model->BlockSetting = ClassRegistry::init('Blocks.BlockSetting', true);
+		if (is_null($blockKey)) {
+			$blockKey = Current::read('Block.key');
+		}
 		//		if (is_null($roomId)) {
 		$roomId = Current::read('Room.id');
-		//		}
-		//		if (is_null($blockKey)) {
-		$blockKey = Current::read('Block.key');
 		//		}
 		$pluginKey = Current::read('Plugin.key');
 
@@ -228,12 +290,19 @@ class BlockSettingBehavior extends ModelBehavior {
 		if (!in_array($fieldName, $this->settings['fields'])) {
 			return $blockSettings;
 		}
+		// データありは、データを使う（つまり何もしない）
+		$fields = Hash::extract($blockSettings, '{n}.{s}.field_name');
+		if (in_array($fieldName, $fields, true)) {
+			return $blockSettings;
+		}
 
 		//$needApproval = Current::read('Room.need_approval');
-		$pluginKey = Current::read('Plugin.key');
+		/** @see BlockFormHelper::blockSettingHidden(); plugin_key,room_id,block_keyは左記でセット */
+		//$pluginKey = Current::read('Plugin.key');
 		$defaultBlockSetting = array(
 			'BlockSetting' => array(
-				'plugin_key' => $pluginKey,
+				//'plugin_key' => $pluginKey,
+				'plugin_key' => null,
 				'room_id' => null,
 				'block_key' => null,
 				'field_name' => $fieldName,
@@ -249,12 +318,12 @@ class BlockSettingBehavior extends ModelBehavior {
 			return $blockSettings;
 		}
 
-		// ルーム承認しない & データあり
-		$fields = Hash::extract($blockSettings, '{n}.{s}.field_name');
-		if (in_array($fieldName, $fields, true)) {
-			// データありは、データを使う（つまり何もしない）
-			return $blockSettings;
-		}
+		//		// ルーム承認しない & データあり
+		//		$fields = Hash::extract($blockSettings, '{n}.{s}.field_name');
+		//		if (in_array($fieldName, $fields, true)) {
+		//			// データありは、データを使う（つまり何もしない）
+		//			return $blockSettings;
+		//		}
 
 		// ルーム承認しない & データなし
 		// TODOO ルーム承認なしにしたら、承認なしデフォルトでOKだよね？
@@ -361,35 +430,44 @@ class BlockSettingBehavior extends ModelBehavior {
  * ```
  *
  * @param Model $model モデル
- * @param array $data received post data
  * @return mixed On success Model::$data if its not empty or true, false on failure
  * @throws InternalErrorException
  */
-	public function saveBlockSetting(Model $model, $data) {
-		//トランザクションBegin
-		$model->BlockSetting->begin();
+	public function saveBlockSetting(Model $model) {
+		//public function saveBlockSetting(Model $model, $data) {
+		//* @param array $data received post data
 
-		//バリデーション
-		$result = $this->_validateBlock($model, $data);
-		if (! $result) {
-			return false;
+		//if (!isset($this->data['BlockSetting'])) {
+		//	return true;
+		//}
+		//		//トランザクションBegin
+		//		$model->BlockSetting->begin();
+		//
+		//		//バリデーション
+		//		$result = $this->_validateBlock($model, $data);
+		//		if (! $result) {
+		//			return false;
+		//		}
+		//		$data = $result;
+
+		//		try {
+		//$saveData = Hash::extract($data, 'BlockSetting.{s}');
+		$saveData = Hash::extract($model->data, 'BlockSetting.{s}');
+
+		//		if ($saveData &&
+		//			!$model->BlockSetting->saveMany($saveData, ['validate' => false, 'callbacks' => false])) {
+		if ($saveData &&
+			!$model->BlockSetting->saveMany($saveData, ['validate' => false])) {
+			throw new InternalErrorException('Failed - BlockSetting ' . __METHOD__);
 		}
-		$data = $result;
 
-		try {
-			$saveData = Hash::extract($data, 'BlockSetting.{s}');
-
-			if ($saveData && ! $model->BlockSetting->saveMany($saveData, ['validate' => false])) {
-				throw new InternalErrorException('Failed - BlockSetting ' . __METHOD__);
-			}
-
-			//トランザクションCommit
-			$model->BlockSetting->commit();
-
-		} catch (Exception $ex) {
-			//トランザクションRollback
-			$model->BlockSetting->rollback($ex);
-		}
+		//			//トランザクションCommit
+		//			$model->BlockSetting->commit();
+		//
+		//		} catch (Exception $ex) {
+		//			//トランザクションRollback
+		//			$model->BlockSetting->rollback($ex);
+		//		}
 		return true;
 	}
 
@@ -397,14 +475,25 @@ class BlockSettingBehavior extends ModelBehavior {
  * ブロック設定のValidate処理
  *
  * @param Model $model モデル
- * @param array $data リクエストデータ配列
- * @return bool|array 正常な場合、登録不要なデータを削除して戻す。validateionErrorが空でない場合は、falseを返す。
+ * @return bool
  */
-	protected function _validateBlock(Model $model, $data) {
+	public function validateBlockSetting(Model $model) {
+		//public function validateBlockSetting(Model $model, $data) {
+		//* @param array $data リクエストデータ配列
+
 		//$this->prepare();
 		//array_keys($this->settings['fields']);
+		//* @return bool|array 正常な場合、登録不要なデータを削除して戻す。validateionErrorが空でない場合は、falseを返す。
+		//var_dump($data);
+		//foreach ($data[$model->alias]['BlockSetting'] as $blockSetting) {
+		//foreach ($data['BlockSetting'] as $blockSetting) {
+		foreach ($model->data['BlockSetting'] as $key => $blockSetting) {
+			if (!isset($blockSetting['type'])) {
+				// 登録不要なデータを削除
+				unset($model->data['BlockSetting'][$key]);
+				continue;
+			}
 
-		foreach ($data['BlockSetting'] as $blockSetting) {
 			if ($blockSetting['type'] === self::TYPE_BOOLEAN) {
 				if (! in_array($blockSetting['value'], ['0', '1'], true)) {
 					$fieldName = $blockSetting['field_name'];
@@ -423,7 +512,8 @@ class BlockSettingBehavior extends ModelBehavior {
 		}
 
 		if (! $model->validationErrors) {
-			return $data;
+			//return $data;
+			return true;
 		} else {
 			return false;
 		}
