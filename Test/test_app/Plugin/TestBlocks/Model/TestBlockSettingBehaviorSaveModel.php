@@ -30,8 +30,8 @@ class TestBlockSettingBehaviorSaveModel extends AppModel {
 			BlockSettingBehavior::FIELD_USE_WORKFLOW,
 			BlockSettingBehavior::FIELD_USE_LIKE,
 			BlockSettingBehavior::FIELD_USE_UNLIKE,
-			BlockSettingBehavior::FIELD_USE_COMMENT,
-			BlockSettingBehavior::FIELD_USE_COMMENT_APPROVAL,
+			//BlockSettingBehavior::FIELD_USE_COMMENT,
+			//BlockSettingBehavior::FIELD_USE_COMMENT_APPROVAL, // USE_WORKFLOWのみの利用を想定したテスト
 			'auto_play',
 			'total_size',
 		),

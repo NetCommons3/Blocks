@@ -53,6 +53,7 @@ class BlockSettingBehaviorSaveTest extends NetCommonsModelTestCase {
 
 /**
  * save()のテスト
+ * USE_WORKFLOWのみの利用を想定したテスト @see TestBlockSettingBehaviorSaveModel
  *
  * @return void
  */
@@ -69,7 +70,7 @@ class BlockSettingBehaviorSaveTest extends NetCommonsModelTestCase {
 
 		$result = $this->TestModel->getBlockSetting($blockKey);
 		//debug($result);
-		$result['BlockSetting']['use_comment']['value'] = '0';
+		//$result['BlockSetting']['use_comment']['value'] = '0';
 		$result['BlockSetting']['use_like']['value'] = '0';
 		$result['BlockSetting']['use_unlike']['value'] = '0';
 		$result['BlockSetting']['auto_play']['value'] = '0';
@@ -83,7 +84,7 @@ class BlockSettingBehaviorSaveTest extends NetCommonsModelTestCase {
 		//チェック
 		//debug($result);
 		$checks = array(
-			'use_comment',
+			//'use_comment',
 			'use_like',
 			'use_unlike',
 			'auto_play',
