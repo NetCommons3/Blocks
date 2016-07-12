@@ -55,8 +55,6 @@ class BlockSettingBehaviorSaveBlockSettingTest extends NetCommonsModelTestCase {
  */
 	public function testSaveBlockSetting() {
 		// テストデータ
-		//$isRow = 0;
-		//$roomId = 1;
 		$blockKey = 'block_1';
 		Current::write('Plugin.key', 'dummy');
 		Current::write('Room.id', 1);
