@@ -133,4 +133,27 @@ class BlockSettingBehaviorSaveBlockSettingTest extends NetCommonsModelTestCase {
 		$this->assertFalse($result);
 	}
 
+/**
+ * saveBlockSetting()の例外テスト
+ *
+ * @return void
+ */
+	public function testSaveBlockSettingOnExeptionError() {
+		//テストデータ
+		$this->_mockForReturnFalse('TestModel', 'Blocks.BlockSetting', 'saveMany');
+
+		$blockKey = 'block_1';
+		Current::write('Plugin.key', 'dummy');
+		Current::write('Room.id', 1);
+
+		$result = $this->TestModel->getBlockSetting($blockKey);
+		$this->TestModel->data = $result;
+		//debug($result);
+
+		//テスト実施
+		$this->setExpectedException('InternalErrorException');
+		/** @see BlockSettingBehavior::saveBlockSetting() */
+		$this->TestModel->saveBlockSetting();
+	}
+
 }
