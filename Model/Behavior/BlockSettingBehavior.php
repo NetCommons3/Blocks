@@ -55,25 +55,22 @@ class BlockSettingBehavior extends ModelBehavior {
  *
  * public $actsAs = array(
  *	'Blocks.BlockSetting' => array(
- *		'fields' => array(
- *			BlockSettingBehavior::USE_WORKFLOW,
- *			BlockSettingBehavior::USE_LIKE,
- *			BlockSettingBehavior::USE_UNLIKE,
- *			BlockSettingBehavior::USE_COMMENT,
- *			BlockSettingBehavior::USE_COMMENT_APPROVAL,
- *			'auto_play',
- *		),
+ *		BlockSettingBehavior::USE_WORKFLOW,
+ *		BlockSettingBehavior::USE_LIKE,
+ *		BlockSettingBehavior::USE_UNLIKE,
+ *		BlockSettingBehavior::USE_COMMENT,
+ *		BlockSettingBehavior::USE_COMMENT_APPROVAL,
+ *		'auto_play',
  *	),
  * ),
  * ```
  *
  * @param Model $model モデル
- * @param array $config Configuration settings for $model
+ * @param array $settings 設定値
  * @return void
  */
-	public function setup(Model $model, $config = array()) {
-		$this->settings = Hash::merge($this->settings, $config);
-		$this->settings['fields'] = Hash::get($this->settings, 'fields', array());
+	public function setup(Model $model, $settings = array()) {
+		$this->settings[$model->alias] = $settings;
 
 		$model->BlockSetting = ClassRegistry::init('Blocks.BlockSetting', true);
 		//$model->Room = ClassRegistry::init('Rooms.Room', true);
@@ -140,7 +137,7 @@ class BlockSettingBehavior extends ModelBehavior {
 			'plugin_key' => $pluginKey,
 			'room_id' => null,
 			'block_key' => null,
-			'field_name' => $this->settings['fields'],
+			'field_name' => $this->settings[$model->alias],
 		);
 		$blockSettings = $model->BlockSetting->find('all', array(
 			'recursive' => -1,
@@ -148,9 +145,9 @@ class BlockSettingBehavior extends ModelBehavior {
 		));
 
 		// use_workflow, use_comment_approval新規作成
-		$blockSettings = self::_getDefaultApproval($blockSettings,
+		$blockSettings = self::_getDefaultApproval($model, $blockSettings,
 			self::FIELD_USE_WORKFLOW, 1);
-		$blockSettings = self::_getDefaultApproval($blockSettings,
+		$blockSettings = self::_getDefaultApproval($model, $blockSettings,
 			self::FIELD_USE_COMMENT_APPROVAL, 1);
 
 		// 縦持ち
@@ -186,7 +183,7 @@ class BlockSettingBehavior extends ModelBehavior {
 			'plugin_key' => $pluginKey,
 			'room_id' => $roomId,
 			'block_key' => $blockKey,
-			'field_name' => $this->settings['fields'],
+			'field_name' => $this->settings[$model->alias],
 		);
 		$blockSettings = $model->BlockSetting->find('all', array(
 			'recursive' => -1,
@@ -198,8 +195,10 @@ class BlockSettingBehavior extends ModelBehavior {
 		}
 
 		// use_workflow, use_comment_approval取得
-		$blockSettings = self::_getDefaultApproval($blockSettings, self::FIELD_USE_WORKFLOW);
-		$blockSettings = self::_getDefaultApproval($blockSettings, self::FIELD_USE_COMMENT_APPROVAL);
+		$blockSettings = self::_getDefaultApproval($model, $blockSettings,
+			self::FIELD_USE_WORKFLOW);
+		$blockSettings = self::_getDefaultApproval($model, $blockSettings,
+			self::FIELD_USE_COMMENT_APPROVAL);
 
 		// [基のモデル] 横持ちに変換 & 基のモデルに付足し
 		$result[$model->alias] = Hash::combine($blockSettings,
@@ -215,14 +214,15 @@ class BlockSettingBehavior extends ModelBehavior {
  * use_workflow, use_comment_approvalの初期値取得
  * room.need_approvalによって、値変わる
  *
+ * @param Model $model モデル
  * @param array $blockSettings ブロックセッティングデータ
  * @param string $fieldName フィールド名
  * @param int $create 新規作成フラグ 0:更新、1:新規作成
  * @return array ブロックセッティングデータ
  */
-	protected function _getDefaultApproval($blockSettings, $fieldName, $create = 0) {
-		// フィールドに指定なければ、何もしない
-		if (!in_array($fieldName, $this->settings['fields'])) {
+	protected function _getDefaultApproval(Model $model, $blockSettings, $fieldName, $create = 0) {
+		// settingに指定なければ、何もしない
+		if (!in_array($fieldName, $this->settings[$model->alias])) {
 			return $blockSettings;
 		}
 

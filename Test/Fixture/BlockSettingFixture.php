@@ -46,15 +46,13 @@ class BlockSettingFixture extends CakeTestFixture {
  * ```php
  * public $actsAs = array(
  *	'Blocks.BlockSetting' => array(
- *		'fields' => array(
- *			'use_workflow',	// rooms.need_approvalによって値決まる。BlockSettingでデフォルト値設定しても無視される。
- *			'use_comment',
- *			'use_comment_approval',	// rooms.need_approvalによって値決まる。BlockSettingでデフォルト値設定しても無視される。
- *			'use_like',
- *			'use_unlike',
- *			'auto_play',
- *			'total_size',
- *		),
+ *		'use_workflow',	// rooms.need_approvalによって値決まる。BlockSettingでデフォルト値設定しても無視される。
+ *		'use_comment',
+ *		'use_comment_approval',	// rooms.need_approvalによって値決まる。BlockSettingでデフォルト値設定しても無視される。
+ *		'use_like',
+ *		'use_unlike',
+ *		'auto_play',
+ *		'total_size',
  *	),
  * ),
  * ```

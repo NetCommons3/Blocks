@@ -34,15 +34,13 @@ class TestBlockSettingBehaviorModel extends AppModel {
  */
 	public $actsAs = array(
 		'Blocks.BlockSetting' => array(
-			'fields' => array(
-				BlockSettingBehavior::FIELD_USE_WORKFLOW,
-				BlockSettingBehavior::FIELD_USE_LIKE,
-				BlockSettingBehavior::FIELD_USE_UNLIKE,
-				BlockSettingBehavior::FIELD_USE_COMMENT,
-				BlockSettingBehavior::FIELD_USE_COMMENT_APPROVAL,
-				'auto_play',
-				'total_size',
-			),
+			BlockSettingBehavior::FIELD_USE_WORKFLOW,
+			BlockSettingBehavior::FIELD_USE_LIKE,
+			BlockSettingBehavior::FIELD_USE_UNLIKE,
+			BlockSettingBehavior::FIELD_USE_COMMENT,
+			BlockSettingBehavior::FIELD_USE_COMMENT_APPROVAL,
+			'auto_play',
+			'total_size',
 		),
 	);
 
