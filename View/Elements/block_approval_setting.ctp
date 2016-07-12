@@ -60,15 +60,13 @@ $initializeParams = array(
 	'roles' => $roles
 );
 
-$useWorkflowValue = Hash::get($this->request->data, $model . '.' . $useWorkflow);
-$useApprovalValue = Hash::get($this->request->data, $model . '.' . $useCommentApproval);
-
 //承認ラジオボタンの値セット
 if (Current::read('Room.need_approval')) {
 	$approvalType = Block::NEED_APPROVAL;
-} elseif (isset($useWorkflow) && $useWorkflowValue) {
+} elseif (isset($useWorkflow) && Hash::get($this->request->data, $model . '.' . $useWorkflow)) {
 	$approvalType = Block::NEED_APPROVAL;
-} elseif (isset($useCommentApproval) && $useApprovalValue) {
+} elseif (isset($useCommentApproval) &&
+	Hash::get($this->request->data, $model . '.' . $useCommentApproval)) {
 	$approvalType = Block::NEED_COMMENT_APPROVAL;
 } else {
 	$approvalType = Block::NOT_NEED_APPROVAL;
