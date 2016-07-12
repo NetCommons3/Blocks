@@ -113,17 +113,17 @@ class BlockSettingBehavior extends ModelBehavior {
 		return $this->validateBlockSetting($model);
 	}
 
-	///**
-	// * beforeSave
-	// *
-	// * @param Model $model Model using this behavior
-	// * @param array $options Options passed from Model::save().
-	// * @return mixed False if the operation should abort. Any other result will continue.
-	// * @see Model::save()
-	// */
-	//	public function beforeSave(Model $model, $options = array()) {
-	//		return $this->saveBlockSetting($model);
-	//	}
+/**
+ * beforeSave
+ *
+ * @param Model $model Model using this behavior
+ * @param array $options Options passed from Model::save().
+ * @return mixed False if the operation should abort. Any other result will continue.
+ * @see Model::save()
+ */
+	public function beforeSave(Model $model, $options = array()) {
+		return $this->saveBlockSetting($model);
+	}
 
 /**
  * BlockSettingデータ新規作成
@@ -160,7 +160,7 @@ class BlockSettingBehavior extends ModelBehavior {
 		$blockSettings = Hash::remove($blockSettings, '{n}.{s}.modified');
 		$blockSettings = Hash::remove($blockSettings, '{n}.{s}.modified_user');
 
-		// 縦持ちでindexをfield_nameに変更
+		// indexをfield_nameに変更
 		$result['BlockSetting'] = Hash::combine($blockSettings, '{n}.{s}.field_name', '{n}.{s}');
 		return $result;
 	}
@@ -191,10 +191,10 @@ class BlockSettingBehavior extends ModelBehavior {
 			'recursive' => -1,
 			'conditions' => $conditions,
 		));
-		//		if (!$blockSettings) {
-		//			// 縦持ちで取得
-		//			$blockSettings = $this->createBlockSetting($model);
-		//		}
+		if (!$blockSettings) {
+			//$blockSettings = $this->createBlockSetting($model);
+			return $blockSettings;
+		}
 
 		// use_workflow, use_comment_approval取得
 		$blockSettings = self::_getDefaultApproval($blockSettings, self::FIELD_USE_WORKFLOW);
@@ -258,7 +258,7 @@ class BlockSettingBehavior extends ModelBehavior {
 		}
 
 		// ルーム承認しない
-		// TODOO ルーム承認なしにしたら、承認なしデフォルトでOKだよね？
+		// TODOO ルーム承認なしにしたら、承認なしデフォルトでOK？
 		$defaultBlockSetting['BlockSetting']['value'] = '0';
 		$blockSettings[] = $defaultBlockSetting;
 		return $blockSettings;
@@ -336,7 +336,7 @@ class BlockSettingBehavior extends ModelBehavior {
 	public function validateBlockSetting(Model $model) {
 		foreach ($model->data['BlockSetting'] as $key => $blockSetting) {
 			if (!isset($blockSetting['type'])) {
-				// 登録不要なデータを削除
+				// 登録不要なデータを削除 - block_approval_setting.ctpで approval_type がセットされるため
 				unset($model->data['BlockSetting'][$key]);
 				continue;
 			}
