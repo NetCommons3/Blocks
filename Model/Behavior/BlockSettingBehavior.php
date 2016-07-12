@@ -75,7 +75,6 @@ class BlockSettingBehavior extends ModelBehavior {
 		$this->settings = Hash::merge($this->settings, $config);
 		$this->settings['fields'] = Hash::get($this->settings, 'fields', array());
 
-		//$model->Block = ClassRegistry::init('Blocks.Block', true);
 		$model->BlockSetting = ClassRegistry::init('Blocks.BlockSetting', true);
 		//$model->Room = ClassRegistry::init('Rooms.Room', true);
 	}
@@ -90,18 +89,15 @@ class BlockSettingBehavior extends ModelBehavior {
  */
 	public function afterFind(Model $model, $results, $primary = false) {
 		// count検索対応。Block.keyが無ければ、何もしない
-		//if (isset($results[0][0]['count'])) {
 		if (!Hash::check($results, '0.Block.key')) {
 			return $results;
 		}
 		//		$blockKeys = Hash::extract($results, '{n}.Block.key');
-		//var_dump($results, $blockKeys);
 		//		foreach ($blockKeys as $blockKey) {
 		foreach ($results as &$result) {
-			$blockSetting = $this->getBlockSetting($model, 0, $result['Block']['key']);
+			$blockSetting = $this->getBlockSetting($model, $result['Block']['key']);
 			$result = Hash::merge($result, $blockSetting);
 		}
-		//var_dump($results);
 		return $results;
 	}
 
@@ -114,13 +110,7 @@ class BlockSettingBehavior extends ModelBehavior {
  * @see Model::save()
  */
 	public function beforeValidate(Model $model, $options = array()) {
-		//return $this->validateBlockSetting($model, $model->data);
 		return $this->validateBlockSetting($model);
-		//		$result = $this->_validateBlock($model, $model->data);
-		//		if (! $result) {
-		//			return false;
-		//		}
-		//		return true;
 	}
 
 	///**
@@ -132,7 +122,6 @@ class BlockSettingBehavior extends ModelBehavior {
 	// * @see Model::save()
 	// */
 	//	public function beforeSave(Model $model, $options = array()) {
-	//		//return $this->saveBlockSetting($model, $model->data);
 	//		return $this->saveBlockSetting($model);
 	//	}
 
@@ -143,8 +132,6 @@ class BlockSettingBehavior extends ModelBehavior {
  * @return array
  */
 	public function createBlockSetting(Model $model) {
-		//public function createBlockSetting(Model $model, $isRow = 1) {
-		//* @param int $isRow 列持ち（横持ち）にするか
 		$pluginKey = Current::read('Plugin.key');
 
 		// room_idなし, block_keyなし
@@ -152,7 +139,6 @@ class BlockSettingBehavior extends ModelBehavior {
 			'plugin_key' => $pluginKey,
 			'room_id' => null,
 			'block_key' => null,
-			//'field_name' => array_keys($this->settings['fields']),
 			'field_name' => $this->settings['fields'],
 		);
 		$blockSettings = $model->BlockSetting->find('all', array(
@@ -160,16 +146,12 @@ class BlockSettingBehavior extends ModelBehavior {
 			'conditions' => $conditions,
 		));
 
-		// use_workflow, use_comment_approval取得
-		//$room = $model->Room->findById($roomId);
-		//$needApproval = $room['Room']['need_approval'];
-		$needApproval = Current::read('Room.need_approval');
-		$blockSettings = self::_getDefaultApproval($blockSettings, $needApproval,
-			self::FIELD_USE_WORKFLOW);
-		$blockSettings = self::_getDefaultApproval($blockSettings, $needApproval,
-			self::FIELD_USE_COMMENT_APPROVAL);
+		// use_workflow, use_comment_approval新規作成
+		$blockSettings = self::_getDefaultApproval($blockSettings,
+			self::FIELD_USE_WORKFLOW, 1);
+		$blockSettings = self::_getDefaultApproval($blockSettings,
+			self::FIELD_USE_COMMENT_APPROVAL, 1);
 
-		//		if (!$isRow) {
 		// 縦持ち
 		// 新規登録時に不要な部分を除外
 		$blockSettings = Hash::remove($blockSettings, '{n}.{s}.id');
@@ -181,36 +163,21 @@ class BlockSettingBehavior extends ModelBehavior {
 		// 縦持ちでindexをfield_nameに変更
 		$result['BlockSetting'] = Hash::combine($blockSettings, '{n}.{s}.field_name', '{n}.{s}');
 		return $result;
-		//		}
-		//
-		//		// 列持ち（横持ち）に変換
-		//		$result['BlockSetting'] = Hash::combine($blockSettings,
-		//			'{n}.BlockSetting.field_name',
-		//			'{n}.BlockSetting.value');
-		//
-		//		return $result;
 	}
 
 /**
  * BlockSettingデータ取得
  *
  * @param Model $model モデル
- * @param int $isRow 列持ち（横持ち）にするか
  * @param string $blockKey ブロックキー
  * @return array
  */
-	public function getBlockSetting(Model $model, $isRow = 0, $blockKey = null) {
-		//	public function getBlockSetting(Model $model, $isRow = 1, $roomId = null, $blockKey = null) {
-		//* @param int $roomId ルームID
-		//* @param string $blockKey ブロックキー
-		//var_dump($model->alias);
-		$model->BlockSetting = ClassRegistry::init('Blocks.BlockSetting', true);
+	public function getBlockSetting(Model $model, $blockKey = null) {
+		//$model->BlockSetting = ClassRegistry::init('Blocks.BlockSetting', true);
 		if (is_null($blockKey)) {
 			$blockKey = Current::read('Block.key');
 		}
-		//		if (is_null($roomId)) {
 		$roomId = Current::read('Room.id');
-		//		}
 		$pluginKey = Current::read('Plugin.key');
 
 		// room_idあり, block_keyあり
@@ -226,54 +193,21 @@ class BlockSettingBehavior extends ModelBehavior {
 		));
 		//		if (!$blockSettings) {
 		//			// 縦持ちで取得
-		//			//$blockSettings = $this->createBlockSetting($model, 0);
 		//			$blockSettings = $this->createBlockSetting($model);
 		//		}
 
 		// use_workflow, use_comment_approval取得
-		//$room = $model->Room->findById($roomId);
-		//$needApproval = $room['Room']['need_approval'];
-		$needApproval = Current::read('Room.need_approval');
-		$blockSettings = self::_getDefaultApproval($blockSettings, $needApproval,
-			self::FIELD_USE_WORKFLOW);
-		$blockSettings = self::_getDefaultApproval($blockSettings, $needApproval,
-			self::FIELD_USE_COMMENT_APPROVAL);
+		$blockSettings = self::_getDefaultApproval($blockSettings, self::FIELD_USE_WORKFLOW);
+		$blockSettings = self::_getDefaultApproval($blockSettings, self::FIELD_USE_COMMENT_APPROVAL);
 
-		if ($isRow) {
-			// 横持ちに変換
-			$result['BlockSetting'] = Hash::combine($blockSettings,
-				'{n}.{s}.field_name',
-				'{n}.{s}.value');
-			return $result;
-		}
+		// [基のモデル] 横持ちに変換 & 基のモデルに付足し
+		$result[$model->alias] = Hash::combine($blockSettings,
+			'{n}.{s}.field_name',
+			'{n}.{s}.value');
 
-		// 縦持ちでindexをfield_nameに変更
+		// [BlockSetting] 縦持ちでindexをfield_nameに変更
 		$result['BlockSetting'] = Hash::combine($blockSettings, '{n}.{s}.field_name', '{n}.{s}');
 		return $result;
-		//			return $blockSettings;
-
-		//		if (!$blockSettings) {
-		//			return $blockSettings;
-		//		}
-
-		//		// 列持ち（横持ち）に変換
-		//		$result['BlockSetting'] = Hash::combine($blockSettings,
-		//			'{n}.BlockSetting.field_name',
-		//			'{n}.BlockSetting.value');
-
-		//		$conditions = array(
-		//			$model->Block->alias . '.key' => Current::read('Block.key'),
-		//		);
-		//
-		//		$block = $model->Block->find('first', array(
-		//			'recursive' => -1,
-		//			//'recursive' => 0,
-		//			'conditions' => $conditions,
-		//			//'order' => $model->Block->alias . '.id DESC'
-		//		));
-		//		$blockSetting = array();
-		//		$result = Hash::merge($block, $blockSetting);
-		//		return $result;
 	}
 
 /**
@@ -281,28 +215,31 @@ class BlockSettingBehavior extends ModelBehavior {
  * room.need_approvalによって、値変わる
  *
  * @param array $blockSettings ブロックセッティングデータ
- * @param array $needApproval ルーム承認する
  * @param string $fieldName フィールド名
+ * @param int $create 新規作成フラグ 0:更新、1:新規作成
  * @return array ブロックセッティングデータ
  */
-	protected function _getDefaultApproval($blockSettings, $needApproval, $fieldName) {
+	protected function _getDefaultApproval($blockSettings, $fieldName, $create = 0) {
 		// フィールドに指定なければ、何もしない
 		if (!in_array($fieldName, $this->settings['fields'])) {
 			return $blockSettings;
 		}
-		// データありは、データを使う（つまり何もしない）
-		$fields = Hash::extract($blockSettings, '{n}.{s}.field_name');
-		if (in_array($fieldName, $fields, true)) {
-			return $blockSettings;
-		}
 
-		//$needApproval = Current::read('Room.need_approval');
+		// 新規作成時はデータあっても、データなしとして扱い、use_workflow, use_comment_approvalを新規作成する
+		if (!$create) {
+			// データありは、何もしない（つまりデータを使う）
+			$fields = Hash::extract($blockSettings, '{n}.{s}.field_name');
+			if (in_array($fieldName, $fields, true)) {
+				return $blockSettings;
+			}
+		}
+		// 以降はデータなし処理
+
 		/** @see BlockFormHelper::blockSettingHidden(); plugin_key,room_id,block_keyは左記でセット */
-		//$pluginKey = Current::read('Plugin.key');
+		$pluginKey = Current::read('Plugin.key');
 		$defaultBlockSetting = array(
 			'BlockSetting' => array(
-				//'plugin_key' => $pluginKey,
-				'plugin_key' => null,
+				'plugin_key' => $pluginKey,
 				'room_id' => null,
 				'block_key' => null,
 				'field_name' => $fieldName,
@@ -311,6 +248,8 @@ class BlockSettingBehavior extends ModelBehavior {
 			)
 		);
 
+		$needApproval = Current::read('Room.need_approval');
+
 		// ルーム承認する
 		if ($needApproval) {
 			$defaultBlockSetting['BlockSetting']['value'] = '1';
@@ -318,66 +257,11 @@ class BlockSettingBehavior extends ModelBehavior {
 			return $blockSettings;
 		}
 
-		//		// ルーム承認しない & データあり
-		//		$fields = Hash::extract($blockSettings, '{n}.{s}.field_name');
-		//		if (in_array($fieldName, $fields, true)) {
-		//			// データありは、データを使う（つまり何もしない）
-		//			return $blockSettings;
-		//		}
-
-		// ルーム承認しない & データなし
+		// ルーム承認しない
 		// TODOO ルーム承認なしにしたら、承認なしデフォルトでOKだよね？
 		$defaultBlockSetting['BlockSetting']['value'] = '0';
 		$blockSettings[] = $defaultBlockSetting;
 		return $blockSettings;
-
-		//		if ($needApproval) {
-		//			// フィールドにuse_workflowあり
-		//			$blockSettings[] = array(
-		//				'BlockSetting' => array(
-		//					'plugin_key' => $pluginKey,
-		//					'room_id' => null,
-		//					'block_key' => null,
-		//					'field_name' => self::FIELD_USE_WORKFLOW,
-		//					'value' => '1',
-		//					'type' => BlockSettingBehavior::TYPE_BOOLEAN,
-		//				)
-		//			);
-		//			// フィールドにuse_comment_approvalあり
-		//			$blockSettings[] = array(
-		//				'BlockSetting' => array(
-		//					'plugin_key' => $pluginKey,
-		//					'room_id' => null,
-		//					'block_key' => null,
-		//					'field_name' => self::FIELD_USE_COMMENT_APPROVAL,
-		//					'value' => '1',
-		//					'type' => BlockSettingBehavior::TYPE_BOOLEAN,
-		//				)
-		//			);
-		//		} else {
-		//			// フィールドにuse_workflowあり
-		//			$blockSettings[] = array(
-		//				'BlockSetting' => array(
-		//					'plugin_key' => $pluginKey,
-		//					'room_id' => null,
-		//					'block_key' => null,
-		//					'field_name' => self::FIELD_USE_WORKFLOW,
-		//					'value' => '0',
-		//					'type' => BlockSettingBehavior::TYPE_BOOLEAN,
-		//				)
-		//			);
-		//			// フィールドにuse_comment_approvalあり
-		//			$blockSettings[] = array(
-		//				'BlockSetting' => array(
-		//					'plugin_key' => $pluginKey,
-		//					'room_id' => null,
-		//					'block_key' => null,
-		//					'field_name' => self::FIELD_USE_COMMENT_APPROVAL,
-		//					'value' => '0',
-		//					'type' => BlockSettingBehavior::TYPE_BOOLEAN,
-		//				)
-		//			);
-		//		}
 	}
 
 /**
@@ -434,40 +318,12 @@ class BlockSettingBehavior extends ModelBehavior {
  * @throws InternalErrorException
  */
 	public function saveBlockSetting(Model $model) {
-		//public function saveBlockSetting(Model $model, $data) {
-		//* @param array $data received post data
-
-		//if (!isset($this->data['BlockSetting'])) {
-		//	return true;
-		//}
-		//		//トランザクションBegin
-		//		$model->BlockSetting->begin();
-		//
-		//		//バリデーション
-		//		$result = $this->_validateBlock($model, $data);
-		//		if (! $result) {
-		//			return false;
-		//		}
-		//		$data = $result;
-
-		//		try {
-		//$saveData = Hash::extract($data, 'BlockSetting.{s}');
 		$saveData = Hash::extract($model->data, 'BlockSetting.{s}');
 
-		//		if ($saveData &&
-		//			!$model->BlockSetting->saveMany($saveData, ['validate' => false, 'callbacks' => false])) {
 		if ($saveData &&
 			!$model->BlockSetting->saveMany($saveData, ['validate' => false])) {
 			throw new InternalErrorException('Failed - BlockSetting ' . __METHOD__);
 		}
-
-		//			//トランザクションCommit
-		//			$model->BlockSetting->commit();
-		//
-		//		} catch (Exception $ex) {
-		//			//トランザクションRollback
-		//			$model->BlockSetting->rollback($ex);
-		//		}
 		return true;
 	}
 
@@ -478,15 +334,6 @@ class BlockSettingBehavior extends ModelBehavior {
  * @return bool
  */
 	public function validateBlockSetting(Model $model) {
-		//public function validateBlockSetting(Model $model, $data) {
-		//* @param array $data リクエストデータ配列
-
-		//$this->prepare();
-		//array_keys($this->settings['fields']);
-		//* @return bool|array 正常な場合、登録不要なデータを削除して戻す。validateionErrorが空でない場合は、falseを返す。
-		//var_dump($data);
-		//foreach ($data[$model->alias]['BlockSetting'] as $blockSetting) {
-		//foreach ($data['BlockSetting'] as $blockSetting) {
 		foreach ($model->data['BlockSetting'] as $key => $blockSetting) {
 			if (!isset($blockSetting['type'])) {
 				// 登録不要なデータを削除
@@ -512,7 +359,6 @@ class BlockSettingBehavior extends ModelBehavior {
 		}
 
 		if (! $model->validationErrors) {
-			//return $data;
 			return true;
 		} else {
 			return false;
