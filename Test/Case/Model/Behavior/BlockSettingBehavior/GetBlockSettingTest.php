@@ -48,84 +48,45 @@ class BlockSettingBehaviorGetBlockSettingTest extends NetCommonsModelTestCase {
 		$this->TestModel = ClassRegistry::init('TestBlocks.TestBlockSettingBehaviorModel');
 	}
 
-	///**
-	// * getBlockSetting()テストのDataProvider
-	// *
-	// * ### 戻り値
-	// *  - roomId ルームID
-	// *  - blockKey ブロックキー
-	// *
-	// * @return array データ
-	// */
-	//	public function dataProvider() {
-	//		$result[0] = array();
-	//		$result[0]['roomId'] = null;
-	//		$result[0]['blockKey'] = null;
-	//
-	//		return $result;
-	//	}
-	//* @param int $roomId ルームID
-	//* @param string $blockKey ブロックキー
-	//* @dataProvider dataProvider
-
 /**
- * getBlockSetting()のテスト 縦持ち
+ * getBlockSetting()のテスト
  *
  * @return void
  */
 	public function testGetBlockSetting() {
-		$isRow = 0;
-		$roomId = 1;
-		$blockKey = 'block_1';
 		Current::write('Plugin.key', 'dummy');
+		Current::write('Room.id', 1);
+		Current::write('Block.key', 'block_1');
 
 		//テスト実施
-		$result = $this->TestModel->getBlockSetting($isRow, $roomId, $blockKey);
+		/** @see BlockSettingBehavior::getBlockSetting() */
+		$result = $this->TestModel->getBlockSetting();
 
 		//チェック
 		//debug($result);
-		// データあり
+		// データあり(縦持ち)
 		$this->assertArrayHasKey('use_like', $result['BlockSetting']);
+		// データあり(横持ち)
+		$this->assertArrayHasKey('use_like', $result[$this->TestModel->alias]);
 	}
 
 /**
- * getBlockSetting()のテスト 横持ち
+ * getBlockSetting()のテスト - 空
  *
  * @return void
  */
-	public function testGetBlockSettingRow() {
-		$isRow = 1;
-		$roomId = 1;
-		$blockKey = 'block_1';
+	public function testGetBlockSettingEmpty() {
+		$blockKey = 'block_999';	// データがないブロックID
 		Current::write('Plugin.key', 'dummy');
+		Current::write('Room.id', 1);
 
 		//テスト実施
-		$result = $this->TestModel->getBlockSetting($isRow, $roomId, $blockKey);
+		$result = $this->TestModel->getBlockSetting($blockKey);
 
 		//チェック
 		//debug($result);
-		// データあり
-		$this->assertArrayHasKey('use_like', $result['BlockSetting']);
+		// データなし
+		$this->assertEmpty($result);
 	}
-
-	///**
-	// * getBlockSetting()のテスト - 空
-	// *
-	// * @return void
-	// */
-	//	public function testGetBlockSettingEmpty() {
-	//		$isRow = 1;
-	//		$roomId = 1;
-	//		$blockKey = 'block_999';	// データがないブロックID
-	//		Current::write('Plugin.key', 'dummy');
-	//
-	//		//テスト実施
-	//		$result = $this->TestModel->getBlockSetting($isRow, $roomId, $blockKey);
-	//
-	//		//チェック
-	//		debug($result);
-	//		// データあり
-	//		//$this->assertEmpty($result);
-	//	}
 
 }

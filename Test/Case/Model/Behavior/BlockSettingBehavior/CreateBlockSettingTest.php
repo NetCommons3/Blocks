@@ -48,38 +48,6 @@ class BlockSettingBehaviorCreateBlockSettingTest extends NetCommonsModelTestCase
 		$this->TestModel = ClassRegistry::init('TestBlocks.TestBlockSettingBehaviorModel');
 	}
 
-	///**
-	// * createBlockSetting()テストのDataProvider
-	// *
-	// * ### 戻り値
-	// *
-	// * @return array データ
-	// */
-	//	public function dataProvider() {
-	//		$result[0] = array();
-	//
-	//		return $result;
-	//	}
-	//
-	//  * @dataProvider dataProvider
-
-	///**
-	// * createBlockSetting()のテスト - 列持ち（横持ち）
-	// *
-	// * @return void
-	// */
-	//	public function testCreateBlockSettingRow() {
-	//		Current::write('Plugin.key', 'dummy');
-	//		$isRow = 1;
-	//
-	//		//テスト実施
-	//		$result = $this->TestModel->createBlockSetting($isRow);
-	//
-	//		//チェック
-	//		//debug($result);
-	//		$this->assertArrayHasKey('use_like', $result['BlockSetting']);
-	//	}
-
 /**
  * createBlockSetting()のテスト - 行持ち（縦持ち）
  *
@@ -87,16 +55,15 @@ class BlockSettingBehaviorCreateBlockSettingTest extends NetCommonsModelTestCase
  */
 	public function testCreateBlockSettingCol() {
 		Current::write('Plugin.key', 'dummy');
-		//$isRow = 0;
 
 		//テスト実施
-		//$result = $this->TestModel->createBlockSetting($isRow);
+		/** @see BlockSettingBehavior::createBlockSetting() */
 		$result = $this->TestModel->createBlockSetting();
 
 		//チェック
 		//debug($result);
-		$this->assertArrayHasKey('field_name', $result[0]['BlockSetting']);
-		$this->assertArrayHasKey('value', $result[0]['BlockSetting']);
+		$this->assertArrayHasKey('field_name', $result['BlockSetting']['use_comment']);
+		$this->assertArrayHasKey('value', $result['BlockSetting']['use_comment']);
 	}
 
 }

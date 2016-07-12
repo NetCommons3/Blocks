@@ -103,6 +103,22 @@ class BlockSettingFixture extends CakeTestFixture {
 			'value' => '0',
 			'type' => BlockSettingBehavior::TYPE_NUMERIC,
 		),
+		array(
+			'plugin_key' => 'dummy',
+			'room_id' => null,
+			'block_key' => null,
+			'field_name' => BlockSettingBehavior::FIELD_USE_WORKFLOW,
+			'value' => '0',
+			'type' => BlockSettingBehavior::TYPE_NUMERIC,
+		),
+		array(
+			'plugin_key' => 'dummy',
+			'room_id' => null,
+			'block_key' => null,
+			'field_name' => BlockSettingBehavior::FIELD_USE_COMMENT_APPROVAL,
+			'value' => '0',
+			'type' => BlockSettingBehavior::TYPE_NUMERIC,
+		),
 		// ブロック設定後 - room_idあり、block_keyあり
 		array(
 			'plugin_key' => 'dummy',
