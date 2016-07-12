@@ -74,6 +74,31 @@ class BlockSettingBehaviorGetBlockSettingTest extends NetCommonsModelTestCase {
 	}
 
 /**
+ * getBlockSetting()のテスト - データあり、しかしuse_workflowのデータがないパターン
+ *
+ * @return void
+ */
+	public function testGetBlockSettingNoUseWorkFlowData() {
+		Current::write('Plugin.key', 'dummy');
+		Current::write('Room.id', 2);	// use_workflowのデータがないパターン
+		Current::write('Block.key', 'block_2');	// use_workflowのデータがないパターン
+
+		//テスト実施
+		/** @see BlockSettingBehavior::getBlockSetting() */
+		$result = $this->TestModel->getBlockSetting();
+
+		//チェック
+		debug($result);
+		// データあり(縦持ち)
+		$this->assertArrayHasKey('use_like', $result['BlockSetting']);
+		// 承認系データあり
+		$this->assertEquals('0', $result['BlockSetting']['use_workflow']['value']);
+		$this->assertEquals('0', $result['BlockSetting']['use_comment_approval']['value']);
+		// データあり(横持ち)
+		$this->assertArrayHasKey('use_like', $result[$this->TestModel->alias]);
+	}
+
+/**
  * getBlockSetting()のテスト - 空
  *
  * @return void

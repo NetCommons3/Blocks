@@ -176,6 +176,47 @@ class BlockSettingFixture extends CakeTestFixture {
 			'value' => '1',
 			'type' => BlockSettingBehavior::TYPE_NUMERIC,
 		),
+		// イレギュラーデータ - room_idあり、block_keyあり、USE_WORKFLOW, USE_COMMENT_APPROVALのデータなし
+		array(
+			'plugin_key' => 'dummy',
+			'room_id' => 2,
+			'block_key' => 'block_2',
+			'field_name' => BlockSettingBehavior::FIELD_USE_COMMENT,
+			'value' => '0',
+			'type' => BlockSettingBehavior::TYPE_BOOLEAN,
+		),
+		array(
+			'plugin_key' => 'dummy',
+			'room_id' => 2,
+			'block_key' => 'block_2',
+			'field_name' => BlockSettingBehavior::FIELD_USE_LIKE,
+			'value' => '1',
+			'type' => BlockSettingBehavior::TYPE_BOOLEAN,
+		),
+		array(
+			'plugin_key' => 'dummy',
+			'room_id' => 2,
+			'block_key' => 'block_2',
+			'field_name' => BlockSettingBehavior::FIELD_USE_UNLIKE,
+			'value' => '1',
+			'type' => BlockSettingBehavior::TYPE_BOOLEAN,
+		),
+		array(
+			'plugin_key' => 'dummy',
+			'room_id' => 2,
+			'block_key' => 'block_2',
+			'field_name' => 'auto_play',
+			'value' => '1',
+			'type' => BlockSettingBehavior::TYPE_BOOLEAN,
+		),
+		array(
+			'plugin_key' => 'dummy',
+			'room_id' => 2,
+			'block_key' => 'block_2',
+			'field_name' => 'total_size',
+			'value' => '100',
+			'type' => BlockSettingBehavior::TYPE_NUMERIC,
+		),
 	);
 
 }
