@@ -34,14 +34,6 @@ class TestBlockSettingBehaviorModel extends AppModel {
  */
 	public $actsAs = array(
 		'Blocks.BlockSetting' => array(
-			//			'fields' => array(
-			//				'use_workflow' => 'boolean',
-			//				'use_comment' => 'boolean',
-			//				'use_comment_approval' => 'boolean',
-			//				'use_like' => 'boolean',
-			//				'use_unlike' => 'boolean',
-			//				'auto_play' => 'numeric',
-			//			),
 			'fields' => array(
 				BlockSettingBehavior::FIELD_USE_WORKFLOW,
 				BlockSettingBehavior::FIELD_USE_LIKE,
