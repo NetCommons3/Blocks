@@ -65,7 +65,7 @@ class BlockSettingBehaviorCreateBlockSettingTest extends NetCommonsModelTestCase
 		//debug($result);
 		$this->assertArrayHasKey('field_name', $result['BlockSetting']['use_comment']);
 		$this->assertArrayHasKey('value', $result['BlockSetting']['use_comment']);
-		//ルーム承認する
+		//デフォルト値は承認する
 		$this->assertEquals('1', $result['BlockSetting']['use_workflow']['value']);
 		$this->assertEquals('1', $result['BlockSetting']['use_comment_approval']['value']);
 	}
@@ -87,7 +87,7 @@ class BlockSettingBehaviorCreateBlockSettingTest extends NetCommonsModelTestCase
 		//debug($result);
 		$this->assertArrayHasKey('field_name', $result['BlockSetting']['use_comment']);
 		$this->assertArrayHasKey('value', $result['BlockSetting']['use_comment']);
-		//ルーム承認しない
+		//デフォルト値は承認しない
 		$this->assertEquals('0', $result['BlockSetting']['use_workflow']['value']);
 		$this->assertEquals('0', $result['BlockSetting']['use_comment_approval']['value']);
 	}
