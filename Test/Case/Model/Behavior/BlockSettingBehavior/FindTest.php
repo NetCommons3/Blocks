@@ -47,6 +47,7 @@ class BlockSettingBehaviorFindTest extends NetCommonsModelTestCase {
 
 		//テストプラグインのロード
 		NetCommonsCakeTestCase::loadTestPlugin($this, 'Blocks', 'TestBlocks');
+		/** @see TestBlockSettingBehaviorFindModel */
 		$this->TestModel = ClassRegistry::init('TestBlocks.TestBlockSettingBehaviorFindModel');
 	}
 
