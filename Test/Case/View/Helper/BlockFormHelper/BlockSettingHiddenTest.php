@@ -63,8 +63,6 @@ class BlockFormHelperBlockSettingHiddenTest extends NetCommonsHelperTestCase {
 		//データ生成
 		$inputValue = 'BlockSetting.use_like';
 		$useValue = 0;
-		Current::write('Plugin.key', 'dummy');
-		Current::write('Room.id', '999');
 
 		//テスト実施
 		/** @see BlockFormHelper::blockSettingHidden() */
@@ -75,8 +73,6 @@ class BlockFormHelperBlockSettingHiddenTest extends NetCommonsHelperTestCase {
 		// valueのhiddenはない事
 		$this->assertTextNotContains('data[BlockSetting][use_like][value]', $result);
 		// valueはセットされているか
-		$this->assertTextContains('value="' . Current::read('Plugin.key'), $result);
-		$this->assertTextContains('value="' . Current::read('Room.id'), $result);
 		$this->assertTextContains('value="block_1"', $result);
 	}
 

@@ -106,12 +106,10 @@ class BlockFormHelper extends AppHelper {
 	public function blockSettingHidden($inputValue, $useValue = 0) {
 		$output = '';
 		$output .= $this->NetCommonsForm->hidden($inputValue . '.id');
+		$output .= $this->NetCommonsForm->hidden($inputValue . '.plugin_key');
+		$output .= $this->NetCommonsForm->hidden($inputValue . '.room_id');
 		$output .= $this->NetCommonsForm->hidden($inputValue . '.field_name');
 		$output .= $this->NetCommonsForm->hidden($inputValue . '.type');
-		$output .= $this->NetCommonsForm->hidden($inputValue . '.plugin_key',
-			array('value' => Current::read('Plugin.key')));
-		$output .= $this->NetCommonsForm->hidden($inputValue . '.room_id',
-			array('value' => Current::read('Room.id')));
 
 		// Block.keyはBlock登録時に生成されるため、Block登録処理と同様にrequest->dataから値を取得する
 		$blockKey = Hash::get($this->_View->request->data, 'Block.key');

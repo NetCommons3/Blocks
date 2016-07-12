@@ -131,6 +131,7 @@ class BlockSettingBehavior extends ModelBehavior {
  */
 	public function createBlockSetting(Model $model) {
 		$pluginKey = Current::read('Plugin.key');
+		$roomId = Current::read('Room.id');
 
 		// room_idなし, block_keyなし
 		$conditions = array(
@@ -157,6 +158,8 @@ class BlockSettingBehavior extends ModelBehavior {
 		$blockSettings = Hash::remove($blockSettings, '{n}.{s}.created_user');
 		$blockSettings = Hash::remove($blockSettings, '{n}.{s}.modified');
 		$blockSettings = Hash::remove($blockSettings, '{n}.{s}.modified_user');
+		$blockSettings = Hash::insert($blockSettings, '{n}.{s}.plugin_key', $pluginKey);
+		$blockSettings = Hash::insert($blockSettings, '{n}.{s}.room_id', $roomId);
 
 		// indexをfield_nameに変更
 		$result['BlockSetting'] = Hash::combine($blockSettings, '{n}.{s}.field_name', '{n}.{s}');
@@ -236,12 +239,13 @@ class BlockSettingBehavior extends ModelBehavior {
 		}
 		// 以降はデータなし処理
 
-		/** @see BlockFormHelper::blockSettingHidden(); plugin_key,room_id,block_keyは左記でセット */
+		/** @see BlockFormHelper::blockSettingHidden(); block_keyは左記でセット */
 		$pluginKey = Current::read('Plugin.key');
+		$roomId = Current::read('Room.id');
 		$defaultBlockSetting = array(
 			'BlockSetting' => array(
 				'plugin_key' => $pluginKey,
-				'room_id' => null,
+				'room_id' => $roomId,
 				'block_key' => null,
 				'field_name' => $fieldName,
 				'value' => null,

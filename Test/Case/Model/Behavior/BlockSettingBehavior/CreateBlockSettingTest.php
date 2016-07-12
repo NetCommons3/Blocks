@@ -55,6 +55,7 @@ class BlockSettingBehaviorCreateBlockSettingTest extends NetCommonsModelTestCase
  */
 	public function testCreateBlockSetting() {
 		Current::write('Plugin.key', 'dummy');
+		Current::write('Room.id', 2);
 		Current::write('Room.need_approval', 1);	//ルーム承認する
 
 		//テスト実施
@@ -65,9 +66,19 @@ class BlockSettingBehaviorCreateBlockSettingTest extends NetCommonsModelTestCase
 		//debug($result);
 		$this->assertArrayHasKey('field_name', $result['BlockSetting']['use_comment']);
 		$this->assertArrayHasKey('value', $result['BlockSetting']['use_comment']);
+		//プラグインキー、ルームIDセットされている
+		$this->assertEquals(Current::read('Plugin.key'),
+			$result['BlockSetting']['use_comment']['plugin_key']);
+		$this->assertEquals(Current::read('Room.id'),
+			$result['BlockSetting']['use_comment']['room_id']);
 		//デフォルト値は承認する
 		$this->assertEquals('1', $result['BlockSetting']['use_workflow']['value']);
 		$this->assertEquals('1', $result['BlockSetting']['use_comment_approval']['value']);
+		//デフォルト値のプラグインキー、ルームIDセットされている
+		$this->assertEquals(Current::read('Plugin.key'),
+			$result['BlockSetting']['use_workflow']['plugin_key']);
+		$this->assertEquals(Current::read('Room.id'),
+			$result['BlockSetting']['use_workflow']['room_id']);
 	}
 
 /**
@@ -77,6 +88,7 @@ class BlockSettingBehaviorCreateBlockSettingTest extends NetCommonsModelTestCase
  */
 	public function testCreateBlockSettingNoApproval() {
 		Current::write('Plugin.key', 'dummy');
+		Current::write('Room.id', 2);
 		Current::write('Room.need_approval', 0);	//ルーム承認しない
 
 		//テスト実施
