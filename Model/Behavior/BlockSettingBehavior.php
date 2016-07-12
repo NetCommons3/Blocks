@@ -86,6 +86,7 @@ class BlockSettingBehavior extends ModelBehavior {
  * @param mixed $results The results of the find operation
  * @param bool $primary Whether this model is being queried directly (vs. being queried as an association)
  * @return mixed An array value will replace the value of $results - any other value will be ignored.
+ * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
  */
 	public function afterFind(Model $model, $results, $primary = false) {
 		// count検索対応。Block.keyが無ければ、何もしない
