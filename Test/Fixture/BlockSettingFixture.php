@@ -103,6 +103,8 @@ class BlockSettingFixture extends CakeTestFixture {
 			'value' => '0',
 			'type' => BlockSettingBehavior::TYPE_NUMERIC,
 		),
+		// use_workflow, use_comment_approvalの初期値は、rooms.need_approvalによって値決まる。
+		// BlockSettingでデフォルト値（room_id=null, block_key=nullの値）設定しても無視される。
 		array(
 			'plugin_key' => 'dummy',
 			'room_id' => null,
@@ -158,6 +160,22 @@ class BlockSettingFixture extends CakeTestFixture {
 			'block_key' => 'block_1',
 			'field_name' => 'total_size',
 			'value' => '100',
+			'type' => BlockSettingBehavior::TYPE_NUMERIC,
+		),
+		array(
+			'plugin_key' => 'dummy',
+			'room_id' => 1,
+			'block_key' => 'block_1',
+			'field_name' => BlockSettingBehavior::FIELD_USE_WORKFLOW,
+			'value' => '0',
+			'type' => BlockSettingBehavior::TYPE_NUMERIC,
+		),
+		array(
+			'plugin_key' => 'dummy',
+			'room_id' => 1,
+			'block_key' => 'block_1',
+			'field_name' => BlockSettingBehavior::FIELD_USE_COMMENT_APPROVAL,
+			'value' => '1',
 			'type' => BlockSettingBehavior::TYPE_NUMERIC,
 		),
 	);

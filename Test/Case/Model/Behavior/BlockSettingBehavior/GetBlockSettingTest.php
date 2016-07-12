@@ -66,6 +66,9 @@ class BlockSettingBehaviorGetBlockSettingTest extends NetCommonsModelTestCase {
 		//debug($result);
 		// データあり(縦持ち)
 		$this->assertArrayHasKey('use_like', $result['BlockSetting']);
+		// 承認系データあり
+		$this->assertEquals('0', $result['BlockSetting']['use_workflow']['value']);
+		$this->assertEquals('1', $result['BlockSetting']['use_comment_approval']['value']);
 		// データあり(横持ち)
 		$this->assertArrayHasKey('use_like', $result[$this->TestModel->alias]);
 	}
