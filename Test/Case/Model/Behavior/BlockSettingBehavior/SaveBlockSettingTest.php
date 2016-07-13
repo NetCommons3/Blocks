@@ -134,6 +134,24 @@ class BlockSettingBehaviorSaveBlockSettingTest extends NetCommonsModelTestCase {
 	}
 
 /**
+ * saveBlockSetting()の Validate データ空テスト
+ *
+ * @return void
+ */
+	public function testSaveBlockSettingValidateEmpty() {
+		// テストデータ
+		$this->TestModel->data = array();
+
+		//テスト実施
+		/** @see BlockSettingBehavior::validateBlockSetting() */
+		$result = $this->TestModel->validateBlockSetting();
+
+		// チェック
+		//debug($this->TestModel->validationErrors);
+		$this->assertTrue($result);
+	}
+
+/**
  * saveBlockSetting()の例外テスト
  *
  * @return void
