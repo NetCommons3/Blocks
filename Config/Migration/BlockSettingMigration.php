@@ -20,6 +20,8 @@ class BlockSettingMigration extends NetCommonsMigration {
 
 /**
  * マイグレーションupの更新と,downの削除
+ * [recordsの注意点] BlockSettingのデフォルト値(room_id=null, block_key=null)でfield_name=use_workflow,
+ * use_comment_approvalは設定しても、無視される。rooms.need_approval（ルーム承認する）によって値決まるため
  *
  * @param string $direction Direction of migration process (up or down)
  * @param string $pluginKey プラグインキー
