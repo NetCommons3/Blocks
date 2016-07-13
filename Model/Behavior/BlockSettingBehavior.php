@@ -339,6 +339,11 @@ class BlockSettingBehavior extends ModelBehavior {
  * @return bool
  */
 	public function validateBlockSetting(Model $model) {
+		// BlockSettingデータが無ければ、チェックしない
+		if (!array_key_exists('BlockSetting', $model->data)) {
+			return true;
+		}
+
 		foreach ($model->data['BlockSetting'] as $key => $blockSetting) {
 			if (!isset($blockSetting['type'])) {
 				// 登録不要なデータを削除 - block_approval_setting.ctpで approval_type がセットされるため
