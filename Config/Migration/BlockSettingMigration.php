@@ -14,7 +14,7 @@ App::uses('NetCommonsMigration', 'NetCommons.Config/Migration');
  * BlockSettingMigration
  *
  * @author Mitsuru Mutaguchi <mutaguchi@opensource-workshop.jp>
- * @package NetCommons\Mails\Config\Migration
+ * @package NetCommons\Blocks\Config\Migration
  */
 class BlockSettingMigration extends NetCommonsMigration {
 
