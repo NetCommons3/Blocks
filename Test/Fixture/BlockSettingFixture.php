@@ -17,6 +17,13 @@ App::uses('BlockSettingBehavior', 'Blocks.Model/Behavior');
 class BlockSettingFixture extends CakeTestFixture {
 
 /**
+ * Plugin key
+ *
+ * @var string
+ */
+	public $pluginKey = 'dummy';
+
+/**
  * Fields
  *
  * @var array
@@ -218,5 +225,17 @@ class BlockSettingFixture extends CakeTestFixture {
 			'type' => BlockSettingBehavior::TYPE_NUMERIC,
 		),
 	);
+
+/**
+ * Initialize the fixture.
+ *
+ * @return void
+ */
+	public function init() {
+		parent::init();
+
+		// 継承先で $this->pluginKey を上書きすれば、そのプラグインに対応したデータになるので
+		$this->records = Hash::insert($this->records, '{n}.plugin_key', $this->pluginKey);
+	}
 
 }
