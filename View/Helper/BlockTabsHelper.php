@@ -330,9 +330,20 @@ class BlockTabsHelper extends AppHelper {
  * ブロック設定タブの出力
  *
  * @param string $activeTab Active tab
+ * @param array $options タブ表示のオプション
+ *   displayAllTab:editアクション以外でもタブを表示するオプション
+ *   displayBlockTitle:edit以外でもタイトルを表示する
  * @return string HTML tags
  */
-	public function block($activeTab) {
+	public function block($activeTab, $options = array()) {
+		$options = Hash::merge(
+			[
+				'displayAllTab' => false,
+				'displayBlockTitle' => true,
+			],
+			$options
+		);
+
 		$tabs = $this->_View->viewVars['blockSettingTabs'];
 
 		$html = '';
@@ -346,7 +357,7 @@ class BlockTabsHelper extends AppHelper {
 			unset($tabs[self::BLOCK_TAB_SETTING]);
 		}
 
-		if ($this->_View->request->params['action'] === 'edit') {
+		if ($this->_View->request->params['action'] === 'edit' || $options['displayAllTab']) {
 			//メール通知
 			if (isset($tabs[self::BLOCK_TAB_MAIL_SETTING])) {
 				$html .= $this->__listTag(
@@ -371,10 +382,7 @@ class BlockTabsHelper extends AppHelper {
 
 		$html .= '</ul>';
 
-		$blockName = Current::read('Block.name');
-		if ($this->_View->request->params['action'] === 'edit' && $blockName) {
-			$html .= $this->NetCommonsHtml->tag('h2', $blockName, ['class' => 'block-title']);
-		}
+		$html .= $this->_getBlockTitleHtml($options);
 		return $html;
 	}
 
@@ -401,6 +409,24 @@ class BlockTabsHelper extends AppHelper {
 			$html .= '</li>';
 		}
 
+		return $html;
+	}
+
+/**
+ * ブロックタイトルのHTMLを返す
+ *
+ * @param array $options オプション
+ * @return string html
+ */
+	protected function _getBlockTitleHtml($options) {
+		$html = '';
+		$blockName = Current::read('Block.name');
+		if (($this->_View->request->params['action'] === 'edit' || $options['displayBlockTitle'])
+			&& $blockName
+		) {
+			$html .= $this->NetCommonsHtml->tag('h2', $blockName, ['class' => 'block-title']);
+			return $html;
+		}
 		return $html;
 	}
 
