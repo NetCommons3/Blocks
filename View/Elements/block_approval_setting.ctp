@@ -83,7 +83,7 @@ if (isset($useWorkflow)) {
 }
 if (isset($useCommentApproval)) {
 	if ($approvalType === Block::NEED_APPROVAL ||
-		$approvalType === Block::NEED_COMMENT_APPROVAL) {
+			$approvalType === Block::NEED_COMMENT_APPROVAL) {
 		$initializeParams['useCommentApproval'] = 1;
 		$this->request->data[$model][$useCommentApproval] = 1;
 	} else {
