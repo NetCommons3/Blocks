@@ -87,13 +87,18 @@ class BlockSettingBehavior extends ModelBehavior {
  */
 	public function afterFind(Model $model, $results, $primary = false) {
 		// count検索対応。Block.keyが無ければ、何もしない
-		if (!Hash::check($results, '0.Block.key')) {
+		$blockKey = Hash::get($results, '0.Block.key');
+		if (is_null($blockKey) && $model->useTable === 'blocks') {
+			$blockKey = Hash::get($results, '0.' . $model->alias . '.key');
+		}
+
+		if (!$blockKey) {
 			return $results;
 		}
 		//		$blockKeys = Hash::extract($results, '{n}.Block.key');
 		//		foreach ($blockKeys as $blockKey) {
 		foreach ($results as &$result) {
-			$blockSetting = $this->getBlockSetting($model, $result['Block']['key']);
+			$blockSetting = $this->getBlockSetting($model, $blockKey);
 			$result = Hash::merge($result, $blockSetting);
 		}
 		return $results;
@@ -352,7 +357,7 @@ class BlockSettingBehavior extends ModelBehavior {
 			}
 
 			if ($blockSetting['type'] === self::TYPE_BOOLEAN) {
-				if (! in_array($blockSetting['value'], ['0', '1'], true)) {
+				if (! Validation::boolean($blockSetting['value'])) {
 					$fieldName = $blockSetting['field_name'];
 					$model->validationErrors['BlockSetting'][$fieldName]['value']
 						= array(__d('net_commons', 'Invalid request.'));
