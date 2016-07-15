@@ -28,6 +28,13 @@ class TestBlockSettingBehaviorModel extends AppModel {
 	public $useTable = false;
 
 /**
+ * テーブル別名
+ *
+ * @var mixed
+ */
+	public $alies = 'TestBlockSettingBehaviorModel';
+
+/**
  * 使用ビヘイビア
  *
  * @var array

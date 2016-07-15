@@ -58,24 +58,14 @@ class BlockSettingBehaviorSaveBlockSettingTest extends NetCommonsModelTestCase {
 		$blockKey = 'block_1';
 		Current::write('Plugin.key', 'dummy');
 		Current::write('Room.id', 1);
+		Current::write('Block.key', $blockKey);
 
-		$result = $this->TestModel->getBlockSetting($blockKey);
-		//debug($result);
-		$result['BlockSetting']['use_comment']['value'] = '0';
-		$result['BlockSetting']['use_like']['value'] = '0';
-		$result['BlockSetting']['use_unlike']['value'] = '0';
-		$result['BlockSetting']['auto_play']['value'] = '0';
-		$result['BlockSetting']['total_size']['value'] = '200';
-		$data = $result;
+		$data[$this->TestModel->alies]['use_comment'] = '0';
+		$data[$this->TestModel->alies]['use_like'] = '0';
+		$data[$this->TestModel->alies]['use_unlike'] = '0';
+		$data[$this->TestModel->alies]['auto_play'] = '0';
+		$data[$this->TestModel->alies]['total_size'] = '200';
 		$this->TestModel->data = $data;
-		//debug($result);
-
-		//テスト実施
-		/** @see BlockSettingBehavior::validateBlockSetting() */
-		$result = $this->TestModel->validateBlockSetting();
-		//チェック
-		//debug($this->TestModel->validationErrors);
-		$this->assertTrue($result);
 
 		//テスト実施
 		/** @see BlockSettingBehavior::saveBlockSetting() */
@@ -94,7 +84,7 @@ class BlockSettingBehaviorSaveBlockSettingTest extends NetCommonsModelTestCase {
 		//debug($result);
 		foreach ($checks as $check) {
 			// 更新した値チェック
-			$this->assertEquals($data['BlockSetting'][$check]['value'],
+			$this->assertEquals($data[$this->TestModel->alies][$check],
 				$result['BlockSetting'][$check]['value']);
 			// 更新日時セットされてるよねチェック
 			$this->assertNotNull($result['BlockSetting'][$check]['modified']);
@@ -102,53 +92,41 @@ class BlockSettingBehaviorSaveBlockSettingTest extends NetCommonsModelTestCase {
 	}
 
 /**
- * saveBlockSetting()の Validate Error テスト
+ * saveBlockSetting()の Validate テスト
  *
  * @return void
  */
-	public function testSaveBlockSettingValidateError() {
+	public function testSaveBlockSettingValidate() {
 		// テストデータ
-		$blockKey = 'block_1';
 		Current::write('Plugin.key', 'dummy');
 		Current::write('Room.id', 1);
 
-		$result = $this->TestModel->getBlockSetting($blockKey);
-		//debug($result);
-		$result['BlockSetting']['use_comment']['value'] = '0';
-		$result['BlockSetting']['use_like']['value'] = '0';
-		$result['BlockSetting']['use_unlike']['value'] = '0';
-		$result['BlockSetting']['auto_play']['value'] = '2'; // 入力値不正エラー
-		$result['BlockSetting']['total_size']['value'] = 'xxx';	// 入力値不正エラー
-		$result['BlockSetting']['approval_type'] = '1';	// 登録不要なデータ
-		$data = $result;
+		$data[$this->TestModel->alies]['use_comment'] = '0';
+		$data[$this->TestModel->alies]['use_like'] = '0';
+		$data[$this->TestModel->alies]['use_unlike'] = '0';
+		$data[$this->TestModel->alies]['auto_play'] = '0';
+		$data[$this->TestModel->alies]['total_size'] = '200';
+		$data[$this->TestModel->alies]['approval_type'] = '1';	// 登録不要なデータ
 		$this->TestModel->data = $data;
 		//debug($result);
 
 		//テスト実施
 		/** @see BlockSettingBehavior::validateBlockSetting() */
-		$result = $this->TestModel->validateBlockSetting();
+		$this->TestModel->validateBlockSetting();
 
 		// チェック
-		//debug($this->TestModel->validationErrors);
-		$this->assertFalse($result);
-	}
-
-/**
- * saveBlockSetting()の Validate データ空テスト
- *
- * @return void
- */
-	public function testSaveBlockSettingValidateEmpty() {
-		// テストデータ
-		$this->TestModel->data = array();
-
-		//テスト実施
-		/** @see BlockSettingBehavior::validateBlockSetting() */
-		$result = $this->TestModel->validateBlockSetting();
-
-		// チェック
-		//debug($this->TestModel->validationErrors);
-		$this->assertTrue($result);
+		//var_dump($this->TestModel->validator()->getField());
+		$checks = array(
+			'use_comment',
+			'use_like',
+			'use_unlike',
+			'auto_play',
+			'total_size',
+		);
+		foreach ($checks as $check) {
+			// 追加validate条件セットされてるよねチェック
+			$this->assertArrayHasKey($check, $this->TestModel->validator()->getField());
+		}
 	}
 
 /**

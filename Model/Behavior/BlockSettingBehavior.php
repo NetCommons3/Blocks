@@ -134,7 +134,7 @@ class BlockSettingBehavior extends ModelBehavior {
  * @param Model $model モデル
  * @return array
  */
-	public function createBlockSetting(Model $model) {
+	protected function _createBlockSetting(Model $model) {
 		$pluginKey = Current::read('Plugin.key');
 		$roomId = Current::read('Room.id');
 
@@ -165,10 +165,7 @@ class BlockSettingBehavior extends ModelBehavior {
 		$blockSettings = Hash::remove($blockSettings, '{n}.{s}.modified_user');
 		$blockSettings = Hash::insert($blockSettings, '{n}.{s}.plugin_key', $pluginKey);
 		$blockSettings = Hash::insert($blockSettings, '{n}.{s}.room_id', $roomId);
-
-		// indexをfield_nameに変更
-		$result['BlockSetting'] = Hash::combine($blockSettings, '{n}.{s}.field_name', '{n}.{s}');
-		return $result;
+		return $blockSettings;
 	}
 
 /**
@@ -198,15 +195,15 @@ class BlockSettingBehavior extends ModelBehavior {
 			'conditions' => $conditions,
 		));
 		if (!$blockSettings) {
-			//$blockSettings = $this->createBlockSetting($model);
-			return $blockSettings;
+			// データなければ新規作成
+			$blockSettings = $this->_createBlockSetting($model);
+		} else {
+			// use_workflow, use_comment_approval取得
+			$blockSettings = self::_getDefaultApproval($model, $blockSettings,
+				self::FIELD_USE_WORKFLOW);
+			$blockSettings = self::_getDefaultApproval($model, $blockSettings,
+				self::FIELD_USE_COMMENT_APPROVAL);
 		}
-
-		// use_workflow, use_comment_approval取得
-		$blockSettings = self::_getDefaultApproval($model, $blockSettings,
-			self::FIELD_USE_WORKFLOW);
-		$blockSettings = self::_getDefaultApproval($model, $blockSettings,
-			self::FIELD_USE_COMMENT_APPROVAL);
 
 		// [基のモデル] 横持ちに変換 & 基のモデルに付足し
 		$result[$model->alias] = Hash::combine($blockSettings,
@@ -277,49 +274,61 @@ class BlockSettingBehavior extends ModelBehavior {
 /**
  * BlockSettingデータ保存
  *
- * ### 注意事項
- * この引数$dataは、リクエストの中身そのまま。
+ * ### 仕組み
+ * 各プラグインの[横]の入力値を、BlockSettingをブロックキーで検索した縦データにセット or
+ * データなしなら、新規作成データが取得できるので、ブロックキーをセット
+ * して、縦データをsaveManyでまとめて保存します。
  * ```
- * //(例)各プラグインのBlockSettingControllerからの登録処理
+ * //(例)各プラグインのBlockSettingControllerからの登録処理 [横]データ
  * array(
- * 	'BlockSetting' => array(
- * 		'use_comment' => array(
- * 			'id' => '1',
- * 			'plugin_key' => 'videos',
- * 			'room_id' => '2',
- * 			'block_key' => '2e86eb72e9cbd0ffa87ea23c81d4e3b7',
- * 			'field_name' => 'use_comment',
- * 			'value' => '1',
- * 			'type' => 'boolean',
- * 		),
- * 		'use_like' => array(
- * 			'id' => '1',
- * 			'plugin_key' => 'videos',
- * 			'room_id' => '2',
- * 			'block_key' => '2e86eb72e9cbd0ffa87ea23c81d4e3b7',
- * 			'field_name' => 'use_like',
- * 			'value' => '1',
- * 			'type' => 'boolean',
- * 		),
- * 		'use_unlike' => array(
- * 			'id' => '1',
- * 			'plugin_key' => 'videos',
- * 			'room_id' => '2',
- * 			'block_key' => '2e86eb72e9cbd0ffa87ea23c81d4e3b7',
- * 			'field_name' => 'use_unlike',
- * 			'value' => '0',
- * 			'type' => 'boolean',
- * 		),
- * 		'is_auto_play' => array(
- * 			'id' => '1',
- * 			'plugin_key' => 'videos',
- * 			'room_id' => '2',
- * 			'block_key' => '2e86eb72e9cbd0ffa87ea23c81d4e3b7',
- * 			'field_name' => 'auto_play',
- * 			'value' => '0',
- * 			'type' => 'numeric',
- * 		),
+ * 	'VideoBlockSetting' => array(
+ * 		'use_comment' => '1',
+ * 		'use_like' => '1',
+ * 		'use_unlike' => '0',
+ * 		'auto_play' => '0',
+ * 		'use_comment' => '1',
  * 	)
+ * )
+ * ↓
+ * ↓ ブロックキーで検索した[縦]データにセット
+ * ↓
+ * array(
+ * 	'use_comment' => array(
+ * 		'id' => '1',		// 新規登録時はidない
+ * 		'plugin_key' => 'videos',
+ * 		'room_id' => '2',
+ * 		'block_key' => '2e86eb72e9cbd0ffa87ea23c81d4e3b7',
+ * 		'field_name' => 'use_comment',
+ * 		'value' => '1',
+ * 		'type' => 'boolean',
+ * 	),
+ * 	'use_like' => array(
+ * 		'id' => '1',
+ * 		'plugin_key' => 'videos',
+ * 		'room_id' => '2',
+ * 		'block_key' => '2e86eb72e9cbd0ffa87ea23c81d4e3b7',
+ * 		'field_name' => 'use_like',
+ * 		'value' => '1',
+ * 		'type' => 'boolean',
+ * 	),
+ * 	'use_unlike' => array(
+ * 		'id' => '1',
+ * 		'plugin_key' => 'videos',
+ * 		'room_id' => '2',
+ * 		'block_key' => '2e86eb72e9cbd0ffa87ea23c81d4e3b7',
+ * 		'field_name' => 'use_unlike',
+ * 		'value' => '0',
+ * 		'type' => 'boolean',
+ * 	),
+ * 	'is_auto_play' => array(
+ * 		'id' => '1',
+ * 		'plugin_key' => 'videos',
+ * 		'room_id' => '2',
+ * 		'block_key' => '2e86eb72e9cbd0ffa87ea23c81d4e3b7',
+ * 		'field_name' => 'auto_play',
+ * 		'value' => '0',
+ * 		'type' => 'boolean',
+ * 	),
  * )
  * ```
  *
@@ -328,7 +337,21 @@ class BlockSettingBehavior extends ModelBehavior {
  * @throws InternalErrorException
  */
 	public function saveBlockSetting(Model $model) {
-		$saveData = Hash::extract($model->data, 'BlockSetting.{s}');
+		// 横の入力データを、検索した縦データにセット & 新規登録用にブロックキーをセット
+		$blockKey = Current::read('Block.key');
+		$blockSetting = $this->getBlockSetting($model, $blockKey);
+		$inputData = $model->data[$model->alias];
+		$saveData = null;
+
+		// セッティングしたフィールドを基に、入力したフィールドのみsaveDataにする
+		foreach ($this->settings[$model->alias] as $field) {
+			if (array_key_exists($field, $inputData)) {
+				$saveData[$field] = $blockSetting['BlockSetting'][$field];
+				$saveData[$field]['value'] = $inputData[$field];
+				// 新規登録用にブロックキーをセット
+				$saveData[$field]['block_key'] = $blockKey;
+			}
+		}
 
 		if ($saveData &&
 			!$model->BlockSetting->saveMany($saveData, ['validate' => false])) {
@@ -338,46 +361,28 @@ class BlockSettingBehavior extends ModelBehavior {
 	}
 
 /**
- * ブロック設定のValidate処理
+ * ブロックセッティングのValidate追加処理
  *
  * @param Model $model モデル
  * @return bool
  */
 	public function validateBlockSetting(Model $model) {
-		// BlockSettingデータが無ければ、チェックしない
-		if (!array_key_exists('BlockSetting', $model->data)) {
-			return true;
-		}
+		$inputData = $model->data[$model->alias];
+		$blockKey = Current::read('Block.key');
+		$blockSetting = $this->getBlockSetting($model, $blockKey);
 
-		foreach ($model->data['BlockSetting'] as $key => $blockSetting) {
-			if (!isset($blockSetting['type'])) {
-				// 登録不要なデータを削除 - block_approval_setting.ctpで approval_type がセットされるため
-				unset($model->data['BlockSetting'][$key]);
-				continue;
-			}
-
-			if ($blockSetting['type'] === self::TYPE_BOOLEAN) {
-				if (! Validation::boolean($blockSetting['value'])) {
-					$fieldName = $blockSetting['field_name'];
-					$model->validationErrors['BlockSetting'][$fieldName]['value']
-						= array(__d('net_commons', 'Invalid request.'));
-				}
-
-			} elseif ($blockSetting['type'] === self::TYPE_NUMERIC) {
-				if (! is_numeric($blockSetting['value'])) {
-					$fieldName = $blockSetting['field_name'];
-					$model->validationErrors['BlockSetting'][$fieldName]['value']
-						= array(__d('net_commons', 'Invalid request.'));
-				}
-
+		// セッティングしたフィールドを基に、入力したフィールドのみvalidateする
+		foreach ($this->settings[$model->alias] as $field) {
+			if (array_key_exists($field, $inputData)) {
+				// validate追加
+				$rule = $blockSetting['BlockSetting'][$field]['type'];
+				$model->validator()->add($field, $rule, array(
+					'rule' => $rule,
+					'message' => __d('net_commons', 'Invalid request.'),
+				));
 			}
 		}
-
-		if (! $model->validationErrors) {
-			return true;
-		} else {
-			return false;
-		}
+		return true;
 	}
 
 }
