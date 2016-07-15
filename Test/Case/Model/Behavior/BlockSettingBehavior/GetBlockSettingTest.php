@@ -113,8 +113,8 @@ class BlockSettingBehaviorGetBlockSettingTest extends NetCommonsModelTestCase {
 
 		//チェック
 		//debug($result);
-		// データなし
-		$this->assertEmpty($result);
+		// 検索データなし->新規作成データあり
+		$this->assertNotEmpty($result);
 	}
 
 }
