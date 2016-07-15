@@ -71,9 +71,6 @@ class BlockSettingBehavior extends ModelBehavior {
  */
 	public function setup(Model $model, $settings = array()) {
 		$this->settings[$model->alias] = $settings;
-
-		$model->BlockSetting = ClassRegistry::init('Blocks.BlockSetting', true);
-		//$model->Room = ClassRegistry::init('Rooms.Room', true);
 	}
 
 /**
@@ -176,7 +173,7 @@ class BlockSettingBehavior extends ModelBehavior {
  * @return array
  */
 	public function getBlockSetting(Model $model, $blockKey = null) {
-		//$model->BlockSetting = ClassRegistry::init('Blocks.BlockSetting', true);
+		$model->BlockSetting = ClassRegistry::init('Blocks.BlockSetting', true);
 		if (is_null($blockKey)) {
 			$blockKey = Current::read('Block.key');
 		}
@@ -337,6 +334,8 @@ class BlockSettingBehavior extends ModelBehavior {
  * @throws InternalErrorException
  */
 	public function saveBlockSetting(Model $model) {
+		$model->BlockSetting = ClassRegistry::init('Blocks.BlockSetting', true);
+
 		// 横の入力データを、検索した縦データにセット & 新規登録用にブロックキーをセット
 		$blockKey = Current::read('Block.key');
 		$blockSetting = $this->getBlockSetting($model, $blockKey);
