@@ -96,31 +96,4 @@ class BlockFormHelper extends AppHelper {
 		));
 	}
 
-/**
- * blockSetting用 input hiddenタグ
- *
- * @param string $inputValue モデル名.項目名
- * @param int $useValue valueのhidden項目も使う
- * @return string HTML
- */
-	public function blockSettingHidden($inputValue, $useValue = 0) {
-		$output = '';
-		$output .= $this->NetCommonsForm->hidden($inputValue . '.id');
-		$output .= $this->NetCommonsForm->hidden($inputValue . '.plugin_key');
-		$output .= $this->NetCommonsForm->hidden($inputValue . '.room_id');
-		$output .= $this->NetCommonsForm->hidden($inputValue . '.field_name');
-		$output .= $this->NetCommonsForm->hidden($inputValue . '.type');
-
-		// Block.keyはBlock登録時に生成されるため、Block登録処理と同様にrequest->dataから値を取得する
-		$blockKey = Hash::get($this->_View->request->data, 'Block.key');
-		$output .= $this->NetCommonsForm->hidden($inputValue . '.block_key',
-			array('value' => $blockKey));
-
-		if ($useValue) {
-			$output .= $this->NetCommonsForm->hidden($inputValue . '.value');
-		}
-
-		return $output;
-	}
-
 }
