@@ -375,9 +375,13 @@ class BlockSettingBehavior extends ModelBehavior {
 			if (array_key_exists($field, $inputData)) {
 				// validate追加
 				$rule = $blockSetting['BlockSetting'][$field]['type'];
-				$model->validator()->add($field, $rule, array(
-					'rule' => $rule,
-					'message' => __d('net_commons', 'Invalid request.'),
+				$model->validate = Hash::merge($model->validate, array(
+					$field => array(
+						$rule => array(
+							'rule' => $rule,
+							'message' => __d('net_commons', 'Invalid request.'),
+						),
+					)
 				));
 			}
 		}
