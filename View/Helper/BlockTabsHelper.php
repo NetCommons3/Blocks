@@ -112,7 +112,8 @@ class BlockTabsHelper extends AppHelper {
  *	public $helpers = array(
  *		'Blocks.BlockTabs' => array(
  *			'mainTabs' => array(
- *				'block_index' => array('label' => array('blocks' => 'Block list')),
+ * 				// この例ではlabelは __d('blocks', 'Block list')に設定される
+ *				'block_index' => array('label' => array('blocks', 'Block list')),
  *				'frame_settings',
  *			),
  *			'blockTabs' => array(
