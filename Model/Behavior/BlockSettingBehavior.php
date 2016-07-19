@@ -343,7 +343,7 @@ class BlockSettingBehavior extends ModelBehavior {
 
 		// 横の入力データを、検索した縦データにセット & 新規登録用にブロックキーをセット
 		$blockKey = Current::read('Block.key');
-		$blockSetting = $this->getBlockSetting($model, $blockKey, 1);
+		$blockSetting = $this->getBlockSetting($model, $blockKey, true);
 		$inputData = $model->data[$model->alias];
 		$saveData = null;
 
@@ -374,7 +374,7 @@ class BlockSettingBehavior extends ModelBehavior {
 		$inputData = $model->data[$model->alias];
 		$blockKey = Current::read('Block.key');
 		// 縦データ取得
-		$blockSetting = $this->getBlockSetting($model, $blockKey, 1);
+		$blockSetting = $this->getBlockSetting($model, $blockKey, true);
 
 		// セッティングしたフィールドを基に、入力したフィールドのみvalidateする
 		foreach ($this->settings[$model->alias] as $field) {
