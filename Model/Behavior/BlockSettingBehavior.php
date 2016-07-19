@@ -170,10 +170,11 @@ class BlockSettingBehavior extends ModelBehavior {
  *
  * @param Model $model モデル
  * @param string $blockKey ブロックキー
- * @param int $isRow 縦持ちデータ取得するか
+ * @param bool $isRow 縦持ちデータ取得するか
  * @return array
+ * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
  */
-	public function getBlockSetting(Model $model, $blockKey = null, $isRow = 0) {
+	public function getBlockSetting(Model $model, $blockKey = null, $isRow = false) {
 		$model->BlockSetting = ClassRegistry::init('Blocks.BlockSetting', true);
 		if (is_null($blockKey)) {
 			$blockKey = Current::read('Block.key');
