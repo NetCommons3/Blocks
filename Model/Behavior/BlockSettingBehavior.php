@@ -262,7 +262,6 @@ class BlockSettingBehavior extends ModelBehavior {
 		}
 
 		// ルーム承認しない
-		// TODOO ルーム承認なしにしても、デフォルト承認しない？
 		$defaultBlockSetting['BlockSetting']['value'] = '0';
 		$blockSettings[] = $defaultBlockSetting;
 		return $blockSettings;
