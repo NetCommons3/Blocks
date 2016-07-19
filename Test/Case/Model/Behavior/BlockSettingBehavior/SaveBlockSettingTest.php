@@ -73,7 +73,7 @@ class BlockSettingBehaviorSaveBlockSettingTest extends NetCommonsModelTestCase {
 		//チェック
 		$this->assertTrue($result);
 
-		$result = $this->TestModel->getBlockSetting($blockKey);
+		$result = $this->TestModel->getBlockSetting($blockKey, 1);
 		$checks = array(
 			'use_comment',
 			'use_like',
@@ -83,7 +83,10 @@ class BlockSettingBehaviorSaveBlockSettingTest extends NetCommonsModelTestCase {
 		);
 		//debug($result);
 		foreach ($checks as $check) {
-			// 更新した値チェック
+			// 更新した値チェック 横データ
+			$this->assertEquals($data[$this->TestModel->alies][$check],
+				$result[$this->TestModel->alies][$check]);
+			//  縦データ
 			$this->assertEquals($data[$this->TestModel->alies][$check],
 				$result['BlockSetting'][$check]['value']);
 			// 更新日時セットされてるよねチェック

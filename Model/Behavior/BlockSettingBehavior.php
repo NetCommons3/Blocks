@@ -170,9 +170,10 @@ class BlockSettingBehavior extends ModelBehavior {
  *
  * @param Model $model モデル
  * @param string $blockKey ブロックキー
+ * @param int $isRow 縦持ちデータ取得するか
  * @return array
  */
-	public function getBlockSetting(Model $model, $blockKey = null) {
+	public function getBlockSetting(Model $model, $blockKey = null, $isRow = 0) {
 		$model->BlockSetting = ClassRegistry::init('Blocks.BlockSetting', true);
 		if (is_null($blockKey)) {
 			$blockKey = Current::read('Block.key');
@@ -206,6 +207,10 @@ class BlockSettingBehavior extends ModelBehavior {
 		$result[$model->alias] = Hash::combine($blockSettings,
 			'{n}.{s}.field_name',
 			'{n}.{s}.value');
+
+		if (!$isRow) {
+			return $result;
+		}
 
 		// [BlockSetting] 縦持ちでindexをfield_nameに変更
 		$result['BlockSetting'] = Hash::combine($blockSettings, '{n}.{s}.field_name', '{n}.{s}');
@@ -337,7 +342,7 @@ class BlockSettingBehavior extends ModelBehavior {
 
 		// 横の入力データを、検索した縦データにセット & 新規登録用にブロックキーをセット
 		$blockKey = Current::read('Block.key');
-		$blockSetting = $this->getBlockSetting($model, $blockKey);
+		$blockSetting = $this->getBlockSetting($model, $blockKey, 1);
 		$inputData = $model->data[$model->alias];
 		$saveData = null;
 
@@ -367,7 +372,8 @@ class BlockSettingBehavior extends ModelBehavior {
 	public function validateBlockSetting(Model $model) {
 		$inputData = $model->data[$model->alias];
 		$blockKey = Current::read('Block.key');
-		$blockSetting = $this->getBlockSetting($model, $blockKey);
+		// 縦データ取得
+		$blockSetting = $this->getBlockSetting($model, $blockKey, 1);
 
 		// セッティングしたフィールドを基に、入力したフィールドのみvalidateする
 		foreach ($this->settings[$model->alias] as $field) {
