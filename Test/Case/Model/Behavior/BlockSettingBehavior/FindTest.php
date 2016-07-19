@@ -71,8 +71,8 @@ class BlockSettingBehaviorFindTest extends NetCommonsModelTestCase {
 
 		//チェック
 		//debug($result);
-		// BlockSettingが取得できた
-		$this->assertArrayHasKey('BlockSetting', $result);
+		// BlockSettingの横データが取得できた
+		$this->assertArrayHasKey('use_like', $result[$this->TestModel->alias]);
 	}
 
 /**
