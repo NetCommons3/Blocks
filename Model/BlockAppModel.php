@@ -30,8 +30,12 @@ class BlockAppModel extends AppModel {
  * @see Model::save()
  */
 	public function beforeSave($options = array()) {
+		if ($this->useTable) {
+			return parent::beforeSave($options);
+		}
+
 		//イベントを発生させる
-		if (! $this->useTable) {
+		if ($options['callbacks'] === true || $options['callbacks'] === 'after') {
 			$event = new CakeEvent('Model.afterSave', $this, array(false, $options));
 			$this->getEventManager()->dispatch($event);
 		}
