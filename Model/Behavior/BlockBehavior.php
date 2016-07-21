@@ -357,7 +357,7 @@ class BlockBehavior extends ModelBehavior {
 				)
 			),
 		);
-
+		$options['group'] = ['Block.id'];
 		return $options;
 	}
 
