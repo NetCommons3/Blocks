@@ -1,6 +1,6 @@
 <?php
 /**
- * BlocksApp Model
+ * BlockBase Model
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
@@ -12,12 +12,19 @@
 App::uses('AppModel', 'Model');
 
 /**
- * BlockApp Model
+ * BlockBase Model
  *
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Blocks\Model
  */
-class BlockAppModel extends AppModel {
+class BlockBaseModel extends AppModel {
+
+/**
+ * Custom database table name
+ *
+ * @var string
+ */
+	public $useTable = false;
 
 /**
  * Called before each save operation, after validation. Return a non-true result
