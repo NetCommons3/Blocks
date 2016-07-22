@@ -106,6 +106,7 @@ class BlockSettingBehavior extends ModelBehavior {
  * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
  */
 	public function createBlockSetting(Model $model, $isRow = false) {
+		$model->loadModels(array('BlockSetting' => 'Blocks.BlockSetting'));
 		$pluginKey = Current::read('Plugin.key');
 		$roomId = Current::read('Room.id');
 
