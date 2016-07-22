@@ -148,9 +148,9 @@ class BlockSettingBehavior extends ModelBehavior {
 		));
 
 		// use_workflow, use_comment_approval新規作成
-		$blockSettings = self::_getDefaultApproval($model, $blockSettings,
+		$blockSettings = $this->_getDefaultApproval($model, $blockSettings,
 			self::FIELD_USE_WORKFLOW, 1);
-		$blockSettings = self::_getDefaultApproval($model, $blockSettings,
+		$blockSettings = $this->_getDefaultApproval($model, $blockSettings,
 			self::FIELD_USE_COMMENT_APPROVAL, 1);
 
 		// 縦持ち
@@ -199,9 +199,9 @@ class BlockSettingBehavior extends ModelBehavior {
 			$blockSettings = $this->_createBlockSetting($model);
 		} else {
 			// use_workflow, use_comment_approval取得
-			$blockSettings = self::_getDefaultApproval($model, $blockSettings,
+			$blockSettings = $this->_getDefaultApproval($model, $blockSettings,
 				self::FIELD_USE_WORKFLOW);
-			$blockSettings = self::_getDefaultApproval($model, $blockSettings,
+			$blockSettings = $this->_getDefaultApproval($model, $blockSettings,
 				self::FIELD_USE_COMMENT_APPROVAL);
 		}
 
