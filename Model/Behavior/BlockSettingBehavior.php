@@ -101,9 +101,12 @@ class BlockSettingBehavior extends ModelBehavior {
  * BlockSettingデータ新規作成
  *
  * @param Model $model モデル
+ * @param bool $isRow 縦持ちデータ取得するか
  * @return array
+ * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
  */
-	protected function _createBlockSetting(Model $model) {
+	public function createBlockSetting(Model $model, $isRow = false) {
+		$model->loadModels(array('BlockSetting' => 'Blocks.BlockSetting'));
 		$pluginKey = Current::read('Plugin.key');
 		$roomId = Current::read('Room.id');
 
@@ -134,7 +137,9 @@ class BlockSettingBehavior extends ModelBehavior {
 		$blockSettings = Hash::remove($blockSettings, '{n}.{s}.modified_user');
 		$blockSettings = Hash::insert($blockSettings, '{n}.{s}.plugin_key', $pluginKey);
 		$blockSettings = Hash::insert($blockSettings, '{n}.{s}.room_id', $roomId);
-		return $blockSettings;
+
+		// 横持ち、縦持ちにデータ変換
+		return $this->_convertColAndRow($model, $blockSettings, $isRow);
 	}
 
 /**
@@ -168,27 +173,18 @@ class BlockSettingBehavior extends ModelBehavior {
 		));
 		if (!$blockSettings) {
 			// データなければ新規作成
-			$blockSettings = $this->_createBlockSetting($model);
-		} else {
-			// use_workflow, use_comment_approval取得
-			$blockSettings = $this->_getDefaultApproval($model, $blockSettings,
-				self::FIELD_USE_WORKFLOW);
-			$blockSettings = $this->_getDefaultApproval($model, $blockSettings,
-				self::FIELD_USE_COMMENT_APPROVAL);
+			$blockSettings = $this->createBlockSetting($model, $isRow);
+			return $blockSettings;
 		}
 
-		// [基のモデル] 横持ちに変換 & 基のモデルに付足し
-		$result[$model->alias] = Hash::combine($blockSettings,
-			'{n}.{s}.field_name',
-			'{n}.{s}.value');
+		// use_workflow, use_comment_approval取得
+		$blockSettings = $this->_getDefaultApproval($model, $blockSettings,
+			self::FIELD_USE_WORKFLOW);
+		$blockSettings = $this->_getDefaultApproval($model, $blockSettings,
+			self::FIELD_USE_COMMENT_APPROVAL);
 
-		if (!$isRow) {
-			return $result;
-		}
-
-		// [BlockSetting] 縦持ちでindexをfield_nameに変更
-		$result['BlockSetting'] = Hash::combine($blockSettings, '{n}.{s}.field_name', '{n}.{s}');
-		return $result;
+		// 横持ち、縦持ちにデータ変換
+		return $this->_convertColAndRow($model, $blockSettings, $isRow);
 	}
 
 /**
@@ -244,6 +240,29 @@ class BlockSettingBehavior extends ModelBehavior {
 		$defaultBlockSetting['BlockSetting']['value'] = '0';
 		$blockSettings[] = $defaultBlockSetting;
 		return $blockSettings;
+	}
+
+/**
+ * 横持ち、縦持ちにデータ変換
+ *
+ * @param Model $model モデル
+ * @param array $blockSettings ブロックセッティングデータ
+ * @param bool $isRow 縦持ちデータ取得するか
+ * @return array
+ */
+	protected function _convertColAndRow(Model $model, $blockSettings, $isRow) {
+		// [基のモデル] 横持ちに変換 & 基のモデルに付足し
+		$result[$model->alias] = Hash::combine($blockSettings,
+			'{n}.{s}.field_name',
+			'{n}.{s}.value');
+
+		if (!$isRow) {
+			return $result;
+		}
+
+		// [BlockSetting] 縦持ちでindexをfield_nameに変更
+		$result['BlockSetting'] = Hash::combine($blockSettings, '{n}.{s}.field_name', '{n}.{s}');
+		return $result;
 	}
 
 /**
