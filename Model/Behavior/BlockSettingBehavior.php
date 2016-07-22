@@ -175,7 +175,8 @@ class BlockSettingBehavior extends ModelBehavior {
  * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
  */
 	public function getBlockSetting(Model $model, $blockKey = null, $isRow = false) {
-		$model->BlockSetting = ClassRegistry::init('Blocks.BlockSetting', true);
+		$model->loadModels(array('BlockSetting' => 'Blocks.BlockSetting'));
+
 		if (is_null($blockKey)) {
 			$blockKey = Current::read('Block.key');
 		}
@@ -339,7 +340,7 @@ class BlockSettingBehavior extends ModelBehavior {
  * @throws InternalErrorException
  */
 	public function saveBlockSetting(Model $model) {
-		$model->BlockSetting = ClassRegistry::init('Blocks.BlockSetting', true);
+		$model->loadModels(array('BlockSetting' => 'Blocks.BlockSetting'));
 
 		// 横の入力データを、検索した縦データにセット & 新規登録用にブロックキーをセット
 		$blockKey = Current::read('Block.key');
