@@ -74,34 +74,6 @@ class BlockSettingBehavior extends ModelBehavior {
 	}
 
 /**
- * afterFind
- *
- * @param Model $model Model using this behavior
- * @param mixed $results The results of the find operation
- * @param bool $primary Whether this model is being queried directly (vs. being queried as an association)
- * @return mixed An array value will replace the value of $results - any other value will be ignored.
- * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
- */
-	public function afterFind(Model $model, $results, $primary = false) {
-		// count検索対応。Block.keyが無ければ、何もしない
-		$blockKey = Hash::get($results, '0.Block.key');
-		if (is_null($blockKey) && $model->useTable === 'blocks') {
-			$blockKey = Hash::get($results, '0.' . $model->alias . '.key');
-		}
-
-		if (!$blockKey) {
-			return $results;
-		}
-		//		$blockKeys = Hash::extract($results, '{n}.Block.key');
-		//		foreach ($blockKeys as $blockKey) {
-		foreach ($results as &$result) {
-			$blockSetting = $this->getBlockSetting($model, $blockKey);
-			$result = Hash::merge($result, $blockSetting);
-		}
-		return $results;
-	}
-
-/**
  * beforeValidate
  *
  * @param Model $model Model using this behavior
@@ -148,9 +120,9 @@ class BlockSettingBehavior extends ModelBehavior {
 		));
 
 		// use_workflow, use_comment_approval新規作成
-		$blockSettings = self::_getDefaultApproval($model, $blockSettings,
+		$blockSettings = $this->_getDefaultApproval($model, $blockSettings,
 			self::FIELD_USE_WORKFLOW, 1);
-		$blockSettings = self::_getDefaultApproval($model, $blockSettings,
+		$blockSettings = $this->_getDefaultApproval($model, $blockSettings,
 			self::FIELD_USE_COMMENT_APPROVAL, 1);
 
 		// 縦持ち
@@ -175,7 +147,8 @@ class BlockSettingBehavior extends ModelBehavior {
  * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
  */
 	public function getBlockSetting(Model $model, $blockKey = null, $isRow = false) {
-		$model->BlockSetting = ClassRegistry::init('Blocks.BlockSetting', true);
+		$model->loadModels(array('BlockSetting' => 'Blocks.BlockSetting'));
+
 		if (is_null($blockKey)) {
 			$blockKey = Current::read('Block.key');
 		}
@@ -198,9 +171,9 @@ class BlockSettingBehavior extends ModelBehavior {
 			$blockSettings = $this->_createBlockSetting($model);
 		} else {
 			// use_workflow, use_comment_approval取得
-			$blockSettings = self::_getDefaultApproval($model, $blockSettings,
+			$blockSettings = $this->_getDefaultApproval($model, $blockSettings,
 				self::FIELD_USE_WORKFLOW);
-			$blockSettings = self::_getDefaultApproval($model, $blockSettings,
+			$blockSettings = $this->_getDefaultApproval($model, $blockSettings,
 				self::FIELD_USE_COMMENT_APPROVAL);
 		}
 
@@ -339,7 +312,7 @@ class BlockSettingBehavior extends ModelBehavior {
  * @throws InternalErrorException
  */
 	public function saveBlockSetting(Model $model) {
-		$model->BlockSetting = ClassRegistry::init('Blocks.BlockSetting', true);
+		$model->loadModels(array('BlockSetting' => 'Blocks.BlockSetting'));
 
 		// 横の入力データを、検索した縦データにセット & 新規登録用にブロックキーをセット
 		$blockKey = Current::read('Block.key');
