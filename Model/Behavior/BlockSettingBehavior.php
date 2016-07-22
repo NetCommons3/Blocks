@@ -74,34 +74,6 @@ class BlockSettingBehavior extends ModelBehavior {
 	}
 
 /**
- * afterFind
- *
- * @param Model $model Model using this behavior
- * @param mixed $results The results of the find operation
- * @param bool $primary Whether this model is being queried directly (vs. being queried as an association)
- * @return mixed An array value will replace the value of $results - any other value will be ignored.
- * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
- */
-	public function afterFind(Model $model, $results, $primary = false) {
-		// count検索対応。Block.keyが無ければ、何もしない
-		$blockKey = Hash::get($results, '0.Block.key');
-		if (is_null($blockKey) && $model->useTable === 'blocks') {
-			$blockKey = Hash::get($results, '0.' . $model->alias . '.key');
-		}
-
-		if (!$blockKey) {
-			return $results;
-		}
-		//		$blockKeys = Hash::extract($results, '{n}.Block.key');
-		//		foreach ($blockKeys as $blockKey) {
-		foreach ($results as &$result) {
-			$blockSetting = $this->getBlockSetting($model, $blockKey);
-			$result = Hash::merge($result, $blockSetting);
-		}
-		return $results;
-	}
-
-/**
  * beforeValidate
  *
  * @param Model $model Model using this behavior
