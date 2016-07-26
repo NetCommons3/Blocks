@@ -188,6 +188,36 @@ class BlockSettingBehavior extends ModelBehavior {
 	}
 
 /**
+ * BlockSettingデータ存在するか
+ *
+ * @param Model $model モデル
+ * @param string $blockKey ブロックキー
+ * @return bool
+ */
+	public function isExsistBlockSetting(Model $model, $blockKey = null) {
+		$model->loadModels(array('BlockSetting' => 'Blocks.BlockSetting'));
+
+		if (is_null($blockKey)) {
+			$blockKey = Current::read('Block.key');
+		}
+		$roomId = Current::read('Room.id');
+		$pluginKey = Current::read('Plugin.key');
+
+		// room_idあり, block_keyあり
+		$conditions = array(
+			'plugin_key' => $pluginKey,
+			'room_id' => $roomId,
+			'block_key' => $blockKey,
+			'field_name' => $this->settings[$model->alias],
+		);
+		$blockSettings = $model->BlockSetting->find('all', array(
+			'recursive' => -1,
+			'conditions' => $conditions,
+		));
+		return !empty($blockSettings);
+	}
+
+/**
  * use_workflow, use_comment_approvalの初期値取得
  * room.need_approvalによって、値変わる
  *
