@@ -188,6 +188,36 @@ class BlockSettingBehavior extends ModelBehavior {
 	}
 
 /**
+ * BlockSettingデータ存在するか
+ *
+ * @param Model $model モデル
+ * @param string $blockKey ブロックキー
+ * @return bool
+ */
+	public function isExsistBlockSetting(Model $model, $blockKey = null) {
+		$model->loadModels(array('BlockSetting' => 'Blocks.BlockSetting'));
+
+		if (is_null($blockKey)) {
+			$blockKey = Current::read('Block.key');
+		}
+		$roomId = Current::read('Room.id');
+		$pluginKey = Current::read('Plugin.key');
+
+		// room_idあり, block_keyあり
+		$conditions = array(
+			'plugin_key' => $pluginKey,
+			'room_id' => $roomId,
+			'block_key' => $blockKey,
+			'field_name' => $this->settings[$model->alias],
+		);
+		$blockSettings = $model->BlockSetting->find('all', array(
+			'recursive' => -1,
+			'conditions' => $conditions,
+		));
+		return !empty($blockSettings);
+	}
+
+/**
  * use_workflow, use_comment_approvalの初期値取得
  * room.need_approvalによって、値変わる
  *
@@ -327,14 +357,17 @@ class BlockSettingBehavior extends ModelBehavior {
  * ```
  *
  * @param Model $model モデル
+ * @param string $blockKey ブロックキー
  * @return mixed On success Model::$data if its not empty or true, false on failure
  * @throws InternalErrorException
  */
-	public function saveBlockSetting(Model $model) {
+	public function saveBlockSetting(Model $model, $blockKey = null) {
 		$model->loadModels(array('BlockSetting' => 'Blocks.BlockSetting'));
 
 		// 横の入力データを、検索した縦データにセット & 新規登録用にブロックキーをセット
-		$blockKey = Current::read('Block.key');
+		if (is_null($blockKey)) {
+			$blockKey = Current::read('Block.key');
+		}
 		$blockSetting = $this->getBlockSetting($model, $blockKey, true);
 		$inputData = $model->data[$model->alias];
 		$saveData = null;
@@ -360,11 +393,14 @@ class BlockSettingBehavior extends ModelBehavior {
  * ブロックセッティングのValidate追加処理
  *
  * @param Model $model モデル
+ * @param string $blockKey ブロックキー
  * @return bool
  */
-	public function validateBlockSetting(Model $model) {
+	public function validateBlockSetting(Model $model, $blockKey = null) {
 		$inputData = $model->data[$model->alias];
-		$blockKey = Current::read('Block.key');
+		if (is_null($blockKey)) {
+			$blockKey = Current::read('Block.key');
+		}
 		// 縦データ取得
 		$blockSetting = $this->getBlockSetting($model, $blockKey, true);
 
