@@ -46,6 +46,22 @@ class BlockSettingBehavior extends ModelBehavior {
 		TYPE_NUMERIC = 'numeric';
 
 /**
+ * セッティングのキー
+ *
+ * @var string true or false
+ */
+	const SETTING_PLUGIN_KEY = 'pluginKey';
+
+/**
+ * ビヘイビアの初期設定
+ *
+ * @var array
+ */
+	protected $_defaultSettings = array(
+		self::SETTING_PLUGIN_KEY => null,
+	);
+
+/**
  * setup
  *
  * #### サンプルコード
@@ -61,6 +77,8 @@ class BlockSettingBehavior extends ModelBehavior {
  *		BlockSettingBehavior::USE_COMMENT,
  *		BlockSettingBehavior::USE_COMMENT_APPROVAL,
  *		'auto_play',
+ * 		// 小テスト、アンケート、カレンダーの場合は下記設定。値の例）小テスト
+ *		BlockSettingBehavior::SETTING_PLUGIN_KEY => 'quizzes',
  *	),
  * ),
  * ```
@@ -71,6 +89,10 @@ class BlockSettingBehavior extends ModelBehavior {
  */
 	public function setup(Model $model, $settings = array()) {
 		$this->settings[$model->alias] = $settings;
+
+		$this->_defaultSettings[self::SETTING_PLUGIN_KEY] = Current::read('Plugin.key');
+		$this->settings[$model->alias] =
+			Hash::merge($this->_defaultSettings, $this->settings[$model->alias]);
 	}
 
 /**
@@ -107,7 +129,8 @@ class BlockSettingBehavior extends ModelBehavior {
  */
 	public function createBlockSetting(Model $model, $isRow = false) {
 		$model->loadModels(array('BlockSetting' => 'Blocks.BlockSetting'));
-		$pluginKey = Current::read('Plugin.key');
+
+		$pluginKey = $this->_getPluginKey($model);
 		$roomId = Current::read('Room.id');
 
 		// room_idなし, block_keyなし
@@ -115,7 +138,7 @@ class BlockSettingBehavior extends ModelBehavior {
 			'plugin_key' => $pluginKey,
 			'room_id' => null,
 			'block_key' => null,
-			'field_name' => $this->settings[$model->alias],
+			'field_name' => $this->_getFields($model),
 		);
 		$blockSettings = $model->BlockSetting->find('all', array(
 			'recursive' => -1,
@@ -143,6 +166,28 @@ class BlockSettingBehavior extends ModelBehavior {
 	}
 
 /**
+ * フィールド取得
+ *
+ * @param Model $model モデル
+ * @return array フィールド
+ */
+	protected function _getFields($model) {
+		$fields = $this->settings[$model->alias];
+		unset($fields[self::SETTING_PLUGIN_KEY]);
+		return $fields;
+	}
+
+/**
+ * プラグインキー取得
+ *
+ * @param Model $model モデル
+ * @return string プラグインキー
+ */
+	protected function _getPluginKey($model) {
+		return $this->settings[$model->alias][self::SETTING_PLUGIN_KEY];
+	}
+
+/**
  * BlockSettingデータ取得
  *
  * @param Model $model モデル
@@ -158,14 +203,14 @@ class BlockSettingBehavior extends ModelBehavior {
 			$blockKey = Current::read('Block.key');
 		}
 		$roomId = Current::read('Room.id');
-		$pluginKey = Current::read('Plugin.key');
+		$pluginKey = $this->_getPluginKey($model);
 
 		// room_idあり, block_keyあり
 		$conditions = array(
 			'plugin_key' => $pluginKey,
 			'room_id' => $roomId,
 			'block_key' => $blockKey,
-			'field_name' => $this->settings[$model->alias],
+			'field_name' => $this->_getFields($model),
 		);
 		$blockSettings = $model->BlockSetting->find('all', array(
 			'recursive' => -1,
@@ -201,14 +246,14 @@ class BlockSettingBehavior extends ModelBehavior {
 			$blockKey = Current::read('Block.key');
 		}
 		$roomId = Current::read('Room.id');
-		$pluginKey = Current::read('Plugin.key');
+		$pluginKey = $this->_getPluginKey($model);
 
 		// room_idあり, block_keyあり
 		$conditions = array(
 			'plugin_key' => $pluginKey,
 			'room_id' => $roomId,
 			'block_key' => $blockKey,
-			'field_name' => $this->settings[$model->alias],
+			'field_name' => $this->_getFields($model),
 		);
 		$blockSettings = $model->BlockSetting->find('all', array(
 			'recursive' => -1,
@@ -228,8 +273,9 @@ class BlockSettingBehavior extends ModelBehavior {
  * @return array ブロックセッティングデータ
  */
 	protected function _getDefaultApproval(Model $model, $blockSettings, $fieldName, $create = 0) {
-		// settingに指定なければ、何もしない
-		if (!in_array($fieldName, $this->settings[$model->alias])) {
+		// settingに対象fieldの指定なければ、何もしない
+		$fields = $this->_getFields($model);
+		if (!in_array($fieldName, $fields)) {
 			return $blockSettings;
 		}
 
@@ -244,7 +290,7 @@ class BlockSettingBehavior extends ModelBehavior {
 		// 以降はデータなし処理
 
 		/** @see BlockFormHelper::blockSettingHidden(); block_keyは左記でセット */
-		$pluginKey = Current::read('Plugin.key');
+		$pluginKey = $this->_getPluginKey($model);
 		$roomId = Current::read('Room.id');
 		$defaultBlockSetting = array(
 			'BlockSetting' => array(
@@ -371,9 +417,10 @@ class BlockSettingBehavior extends ModelBehavior {
 		$blockSetting = $this->getBlockSetting($model, $blockKey, true);
 		$inputData = $model->data[$model->alias];
 		$saveData = null;
+		$fields = $this->_getFields($model);
 
 		// セッティングしたフィールドを基に、入力したフィールドのみsaveDataにする
-		foreach ($this->settings[$model->alias] as $field) {
+		foreach ($fields as $field) {
 			if (array_key_exists($field, $inputData)) {
 				$saveData[$field] = $blockSetting['BlockSetting'][$field];
 				$saveData[$field]['value'] = $inputData[$field];
@@ -401,11 +448,12 @@ class BlockSettingBehavior extends ModelBehavior {
 		if (is_null($blockKey)) {
 			$blockKey = Current::read('Block.key');
 		}
+		$fields = $this->_getFields($model);
 		// 縦データ取得
 		$blockSetting = $this->getBlockSetting($model, $blockKey, true);
 
 		// セッティングしたフィールドを基に、入力したフィールドのみvalidateする
-		foreach ($this->settings[$model->alias] as $field) {
+		foreach ($fields as $field) {
 			if (array_key_exists($field, $inputData)) {
 				// validate追加
 				$rule = $blockSetting['BlockSetting'][$field]['type'];
