@@ -43,6 +43,8 @@ class BlockSettingBehaviorCreateBlockSettingTest extends NetCommonsModelTestCase
 	public function setUp() {
 		parent::setUp();
 
+		Current::write('Plugin.key', 'dummy');
+
 		//テストプラグインのロード
 		NetCommonsCakeTestCase::loadTestPlugin($this, 'Blocks', 'TestBlocks');
 		$this->TestModel = ClassRegistry::init('TestBlocks.TestBlockSettingBehaviorModel');
@@ -54,7 +56,6 @@ class BlockSettingBehaviorCreateBlockSettingTest extends NetCommonsModelTestCase
  * @return void
  */
 	public function testCreateBlockSetting() {
-		Current::write('Plugin.key', 'dummy');
 		Current::write('Room.id', 2);
 		Current::write('Room.need_approval', 1);	//ルーム承認する
 		Current::write('Block.key', 'block_1');
@@ -77,7 +78,6 @@ class BlockSettingBehaviorCreateBlockSettingTest extends NetCommonsModelTestCase
  * @return void
  */
 	public function testCreateBlockSettingRow() {
-		Current::write('Plugin.key', 'dummy');
 		Current::write('Room.id', 2);
 		Current::write('Room.need_approval', 1);	//ルーム承認する
 		Current::write('Block.key', 'block_1');
@@ -112,7 +112,6 @@ class BlockSettingBehaviorCreateBlockSettingTest extends NetCommonsModelTestCase
  * @return void
  */
 	public function testCreateBlockSettingNoApproval() {
-		Current::write('Plugin.key', 'dummy');
 		Current::write('Room.id', 2);
 		Current::write('Room.need_approval', 0);	//ルーム承認しない
 		Current::write('Block.key', 'block_1');

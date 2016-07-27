@@ -43,6 +43,8 @@ class BlockSettingBehaviorGetBlockSettingTest extends NetCommonsModelTestCase {
 	public function setUp() {
 		parent::setUp();
 
+		Current::write('Plugin.key', 'dummy');
+
 		//テストプラグインのロード
 		NetCommonsCakeTestCase::loadTestPlugin($this, 'Blocks', 'TestBlocks');
 		$this->TestModel = ClassRegistry::init('TestBlocks.TestBlockSettingBehaviorModel');
@@ -54,7 +56,6 @@ class BlockSettingBehaviorGetBlockSettingTest extends NetCommonsModelTestCase {
  * @return void
  */
 	public function testGetBlockSetting() {
-		Current::write('Plugin.key', 'dummy');
 		Current::write('Room.id', 1);
 		Current::write('Block.key', 'block_1');
 
@@ -77,7 +78,6 @@ class BlockSettingBehaviorGetBlockSettingTest extends NetCommonsModelTestCase {
  * @return void
  */
 	public function testGetBlockSettingNoUseWorkFlowData() {
-		Current::write('Plugin.key', 'dummy');
 		Current::write('Room.id', 2);	// use_workflowのデータがないパターン
 		Current::write('Block.key', 'block_2');	// use_workflowのデータがないパターン
 
@@ -101,7 +101,6 @@ class BlockSettingBehaviorGetBlockSettingTest extends NetCommonsModelTestCase {
  */
 	public function testGetBlockSettingEmpty() {
 		$blockKey = 'block_999';	// データがないブロックID
-		Current::write('Plugin.key', 'dummy');
 		Current::write('Room.id', 1);
 
 		//テスト実施
