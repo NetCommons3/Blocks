@@ -74,7 +74,7 @@ class BlockSettingBehaviorSaveBlockSettingTest extends NetCommonsModelTestCase {
 		//チェック
 		$this->assertTrue($result);
 
-		$result = $this->TestModel->getBlockSetting($blockKey, 1);
+		$result = $this->TestModel->getBlockSetting($blockKey, null, true);
 		$checks = array(
 			'use_comment',
 			'use_like',
