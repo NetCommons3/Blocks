@@ -123,15 +123,18 @@ class BlockSettingBehavior extends ModelBehavior {
  * BlockSettingデータ新規作成
  *
  * @param Model $model モデル
+ * @param int $roomId ルームID
  * @param bool $isRow 縦持ちデータ取得するか
  * @return array
  * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
  */
-	public function createBlockSetting(Model $model, $isRow = false) {
+	public function createBlockSetting(Model $model, $roomId = null, $isRow = false) {
 		$model->loadModels(array('BlockSetting' => 'Blocks.BlockSetting'));
 
 		$pluginKey = $this->_getPluginKey($model);
-		$roomId = Current::read('Room.id');
+		if (is_null($roomId)) {
+			$roomId = Current::read('Room.id');
+		}
 
 		// room_idなし, block_keyなし
 		$conditions = array(
@@ -192,17 +195,21 @@ class BlockSettingBehavior extends ModelBehavior {
  *
  * @param Model $model モデル
  * @param string $blockKey ブロックキー
+ * @param int $roomId ルームID
  * @param bool $isRow 縦持ちデータ取得するか
  * @return array
  * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
  */
-	public function getBlockSetting(Model $model, $blockKey = null, $isRow = false) {
+	public function getBlockSetting(Model $model, $blockKey = null, $roomId = null,
+									$isRow = false) {
 		$model->loadModels(array('BlockSetting' => 'Blocks.BlockSetting'));
 
 		if (is_null($blockKey)) {
 			$blockKey = Current::read('Block.key');
 		}
-		$roomId = Current::read('Room.id');
+		if (is_null($roomId)) {
+			$roomId = Current::read('Room.id');
+		}
 		$pluginKey = $this->_getPluginKey($model);
 
 		// room_idあり, block_keyあり
@@ -218,7 +225,7 @@ class BlockSettingBehavior extends ModelBehavior {
 		));
 		if (!$blockSettings) {
 			// データなければ新規作成
-			$blockSettings = $this->createBlockSetting($model, $isRow);
+			$blockSettings = $this->createBlockSetting($model, $roomId, $isRow);
 			return $blockSettings;
 		}
 
@@ -237,15 +244,18 @@ class BlockSettingBehavior extends ModelBehavior {
  *
  * @param Model $model モデル
  * @param string $blockKey ブロックキー
+ * @param int $roomId ルームID
  * @return bool
  */
-	public function isExsistBlockSetting(Model $model, $blockKey = null) {
+	public function isExsistBlockSetting(Model $model, $blockKey = null, $roomId = null) {
 		$model->loadModels(array('BlockSetting' => 'Blocks.BlockSetting'));
 
 		if (is_null($blockKey)) {
 			$blockKey = Current::read('Block.key');
 		}
-		$roomId = Current::read('Room.id');
+		if (is_null($roomId)) {
+			$roomId = Current::read('Room.id');
+		}
 		$pluginKey = $this->_getPluginKey($model);
 
 		// room_idあり, block_keyあり
@@ -404,17 +414,22 @@ class BlockSettingBehavior extends ModelBehavior {
  *
  * @param Model $model モデル
  * @param string $blockKey ブロックキー
+ * @param int $roomId ルームID
  * @return mixed On success Model::$data if its not empty or true, false on failure
  * @throws InternalErrorException
  */
-	public function saveBlockSetting(Model $model, $blockKey = null) {
+	public function saveBlockSetting(Model $model, $blockKey = null, $roomId = null) {
 		$model->loadModels(array('BlockSetting' => 'Blocks.BlockSetting'));
 
 		// 横の入力データを、検索した縦データにセット & 新規登録用にブロックキーをセット
 		if (is_null($blockKey)) {
 			$blockKey = Current::read('Block.key');
 		}
-		$blockSetting = $this->getBlockSetting($model, $blockKey, true);
+		if (is_null($roomId)) {
+			$roomId = Current::read('Room.id');
+		}
+
+		$blockSetting = $this->getBlockSetting($model, $blockKey, $roomId, true);
 		$inputData = $model->data[$model->alias];
 		$saveData = null;
 		$fields = $this->_getFields($model);
@@ -450,7 +465,7 @@ class BlockSettingBehavior extends ModelBehavior {
 		}
 		$fields = $this->_getFields($model);
 		// 縦データ取得
-		$blockSetting = $this->getBlockSetting($model, $blockKey, true);
+		$blockSetting = $this->getBlockSetting($model, $blockKey, null, true);
 
 		// セッティングしたフィールドを基に、入力したフィールドのみvalidateする
 		foreach ($fields as $field) {

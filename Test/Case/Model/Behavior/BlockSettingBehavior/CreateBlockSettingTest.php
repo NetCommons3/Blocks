@@ -83,9 +83,8 @@ class BlockSettingBehaviorCreateBlockSettingTest extends NetCommonsModelTestCase
 		Current::write('Block.key', 'block_1');
 
 		//テスト実施
-		/** @see BlockSettingBehavior::getBlockSetting() */
-		/** @see BlockSettingBehavior::_createBlockSetting() */
-		$result = $this->TestModel->getBlockSetting(null, 1);
+		/** @see BlockSettingBehavior::createBlockSetting() */
+		$result = $this->TestModel->createBlockSetting(null, true);
 
 		//チェック
 		//debug($result);
@@ -117,9 +116,8 @@ class BlockSettingBehaviorCreateBlockSettingTest extends NetCommonsModelTestCase
 		Current::write('Block.key', 'block_1');
 
 		//テスト実施
-		/** @see BlockSettingBehavior::getBlockSetting() */
-		/** @see BlockSettingBehavior::_createBlockSetting() */
-		$result = $this->TestModel->getBlockSetting();
+		/** @see BlockSettingBehavior::createBlockSetting() */
+		$result = $this->TestModel->createBlockSetting();
 
 		//チェック
 		//debug($result);
