@@ -43,6 +43,8 @@ class BlockSettingBehaviorSaveBlockSettingTest extends NetCommonsModelTestCase {
 	public function setUp() {
 		parent::setUp();
 
+		Current::write('Plugin.key', 'dummy');
+
 		//テストプラグインのロード
 		NetCommonsCakeTestCase::loadTestPlugin($this, 'Blocks', 'TestBlocks');
 		$this->TestModel = ClassRegistry::init('TestBlocks.TestBlockSettingBehaviorModel');
@@ -56,7 +58,6 @@ class BlockSettingBehaviorSaveBlockSettingTest extends NetCommonsModelTestCase {
 	public function testSaveBlockSetting() {
 		// テストデータ
 		$blockKey = 'block_1';
-		Current::write('Plugin.key', 'dummy');
 		Current::write('Room.id', 1);
 		Current::write('Block.key', $blockKey);
 
@@ -101,7 +102,6 @@ class BlockSettingBehaviorSaveBlockSettingTest extends NetCommonsModelTestCase {
  */
 	public function testSaveBlockSettingValidate() {
 		// テストデータ
-		Current::write('Plugin.key', 'dummy');
 		Current::write('Room.id', 1);
 
 		$data[$this->TestModel->alies]['use_comment'] = '0';
@@ -142,7 +142,6 @@ class BlockSettingBehaviorSaveBlockSettingTest extends NetCommonsModelTestCase {
 		$this->_mockForReturnFalse('TestModel', 'Blocks.BlockSetting', 'saveMany');
 
 		$blockKey = 'block_1';
-		Current::write('Plugin.key', 'dummy');
 		Current::write('Room.id', 1);
 
 		$result = $this->TestModel->getBlockSetting($blockKey);

@@ -45,6 +45,8 @@ class BlockSettingBehaviorSaveTest extends NetCommonsModelTestCase {
 	public function setUp() {
 		parent::setUp();
 
+		Current::write('Plugin.key', 'dummy');
+
 		//テストプラグインのロード
 		NetCommonsCakeTestCase::loadTestPlugin($this, 'Blocks', 'TestBlocks');
 		/** @see TestBlockSettingBehaviorSaveModel */
@@ -64,17 +66,15 @@ class BlockSettingBehaviorSaveTest extends NetCommonsModelTestCase {
 		);
 
 		$blockKey = 'block_1';
-		Current::write('Plugin.key', 'dummy');
 		Current::write('Room.id', 1);
 		Current::write('Room.need_approval', 0);	//ルーム承認しない
 
 		$result = $this->TestModel->getBlockSetting($blockKey);
 		//debug($result);
-		//$result['BlockSetting']['use_comment']['value'] = '0';
-		$result['BlockSetting']['use_like']['value'] = '0';
-		$result['BlockSetting']['use_unlike']['value'] = '0';
-		$result['BlockSetting']['auto_play']['value'] = '0';
-		$result['BlockSetting']['total_size']['value'] = '200';
+		$result[$this->TestModel->alias]['use_like'] = '0';
+		$result[$this->TestModel->alias]['use_unlike'] = '0';
+		$result[$this->TestModel->alias]['auto_play'] = '0';
+		$result[$this->TestModel->alias]['total_size'] = '200';
 		$data = Hash::merge($data, $result);
 		//$this->TestModel->data = $data;
 
@@ -92,8 +92,8 @@ class BlockSettingBehaviorSaveTest extends NetCommonsModelTestCase {
 		);
 		foreach ($checks as $check) {
 			// 更新した値チェック
-			$this->assertEquals($data['BlockSetting'][$check]['value'],
-				$result['BlockSetting'][$check]['value']);
+			$this->assertEquals($data[$this->TestModel->alias][$check],
+				$result[$this->TestModel->alias][$check]);
 		}
 	}
 

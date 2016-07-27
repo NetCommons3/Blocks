@@ -43,6 +43,8 @@ class BlockSettingBehaviorIsExsistBlockSettingTest extends NetCommonsModelTestCa
 	public function setUp() {
 		parent::setUp();
 
+		Current::write('Plugin.key', 'dummy');
+
 		//テストプラグインのロード
 		NetCommonsCakeTestCase::loadTestPlugin($this, 'Blocks', 'TestBlocks');
 		$this->TestModel = ClassRegistry::init('TestBlocks.TestBlockSettingBehaviorModel');
@@ -54,7 +56,6 @@ class BlockSettingBehaviorIsExsistBlockSettingTest extends NetCommonsModelTestCa
  * @return void
  */
 	public function testIsExsistBlockSetting() {
-		Current::write('Plugin.key', 'dummy');
 		Current::write('Room.id', 1);
 		Current::write('Block.key', 'block_1');
 
@@ -74,7 +75,6 @@ class BlockSettingBehaviorIsExsistBlockSettingTest extends NetCommonsModelTestCa
  * @return void
  */
 	public function testIsExsistBlockSettingEmpty() {
-		Current::write('Plugin.key', 'dummy');
 		Current::write('Room.id', 1);
 		Current::write('Block.key', 'block_999'); // 該当なしキー
 
