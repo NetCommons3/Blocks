@@ -25,7 +25,7 @@ if (isset($action)) {
 <div class="nc-danger-zone" ng-init="dangerZone=false;">
 	<?php echo $this->NetCommonsForm->create($model, Hash::merge(array('type' => 'delete'), $options)); ?>
 		<uib-accordion close-others="false">
-			<uib-accordion-group is-open="dangerZone" class="panel-danger">
+			<div uib-accordion-group is-open="dangerZone" class="panel-danger">
 				<uib-accordion-heading class="clearfix">
 					<span style="cursor: pointer">
 						<?php echo __d('net_commons', 'Danger Zone'); ?>
@@ -34,7 +34,7 @@ if (isset($action)) {
 				</uib-accordion-heading>
 
 				<?php echo $this->element($callback, (isset($callbackOptions) ? $callbackOptions : array())); ?>
-			</uib-accordion-group>
+			</div>
 		</uib-accordion>
 	<?php echo $this->NetCommonsForm->end(); ?>
 </div>
