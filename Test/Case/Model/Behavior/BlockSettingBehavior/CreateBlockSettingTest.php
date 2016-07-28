@@ -90,7 +90,7 @@ class BlockSettingBehaviorCreateBlockSettingTest extends NetCommonsModelTestCase
 		$this->assertArrayHasKey('field_name', $result['BlockSetting']['use_comment']);
 		$this->assertArrayHasKey('value', $result['BlockSetting']['use_comment']);
 		//プラグインキー、ルームIDセットされている
-		$this->assertEquals(Current::read('Plugin.key'),
+		$this->assertEquals($this->TestModel->plugin,
 			$result['BlockSetting']['use_comment']['plugin_key']);
 		$this->assertEquals(Current::read('Room.id'),
 			$result['BlockSetting']['use_comment']['room_id']);
@@ -98,7 +98,7 @@ class BlockSettingBehaviorCreateBlockSettingTest extends NetCommonsModelTestCase
 		$this->assertEquals('1', $result['BlockSetting']['use_workflow']['value']);
 		$this->assertEquals('1', $result['BlockSetting']['use_comment_approval']['value']);
 		//デフォルト値のプラグインキー、ルームIDセットされている
-		$this->assertEquals(Current::read('Plugin.key'),
+		$this->assertEquals($this->TestModel->plugin,
 			$result['BlockSetting']['use_workflow']['plugin_key']);
 		$this->assertEquals(Current::read('Room.id'),
 			$result['BlockSetting']['use_workflow']['room_id']);
