@@ -43,11 +43,10 @@ class BlockSettingBehaviorCreateBlockSettingTest extends NetCommonsModelTestCase
 	public function setUp() {
 		parent::setUp();
 
-		Current::write('Plugin.key', 'dummy');
-
 		//テストプラグインのロード
 		NetCommonsCakeTestCase::loadTestPlugin($this, 'Blocks', 'TestBlocks');
 		$this->TestModel = ClassRegistry::init('TestBlocks.TestBlockSettingBehaviorModel');
+		$this->TestModel->plugin = 'dummy';
 	}
 
 /**
