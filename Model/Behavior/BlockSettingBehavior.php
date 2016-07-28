@@ -50,17 +50,9 @@ class BlockSettingBehavior extends ModelBehavior {
  * セッティングのキー
  *
  * @var string true or false
+ * @deprecated 不要になったため、廃止予定
  */
 	const SETTING_PLUGIN_KEY = 'pluginKey';
-
-/**
- * ビヘイビアの初期設定
- *
- * @var array
- */
-	protected $_defaultSettings = array(
-		self::SETTING_PLUGIN_KEY => null,
-	);
 
 /**
  * setup
@@ -78,8 +70,6 @@ class BlockSettingBehavior extends ModelBehavior {
  *		BlockSettingBehavior::USE_COMMENT,
  *		BlockSettingBehavior::USE_COMMENT_APPROVAL,
  *		'auto_play',
- * 		// 小テスト、アンケート、カレンダーの場合は下記設定。値の例）小テスト
- *		BlockSettingBehavior::SETTING_PLUGIN_KEY => 'quizzes',
  *	),
  * ),
  * ```
@@ -90,10 +80,6 @@ class BlockSettingBehavior extends ModelBehavior {
  */
 	public function setup(Model $model, $settings = array()) {
 		$this->settings[$model->alias] = $settings;
-
-		$this->_defaultSettings[self::SETTING_PLUGIN_KEY] = Current::read('Plugin.key');
-		$this->settings[$model->alias] =
-			Hash::merge($this->_defaultSettings, $this->settings[$model->alias]);
 	}
 
 /**
@@ -188,7 +174,7 @@ class BlockSettingBehavior extends ModelBehavior {
  * @return string プラグインキー
  */
 	protected function _getPluginKey($model) {
-		return $this->settings[$model->alias][self::SETTING_PLUGIN_KEY];
+		return Inflector::underscore($model->plugin);
 	}
 
 /**
