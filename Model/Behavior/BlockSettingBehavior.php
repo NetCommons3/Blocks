@@ -10,6 +10,7 @@
  */
 
 App::uses('ModelBehavior', 'Model');
+App::uses('Current', 'NetCommons.Utility');
 
 /**
  * BlockSetting Behavior
