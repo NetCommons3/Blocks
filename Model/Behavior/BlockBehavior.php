@@ -354,6 +354,7 @@ class BlockBehavior extends ModelBehavior {
 				'type' => 'LEFT',
 				'conditions' => array(
 					'Frame.block_id = Block.id',
+					'Frame.id' => Current::read('Frame.id')
 				)
 			),
 		);
