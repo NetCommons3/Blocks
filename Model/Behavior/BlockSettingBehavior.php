@@ -47,14 +47,6 @@ class BlockSettingBehavior extends ModelBehavior {
 		TYPE_NUMERIC = 'numeric';
 
 /**
- * セッティングのキー
- *
- * @var string true or false
- * @deprecated 不要になったため、廃止予定
- */
-	const SETTING_PLUGIN_KEY = 'pluginKey';
-
-/**
  * setup
  *
  * #### サンプルコード
@@ -162,9 +154,7 @@ class BlockSettingBehavior extends ModelBehavior {
  * @return array フィールド
  */
 	protected function _getFields($model) {
-		$fields = $this->settings[$model->alias];
-		unset($fields[self::SETTING_PLUGIN_KEY]);
-		return $fields;
+		return $this->settings[$model->alias];
 	}
 
 /**
