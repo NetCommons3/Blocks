@@ -79,7 +79,7 @@ class BlockSetting extends BlocksAppModel {
 			$blockKey = Current::read('Block.key');
 		}
 
-		$blockSetting = $this->find('first',array(
+		$blockSetting = $this->find('first', array(
 			'recursive' => -1,
 			'conditions' => array(
 				'BlockSetting.plugin_key' => $pluginKey,

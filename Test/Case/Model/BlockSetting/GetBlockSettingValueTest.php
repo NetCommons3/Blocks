@@ -81,7 +81,7 @@ class BlockSettingGetBlockSettingValueTest extends NetCommonsGetTest {
 		$model = $this->_modelName;
 		$methodName = $this->_methodName;
 		Current::write('Plugin.key', 'dummy');
-		Current::write('Block.key', 'block_xxx');   //データなし条件
+		Current::write('Block.key', 'block_xxx');	//データなし条件
 		$fieldName = 'use_workflow';
 
 		//テスト実施
