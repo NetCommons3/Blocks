@@ -61,4 +61,36 @@ class BlockSetting extends BlocksAppModel {
 		return parent::beforeValidate($options);
 	}
 
+/**
+ * 単一の設定値 ゲット
+ *
+ * @param string $fieldName 項目名
+ * @param Model $pluginKey プラグインキー
+ * @param Model $blockKey ブロックキー
+ * @return string 設定値
+ * @see BlockSettingBehavior::FIELD_USE_WORKFLOW 承認を使う
+ * @see BlockSettingBehavior::FIELD_USE_COMMENT_APPROVAL コメント承認を使う
+ */
+	public function getBlockSettingValue($fieldName, $pluginKey = null, $blockKey = null) {
+		if (is_null($pluginKey)) {
+			$pluginKey = Current::read('Plugin.key');
+		}
+		if (is_null($blockKey)) {
+			$blockKey = Current::read('Block.key');
+		}
+
+		$blockSetting = $this->find('first',array(
+			'recursive' => -1,
+			'conditions' => array(
+				'BlockSetting.plugin_key' => $pluginKey,
+				'BlockSetting.block_key' => $blockKey,
+				'BlockSetting.field_name' => $fieldName,
+			),
+		));
+		if (!$blockSetting) {
+			return null;
+		}
+		return $blockSetting['BlockSetting']['value'];
+	}
+
 }
