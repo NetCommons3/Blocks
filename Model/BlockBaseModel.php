@@ -64,6 +64,7 @@ class BlockBaseModel extends AppModel {
  * @triggers Model.beforeSave $this, array($options)
  * @triggers Model.afterSave $this, array($created, $options)
  * @link http://book.cakephp.org/2.0/en/models/saving-your-data.html
+ * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
  */
 	public function save($data = null, $validate = true, $fieldList = array()) {
 		if ($this->useTable) {
