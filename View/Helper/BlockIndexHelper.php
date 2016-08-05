@@ -76,7 +76,7 @@ class BlockIndexHelper extends AppHelper {
  * @return string
  */
 	public function create($model = null, $options = array()) {
-		$options['url'] = $this->NetCommonsHtml->url(
+		$options['url'] = NetCommonsUrl::blockUrl(
 			array('plugin' => 'frames', 'controller' => 'frames', 'action' => 'edit')
 		);
 		$output = $this->NetCommonsForm->create('', $options);

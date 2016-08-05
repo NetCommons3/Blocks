@@ -425,7 +425,7 @@ class BlockTabsHelper extends AppHelper {
 		if (($this->_View->request->params['action'] === 'edit' || $options['displayBlockTitle'])
 			&& $blockName
 		) {
-			$html .= $this->NetCommonsHtml->tag('h2', $blockName, ['class' => 'block-title']);
+			$html .= $this->NetCommonsHtml->tag('h2', h($blockName), ['class' => 'block-title']);
 			return $html;
 		}
 		return $html;
