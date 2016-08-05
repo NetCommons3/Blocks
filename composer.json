@@ -11,7 +11,7 @@
     "require": {
         "cakedc/migrations":            "~2.2",
         "netcommons/frames":            "dev-master",
-        "netcommons/net-commons":       "dev-master",
+        "netcommons/net-commons":       "~0.0",
         "netcommons/plugin-manager":    "dev-master"
     },
     "require-dev": {
