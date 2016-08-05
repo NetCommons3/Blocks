@@ -23,7 +23,7 @@
     "authors": [
         {
             "name": "NetCommons Community",
-            "homepage": "https://github.com/NetCommons3/Blocks/graphs/contributors"
+            "homepage": "http://www.netcommons.org"
         }
     ],
     "keywords":    ["cakephp", "blocks"],
