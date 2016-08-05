@@ -270,7 +270,7 @@ class BlockBehavior extends ModelBehavior {
 
 			$name = trim(mb_strimwidth(strip_tags($model->data[$alias][$filed]), 0, self::NAME_LENGTH));
 			if (! $name) {
-				$name = trim(mb_strimwidth($model->data[$alias][$filed], 0, self::NAME_LENGTH));
+				$name = __d('blocks', '(no text)');
 			}
 			$model->data['Block']['name'] = $name;
 		} else {

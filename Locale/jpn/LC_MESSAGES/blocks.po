@@ -119,3 +119,5 @@ msgstr "作成:"
 msgid "Modified:"
 msgstr "更新:"
 
+msgid "(no text)"
+msgstr "（テキストなし）"
