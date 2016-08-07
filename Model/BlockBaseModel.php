@@ -27,20 +27,6 @@ class BlockBaseModel extends AppModel {
 	public $useTable = false;
 
 /**
- * Called before each save operation, after validation. Return a non-true result
- * to halt the save.
- *
- * @param array $options Options passed from Model::save().
- * @return bool True if the operation should continue, false if it should abort
- * @link http://book.cakephp.org/2.0/en/models/callback-methods.html#beforesave
- * @throws InternalErrorException
- * @see Model::save()
- */
-	public function beforeSave($options = array()) {
-		return parent::beforeSave($options);
-	}
-
-/**
  * Saves model data (based on white-list, if supplied) to the database. By
  * default, validation occurs before save. Passthrough method to _doSave() with
  * transaction handling.
@@ -71,6 +57,10 @@ class BlockBaseModel extends AppModel {
 			return parent::save($data, $validate, $fieldList);
 		}
 
+		if ($data) {
+			$this->set($data);
+		}
+
 		$defaults = array(
 			'validate' => true, 'fieldList' => array(),
 			'callbacks' => true, 'counterCache' => true,
@@ -97,19 +87,6 @@ class BlockBaseModel extends AppModel {
 			$event = new CakeEvent('Model.afterSave', $this, array(false, $options));
 			$this->getEventManager()->dispatch($event);
 		}
-	}
-
-/**
- * Called after each successful save operation.
- *
- * @param bool $created True if this save created a new record
- * @param array $options Options passed from Model::save().
- * @return void
- * @link http://book.cakephp.org/2.0/en/models/callback-methods.html#aftersave
- * @see Model::save()
- */
-	public function afterSave($created, $options = array()) {
-		parent::afterSave($created, $options);
 	}
 
 }
