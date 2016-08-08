@@ -430,7 +430,7 @@ class BlockBehavior extends ModelBehavior {
 		$blockIds = array_keys($blocks);
 		foreach ($blockIds as $blockId) {
 			if (! $model->Frame->updateAll(
-					array('Frame.block_id' => null),
+					array('Frame.block_id' => null, 'Frame.default_action' => '\'\''),
 					array('Frame.block_id' => (int)$blockId)
 			)) {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
