@@ -10,9 +10,9 @@
     },
     "require": {
         "cakedc/migrations":            "~2.2",
-        "netcommons/frames":            "dev-master",
-        "netcommons/net-commons":       "dev-master",
-        "netcommons/plugin-manager":    "dev-master"
+        "netcommons/frames":            "@dev",
+        "netcommons/net-commons":       "@dev",
+        "netcommons/plugin-manager":    "@dev"
     },
     "require-dev": {
         "netcommons/roles":             "dev-master",
