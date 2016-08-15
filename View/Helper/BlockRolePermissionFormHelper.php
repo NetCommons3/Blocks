@@ -24,7 +24,8 @@ class BlockRolePermissionFormHelper extends AppHelper {
  * @var array
  */
 	public $helpers = array(
-		'NetCommons.NetCommonsForm'
+		'NetCommons.NetCommonsForm',
+		'Rooms.Rooms',
 	);
 
 /**
@@ -135,7 +136,10 @@ class BlockRolePermissionFormHelper extends AppHelper {
 							'\'' . $permission . '\', \'' . Inflector::variable($roleKey) . '\')';
 		}
 
-		$options['label'] = $this->_View->viewVars['roles'][$roleKey]['name'];
+		$options['label'] = $this->Rooms->roomRoleName(
+			$roleKey, ['help' => true, 'roles' => $this->_View->viewVars['roles']]
+		);
+		$options['escape'] = false;
 
 		$html .= $this->NetCommonsForm->checkbox($fieldName . '.value', $options);
 
