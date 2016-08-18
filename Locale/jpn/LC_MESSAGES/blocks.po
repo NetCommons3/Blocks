@@ -41,6 +41,16 @@ msgstr "公開終了"
 msgid "Limited"
 msgstr "期限付き公開"
 
+msgid "Setting public"
+msgstr "公開にする"
+
+msgid "Setting private"
+msgstr "非公開にする"
+
+msgid "Setting limited public"
+msgstr "期限付き公開にする"
+
+
 #: Bbses/View/Elements/BbsBlockRolePermissions/edit_form.ctp:31
 #: Blogs/View/Elements/BlockRolePermissions/edit_form.ctp:31
 #: Faqs/View/Elements/FaqBlockRolePermissions/edit_form.ctp:30
