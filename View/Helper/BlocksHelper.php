@@ -82,6 +82,7 @@ class BlocksHelper extends AppHelper {
 /**
  * ブロックのステータスラベルを表示
  *
+ * @param null|bool $isSetting 強制的にセッティングモード
  * @return string HTML
  */
 	public function getBlockStatus($isSetting = null) {
