@@ -73,7 +73,7 @@ class BlocksHelper extends AppHelper {
 			$text = $this->NetCommonsHtml->titleIcon($titleIcon) . ' ' . $text;
 		}
 
-		$text = $this->getBlockStatus(true) . ' ' . $text;
+		//$text = $this->getBlockStatus(true) . ' ' . $text;
 
 		$output .= $this->Html->tag('h1', $text, $options);
 		return $output;
