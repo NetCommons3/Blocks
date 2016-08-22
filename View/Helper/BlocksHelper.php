@@ -92,7 +92,8 @@ class BlocksHelper extends AppHelper {
 			$isSetting = Current::isSettingMode();
 		}
 
-		if (! $isSetting || ! Current::read('Block.id')) {
+		if (! $isSetting || ! Current::read('Block.id') ||
+				! Current::permission('block_editable')) {
 			return $html;
 		}
 
