@@ -73,8 +73,6 @@ class BlocksHelper extends AppHelper {
 			$text = $this->NetCommonsHtml->titleIcon($titleIcon) . ' ' . $text;
 		}
 
-		//$text = $this->getBlockStatus(true) . ' ' . $text;
-
 		$output .= $this->Html->tag('h1', $text, $options);
 		return $output;
 	}
@@ -86,21 +84,41 @@ class BlocksHelper extends AppHelper {
  * @return string HTML
  */
 	public function getBlockStatus($isSetting = null) {
-		$html = '';
+		if (! Current::permission('block_editable')) {
+			return '';
+		}
 
 		if (! isset($isSetting)) {
 			$isSetting = Current::isSettingMode();
 		}
 
-		if (! $isSetting || ! Current::read('Block.id') ||
-				! Current::permission('block_editable')) {
-			return $html;
+		if (! $isSetting || ! Current::read('Block.id')) {
+			return '';
 		}
 
 		$block = Current::read('Block', array());
 
 		$publicType = Hash::get($block, 'public_type');
 		if ($publicType === Block::TYPE_PUBLIC) {
+			return '';
+		}
+
+		$html = $this->__getBlockStatus();
+		return $html;
+	}
+
+/**
+ * ブロックのステータスラベルを表示
+ *
+ * @return string HTML
+ */
+	private function __getBlockStatus() {
+		$html = '';
+
+		$block = Current::read('Block', array());
+
+		$publicType = Hash::get($block, 'public_type', false);
+		if ($publicType === false || $publicType === Block::TYPE_PUBLIC) {
 			return $html;
 		}
 
