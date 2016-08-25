@@ -276,7 +276,6 @@ class BlockSettingBehavior extends ModelBehavior {
 		}
 		// 以降はデータなし処理
 
-		/** @see BlockFormHelper::blockSettingHidden(); block_keyは左記でセット */
 		$pluginKey = $this->_getPluginKey($model);
 		$roomId = Current::read('Room.id');
 		$defaultBlockSetting = array(
