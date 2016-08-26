@@ -337,7 +337,7 @@ class BlockSettingBehavior extends ModelBehavior {
  * ```
  * //(例)各プラグインのBlockSettingControllerからの登録処理 [横]データ
  * array(
- * 	'VideoBlockSetting' => array(
+ * 	'VideoSetting' => array(
  * 		'use_comment' => '1',
  * 		'use_like' => '1',
  * 		'use_unlike' => '0',
