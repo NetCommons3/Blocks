@@ -37,6 +37,7 @@ ClassRegistry::init('Blocks.Block');
 					'placeholder' => 'yyyy-mm-dd hh:nn',
 					'div' => false,
 					'error' => false,
+					'default' => false,
 				)); ?>
 
 				<span class="input-group-addon">
@@ -50,6 +51,7 @@ ClassRegistry::init('Blocks.Block');
 					'placeholder' => 'yyyy-mm-dd hh:nn',
 					'div' => false,
 					'error' => false,
+					'default' => false,
 				)); ?>
 			</div>
 		</div>

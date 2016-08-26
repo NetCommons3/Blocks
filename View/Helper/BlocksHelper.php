@@ -128,9 +128,9 @@ class BlocksHelper extends AppHelper {
 		if ($publicType === Block::TYPE_PRIVATE) {
 			$html .= __d('blocks', 'Private');
 		} elseif ($publicType === Block::TYPE_LIMITED) {
-			if ($now < Hash::get($block, 'publish_start')) {
+			if ($now <= Hash::get($block, 'publish_start', '0000-00-00 00:00:00')) {
 				$html .= __d('blocks', 'Public before');
-			} elseif ($now > Hash::get($block, 'publish_end')) {
+			} elseif ($now > Hash::get($block, 'publish_end', '9999-99-99 99:99:99')) {
 				$html .= __d('blocks', 'Public end');
 			} else {
 				$html .= __d('blocks', 'Limited');
