@@ -192,9 +192,9 @@ class BlockIndexHelper extends AppHelper {
 				$html .= __d('blocks', 'Private');
 			} elseif ($publicType === Block::TYPE_PUBLIC) {
 				$html .= __d('blocks', 'Public');
-			} elseif ($now < Hash::get($value, 'Block.publish_start')) {
+			} elseif ($now <= Hash::get($value, 'Block.publish_start', '0000-00-00 00:00:00')) {
 				$html .= __d('blocks', 'Public before');
-			} elseif ($now > Hash::get($value, 'Block.publish_end')) {
+			} elseif ($now > Hash::get($value, 'Block.publish_end', '9999-99-99 99:99:99')) {
 				$html .= __d('blocks', 'Public end');
 			} else {
 				$html .= __d('blocks', 'Limited');
