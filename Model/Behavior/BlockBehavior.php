@@ -101,10 +101,9 @@ class BlockBehavior extends ModelBehavior {
 			return true;
 		}
 
-		if (isset($model->data['Block']['public_type'])) {
-			if ($model->data['Block']['public_type'] !== Block::TYPE_LIMITED) {
-				unset($model->data['Block']['publish_start'], $model->data['Block']['publish_end']);
-			}
+		if (Hash::get($model->data, 'Block.public_type') !== Block::TYPE_LIMITED) {
+			$model->data = Hash::remove($model->data, 'Block.publish_start');
+			$model->data = Hash::remove($model->data, 'Block.publish_end');
 		}
 
 		$model->loadModels(array(
@@ -263,20 +262,7 @@ class BlockBehavior extends ModelBehavior {
 
 		$model->data['Block'] = Hash::insert($model->data['Block'], 'modified', null);
 
-		if (Hash::get($model->data, 'Block.name')) {
-			//値があれば、何もしない
-		} elseif (isset($this->settings['name'])) {
-			list($alias, $filed) = pluginSplit($this->settings['name']);
-
-			$name = trim(mb_strimwidth(strip_tags($model->data[$alias][$filed]), 0, self::NAME_LENGTH));
-			if (! $name) {
-				$name = __d('blocks', '(no text)');
-			}
-			$model->data['Block']['name'] = $name;
-		} else {
-			$model->data['Block']['name'] = sprintf(__d('blocks', 'Block %s'), date('YmdHis'));
-		}
-
+		$model->data['Block']['name'] = $this->__getBlockName($model);
 		$model->data['Block']['plugin_key'] = Inflector::underscore($model->plugin);
 
 		//blocksの登録
@@ -295,6 +281,32 @@ class BlockBehavior extends ModelBehavior {
 		if ($model->hasField('block_key') && ! Hash::check($model->data, $model->alias . '.block_key')) {
 			$model->data[$model->alias]['block_key'] = $model->data['Block']['key'];
 		}
+	}
+
+/**
+ * ブロック名取得
+ *
+ * @param Model $model ビヘイビアの呼び出しのモデル
+ * @return string
+ */
+	private function __getBlockName(Model $model) {
+		if (Hash::get($model->data, 'Block.name')) {
+			//値があれば、何もしない
+			$name = Hash::get($model->data, 'Block.name');
+		} elseif (Hash::get($this->settings, 'nameHtml', false)) {
+			list($alias, $filed) = pluginSplit($this->settings['name']);
+			$name = trim(mb_strimwidth(strip_tags($model->data[$alias][$filed]), 0, self::NAME_LENGTH));
+			if (! $name) {
+				$name = __d('blocks', '(no text)');
+			}
+		} elseif (isset($this->settings['name'])) {
+			list($alias, $filed) = pluginSplit($this->settings['name']);
+			$name = $model->data[$alias][$filed];
+		} else {
+			$name = sprintf(__d('blocks', 'Block %s'), date('YmdHis'));
+		}
+
+		return $name;
 	}
 
 /**
