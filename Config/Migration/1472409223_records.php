@@ -94,28 +94,6 @@ class Records extends NetCommonsMigration {
  * @return bool Should process continue
  */
 	public function after($direction) {
-		if ($direction === 'down') {
-			foreach ($this->records as $model => $records) {
-				$Model = $this->generateModel($model);
-				foreach ($records as $record) {
-					$id = Hash::get($record, 'id');
-					if (!$id) {
-						continue;
-					}
-					if (!$Model->delete($id, false)) {
-						return false;
-					}
-				}
-			}
-			return true;
-		}
-
-		foreach ($this->records as $model => $records) {
-			if (!$this->updateRecords($model, $records)) {
-				return false;
-			}
-		}
-
-		return true;
+		return parent::updateAndDeleteRecords($direction);
 	}
 }
