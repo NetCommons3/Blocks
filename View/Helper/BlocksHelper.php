@@ -72,6 +72,10 @@ class BlocksHelper extends AppHelper {
 		if ($titleIcon) {
 			$text = $this->NetCommonsHtml->titleIcon($titleIcon) . ' ' . $text;
 		}
+		if (Hash::get($options, 'status')) {
+			$text = Hash::get($options, 'status') . ' ' . $text;
+			$options = Hash::remove($options, 'status');
+		}
 
 		$output .= $this->Html->tag('h1', $text, $options);
 		return $output;
