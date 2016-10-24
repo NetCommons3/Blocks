@@ -96,7 +96,7 @@ class TestSuiteBlocksControllerEditTestTestAddTest extends NetCommonsControllerT
 					'method' => 'assertInput',
 					'type' => 'input',
 					'name' => 'data[Block][room_id]',
-					'value' => '1'
+					'value' => '2'
 				)
 			)
 		);

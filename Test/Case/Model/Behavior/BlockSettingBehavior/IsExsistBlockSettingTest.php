@@ -55,7 +55,7 @@ class BlockSettingBehaviorIsExsistBlockSettingTest extends NetCommonsModelTestCa
  * @return void
  */
 	public function testIsExsistBlockSetting() {
-		Current::write('Room.id', 1);
+		Current::write('Room.id', '2');
 		Current::write('Block.key', 'block_1');
 
 		//テスト実施
@@ -74,7 +74,7 @@ class BlockSettingBehaviorIsExsistBlockSettingTest extends NetCommonsModelTestCa
  * @return void
  */
 	public function testIsExsistBlockSettingEmpty() {
-		Current::write('Room.id', 1);
+		Current::write('Room.id', '2');
 		Current::write('Block.key', 'block_999'); // 該当なしキー
 
 		//テスト実施

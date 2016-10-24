@@ -72,14 +72,14 @@ class BlockBehaviorGetBlockConditionByIdTest extends NetCommonsModelTestCase {
  */
 	public function testGetBlockConditionById($conditions) {
 		//テストデータ
-		Current::$current = Hash::insert(Current::$current, 'Room.id', '1');
+		Current::$current = Hash::insert(Current::$current, 'Room.id', '2');
 		Current::$current = Hash::insert(Current::$current, 'Block.id', '2');
 
 		//テスト実施
 		$conditions = $this->TestModel->getBlockConditionById($conditions);
 		$expected = array(
 			'Block.id' => '2',
-			'Block.room_id' => '1',
+			'Block.room_id' => '2',
 			'TestBlockBehaviorModel.key' => 'content_1'
 		);
 		$this->assertEquals($expected, $conditions);

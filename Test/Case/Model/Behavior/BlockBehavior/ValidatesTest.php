@@ -83,7 +83,7 @@ class BlockBehaviorValidatesTest extends NetCommonsModelTestCase {
 			'Block' => array(
 				'id' => '2',
 				'language_id' => '2',
-				'room_id' => '1',
+				'room_id' => '2',
 				'plugin_key' => 'test_plugin',
 				'key' => 'block_1',
 				'name' => 'Block name 1',

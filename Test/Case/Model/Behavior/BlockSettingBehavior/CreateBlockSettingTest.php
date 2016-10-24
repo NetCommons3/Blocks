@@ -55,7 +55,7 @@ class BlockSettingBehaviorCreateBlockSettingTest extends NetCommonsModelTestCase
  * @return void
  */
 	public function testCreateBlockSetting() {
-		Current::write('Room.id', 2);
+		Current::write('Room.id', '3');
 		Current::write('Room.need_approval', 1);	//ルーム承認する
 		Current::write('Block.key', 'block_1');
 
@@ -77,7 +77,7 @@ class BlockSettingBehaviorCreateBlockSettingTest extends NetCommonsModelTestCase
  * @return void
  */
 	public function testCreateBlockSettingRow() {
-		Current::write('Room.id', 2);
+		Current::write('Room.id', '3');
 		Current::write('Room.need_approval', 1);	//ルーム承認する
 		Current::write('Block.key', 'block_1');
 
@@ -110,7 +110,7 @@ class BlockSettingBehaviorCreateBlockSettingTest extends NetCommonsModelTestCase
  * @return void
  */
 	public function testCreateBlockSettingNoApproval() {
-		Current::write('Room.id', 2);
+		Current::write('Room.id', '3');
 		Current::write('Room.need_approval', 0);	//ルーム承認しない
 		Current::write('Block.key', 'block_1');
 

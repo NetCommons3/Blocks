@@ -129,7 +129,7 @@ class BlockSettingFixture extends CakeTestFixture {
 		// ブロック設定後 - room_idあり、block_keyあり
 		array(
 			'plugin_key' => 'dummy',
-			'room_id' => 1,
+			'room_id' => '2',
 			'block_key' => 'block_1',
 			'field_name' => BlockSettingBehavior::FIELD_USE_COMMENT,
 			'value' => '0',
@@ -137,7 +137,7 @@ class BlockSettingFixture extends CakeTestFixture {
 		),
 		array(
 			'plugin_key' => 'dummy',
-			'room_id' => 1,
+			'room_id' => '2',
 			'block_key' => 'block_1',
 			'field_name' => BlockSettingBehavior::FIELD_USE_LIKE,
 			'value' => '1',
@@ -145,7 +145,7 @@ class BlockSettingFixture extends CakeTestFixture {
 		),
 		array(
 			'plugin_key' => 'dummy',
-			'room_id' => 1,
+			'room_id' => '2',
 			'block_key' => 'block_1',
 			'field_name' => BlockSettingBehavior::FIELD_USE_UNLIKE,
 			'value' => '1',
@@ -153,7 +153,7 @@ class BlockSettingFixture extends CakeTestFixture {
 		),
 		array(
 			'plugin_key' => 'dummy',
-			'room_id' => 1,
+			'room_id' => '2',
 			'block_key' => 'block_1',
 			'field_name' => 'auto_play',
 			'value' => '1',
@@ -161,7 +161,7 @@ class BlockSettingFixture extends CakeTestFixture {
 		),
 		array(
 			'plugin_key' => 'dummy',
-			'room_id' => 1,
+			'room_id' => '2',
 			'block_key' => 'block_1',
 			'field_name' => 'total_size',
 			'value' => '100',
@@ -169,7 +169,7 @@ class BlockSettingFixture extends CakeTestFixture {
 		),
 		array(
 			'plugin_key' => 'dummy',
-			'room_id' => 1,
+			'room_id' => '2',
 			'block_key' => 'block_1',
 			'field_name' => BlockSettingBehavior::FIELD_USE_WORKFLOW,
 			'value' => '0',
@@ -177,7 +177,7 @@ class BlockSettingFixture extends CakeTestFixture {
 		),
 		array(
 			'plugin_key' => 'dummy',
-			'room_id' => 1,
+			'room_id' => '2',
 			'block_key' => 'block_1',
 			'field_name' => BlockSettingBehavior::FIELD_USE_COMMENT_APPROVAL,
 			'value' => '1',
@@ -186,7 +186,7 @@ class BlockSettingFixture extends CakeTestFixture {
 		// イレギュラーデータ - room_idあり、block_keyあり、USE_WORKFLOW, USE_COMMENT_APPROVALのデータなし
 		array(
 			'plugin_key' => 'dummy',
-			'room_id' => 2,
+			'room_id' => '3',
 			'block_key' => 'block_2',
 			'field_name' => BlockSettingBehavior::FIELD_USE_COMMENT,
 			'value' => '0',
@@ -194,7 +194,7 @@ class BlockSettingFixture extends CakeTestFixture {
 		),
 		array(
 			'plugin_key' => 'dummy',
-			'room_id' => 2,
+			'room_id' => '3',
 			'block_key' => 'block_2',
 			'field_name' => BlockSettingBehavior::FIELD_USE_LIKE,
 			'value' => '1',
@@ -202,7 +202,7 @@ class BlockSettingFixture extends CakeTestFixture {
 		),
 		array(
 			'plugin_key' => 'dummy',
-			'room_id' => 2,
+			'room_id' => '3',
 			'block_key' => 'block_2',
 			'field_name' => BlockSettingBehavior::FIELD_USE_UNLIKE,
 			'value' => '1',
@@ -210,7 +210,7 @@ class BlockSettingFixture extends CakeTestFixture {
 		),
 		array(
 			'plugin_key' => 'dummy',
-			'room_id' => 2,
+			'room_id' => '3',
 			'block_key' => 'block_2',
 			'field_name' => 'auto_play',
 			'value' => '1',
@@ -218,7 +218,7 @@ class BlockSettingFixture extends CakeTestFixture {
 		),
 		array(
 			'plugin_key' => 'dummy',
-			'room_id' => 2,
+			'room_id' => '3',
 			'block_key' => 'block_2',
 			'field_name' => 'total_size',
 			'value' => '100',

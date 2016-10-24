@@ -55,7 +55,7 @@ class BlockSettingBehaviorGetBlockSettingTest extends NetCommonsModelTestCase {
  * @return void
  */
 	public function testGetBlockSetting() {
-		Current::write('Room.id', 1);
+		Current::write('Room.id', '2');
 		Current::write('Block.key', 'block_1');
 
 		//テスト実施
@@ -77,7 +77,7 @@ class BlockSettingBehaviorGetBlockSettingTest extends NetCommonsModelTestCase {
  * @return void
  */
 	public function testGetBlockSettingNoUseWorkFlowData() {
-		Current::write('Room.id', 2);	// use_workflowのデータがないパターン
+		Current::write('Room.id', '3');	// use_workflowのデータがないパターン
 		Current::write('Block.key', 'block_2');	// use_workflowのデータがないパターン
 
 		//テスト実施
@@ -100,7 +100,7 @@ class BlockSettingBehaviorGetBlockSettingTest extends NetCommonsModelTestCase {
  */
 	public function testGetBlockSettingEmpty() {
 		$blockKey = 'block_999';	// データがないブロックID
-		Current::write('Room.id', 1);
+		Current::write('Room.id', '2');
 
 		//テスト実施
 		$result = $this->TestModel->getBlockSetting($blockKey);

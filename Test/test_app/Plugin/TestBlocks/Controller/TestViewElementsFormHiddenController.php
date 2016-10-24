@@ -34,7 +34,7 @@ class TestViewElementsFormHiddenController extends AppController {
 			'id' => '2',
 			'key' => 'block_1',
 			'language_id' => '2',
-			'room_id' => '1',
+			'room_id' => '2',
 			'plugin_key' => 'test_blocks'
 		);
 	}

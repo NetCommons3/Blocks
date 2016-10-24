@@ -135,7 +135,7 @@ class BlockBehaviorSaveWOBlockNameTest extends NetCommonsModelTestCase {
 		$expected = array(
 			'id' => $data[$alias]['id'],
 			'key' => $data[$alias]['key'],
-			'room_id' => '1',
+			'room_id' => '2',
 			'language_id' => '2',
 			'name' => $data[$alias]['name'],
 			'plugin_key' => 'test_blocks',

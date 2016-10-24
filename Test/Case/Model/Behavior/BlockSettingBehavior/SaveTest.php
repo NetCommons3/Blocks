@@ -65,7 +65,7 @@ class BlockSettingBehaviorSaveTest extends NetCommonsModelTestCase {
 		);
 
 		$blockKey = 'block_1';
-		Current::write('Room.id', 1);
+		Current::write('Room.id', '2');
 		Current::write('Room.need_approval', 0);	//ルーム承認しない
 
 		$result = $this->TestModel->getBlockSetting($blockKey);
