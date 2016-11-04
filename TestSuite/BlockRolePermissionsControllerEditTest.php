@@ -262,7 +262,7 @@ class BlockRolePermissionsControllerEditTest extends NetCommonsControllerTestCas
 		$frameId = '6';
 		$blockId = '4';
 		$blockKey = 'block_2';
-		$roomId = '1';
+		$roomId = '2';
 		$permissions = $this->_getPermissionData(true, Hash::check($data, '{s}.use_comment_approval'));
 
 		$RolesRoomFixture = new RolesRoomFixture();

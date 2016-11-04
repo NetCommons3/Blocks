@@ -132,7 +132,7 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 		TestAuthGeneral::login($this);
 
 		$frameId = '6';
-		$roomId = '1';
+		$roomId = '2';
 		if ($validationError) {
 			$data = Hash::insert($data, $validationError['field'], $validationError['value']);
 		}
@@ -210,7 +210,7 @@ class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 
 		$frameId = '6';
 		$blockId = '4';
-		$roomId = '1';
+		$roomId = '2';
 		if ($validationError) {
 			$data = Hash::remove($data, $validationError['field']);
 			$data = Hash::insert($data, $validationError['field'], $validationError['value']);

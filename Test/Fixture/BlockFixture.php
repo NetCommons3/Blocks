@@ -27,7 +27,7 @@ class BlockFixture extends CakeTestFixture {
 		array(
 			'id' => '1',
 			'language_id' => '1',
-			'room_id' => '1',
+			'room_id' => '2',
 			'plugin_key' => 'test_plugin',
 			'key' => 'block_1',
 			'name' => 'Block name 1',
@@ -38,7 +38,7 @@ class BlockFixture extends CakeTestFixture {
 		array(
 			'id' => '2',
 			'language_id' => '2',
-			'room_id' => '1',
+			'room_id' => '2',
 			'plugin_key' => 'test_plugin',
 			'key' => 'block_1',
 			'name' => 'Block name 1',
@@ -50,7 +50,7 @@ class BlockFixture extends CakeTestFixture {
 		array(
 			'id' => '3',
 			'language_id' => '1',
-			'room_id' => '1',
+			'room_id' => '2',
 			'plugin_key' => 'test_plugin',
 			'key' => 'block_2',
 			'name' => 'Block name 2',
@@ -61,7 +61,7 @@ class BlockFixture extends CakeTestFixture {
 		array(
 			'id' => '4',
 			'language_id' => '2',
-			'room_id' => '1',
+			'room_id' => '2',
 			'plugin_key' => 'test_plugin',
 			'key' => 'block_2',
 			'name' => 'Block name 2',
@@ -73,7 +73,7 @@ class BlockFixture extends CakeTestFixture {
 		array(
 			'id' => '5',
 			'language_id' => '1',
-			'room_id' => '1',
+			'room_id' => '2',
 			'plugin_key' => 'test_plugin',
 			'key' => 'block_3',
 			'name' => 'Block name 3',
@@ -84,7 +84,7 @@ class BlockFixture extends CakeTestFixture {
 		array(
 			'id' => '6',
 			'language_id' => '2',
-			'room_id' => '1',
+			'room_id' => '2',
 			'plugin_key' => 'test_plugin',
 			'key' => 'block_3',
 			'name' => 'Block name 3',
@@ -97,7 +97,7 @@ class BlockFixture extends CakeTestFixture {
 		array(
 			'id' => '7',
 			'language_id' => '1',
-			'room_id' => '1',
+			'room_id' => '2',
 			'plugin_key' => 'test_plugin',
 			'key' => 'block_4',
 			'name' => 'Block name 4',
@@ -108,7 +108,7 @@ class BlockFixture extends CakeTestFixture {
 		array(
 			'id' => '8',
 			'language_id' => '2',
-			'room_id' => '1',
+			'room_id' => '2',
 			'plugin_key' => 'test_plugin',
 			'key' => 'block_4',
 			'name' => 'Block name 4',
@@ -121,7 +121,7 @@ class BlockFixture extends CakeTestFixture {
 		array(
 			'id' => '9',
 			'language_id' => '1',
-			'room_id' => '1',
+			'room_id' => '2',
 			'plugin_key' => 'test_plugin',
 			'key' => 'block_5',
 			'name' => 'Block name 5',
@@ -132,7 +132,7 @@ class BlockFixture extends CakeTestFixture {
 		array(
 			'id' => '10',
 			'language_id' => '2',
-			'room_id' => '1',
+			'room_id' => '2',
 			'plugin_key' => 'test_plugin',
 			'key' => 'block_5',
 			'name' => 'Block name 5',
@@ -159,7 +159,7 @@ class BlockFixture extends CakeTestFixture {
 		//	$this->records[$i] = array(
 		//		'id' => $i,
 		//		'language_id' => '2',
-		//		'room_id' => '1',
+		//		'room_id' => '2',
 		//		'plugin_key' => 'test_plugin',
 		//		'key' => 'block_' . $i,
 		//		'name' => 'Block name ' . $i,
@@ -170,7 +170,7 @@ class BlockFixture extends CakeTestFixture {
 		//	$this->records[$i] = array(
 		//		'id' => $i,
 		//		'language_id' => '2',
-		//		'room_id' => '4',
+		//		'room_id' => '5',
 		//		'plugin_key' => 'test_plugin',
 		//		'key' => 'block_' . $i,
 		//		'name' => 'Block name ' . $i,

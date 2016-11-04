@@ -57,7 +57,7 @@ class BlockSettingBehaviorSaveBlockSettingTest extends NetCommonsModelTestCase {
 	public function testSaveBlockSetting() {
 		// テストデータ
 		$blockKey = 'block_1';
-		Current::write('Room.id', 1);
+		Current::write('Room.id', '2');
 		Current::write('Block.key', $blockKey);
 
 		$data[$this->TestModel->alies]['use_comment'] = '0';
@@ -101,7 +101,7 @@ class BlockSettingBehaviorSaveBlockSettingTest extends NetCommonsModelTestCase {
  */
 	public function testSaveBlockSettingValidate() {
 		// テストデータ
-		Current::write('Room.id', 1);
+		Current::write('Room.id', '2');
 
 		$data[$this->TestModel->alies]['use_comment'] = '0';
 		$data[$this->TestModel->alies]['use_like'] = '0';
@@ -141,7 +141,7 @@ class BlockSettingBehaviorSaveBlockSettingTest extends NetCommonsModelTestCase {
 		$this->_mockForReturnFalse('TestModel', 'Blocks.BlockSetting', 'saveMany');
 
 		$blockKey = 'block_1';
-		Current::write('Room.id', 1);
+		Current::write('Room.id', '2');
 
 		$result = $this->TestModel->getBlockSetting($blockKey);
 		$this->TestModel->data = $result;
