@@ -73,7 +73,6 @@ class Block extends BlocksAppModel {
  */
 	public $actsAs = array(
 		'NetCommons.OriginalKey',
-		//'M17n.M17n'
 	);
 
 /**
