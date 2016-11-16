@@ -272,7 +272,6 @@ class BlockBehavior extends ModelBehavior {
 		}
 		$model->data['Block'] = $block['Block'];
 		Current::$current['Block'] = $block['Block'];
-		(new CurrentFrame())->setM17n();
 
 		//Behaviorをセットしているモデルに対してblock_idとblock_keyをセットする
 		if ($model->hasField('block_id') && ! Hash::check($model->data, $model->alias . '.block_id')) {
