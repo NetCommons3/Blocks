@@ -79,6 +79,7 @@ class BlockIndexHelper extends AppHelper {
 		$options['url'] = NetCommonsUrl::blockUrl(
 			array('plugin' => 'frames', 'controller' => 'frames', 'action' => 'edit')
 		);
+		$options['type'] = 'PUT';
 		$output = $this->NetCommonsForm->create('', $options);
 		$output .= $this->NetCommonsForm->hidden('Frame.id');
 		return $output;
