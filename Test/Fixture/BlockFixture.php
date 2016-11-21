@@ -140,10 +140,6 @@ class BlockFixture extends CakeTestFixture {
 			'publish_start' => null,
 			'publish_end' => null,
 		),
-
-		//11-20は、各プラグインで設定関係のテストで使う
-
-		//101-200まで、ページ遷移のためのテスト
 	);
 
 /**
@@ -155,33 +151,12 @@ class BlockFixture extends CakeTestFixture {
 		require_once App::pluginPath('Blocks') . 'Config' . DS . 'Schema' . DS . 'schema.php';
 		$this->fields = (new BlocksSchema())->tables['blocks'];
 
-		//for ($i = 11; $i <= 20; $i++) {
-		//	$this->records[$i] = array(
-		//		'id' => $i,
-		//		'language_id' => '2',
-		//		'room_id' => '2',
-		//		'plugin_key' => 'test_plugin',
-		//		'key' => 'block_' . $i,
-		//		'name' => 'Block name ' . $i,
-		//		'public_type' => '1',
-		//	);
-		//}
-		//for ($i = 101; $i <= 200; $i++) {
-		//	$this->records[$i] = array(
-		//		'id' => $i,
-		//		'language_id' => '2',
-		//		'room_id' => '5',
-		//		'plugin_key' => 'test_plugin',
-		//		'key' => 'block_' . $i,
-		//		'name' => 'Block name ' . $i,
-		//		'public_type' => '1',
-		//	);
-		//}
-
 		if (class_exists('NetCommonsTestSuite') && NetCommonsTestSuite::$plugin) {
 			$records = array_keys($this->records);
 			foreach ($records as $i) {
-				$this->records[$i]['plugin_key'] = NetCommonsTestSuite::$plugin;
+				if ($this->records[$i]['plugin_key'] === 'test_plugin') {
+					$this->records[$i]['plugin_key'] = NetCommonsTestSuite::$plugin;
+				}
 			}
 		}
 		parent::init();
