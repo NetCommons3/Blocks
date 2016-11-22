@@ -34,12 +34,12 @@ class AddBlockSettings extends CakeMigration {
 			'create_table' => array(
 				'block_settings' => array(
 					'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'unsigned' => false, 'key' => 'primary'),
-					'plugin_key' => array('type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'charset' => 'utf8mb4'),
+					'plugin_key' => array('type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 					'room_id' => array('type' => 'integer', 'null' => true, 'default' => null, 'unsigned' => false),
-					'block_key' => array('type' => 'string', 'null' => true, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'charset' => 'utf8mb4'),
-					'field_name' => array('type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'charset' => 'utf8mb4'),
-					'value' => array('type' => 'string', 'null' => true, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'charset' => 'utf8mb4'),
-					'type' => array('type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'charset' => 'utf8mb4'),
+					'block_key' => array('type' => 'string', 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+					'field_name' => array('type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+					'value' => array('type' => 'string', 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+					'type' => array('type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 					'created_user' => array('type' => 'integer', 'null' => true, 'default' => null, 'unsigned' => false),
 					'created' => array('type' => 'datetime', 'null' => true, 'default' => null),
 					'modified_user' => array('type' => 'integer', 'null' => true, 'default' => null, 'unsigned' => false),
@@ -47,7 +47,7 @@ class AddBlockSettings extends CakeMigration {
 					'indexes' => array(
 						'PRIMARY' => array('column' => 'id', 'unique' => 1),
 					),
-					'tableParameters' => array('charset' => 'utf8mb4', 'collate' => 'utf8mb4_general_ci', 'engine' => 'InnoDB'),
+					'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB'),
 				),
 			),
 		),
