@@ -154,7 +154,7 @@ class BlockFixture extends CakeTestFixture {
 		if (class_exists('NetCommonsTestSuite') && NetCommonsTestSuite::$plugin) {
 			$records = array_keys($this->records);
 			foreach ($records as $i) {
-				if ($this->records[$i]['plugin_key'] === 'test_plugin') {
+				if (Hash::get($this->records[$i], 'plugin_key', 'test_plugin') === 'test_plugin') {
 					$this->records[$i]['plugin_key'] = NetCommonsTestSuite::$plugin;
 				}
 			}
