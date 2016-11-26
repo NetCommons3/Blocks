@@ -154,14 +154,21 @@ class BlockBehaviorDeleteBlockTest extends NetCommonsModelTestCase {
 			'recursive' => -1,
 			'conditions' => array('key' => $blockKey)
 		));
-		$this->assertEquals(2, $count);
+		$this->assertEquals(1, $count);
+
+		$Model = ClassRegistry::init('Blocks.BlocksLanguage');
+		$count = $Model->find('count', array(
+			'recursive' => -1,
+			'conditions' => array('block_id' => $blockId)
+		));
+		$this->assertEquals(1, $count);
 
 		$Model = ClassRegistry::init('Frames.Frame');
 		$count = $Model->find('count', array(
 			'recursive' => -1,
 			'conditions' => array('block_id' => $blockId)
 		));
-		$this->assertEquals(4, $count);
+		$this->assertEquals(2, $count);
 
 		$Model = ClassRegistry::init('Blocks.BlockRolePermission');
 		$count = $Model->find('count', array(

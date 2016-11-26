@@ -78,7 +78,7 @@ class BlockBehaviorGetBlockConditionsTest extends NetCommonsModelTestCase {
 		//テスト実施
 		$conditions = $this->TestModel->getBlockConditions($conditions);
 		$expected = array(
-			'Block.language_id' => '2',
+			'BlocksLanguage.language_id' => '2',
 			'Block.room_id' => '2',
 			'Block.plugin_key' => 'blocks',
 			'TestBlockBehaviorModel.key' => 'content_1'
@@ -86,38 +86,86 @@ class BlockBehaviorGetBlockConditionsTest extends NetCommonsModelTestCase {
 		$this->assertEquals($expected, $conditions);
 
 		$result = $this->TestModel->find('all', array(
-			'recursive' => -1,
+			'recursive' => 0,
 			'conditions' => $conditions,
-			'joins' => array(
-				array(
-					'table' => $this->TestModel->Block->table,
-					'alias' => $this->TestModel->Block->alias,
-					'type' => 'INNER',
-					'conditions' => array(
-						$this->TestModel->alias . '.block_id' . ' = ' . $this->TestModel->Block->alias . ' .id',
-					),
-				),
-			),
 		));
 		$expected = array(
-			0 => array('TestBlockBehaviorModel' => array(
-				'id' => '1',
-				'block_id' => '2',
-				'key' => 'content_1',
-				'created_user' => '0',
-				'created' => null,
-				'modified_user' => '0',
-				'modified' => null
-			)),
-			1 => array('TestBlockBehaviorModel' => array(
-				'id' => '2',
-				'block_id' => '2',
-				'key' => 'content_1',
-				'created_user' => '0',
-				'created' => null,
-				'modified_user' => '0',
-				'modified' => null
-			))
+			0 => array(
+				'TestBlockBehaviorModel' => array(
+					'id' => '1',
+					'block_id' => '2',
+					'key' => 'content_1',
+					'created_user' => '0',
+					'created' => null,
+					'modified_user' => '0',
+					'modified' => null,
+				),
+				'Block' => array(
+					'id' => '2',
+					'room_id' => '2',
+					'plugin_key' => 'blocks',
+					'key' => 'block_1',
+					'public_type' => '1',
+					'publish_start' => null,
+					'publish_end' => null,
+					'content_count' => '0',
+					'created_user' => null,
+					'created' => null,
+					'modified_user' => null,
+					'modified' => null,
+				),
+				'TrackableCreator' => array(
+					'id' => null, 'handlename' => null,
+				),
+				'TrackableUpdater' => array(
+					'id' => null, 'handlename' => null,
+				),
+				'BlocksLanguage' => array(
+					'language_id' => '2',
+					'block_id' => '2',
+					'name' => 'Block name 1',
+					'is_original' => true,
+					'is_translation' => false,
+				),
+			),
+			1 => array(
+				'TestBlockBehaviorModel' => array(
+					'id' => '2',
+					'block_id' => '2',
+					'key' => 'content_1',
+					'created_user' => '0',
+					'created' => null,
+					'modified_user' => '0',
+					'modified' => null,
+				),
+				'Block' => array(
+					'id' => '2',
+					'room_id' => '2',
+					'plugin_key' => 'blocks',
+					'key' => 'block_1',
+					'public_type' => '1',
+					'publish_start' => null,
+					'publish_end' => null,
+					'content_count' => '0',
+					'created_user' => null,
+					'created' => null,
+					'modified_user' => null,
+					'modified' => null,
+				),
+				'TrackableCreator' => array(
+					'id' => null, 'handlename' => null,
+				),
+				'TrackableUpdater' => array(
+					'id' => null, 'handlename' => null,
+				),
+				'BlocksLanguage' => array(
+					'language_id' => '2',
+					'block_id' => '2',
+					'name' => 'Block name 1',
+					'is_original' => true,
+					'is_translation' => false,
+				),
+			),
 		);
 		$this->assertEquals($expected, $result);
 	}

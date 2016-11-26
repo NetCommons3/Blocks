@@ -421,7 +421,7 @@ class BlockTabsHelper extends AppHelper {
  */
 	protected function _getBlockTitleHtml($options) {
 		$html = '';
-		$blockName = Current::read('Block.name');
+		$blockName = Current::read('BlocksLanguage.name');
 		if (($this->_View->request->params['action'] === 'edit' || $options['displayBlockTitle'])
 			&& $blockName
 		) {

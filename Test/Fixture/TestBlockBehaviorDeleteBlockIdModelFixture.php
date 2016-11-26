@@ -46,7 +46,7 @@ class TestBlockBehaviorDeleteBlockIdModelFixture extends CakeTestFixture {
 	public $records = array(
 		array(
 			'id' => '1',
-			'block_id' => '1',
+			'block_id' => '2',
 			'language_id' => '1',
 			'key' => 'key_1',
 			'name' => 'Test Name 1 en',
@@ -60,7 +60,7 @@ class TestBlockBehaviorDeleteBlockIdModelFixture extends CakeTestFixture {
 		),
 		array(
 			'id' => '3',
-			'block_id' => '3',
+			'block_id' => '4',
 			'language_id' => '1',
 			'key' => 'key_2',
 			'name' => 'Test Name 2 en',

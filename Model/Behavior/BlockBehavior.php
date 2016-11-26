@@ -108,6 +108,7 @@ class BlockBehavior extends ModelBehavior {
 
 		$model->loadModels(array(
 			'Block' => 'Blocks.Block',
+			'BlocksLanguage' => 'Blocks.BlocksLanguage',
 		));
 		$model->Block->set($model->data['Block']);
 		if (! $model->Block->validates()) {
@@ -151,11 +152,10 @@ class BlockBehavior extends ModelBehavior {
 
 		$model->loadModels(array(
 			'Block' => 'Blocks.Block',
+			'BlocksLanguage' => 'Blocks.BlocksLanguage',
 			'Frame' => 'Frames.Frame',
 		));
-		if (isset($this->settings['loadModels'])) {
-			$model->loadModels($this->settings['loadModels']);
-		}
+		$model->loadModels(Hash::get($this->settings, 'loadModels', array()));
 
 		//frameの取得
 		$frame = $model->Frame->findById($model->data['Frame']['id']);
@@ -196,12 +196,9 @@ class BlockBehavior extends ModelBehavior {
 			$model->data[$model->alias]['block_key'] = $model->data['Block']['key'];
 		}
 
-		$keys = array_keys($model->data);
+		$modelData = Hash::remove($model->data, 'Frame');
+		$keys = array_keys($modelData);
 		foreach ($keys as $key) {
-			if ($key === 'Frame') {
-				continue;
-			}
-
 			$this->__setRecursiveBlockField(
 				$model, $model->data, 'block_id', $key, $model->data['Block']['id']
 			);
@@ -257,12 +254,12 @@ class BlockBehavior extends ModelBehavior {
 		$roomId = Hash::get($model->data, 'Block.room_id', $frame['Frame']['room_id']);
 		$model->data['Block']['room_id'] = $roomId;
 
-		$langId = Hash::get($model->data, 'Block.language_id', $frame['Frame']['language_id']);
-		$model->data['Block']['language_id'] = $langId;
+		$langId = Hash::get($model->data, 'BlocksLanguage.language_id', Current::read('Language.id'));
+		$model->data['BlocksLanguage']['language_id'] = $langId;
 
 		$model->data['Block'] = Hash::insert($model->data['Block'], 'modified', null);
 
-		$model->data['Block']['name'] = $this->__getBlockName($model);
+		$model->data['BlocksLanguage']['name'] = $this->__getBlockName($model);
 		$model->data['Block']['plugin_key'] = Inflector::underscore($model->plugin);
 
 		//blocksの登録
@@ -270,8 +267,34 @@ class BlockBehavior extends ModelBehavior {
 		if (! $block) {
 			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 		}
+		$model->data['BlocksLanguage']['block_id'] = $block['Block']['id'];
 		$model->data['Block'] = $block['Block'];
 		Current::$current['Block'] = $block['Block'];
+
+		//blocks_languagesの登録
+		$blockLanguage = $model->BlocksLanguage->find('first', array(
+			'recursive' => -1,
+			'conditions' => array(
+				'block_id' => $model->data['BlocksLanguage']['block_id'],
+				'language_id' => $model->data['BlocksLanguage']['language_id'],
+			),
+		));
+		$model->data['BlocksLanguage'] = Hash::merge(
+			array(
+				'is_original' => true,
+				'is_translation' => false,
+			),
+			Hash::get($blockLanguage, 'BlocksLanguage', array()),
+			Hash::get($model->data, 'BlocksLanguage', array())
+		);
+		$model->data['BlocksLanguage'] = Hash::insert($model->data['BlocksLanguage'], 'modified', null);
+
+		$blockLanguage = $model->BlocksLanguage->save($model->data['BlocksLanguage'], false);
+		if (! $blockLanguage) {
+			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+		}
+		$model->data['BlocksLanguage'] = $blockLanguage['BlocksLanguage'];
+		Current::$current['BlocksLanguage'] = $blockLanguage['BlocksLanguage'];
 
 		//Behaviorをセットしているモデルに対してblock_idとblock_keyをセットする
 		if ($model->hasField('block_id') && ! Hash::check($model->data, $model->alias . '.block_id')) {
@@ -289,9 +312,9 @@ class BlockBehavior extends ModelBehavior {
  * @return string
  */
 	private function __getBlockName(Model $model) {
-		if (Hash::get($model->data, 'Block.name')) {
+		if (Hash::get($model->data, 'BlocksLanguage.name')) {
 			//値があれば、何もしない
-			$name = Hash::get($model->data, 'Block.name');
+			$name = Hash::get($model->data, 'BlocksLanguage.name');
 		} elseif (Hash::get($this->settings, 'nameHtml', false)) {
 			list($alias, $filed) = pluginSplit($this->settings['name']);
 			$name = trim(mb_strimwidth(strip_tags($model->data[$alias][$filed]), 0, self::NAME_LENGTH));
@@ -326,13 +349,45 @@ class BlockBehavior extends ModelBehavior {
  * @return array Conditions data
  */
 	public function getBlockConditions(Model $model, $conditions = array()) {
+		$this->bindModelBlock($model);
+
 		$conditions = Hash::merge(array(
-			'Block.language_id' => Current::read('Language.id'),
+			'BlocksLanguage.language_id' => Current::read('Language.id'),
 			'Block.room_id' => Current::read('Room.id'),
 			'Block.plugin_key' => Current::read('Plugin.key'),
 		), $conditions);
 
 		return $conditions;
+	}
+
+/**
+ * ブロック言語テーブルのバインド
+ *
+ * @param Model $model ビヘイビアの呼び出しのモデル
+ * @return void
+ */
+	public function bindModelBlock(Model $model) {
+		//belongsToの定義は、こっちでやる
+		$model->bindModel(array(
+			'belongsTo' => array(
+				//'Block' => array(
+				//	'className' => 'Blocks.Block',
+				//	'foreignKey' => 'block_id',
+				//	'fields' => '',
+				//	'order' => ''
+				//),
+				'BlocksLanguage' => array(
+					'className' => 'Blocks.BlocksLanguage',
+					'foreignKey' => false,
+					'conditions' => array(
+						'BlocksLanguage.block_id = Block.id',
+						'BlocksLanguage.language_id' => Current::read('Language.id', '2')
+					),
+					'fields' => array('language_id', 'block_id', 'name', 'is_original', 'is_translation'),
+					'order' => ''
+				),
+			)
+		), false);
 	}
 
 /**
@@ -389,6 +444,8 @@ class BlockBehavior extends ModelBehavior {
  * @return array Conditions data
  */
 	public function getBlockConditionById(Model $model, $conditions = array()) {
+		$this->bindModelBlock($model);
+
 		$conditions = Hash::merge(array(
 			'Block.id' => Current::read('Block.id'),
 			'Block.room_id' => Current::read('Room.id'),
