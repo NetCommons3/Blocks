@@ -281,7 +281,7 @@ class BlockBehavior extends ModelBehavior {
 		));
 		$model->data['BlocksLanguage'] = Hash::merge(
 			array(
-				'is_original' => true,
+				'is_origin' => true,
 				'is_translation' => false,
 			),
 			Hash::get($blockLanguage, 'BlocksLanguage', array()),
@@ -383,7 +383,7 @@ class BlockBehavior extends ModelBehavior {
 						'BlocksLanguage.block_id = Block.id',
 						'BlocksLanguage.language_id' => Current::read('Language.id', '2')
 					),
-					'fields' => array('language_id', 'block_id', 'name', 'is_original', 'is_translation'),
+					'fields' => array('language_id', 'block_id', 'name', 'is_origin', 'is_translation'),
 					'order' => ''
 				),
 			)

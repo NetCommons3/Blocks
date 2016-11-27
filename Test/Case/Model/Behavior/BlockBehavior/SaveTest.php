@@ -702,7 +702,7 @@ class BlockBehaviorSaveTest extends NetCommonsModelTestCase {
 			'language_id' => '2',
 			'name' => $data[$alias]['name'],
 			'id' => $data[$alias]['id'],
-			'is_original' => true,
+			'is_origin' => true,
 			'is_translation' => false,
 		);
 		$this->assertDatetime($result[$alias]['modified']);

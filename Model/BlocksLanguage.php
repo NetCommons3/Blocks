@@ -80,7 +80,7 @@ class BlocksLanguage extends BlocksAppModel {
 			//		//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			//	),
 			//),
-			'is_original' => array(
+			'is_origin' => array(
 				'boolean' => array(
 					'rule' => array('boolean'),
 					'message' => __d('net_commons', 'Invalid request.'),
