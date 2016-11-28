@@ -176,12 +176,6 @@ class Block extends BlocksAppModel {
  */
 	public function beforeValidate($options = array()) {
 		$this->validate = Hash::merge(array(
-			'language_id' => array(
-				'numeric' => array(
-					'rule' => array('numeric'),
-					'message' => __d('net_commons', 'Invalid request.'),
-				),
-			),
 			'room_id' => array(
 				'numeric' => array(
 					'rule' => array('numeric'),
