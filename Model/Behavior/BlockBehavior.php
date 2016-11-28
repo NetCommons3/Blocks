@@ -381,7 +381,7 @@ class BlockBehavior extends ModelBehavior {
 					'foreignKey' => false,
 					'conditions' => array(
 						'BlocksLanguage.block_id = Block.id',
-						'BlocksLanguage.language_id' => Current::read('Language.id', '2')
+						'BlocksLanguage.language_id' => Current::read('Language.id', '0')
 					),
 					'fields' => array('language_id', 'block_id', 'name', 'is_origin', 'is_translation'),
 					'order' => ''
