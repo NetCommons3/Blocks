@@ -41,6 +41,7 @@ class BlocksControllerPaginatorTest extends NetCommonsControllerTestCase {
 		}
 		$this->fixtures = array_merge($this->fixtures, array(
 			'plugin.blocks.block4paginator',
+			'plugin.blocks.blocks_language4paginator',
 		));
 		parent::__construct($name, $data, $dataName);
 	}
