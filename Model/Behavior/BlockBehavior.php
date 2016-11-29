@@ -483,6 +483,7 @@ class BlockBehavior extends ModelBehavior {
 	public function deleteBlock(Model $model, $blockKey) {
 		$model->loadModels([
 			'Block' => 'Blocks.Block',
+			'BlocksLanguage' => 'Blocks.BlocksLanguage',
 			'Frame' => 'Frames.Frame',
 		]);
 
@@ -538,6 +539,14 @@ class BlockBehavior extends ModelBehavior {
 			$model->Block->alias . '.key' => $blockKey
 		);
 		if (! $model->Block->deleteAll($conditions, false)) {
+			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+		}
+
+		//BlocksLanguageデータ削除
+		$conditions = array(
+			$model->BlocksLanguage->alias . '.block_id' => $blockIds
+		);
+		if (! $model->BlocksLanguage->deleteAll($conditions, false)) {
 			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 		}
 
