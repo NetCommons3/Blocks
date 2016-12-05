@@ -149,20 +149,46 @@ class Block extends BlocksAppModel {
 						'fields' => '',
 						'order' => ''
 					),
-					'BlocksLanguage' => array(
-						'className' => 'Blocks.BlocksLanguage',
-						'foreignKey' => false,
-						'conditions' => array(
-							'BlocksLanguage.block_id = Block.id',
-							'BlocksLanguage.language_id' => Current::read('Language.id', '0')
-						),
-						'fields' => array('language_id', 'block_id', 'name', 'is_origin', 'is_translation'),
-						'order' => ''
-					),
 				)
 			), true);
+
+			$belongsTo = $this->bindModelBlockLang();
+			$this->bindModel($belongsTo, true);
 		}
 		return true;
+	}
+
+/**
+ * ブロック言語テーブルのバインド条件を戻す
+ *
+ * @return array
+ */
+	public function bindModelBlockLang() {
+		$belongsTo = array(
+			'belongsTo' => array(
+				//'Block' => array(
+				//	'className' => 'Blocks.Block',
+				//	'foreignKey' => 'block_id',
+				//	'fields' => '',
+				//	'order' => ''
+				//),
+				'BlocksLanguage' => array(
+					'className' => 'Blocks.BlocksLanguage',
+					'foreignKey' => false,
+					'conditions' => array(
+						'BlocksLanguage.block_id = Block.id',
+						'OR' => array(
+							'BlocksLanguage.is_translation' => false,
+							'BlocksLanguage.language_id' => Current::read('Language.id', '0'),
+						),
+					),
+					'fields' => array('language_id', 'block_id', 'name', 'is_origin', 'is_translation'),
+					'order' => ''
+				),
+			)
+		);
+
+		return $belongsTo;
 	}
 
 /**
@@ -245,4 +271,5 @@ class Block extends BlocksAppModel {
 		}
 		return $result;
 	}
+
 }

@@ -349,45 +349,21 @@ class BlockBehavior extends ModelBehavior {
  * @return array Conditions data
  */
 	public function getBlockConditions(Model $model, $conditions = array()) {
-		$this->bindModelBlock($model);
+		$model->loadModels([
+			'Block' => 'Blocks.Block',
+		]);
+
+		//belongsToの定義は、こっちでやる
+		$belongsTo = $model->Block->bindModelBlockLang();
+		$model->bindModel($belongsTo, false);
 
 		$conditions = Hash::merge(array(
-			'BlocksLanguage.language_id' => Current::read('Language.id'),
+			//'BlocksLanguage.language_id' => Current::read('Language.id'),
 			'Block.room_id' => Current::read('Room.id'),
 			'Block.plugin_key' => Current::read('Plugin.key'),
 		), $conditions);
 
 		return $conditions;
-	}
-
-/**
- * ブロック言語テーブルのバインド
- *
- * @param Model $model ビヘイビアの呼び出しのモデル
- * @return void
- */
-	public function bindModelBlock(Model $model) {
-		//belongsToの定義は、こっちでやる
-		$model->bindModel(array(
-			'belongsTo' => array(
-				//'Block' => array(
-				//	'className' => 'Blocks.Block',
-				//	'foreignKey' => 'block_id',
-				//	'fields' => '',
-				//	'order' => ''
-				//),
-				'BlocksLanguage' => array(
-					'className' => 'Blocks.BlocksLanguage',
-					'foreignKey' => false,
-					'conditions' => array(
-						'BlocksLanguage.block_id = Block.id',
-						'BlocksLanguage.language_id' => Current::read('Language.id', '0')
-					),
-					'fields' => array('language_id', 'block_id', 'name', 'is_origin', 'is_translation'),
-					'order' => ''
-				),
-			)
-		), false);
 	}
 
 /**
@@ -444,7 +420,13 @@ class BlockBehavior extends ModelBehavior {
  * @return array Conditions data
  */
 	public function getBlockConditionById(Model $model, $conditions = array()) {
-		$this->bindModelBlock($model);
+		$model->loadModels([
+			'Block' => 'Blocks.Block',
+		]);
+
+		//belongsToの定義は、こっちでやる
+		$belongsTo = $model->Block->bindModelBlockLang();
+		$model->bindModel($belongsTo, false);
 
 		$conditions = Hash::merge(array(
 			'Block.id' => Current::read('Block.id'),
