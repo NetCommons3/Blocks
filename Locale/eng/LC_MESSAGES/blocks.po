@@ -26,7 +26,7 @@ msgstr ""
 #: Tasks/View/TaskBlocks/index.ctp:38
 #: Videos/View/VideoBlocks/index.ctp:42
 msgid "Publishing setting"
-msgstr ""
+msgstr "Status"
 
 #: Announcements/View/Elements/AnnouncementBlockRolePermissions/edit_form.ctp:21
 #: Cabinets/View/Elements/CabinetBlockRolePermissions/edit_form.ctp:35
