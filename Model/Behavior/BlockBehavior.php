@@ -56,16 +56,6 @@ App::uses('Block', 'Blocks.Model');
 class BlockBehavior extends ModelBehavior {
 
 /**
- * ビヘイビアの設定
- *
- * @var array
- * @see ModelBehavior::$settings
- */
-	public $settings = array(
-		'priority' => 7
-	);
-
-/**
  * Max length of content
  *
  * 名称が長い場合に切り取る文字数
@@ -82,8 +72,13 @@ class BlockBehavior extends ModelBehavior {
  * @return void
  */
 	public function setup(Model $model, $config = array()) {
+		parent::setup($model, $config);
+
 		$this->settings = Hash::merge($this->settings, $config);
 		$this->settings['loadModels'] = Hash::get($this->settings, 'loadModels', array());
+
+		//ビヘイビアの優先順位
+		$this->settings['priority'] = 6;
 	}
 
 /**
@@ -276,14 +271,10 @@ class BlockBehavior extends ModelBehavior {
 			'recursive' => -1,
 			'conditions' => array(
 				'block_id' => $model->data['BlocksLanguage']['block_id'],
-				'language_id' => $model->data['BlocksLanguage']['language_id'],
+				'language_id' => Current::read('Language.id'),
 			),
 		));
 		$model->data['BlocksLanguage'] = Hash::merge(
-			array(
-				'is_origin' => true,
-				'is_translation' => false,
-			),
 			Hash::get($blockLanguage, 'BlocksLanguage', array()),
 			Hash::get($model->data, 'BlocksLanguage', array())
 		);
@@ -361,6 +352,10 @@ class BlockBehavior extends ModelBehavior {
 			//'BlocksLanguage.language_id' => Current::read('Language.id'),
 			'Block.room_id' => Current::read('Room.id'),
 			'Block.plugin_key' => Current::read('Plugin.key'),
+			'OR' => array(
+				$model->alias . '.is_translation' => false,
+				$model->alias . '.language_id' => Current::read('Language.id', '0'),
+			),
 		), $conditions);
 
 		return $conditions;
@@ -431,6 +426,10 @@ class BlockBehavior extends ModelBehavior {
 		$conditions = Hash::merge(array(
 			'Block.id' => Current::read('Block.id'),
 			'Block.room_id' => Current::read('Room.id'),
+			'OR' => array(
+				$model->alias . '.is_translation' => false,
+				$model->alias . '.language_id' => Current::read('Language.id', '0'),
+			),
 		), $conditions);
 
 		return $conditions;

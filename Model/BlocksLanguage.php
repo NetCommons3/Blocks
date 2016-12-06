@@ -23,6 +23,18 @@ App::uses('BlocksAppModel', 'Blocks.Model');
 class BlocksLanguage extends BlocksAppModel {
 
 /**
+ * use behaviors
+ *
+ * @var array
+ */
+	public $actsAs = array(
+		//多言語
+		'M17n.M17n' => array(
+			'key_field' => 'block_id'
+		),
+	);
+
+/**
  * Validation rules
  *
  * @var array
