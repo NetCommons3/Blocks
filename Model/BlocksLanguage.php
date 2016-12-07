@@ -30,7 +30,7 @@ class BlocksLanguage extends BlocksAppModel {
 	public $actsAs = array(
 		//多言語
 		'M17n.M17n' => array(
-			'key_field' => 'block_id'
+			'keyField' => 'block_id'
 		),
 	);
 
