@@ -348,7 +348,7 @@ class BlockBehavior extends ModelBehavior {
 		$belongsTo = $model->Block->bindModelBlockLang();
 		$model->bindModel($belongsTo, false);
 
-		if ($model->hasField('is_translation')) {
+		if ($model->hasField('is_translation', true)) {
 			$conditions = Hash::merge(array(
 				//'BlocksLanguage.language_id' => Current::read('Language.id'),
 				'Block.room_id' => Current::read('Room.id'),
@@ -432,7 +432,7 @@ class BlockBehavior extends ModelBehavior {
 		$belongsTo = $model->Block->bindModelBlockLang();
 		$model->bindModel($belongsTo, false);
 
-		if ($model->hasField('is_translation')) {
+		if ($model->hasField('is_translation', true)) {
 			$conditions = Hash::merge(array(
 				'Block.id' => Current::read('Block.id'),
 				'Block.room_id' => Current::read('Room.id'),

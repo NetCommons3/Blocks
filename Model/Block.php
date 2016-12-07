@@ -161,22 +161,17 @@ class Block extends BlocksAppModel {
 /**
  * ブロック言語テーブルのバインド条件を戻す
  *
+ * @param string $joinKey JOINするKeyフィールド(default: Block.id)
  * @return array
  */
-	public function bindModelBlockLang() {
+	public function bindModelBlockLang($joinKey = 'Block.id') {
 		$belongsTo = array(
 			'belongsTo' => array(
-				//'Block' => array(
-				//	'className' => 'Blocks.Block',
-				//	'foreignKey' => 'block_id',
-				//	'fields' => '',
-				//	'order' => ''
-				//),
 				'BlocksLanguage' => array(
 					'className' => 'Blocks.BlocksLanguage',
 					'foreignKey' => false,
 					'conditions' => array(
-						'BlocksLanguage.block_id = Block.id',
+						'BlocksLanguage.block_id = ' . $joinKey,
 						'OR' => array(
 							'BlocksLanguage.is_translation' => false,
 							'BlocksLanguage.language_id' => Current::read('Language.id', '0'),
@@ -222,16 +217,6 @@ class Block extends BlocksAppModel {
 					'message' => __d('net_commons', 'Invalid request.'),
 				)
 			),
-			//'name' => array(
-			//	'notBlank' => array(
-			//		'rule' => array('notBlank'),
-			//		'message' => sprintf(__d('net_commons', 'Please input %s.'), __d('blocks', 'Block name')),
-			//		//'allowEmpty' => false,
-			//		//'required' => false,
-			//		//'last' => false, // Stop validation after this rule
-			//		//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			//	),
-			//),
 		), $this->validate);
 
 		return parent::beforeValidate($options);
