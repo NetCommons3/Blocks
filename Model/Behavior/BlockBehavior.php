@@ -348,15 +348,24 @@ class BlockBehavior extends ModelBehavior {
 		$belongsTo = $model->Block->bindModelBlockLang();
 		$model->bindModel($belongsTo, false);
 
-		$conditions = Hash::merge(array(
-			//'BlocksLanguage.language_id' => Current::read('Language.id'),
-			'Block.room_id' => Current::read('Room.id'),
-			'Block.plugin_key' => Current::read('Plugin.key'),
-			'OR' => array(
-				$model->alias . '.is_translation' => false,
+		if ($model->hasField('is_translation')) {
+			$conditions = Hash::merge(array(
+				//'BlocksLanguage.language_id' => Current::read('Language.id'),
+				'Block.room_id' => Current::read('Room.id'),
+				'Block.plugin_key' => Current::read('Plugin.key'),
+				'OR' => array(
+					$model->alias . '.is_translation' => false,
+					$model->alias . '.language_id' => Current::read('Language.id', '0'),
+				),
+			), $conditions);
+		} else {
+			$conditions = Hash::merge(array(
+				//'BlocksLanguage.language_id' => Current::read('Language.id'),
+				'Block.room_id' => Current::read('Room.id'),
+				'Block.plugin_key' => Current::read('Plugin.key'),
 				$model->alias . '.language_id' => Current::read('Language.id', '0'),
-			),
-		), $conditions);
+			), $conditions);
+		}
 
 		return $conditions;
 	}
@@ -423,14 +432,22 @@ class BlockBehavior extends ModelBehavior {
 		$belongsTo = $model->Block->bindModelBlockLang();
 		$model->bindModel($belongsTo, false);
 
-		$conditions = Hash::merge(array(
-			'Block.id' => Current::read('Block.id'),
-			'Block.room_id' => Current::read('Room.id'),
-			'OR' => array(
-				$model->alias . '.is_translation' => false,
+		if ($model->hasField('is_translation')) {
+			$conditions = Hash::merge(array(
+				'Block.id' => Current::read('Block.id'),
+				'Block.room_id' => Current::read('Room.id'),
+				'OR' => array(
+					$model->alias . '.is_translation' => false,
+					$model->alias . '.language_id' => Current::read('Language.id', '0'),
+				),
+			), $conditions);
+		} else {
+			$conditions = Hash::merge(array(
+				'Block.id' => Current::read('Block.id'),
+				'Block.room_id' => Current::read('Room.id'),
 				$model->alias . '.language_id' => Current::read('Language.id', '0'),
-			),
-		), $conditions);
+			), $conditions);
+		}
 
 		return $conditions;
 	}
