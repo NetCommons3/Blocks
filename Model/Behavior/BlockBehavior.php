@@ -365,9 +365,12 @@ class BlockBehavior extends ModelBehavior {
 			), $conditions);
 		} else {
 			$conditions = Hash::merge(array(
-				'BlocksLanguage.language_id' => Current::read('Language.id'),
 				'Block.room_id' => Current::read('Room.id'),
 				'Block.plugin_key' => Current::read('Plugin.key'),
+				'OR' => array(
+					'BlocksLanguage.is_translation' => false,
+					'BlocksLanguage.language_id' => Current::read('Language.id', '0'),
+				),
 			), $conditions);
 		}
 
