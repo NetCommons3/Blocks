@@ -17,7 +17,7 @@ App::uses('AppModel', 'Model');
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Blocks\Test\test_app\Plugin\TestBlocks\Model
  */
-class TestBlockBehaviorModel extends AppModel {
+class TestBlockBehaviorModelTranslation extends AppModel {
 
 /**
  * 使用ビヘイビア

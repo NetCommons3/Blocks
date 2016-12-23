@@ -52,18 +52,9 @@ App::uses('Block', 'Blocks.Model');
  *
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Blocks\Model\Behavior
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 class BlockBehavior extends ModelBehavior {
-
-/**
- * ビヘイビアの設定
- *
- * @var array
- * @see ModelBehavior::$settings
- */
-	public $settings = array(
-		'priority' => 7
-	);
 
 /**
  * Max length of content
@@ -82,8 +73,13 @@ class BlockBehavior extends ModelBehavior {
  * @return void
  */
 	public function setup(Model $model, $config = array()) {
+		parent::setup($model, $config);
+
 		$this->settings = Hash::merge($this->settings, $config);
 		$this->settings['loadModels'] = Hash::get($this->settings, 'loadModels', array());
+
+		//ビヘイビアの優先順位
+		$this->settings['priority'] = 6;
 	}
 
 /**
@@ -108,6 +104,7 @@ class BlockBehavior extends ModelBehavior {
 
 		$model->loadModels(array(
 			'Block' => 'Blocks.Block',
+			'BlocksLanguage' => 'Blocks.BlocksLanguage',
 		));
 		$model->Block->set($model->data['Block']);
 		if (! $model->Block->validates()) {
@@ -151,11 +148,10 @@ class BlockBehavior extends ModelBehavior {
 
 		$model->loadModels(array(
 			'Block' => 'Blocks.Block',
+			'BlocksLanguage' => 'Blocks.BlocksLanguage',
 			'Frame' => 'Frames.Frame',
 		));
-		if (isset($this->settings['loadModels'])) {
-			$model->loadModels($this->settings['loadModels']);
-		}
+		$model->loadModels(Hash::get($this->settings, 'loadModels', array()));
 
 		//frameの取得
 		$frame = $model->Frame->findById($model->data['Frame']['id']);
@@ -196,12 +192,9 @@ class BlockBehavior extends ModelBehavior {
 			$model->data[$model->alias]['block_key'] = $model->data['Block']['key'];
 		}
 
-		$keys = array_keys($model->data);
+		$modelData = Hash::remove($model->data, 'Frame');
+		$keys = array_keys($modelData);
 		foreach ($keys as $key) {
-			if ($key === 'Frame') {
-				continue;
-			}
-
 			$this->__setRecursiveBlockField(
 				$model, $model->data, 'block_id', $key, $model->data['Block']['id']
 			);
@@ -257,12 +250,12 @@ class BlockBehavior extends ModelBehavior {
 		$roomId = Hash::get($model->data, 'Block.room_id', $frame['Frame']['room_id']);
 		$model->data['Block']['room_id'] = $roomId;
 
-		$langId = Hash::get($model->data, 'Block.language_id', $frame['Frame']['language_id']);
-		$model->data['Block']['language_id'] = $langId;
+		$langId = Hash::get($model->data, 'BlocksLanguage.language_id', Current::read('Language.id'));
+		$model->data['BlocksLanguage']['language_id'] = $langId;
 
 		$model->data['Block'] = Hash::insert($model->data['Block'], 'modified', null);
 
-		$model->data['Block']['name'] = $this->__getBlockName($model);
+		$model->data['BlocksLanguage']['name'] = $this->__getBlockName($model);
 		$model->data['Block']['plugin_key'] = Inflector::underscore($model->plugin);
 
 		//blocksの登録
@@ -270,8 +263,30 @@ class BlockBehavior extends ModelBehavior {
 		if (! $block) {
 			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 		}
+		$model->data['BlocksLanguage']['block_id'] = $block['Block']['id'];
 		$model->data['Block'] = $block['Block'];
 		Current::$current['Block'] = $block['Block'];
+
+		//blocks_languagesの登録
+		$blockLanguage = $model->BlocksLanguage->find('first', array(
+			'recursive' => -1,
+			'conditions' => array(
+				'block_id' => $model->data['BlocksLanguage']['block_id'],
+				'language_id' => Current::read('Language.id'),
+			),
+		));
+		$model->data['BlocksLanguage'] = Hash::merge(
+			Hash::get($blockLanguage, 'BlocksLanguage', array()),
+			Hash::get($model->data, 'BlocksLanguage', array())
+		);
+		$model->data['BlocksLanguage'] = Hash::insert($model->data['BlocksLanguage'], 'modified', null);
+
+		$blockLanguage = $model->BlocksLanguage->save($model->data['BlocksLanguage'], false);
+		if (! $blockLanguage) {
+			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+		}
+		$model->data['BlocksLanguage'] = $blockLanguage['BlocksLanguage'];
+		Current::$current['BlocksLanguage'] = $blockLanguage['BlocksLanguage'];
 
 		//Behaviorをセットしているモデルに対してblock_idとblock_keyをセットする
 		if ($model->hasField('block_id') && ! Hash::check($model->data, $model->alias . '.block_id')) {
@@ -289,9 +304,9 @@ class BlockBehavior extends ModelBehavior {
  * @return string
  */
 	private function __getBlockName(Model $model) {
-		if (Hash::get($model->data, 'Block.name')) {
+		if (Hash::get($model->data, 'BlocksLanguage.name')) {
 			//値があれば、何もしない
-			$name = Hash::get($model->data, 'Block.name');
+			$name = Hash::get($model->data, 'BlocksLanguage.name');
 		} elseif (Hash::get($this->settings, 'nameHtml', false)) {
 			list($alias, $filed) = pluginSplit($this->settings['name']);
 			$name = trim(mb_strimwidth(strip_tags($model->data[$alias][$filed]), 0, self::NAME_LENGTH));
@@ -326,11 +341,51 @@ class BlockBehavior extends ModelBehavior {
  * @return array Conditions data
  */
 	public function getBlockConditions(Model $model, $conditions = array()) {
-		$conditions = Hash::merge(array(
-			'Block.language_id' => Current::read('Language.id'),
-			'Block.room_id' => Current::read('Room.id'),
-			'Block.plugin_key' => Current::read('Plugin.key'),
-		), $conditions);
+		$model->loadModels([
+			'Block' => 'Blocks.Block',
+		]);
+
+		$conditions = Hash::merge(
+			array(
+				'Block.room_id' => Current::read('Room.id'),
+				'Block.plugin_key' => Current::read('Plugin.key'),
+			),
+			$this->__getBlockDefaultConditions($model),
+			$conditions
+		);
+
+		return $conditions;
+	}
+
+/**
+ * ブロック一覧データを取得する場合のデフォルト条件を返します。
+ *
+ * @param Model $model ビヘイビアの呼び出しのモデル
+ * @return array Conditions data
+ */
+	private function __getBlockDefaultConditions(Model $model) {
+		$model->loadModels([
+			'Block' => 'Blocks.Block',
+		]);
+
+		//belongsToの定義は、こっちでやる
+		$belongsTo = $model->Block->bindModelBlockLang();
+		$model->bindModel($belongsTo, false);
+
+		if ($model->hasField('is_translation', true)) {
+			$conditions = array(
+				'OR' => array(
+					$model->alias . '.is_translation' => false,
+					$model->alias . '.language_id' => Current::read('Language.id', '0'),
+				),
+			);
+		} elseif ($model->hasField('language_id', true)) {
+			$conditions = array(
+				$model->alias . '.language_id' => Current::read('Language.id', '0'),
+			);
+		} else {
+			$conditions = array();
+		}
 
 		return $conditions;
 	}
@@ -389,10 +444,18 @@ class BlockBehavior extends ModelBehavior {
  * @return array Conditions data
  */
 	public function getBlockConditionById(Model $model, $conditions = array()) {
-		$conditions = Hash::merge(array(
-			'Block.id' => Current::read('Block.id'),
-			'Block.room_id' => Current::read('Room.id'),
-		), $conditions);
+		$model->loadModels([
+			'Block' => 'Blocks.Block',
+		]);
+
+		$conditions = Hash::merge(
+			array(
+				'Block.id' => Current::read('Block.id'),
+				'Block.room_id' => Current::read('Room.id'),
+			),
+			$this->__getBlockDefaultConditions($model),
+			$conditions
+		);
 
 		return $conditions;
 	}
@@ -426,6 +489,7 @@ class BlockBehavior extends ModelBehavior {
 	public function deleteBlock(Model $model, $blockKey) {
 		$model->loadModels([
 			'Block' => 'Blocks.Block',
+			'BlocksLanguage' => 'Blocks.BlocksLanguage',
 			'Frame' => 'Frames.Frame',
 		]);
 
@@ -481,6 +545,14 @@ class BlockBehavior extends ModelBehavior {
 			$model->Block->alias . '.key' => $blockKey
 		);
 		if (! $model->Block->deleteAll($conditions, false)) {
+			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+		}
+
+		//BlocksLanguageデータ削除
+		$conditions = array(
+			$model->BlocksLanguage->alias . '.block_id' => $blockIds
+		);
+		if (! $model->BlocksLanguage->deleteAll($conditions, false)) {
 			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 		}
 

@@ -114,10 +114,10 @@ class BlockBehaviorSaveWOBlockNameTest extends NetCommonsModelTestCase {
 		$result = $this->TestModel->save($data);
 
 		//チェック
-		$this->assertNotEmpty($result['Block']['name']);
-		$this->assertFalse($result['Block']['name'] === $result[$this->TestModel->alias]['name']);
+		$this->assertNotEmpty($result['BlocksLanguage']['name']);
+		$this->assertFalse($result['BlocksLanguage']['name'] === $result[$this->TestModel->alias]['name']);
 
-		$data['Block']['name'] = $result['Block']['name'];
+		$data['BlocksLanguage']['name'] = $result['BlocksLanguage']['name'];
 		$this->__assertBlock($data, $result);
 		$this->__assertTestModel($data, $result);
 	}
@@ -131,26 +131,39 @@ class BlockBehaviorSaveWOBlockNameTest extends NetCommonsModelTestCase {
  */
 	private function __assertBlock($data, $result) {
 		$alias = 'Block';
-
 		$expected = array(
 			'id' => $data[$alias]['id'],
 			'key' => $data[$alias]['key'],
 			'room_id' => '2',
-			'language_id' => '2',
-			'name' => $data[$alias]['name'],
 			'plugin_key' => 'test_blocks',
 		);
-
 		$this->assertDatetime($result[$alias]['modified']);
 		$result[$alias] = Hash::remove($result[$alias], 'modified');
-
 		if ($data[$alias]['id'] !== '2') {
 			$expected['id'] = '11';
-
 			$this->assertDatetime($result[$alias]['created']);
 			$result[$alias] = Hash::remove($result[$alias], 'created');
-		}
 
+			$data['BlocksLanguage']['id'] = '11';
+		} else {
+			$data['BlocksLanguage']['id'] = '2';
+		}
+		$this->assertEquals($expected, $result[$alias]);
+
+		$alias = 'BlocksLanguage';
+		$expected = array(
+			'block_id' => $data['Block']['id'],
+			'language_id' => '2',
+			'name' => $data[$alias]['name'],
+			'id' => $data[$alias]['id'],
+			'is_origin' => true,
+			'is_translation' => false,
+		);
+		$this->assertDatetime($result[$alias]['modified']);
+		$result[$alias] = Hash::remove($result[$alias], 'modified');
+		$result[$alias] = Hash::remove($result[$alias], 'created');
+		$result[$alias] = Hash::remove($result[$alias], 'modified_user');
+		$result[$alias] = Hash::remove($result[$alias], 'created_user');
 		$this->assertEquals($expected, $result[$alias]);
 	}
 

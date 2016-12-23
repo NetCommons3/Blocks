@@ -151,7 +151,7 @@ class BlockBehaviorSaveTest extends NetCommonsModelTestCase {
 		$result = $this->TestModel->save($data);
 
 		//チェック
-		$data['Block']['name'] = $data[$this->TestModel->alias]['name'];
+		$data['BlocksLanguage']['name'] = $data[$this->TestModel->alias]['name'];
 		$this->__assertBlock($data, $result);
 		$this->__assertTestModel($data, $result);
 	}
@@ -184,7 +184,7 @@ class BlockBehaviorSaveTest extends NetCommonsModelTestCase {
 		$result = $this->TestModel->save($data);
 
 		//チェック
-		$data['Block']['name'] = $data[$this->TestModel->alias]['name'];
+		$data['BlocksLanguage']['name'] = $data[$this->TestModel->alias]['name'];
 		$this->__assertBlock($data, $result);
 		$this->__assertTestModel($data, $result);
 	}
@@ -240,7 +240,7 @@ class BlockBehaviorSaveTest extends NetCommonsModelTestCase {
 		$result = $this->TestModel->save($data);
 
 		//チェック
-		$data['Block']['name'] = $data[$this->TestModel->alias]['name'];
+		$data['BlocksLanguage']['name'] = $data[$this->TestModel->alias]['name'];
 		$this->__assertBlock($data, $result);
 		$this->__assertTestModel($data, $result);
 		$this->__assertTestModelMany('0.TestBlockBehaviorSaveManyModel', $data, $result);
@@ -298,7 +298,7 @@ class BlockBehaviorSaveTest extends NetCommonsModelTestCase {
 		$result = $this->TestModel->save($data);
 
 		//チェック
-		$data['Block']['name'] = $data[$this->TestModel->alias]['name'];
+		$data['BlocksLanguage']['name'] = $data[$this->TestModel->alias]['name'];
 
 		$this->__assertBlock($data, $result);
 		$this->__assertTestModel($data, $result);
@@ -361,7 +361,7 @@ class BlockBehaviorSaveTest extends NetCommonsModelTestCase {
 		$result = $this->TestModel->save($data);
 
 		//チェック
-		$data['Block']['name'] = $data[$this->TestModel->alias]['name'];
+		$data['BlocksLanguage']['name'] = $data[$this->TestModel->alias]['name'];
 		$this->__assertBlock($data, $result);
 		$this->__assertTestModel($data, $result);
 		$this->__assertTestModelMany('TestBlockBehaviorSaveManyModels.0.TestBlockBehaviorSaveManyModel', $data, $result);
@@ -499,7 +499,7 @@ class BlockBehaviorSaveTest extends NetCommonsModelTestCase {
 		//チェック
 		$data['Block']['id'] = '11';
 		$data['Block']['key'] = OriginalKeyBehavior::generateKey($this->TestModel->Block->alias, $this->TestModel->useDbConfig);
-		$data['Block']['name'] = $data[$this->TestModel->alias]['name'];
+		$data['BlocksLanguage']['name'] = $data[$this->TestModel->alias]['name'];
 		$this->__assertBlock($data, $result);
 		$this->__assertTestModel($data, $result);
 	}
@@ -529,7 +529,7 @@ class BlockBehaviorSaveTest extends NetCommonsModelTestCase {
  */
 	public function testSaveCaseWBlockName($data) {
 		//テストデータ生成
-		$data['Block']['name'] = 'Block name';
+		$data['BlocksLanguage']['name'] = 'Block name';
 
 		//テスト実施
 		$result = $this->TestModel->save($data);
@@ -626,7 +626,7 @@ class BlockBehaviorSaveTest extends NetCommonsModelTestCase {
 		$result = $this->TestModel->save($data);
 
 		//チェック
-		$data['Block']['name'] = $data[$this->TestModel->alias]['name'];
+		$data['BlocksLanguage']['name'] = $data[$this->TestModel->alias]['name'];
 		$this->__assertBlock($data, $result);
 		$this->__assertTestModel($data, $result);
 
@@ -663,7 +663,7 @@ class BlockBehaviorSaveTest extends NetCommonsModelTestCase {
 		$result = $this->TestModel->save($data);
 
 		//チェック
-		$data['Block']['name'] = $data[$this->TestModel->alias]['name'];
+		$data['BlocksLanguage']['name'] = $data[$this->TestModel->alias]['name'];
 		$this->__assertBlock($data, $result);
 		$this->__assertTestModel($data, $result);
 	}
@@ -677,26 +677,39 @@ class BlockBehaviorSaveTest extends NetCommonsModelTestCase {
  */
 	private function __assertBlock($data, $result) {
 		$alias = 'Block';
-
 		$expected = array(
 			'id' => $data[$alias]['id'],
 			'key' => $data[$alias]['key'],
 			'room_id' => '2',
-			'language_id' => '2',
-			'name' => $data[$alias]['name'],
 			'plugin_key' => 'test_blocks',
 		);
-
 		$this->assertDatetime($result[$alias]['modified']);
 		$result[$alias] = Hash::remove($result[$alias], 'modified');
-
 		if ($data[$alias]['id'] !== '2') {
 			$expected['id'] = '11';
-
 			$this->assertDatetime($result[$alias]['created']);
 			$result[$alias] = Hash::remove($result[$alias], 'created');
-		}
 
+			$data['BlocksLanguage']['id'] = '11';
+		} else {
+			$data['BlocksLanguage']['id'] = '2';
+		}
+		$this->assertEquals($expected, $result[$alias]);
+
+		$alias = 'BlocksLanguage';
+		$expected = array(
+			'block_id' => $data['Block']['id'],
+			'language_id' => '2',
+			'name' => $data[$alias]['name'],
+			'id' => $data[$alias]['id'],
+			'is_origin' => true,
+			'is_translation' => false,
+		);
+		$this->assertDatetime($result[$alias]['modified']);
+		$result[$alias] = Hash::remove($result[$alias], 'modified');
+		$result[$alias] = Hash::remove($result[$alias], 'created');
+		$result[$alias] = Hash::remove($result[$alias], 'modified_user');
+		$result[$alias] = Hash::remove($result[$alias], 'created_user');
 		$this->assertEquals($expected, $result[$alias]);
 	}
 

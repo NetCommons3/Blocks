@@ -67,11 +67,6 @@ class BlockValidateTest extends NetCommonsValidateTest {
 		$data['Block'] = (new BlockFixture())->records[0];
 
 		return array(
-			// * language_id
-			array('data' => $data, 'field' => 'language_id', 'value' => '',
-				'message' => __d('net_commons', 'Invalid request.')),
-			array('data' => $data, 'field' => 'language_id', 'value' => 'a',
-				'message' => __d('net_commons', 'Invalid request.')),
 			// * room_id
 			array('data' => $data, 'field' => 'room_id', 'value' => '',
 				'message' => __d('net_commons', 'Invalid request.')),

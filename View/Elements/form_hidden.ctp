@@ -16,7 +16,7 @@
 
 <?php echo $this->NetCommonsForm->hidden('Block.key'); ?>
 
-<?php echo $this->NetCommonsForm->hidden('Block.language_id'); ?>
+<?php echo $this->NetCommonsForm->hidden('BlocksLanguage.language_id'); ?>
 
 <?php echo $this->NetCommonsForm->hidden('Block.room_id'); ?>
 

@@ -26,6 +26,7 @@ class BlockBehaviorGetBlockConditionByIdTest extends NetCommonsModelTestCase {
  */
 	public $fixtures = array(
 		'plugin.blocks.test_block_behavior_model',
+		'plugin.blocks.test_block_behavior_model_translation',
 	);
 
 /**
@@ -45,7 +46,6 @@ class BlockBehaviorGetBlockConditionByIdTest extends NetCommonsModelTestCase {
 
 		//テストプラグインのロード
 		NetCommonsCakeTestCase::loadTestPlugin($this, 'Blocks', 'TestBlocks');
-		$this->TestModel = ClassRegistry::init('TestBlocks.TestBlockBehaviorModel');
 	}
 
 /**
@@ -59,6 +59,11 @@ class BlockBehaviorGetBlockConditionByIdTest extends NetCommonsModelTestCase {
 	public function dataProvider() {
 		$result[0] = array();
 		$result[0]['conditions'] = array('TestBlockBehaviorModel.key' => 'content_1');
+		$result[0]['model'] = 'TestBlocks.TestBlockBehaviorModel';
+
+		$result[1] = array();
+		$result[1]['conditions'] = array('TestBlockBehaviorModelTranslation.key' => 'content_1');
+		$result[1]['model'] = 'TestBlocks.TestBlockBehaviorModelTranslation';
 
 		return $result;
 	}
@@ -67,21 +72,36 @@ class BlockBehaviorGetBlockConditionByIdTest extends NetCommonsModelTestCase {
  * getBlockConditionById()のテスト
  *
  * @param array $conditions Model::find conditions default value
+ * @param array $model Model名
  * @dataProvider dataProvider
  * @return void
  */
-	public function testGetBlockConditionById($conditions) {
+	public function testGetBlockConditionById($conditions, $model) {
+		$this->TestModel = ClassRegistry::init($model);
+
 		//テストデータ
 		Current::$current = Hash::insert(Current::$current, 'Room.id', '2');
 		Current::$current = Hash::insert(Current::$current, 'Block.id', '2');
 
 		//テスト実施
 		$conditions = $this->TestModel->getBlockConditionById($conditions);
-		$expected = array(
-			'Block.id' => '2',
-			'Block.room_id' => '2',
-			'TestBlockBehaviorModel.key' => 'content_1'
-		);
+		if ($this->TestModel->alias === 'TestBlockBehaviorModel') {
+			$expected = array(
+				'Block.id' => '2',
+				'Block.room_id' => '2',
+				$this->TestModel->alias . '.key' => 'content_1'
+			);
+		} elseif ($this->TestModel->alias === 'TestBlockBehaviorModelTranslation') {
+			$expected = array(
+				'Block.id' => '2',
+				'Block.room_id' => '2',
+				$this->TestModel->alias . '.key' => 'content_1',
+				'OR' => array(
+					$this->TestModel->alias . '.language_id' => '2',
+					$this->TestModel->alias . '.is_translation' => false,
+				),
+			);
+		}
 		$this->assertEquals($expected, $conditions);
 
 		$result = $this->TestModel->find('all', array(
@@ -99,7 +119,7 @@ class BlockBehaviorGetBlockConditionByIdTest extends NetCommonsModelTestCase {
 			),
 		));
 		$expected = array(
-			0 => array('TestBlockBehaviorModel' => array(
+			0 => array($this->TestModel->alias => array(
 				'id' => '1',
 				'block_id' => '2',
 				'key' => 'content_1',
@@ -108,7 +128,7 @@ class BlockBehaviorGetBlockConditionByIdTest extends NetCommonsModelTestCase {
 				'modified_user' => '0',
 				'modified' => null
 			)),
-			1 => array('TestBlockBehaviorModel' => array(
+			1 => array($this->TestModel->alias => array(
 				'id' => '2',
 				'block_id' => '2',
 				'key' => 'content_1',
@@ -118,6 +138,25 @@ class BlockBehaviorGetBlockConditionByIdTest extends NetCommonsModelTestCase {
 				'modified' => null
 			))
 		);
+		if ($this->TestModel->alias === 'TestBlockBehaviorModelTranslation') {
+			$expected = Hash::merge($expected, array(
+				0 => array(
+					$this->TestModel->alias => array(
+						'language_id' => '2',
+						'is_origin' => true,
+						'is_translation' => false,
+					),
+				),
+				1 => array(
+					$this->TestModel->alias => array(
+						'language_id' => '2',
+						'is_origin' => true,
+						'is_translation' => false,
+					),
+				)
+			));
+		}
+
 		$this->assertEquals($expected, $result);
 	}
 

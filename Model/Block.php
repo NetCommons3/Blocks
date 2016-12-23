@@ -15,6 +15,7 @@
 
 App::uses('BlocksAppModel', 'Blocks.Model');
 App::uses('NetCommonsTime', 'NetCommons.Utility');
+App::uses('Current', 'NetCommons.Utility');
 
 /**
  * Block Model
@@ -88,13 +89,6 @@ class Block extends BlocksAppModel {
  * @var array
  */
 	public $belongsTo = array(
-		'Language' => array(
-			'className' => 'M17n.Language',
-			'foreignKey' => 'language_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
 		'Room' => array(
 			'className' => 'Rooms.Room',
 			'foreignKey' => 'room_id',
@@ -126,6 +120,73 @@ class Block extends BlocksAppModel {
 	);
 
 /**
+ * hasAndBelongsToMany associations
+ *
+ * @var array
+ */
+	public $hasAndBelongsToMany = array();
+
+/**
+ * Called before each find operation. Return false if you want to halt the find
+ * call, otherwise return the (modified) query data.
+ *
+ * @param array $query Data used to execute this query, i.e. conditions, order, etc.
+ * @return mixed true if the operation should continue, false if it should abort; or, modified
+ *  $query to continue with new $query
+ * @link http://book.cakephp.org/2.0/en/models/callback-methods.html#beforefind
+ */
+	public function beforeFind($query) {
+		if (Hash::get($query, 'recursive') > -1) {
+			$this->bindModel(array(
+				'belongsTo' => array(
+					'Plugin' => array(
+						'className' => 'PluginManager.Plugin',
+						'foreignKey' => false,
+						'conditions' => array(
+							'Plugin.key' . ' = ' . $this->alias . '.plugin_key',
+							'Plugin.language_id' => Current::read('Language.id', '0'),
+						),
+						'fields' => '',
+						'order' => ''
+					),
+				)
+			), true);
+
+			$belongsTo = $this->bindModelBlockLang();
+			$this->bindModel($belongsTo, true);
+		}
+		return true;
+	}
+
+/**
+ * ブロック言語テーブルのバインド条件を戻す
+ *
+ * @param string $joinKey JOINするKeyフィールド(default: Block.id)
+ * @return array
+ */
+	public function bindModelBlockLang($joinKey = 'Block.id') {
+		$belongsTo = array(
+			'belongsTo' => array(
+				'BlocksLanguage' => array(
+					'className' => 'Blocks.BlocksLanguage',
+					'foreignKey' => false,
+					'conditions' => array(
+						'BlocksLanguage.block_id = ' . $joinKey,
+						'OR' => array(
+							'BlocksLanguage.is_translation' => false,
+							'BlocksLanguage.language_id' => Current::read('Language.id', '0'),
+						),
+					),
+					'fields' => array('language_id', 'block_id', 'name', 'is_origin', 'is_translation'),
+					'order' => ''
+				),
+			)
+		);
+
+		return $belongsTo;
+	}
+
+/**
  * Called during validation operations, before validation. Please note that custom
  * validation rules can be defined in $validate.
  *
@@ -136,12 +197,6 @@ class Block extends BlocksAppModel {
  */
 	public function beforeValidate($options = array()) {
 		$this->validate = Hash::merge(array(
-			'language_id' => array(
-				'numeric' => array(
-					'rule' => array('numeric'),
-					'message' => __d('net_commons', 'Invalid request.'),
-				),
-			),
 			'room_id' => array(
 				'numeric' => array(
 					'rule' => array('numeric'),
@@ -162,16 +217,6 @@ class Block extends BlocksAppModel {
 					'message' => __d('net_commons', 'Invalid request.'),
 				)
 			),
-			//'name' => array(
-			//	'notBlank' => array(
-			//		'rule' => array('notBlank'),
-			//		'message' => sprintf(__d('net_commons', 'Please input %s.'), __d('blocks', 'Block name')),
-			//		//'allowEmpty' => false,
-			//		//'required' => false,
-			//		//'last' => false, // Stop validation after this rule
-			//		//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			//	),
-			//),
 		), $this->validate);
 
 		return parent::beforeValidate($options);
@@ -211,4 +256,5 @@ class Block extends BlocksAppModel {
 		}
 		return $result;
 	}
+
 }

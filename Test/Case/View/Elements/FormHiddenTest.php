@@ -64,7 +64,7 @@ class BlocksViewElementsFormHiddenTest extends NetCommonsControllerTestCase {
 		$this->assertInput('input', 'data[Frame][id]', '6', $this->view);
 		$this->assertInput('input', 'data[Block][id]', '2', $this->view);
 		$this->assertInput('input', 'data[Block][key]', 'block_1', $this->view);
-		$this->assertInput('input', 'data[Block][language_id]', '2', $this->view);
+		$this->assertInput('input', 'data[BlocksLanguage][language_id]', '2', $this->view);
 		$this->assertInput('input', 'data[Block][room_id]', '2', $this->view);
 		$this->assertInput('input', 'data[Block][plugin_key]', 'test_blocks', $this->view);
 	}

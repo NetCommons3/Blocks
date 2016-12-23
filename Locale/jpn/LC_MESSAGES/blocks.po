@@ -1,6 +1,7 @@
 # LANGUAGE translation of CakePHP Application
 # Copyright YEAR NAME <EMAIL@ADDRESS>
 #
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
@@ -11,123 +12,165 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-"POT-Creation-Date: \n"
-"Language: ja\n"
-"X-Generator: Poedit 1.7.5\n"
 
-#: Announcements/View/AnnouncementBlocks/index.ctp:40
-#: Blocks/View/Elements/public_type.ctp:19
+#: AccessCounters/View/AccessCounterBlocks/index.ctp:37
+#: Announcements/View/AnnouncementBlocks/index.ctp:35
+#: Bbses/View/BbsBlocks/index.ctp:42
+#: Blocks/View/Elements/public_type.ctp:17
+#: Blogs/View/BlogBlocks/index.ctp:38
+#: Cabinets/View/CabinetBlocks/index.ctp:38
+#: Faqs/View/FaqBlocks/index.ctp:37
+#: Iframes/View/IframeBlocks/index.ctp:33
+#: Links/View/LinkBlocks/index.ctp:38
+#: RssReaders/View/RssReaderBlocks/index.ctp:33
+#: Tasks/View/TaskBlocks/index.ctp:38
+#: Videos/View/VideoBlocks/index.ctp:42
 msgid "Publishing setting"
 msgstr "状態"
 
-#: Announcements/View/AnnouncementBlocks/index.ctp:71
-#: Blocks/View/Elements/public_type.ctp:25
-msgid "Private"
-msgstr "非公開"
-
-#: Announcements/View/AnnouncementBlocks/index.ctp:73
-#: Blocks/View/Elements/public_type.ctp:26
-msgid "Public"
-msgstr "公開"
-
-msgid "Public before"
-msgstr "公開前"
-
-msgid "Public end"
-msgstr "公開終了"
-
-#: Announcements/View/AnnouncementBlocks/index.ctp:75
-#: Blocks/View/Elements/public_type.ctp:27
-msgid "Limited"
-msgstr "期限付き公開"
-
-msgid "Setting public"
-msgstr "公開にする"
-
-msgid "Setting private"
-msgstr "非公開にする"
-
-msgid "Setting limited public"
-msgstr "期限付き公開にする"
-
-
-#: Bbses/View/Elements/BbsBlockRolePermissions/edit_form.ctp:31
-#: Blogs/View/Elements/BlockRolePermissions/edit_form.ctp:31
-#: Faqs/View/Elements/FaqBlockRolePermissions/edit_form.ctp:30
-#: Links/View/Elements/LinkBlockRolePermissions/edit_form.ctp:30
-#: Questionnaires/View/Elements/QuestionnaireBlockRolePermissions/edit_form.ctp:30
-#: Videos/View/Elements/VideoBlockRolePermissions/edit_form.ctp:23
-msgid "Content creatable roles"
-msgstr "記事を投稿できる権限"
-
-#: Bbses/View/Elements/BbsBlockRolePermissions/edit_form.ctp:32
-#: Blogs/View/Elements/BlockRolePermissions/edit_form.ctp:32
-#: Videos/View/Elements/VideoBlockRolePermissions/edit_form.ctp:24
-msgid "Content comment creatable roles"
-msgstr "コメントを投稿できる権限"
-
-#: Bbses/View/Elements/BbsBlockRolePermissions/edit_form.ctp:35
-#: Blogs/View/Elements/BlockRolePermissions/edit_form.ctp:35
-#: Videos/View/Elements/VideoBlockRolePermissions/edit_form.ctp:27
-msgid "Content comment publishable roles"
-msgstr "コメントを承認できる権限"
-
-#: Bbses/View/Elements/BbsBlockRolePermissions/edit_form.ctp:38
-#: Blogs/View/Elements/BlockRolePermissions/edit_form.ctp:38
-#: Videos/View/Elements/VideoBlockRolePermissions/edit_form.ctp:30
-msgid "Need approval in both %s and comments "
-msgstr "%s・コメント両方に承認が必要"
-
-#: Bbses/View/Elements/BbsBlockRolePermissions/edit_form.ctp:39
-#: Blogs/View/Elements/BlockRolePermissions/edit_form.ctp:39
-#: Videos/View/Elements/VideoBlockRolePermissions/edit_form.ctp:31
-msgid "Need only comments approval"
-msgstr "コメントのみ承認が必要"
-
-#: Bbses/View/Elements/BbsBlockRolePermissions/edit_form.ctp:40
-#: Blogs/View/Elements/BlockRolePermissions/edit_form.ctp:40
-#: Faqs/View/Elements/FaqBlockRolePermissions/edit_form.ctp:34
-#: Links/View/Elements/LinkBlockRolePermissions/edit_form.ctp:34
-#: Questionnaires/View/Elements/QuestionnaireBlockRolePermissions/edit_form.ctp:34
-#: Videos/View/Elements/VideoBlockRolePermissions/edit_form.ctp:32
-msgid "Not need approval"
-msgstr "不要"
-
-#: Blocks/View/Elements/block_role_setting.ctp:48
-msgid "Creatable settings"
-msgstr "投稿権限"
-
-#: Blocks/View/Elements/block_role_setting.ctp:49
-msgid "Approval settings"
-msgstr "承認機能"
-
-#: Blocks/View/Elements/setting_tabs.ctp:20
-msgid "Block settings"
-msgstr "ブロック設定"
-
-#: Faqs/View/Elements/FaqBlockRolePermissions/edit_form.ctp:33
-#: Links/View/Elements/LinkBlockRolePermissions/edit_form.ctp:33
-#: Questionnaires/View/Elements/QuestionnaireBlockRolePermissions/edit_form.ctp:33
+#: Announcements/View/Elements/AnnouncementBlockRolePermissions/edit_form.ctp:21
+#: Cabinets/View/Elements/CabinetBlockRolePermissions/edit_form.ctp:35
+#: Calendars/View/Elements/CalendarBlockRolePermissions/permission_table_header.ctp:19
+#: Faqs/View/Elements/FaqBlockRolePermissions/edit_form.ctp:26
+#: Links/View/Elements/LinkBlockRolePermissions/edit_form.ctp:27
+#: PhotoAlbums/View/Elements/setting.ctp:31
+#: Questionnaires/View/Elements/QuestionnaireBlockRolePermissions/edit_form.ctp:26
+#: Quizzes/View/Elements/QuizBlockRolePermissions/edit_form.ctp:26
+#: Registrations/View/Elements/RegistrationBlockRolePermissions/edit_form.ctp:28
+#: RssReaders/View/Elements/RssReaderBlockRolePermissions/edit_form.ctp:22
 msgid "Need approval"
 msgstr "承認が必要"
 
+#: Announcements/View/Elements/AnnouncementBlockRolePermissions/edit_form.ctp:22
+#: Bbses/View/Elements/BbsBlockRolePermissions/edit_form.ctp:33
+#: Blogs/View/Elements/BlogBlockRolePermissions/edit_form.ctp:36
+#: Cabinets/View/Elements/CabinetBlockRolePermissions/edit_form.ctp:37
+#: Faqs/View/Elements/FaqBlockRolePermissions/edit_form.ctp:27
+#: Links/View/Elements/LinkBlockRolePermissions/edit_form.ctp:28
+#: PhotoAlbums/View/Elements/setting.ctp:32
+#: Questionnaires/View/Elements/QuestionnaireBlockRolePermissions/edit_form.ctp:27
+#: Quizzes/View/Elements/QuizBlockRolePermissions/edit_form.ctp:27
+#: Registrations/View/Elements/RegistrationBlockRolePermissions/edit_form.ctp:29
+#: RssReaders/View/Elements/RssReaderBlockRolePermissions/edit_form.ctp:23
+#: Tasks/View/Elements/TaskBlockRolePermissions/edit_form.ctp:38
+#: Videos/View/Elements/VideoBlockRolePermissions/edit_form.ctp:37
+msgid "Not need approval"
+msgstr "不要"
+
+#: Bbses/View/Elements/BbsBlockRolePermissions/edit_form.ctp:18
+#: Blogs/View/Elements/BlogBlockRolePermissions/edit_form.ctp:18
+#: PhotoAlbums/View/Elements/setting.ctp:19
+msgid "Content creatable roles"
+msgstr "記事を投稿できる権限"
+
+#: Bbses/View/Elements/BbsBlockRolePermissions/edit_form.ctp:19
+#: Blogs/View/Elements/BlogBlockRolePermissions/edit_form.ctp:20
+#: Tasks/View/Elements/TaskBlockRolePermissions/edit_form.ctp:21
+#: Videos/View/Elements/VideoBlockRolePermissions/edit_form.ctp:21
+msgid "Content comment creatable roles"
+msgstr "コメントを投稿できる権限"
+
+#: Bbses/View/Elements/BbsBlockRolePermissions/edit_form.ctp:28
+#: Blogs/View/Elements/BlogBlockRolePermissions/edit_form.ctp:31
+#: Tasks/View/Elements/TaskBlockRolePermissions/edit_form.ctp:33
+#: Videos/View/Elements/VideoBlockRolePermissions/edit_form.ctp:32
+msgid "Content comment publishable roles"
+msgstr "コメントを承認できる権限"
+
+#: Bbses/View/Elements/BbsBlockRolePermissions/edit_form.ctp:31
+#: Blogs/View/Elements/BlogBlockRolePermissions/edit_form.ctp:34
+#: Tasks/View/Elements/TaskBlockRolePermissions/edit_form.ctp:36
+#: Videos/View/Elements/VideoBlockRolePermissions/edit_form.ctp:35
+msgid "Need approval in both %s and comments "
+msgstr "%s・コメント両方に承認が必要"
+
+#: Bbses/View/Elements/BbsBlockRolePermissions/edit_form.ctp:32
+#: Blogs/View/Elements/BlogBlockRolePermissions/edit_form.ctp:35
+#: Tasks/View/Elements/TaskBlockRolePermissions/edit_form.ctp:37
+#: Videos/View/Elements/VideoBlockRolePermissions/edit_form.ctp:36
+msgid "Need only comments approval"
+msgstr "コメントのみ承認が必要"
+
+#: Blocks/Model/Behavior/BlockBehavior.php:322
+msgid "(no text)"
+msgstr "（テキストなし）"
+
+#: Blocks/Model/Behavior/BlockBehavior.php:328
+msgid "Block %s"
+msgstr ""
+
+#: Blocks/Test/Case/View/Elements/BlockCreatableSettingTest.php:62
+#: Blocks/View/Elements/block_creatable_setting.ctp:29
+msgid "Creatable settings"
+msgstr "投稿権限"
+
+#: Blocks/Test/Case/View/Helper/BlockTabsHelper/BlockTest.php:147;185
+msgid "Block settings"
+msgstr "ブロック設定"
+
+#: Blocks/View/Blocks/not_found.ctp:19
+#: Blocks/View/Helper/BlockIndexHelper.php:124
+msgid "When you newly created, %s, please click."
+msgstr "新しく作成するときは、%sをクリックしてください。"
+
+#: Blocks/View/Elements/block_approval_setting.ctp:55
+msgid "Approval settings"
+msgstr "承認機能"
+
+#: Blocks/View/Elements/modifed_info.ctp:20
+msgid "Created:"
+msgstr "作成:"
+
+#: Blocks/View/Elements/modifed_info.ctp:34
+msgid "Modified:"
+msgstr "更新:"
+
+#: Blocks/View/Elements/public_type.ctp:20
+msgid "Setting public"
+msgstr "公開にする"
+
+#: Blocks/View/Elements/public_type.ctp:21
+msgid "Setting private"
+msgstr "非公開にする"
+
+#: Blocks/View/Elements/public_type.ctp:22
+msgid "Setting limited public"
+msgstr "期限付き公開にする"
+
+#: Blocks/View/Helper/BlockIndexHelper.php:100
 msgid "%sThe highlighted%s target, %s, is currently displayed."
 msgstr "%sハイライト%sされている%sが現在表示されています。<br>"
 "新しく作成するときは、%sを押してください。"
 "編集もしくは削除するときは、%sを押してください。"
 
-msgid "When you newly created, %s, please click."
-msgstr "新しく作成するときは、%sをクリックしてください。"
+#: Blocks/View/Helper/BlockIndexHelper.php:193
+#: Blocks/View/Helper/BlocksHelper.php:133
+#: Topics/Model/Topic.php:313
+#: Topics/Test/Case/View/Helper/TopicsHelper/PrivateGetStatusLabelTest.php:191
+msgid "Private"
+msgstr "非公開"
 
-#
-#: ブロック設定
-#
+#: Blocks/View/Helper/BlockIndexHelper.php:195
+msgid "Public"
+msgstr "公開"
 
-msgid "Created:"
-msgstr "作成:"
+#: Blocks/View/Helper/BlockIndexHelper.php:197
+#: Blocks/View/Helper/BlocksHelper.php:136
+#: Topics/Model/Topic.php:319
+#: Topics/Test/Case/View/Helper/TopicsHelper/PrivateGetStatusLabelTest.php:259
+msgid "Public before"
+msgstr "公開前"
 
-msgid "Modified:"
-msgstr "更新:"
+#: Blocks/View/Helper/BlockIndexHelper.php:199
+#: Blocks/View/Helper/BlocksHelper.php:138
+#: Topics/Model/Topic.php:331
+#: Topics/Test/Case/View/Helper/TopicsHelper/PrivateGetStatusLabelTest.php:276;612;629;646;664;681;698
+msgid "Public end"
+msgstr "公開終了"
 
-msgid "(no text)"
-msgstr "（テキストなし）"
+#: Blocks/View/Helper/BlockIndexHelper.php:201
+#: Blocks/View/Helper/BlocksHelper.php:140
+#: Topics/Model/Topic.php:325
+#: Topics/Test/Case/View/Helper/TopicsHelper/PrivateGetStatusLabelTest.php:208;225;242
+msgid "Limited"
+msgstr "期限付き公開"
