@@ -52,6 +52,7 @@ App::uses('Block', 'Blocks.Model');
  *
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Blocks\Model\Behavior
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 class BlockBehavior extends ModelBehavior {
 
@@ -344,34 +345,46 @@ class BlockBehavior extends ModelBehavior {
 			'Block' => 'Blocks.Block',
 		]);
 
+		$conditions = Hash::merge(
+			array(
+				'Block.room_id' => Current::read('Room.id'),
+				'Block.plugin_key' => Current::read('Plugin.key'),
+			),
+			$this->__getBlockDefaultConditions($model),
+			$conditions
+		);
+
+		return $conditions;
+	}
+
+/**
+ * ブロック一覧データを取得する場合のデフォルト条件を返します。
+ *
+ * @param Model $model ビヘイビアの呼び出しのモデル
+ * @return array Conditions data
+ */
+	private function __getBlockDefaultConditions(Model $model) {
+		$model->loadModels([
+			'Block' => 'Blocks.Block',
+		]);
+
 		//belongsToの定義は、こっちでやる
 		$belongsTo = $model->Block->bindModelBlockLang();
 		$model->bindModel($belongsTo, false);
 
 		if ($model->hasField('is_translation', true)) {
-			$conditions = Hash::merge(array(
-				'Block.room_id' => Current::read('Room.id'),
-				'Block.plugin_key' => Current::read('Plugin.key'),
+			$conditions = array(
 				'OR' => array(
 					$model->alias . '.is_translation' => false,
 					$model->alias . '.language_id' => Current::read('Language.id', '0'),
 				),
-			), $conditions);
+			);
 		} elseif ($model->hasField('language_id', true)) {
-			$conditions = Hash::merge(array(
-				'Block.room_id' => Current::read('Room.id'),
-				'Block.plugin_key' => Current::read('Plugin.key'),
+			$conditions = array(
 				$model->alias . '.language_id' => Current::read('Language.id', '0'),
-			), $conditions);
+			);
 		} else {
-			$conditions = Hash::merge(array(
-				'Block.room_id' => Current::read('Room.id'),
-				'Block.plugin_key' => Current::read('Plugin.key'),
-				'OR' => array(
-					'BlocksLanguage.is_translation' => false,
-					'BlocksLanguage.language_id' => Current::read('Language.id', '0'),
-				),
-			), $conditions);
+			$conditions = array();
 		}
 
 		return $conditions;
@@ -435,31 +448,14 @@ class BlockBehavior extends ModelBehavior {
 			'Block' => 'Blocks.Block',
 		]);
 
-		//belongsToの定義は、こっちでやる
-		$belongsTo = $model->Block->bindModelBlockLang();
-		$model->bindModel($belongsTo, false);
-
-		if ($model->hasField('is_translation', true)) {
-			$conditions = Hash::merge(array(
+		$conditions = Hash::merge(
+			array(
 				'Block.id' => Current::read('Block.id'),
 				'Block.room_id' => Current::read('Room.id'),
-				'OR' => array(
-					$model->alias . '.is_translation' => false,
-					$model->alias . '.language_id' => Current::read('Language.id', '0'),
-				),
-			), $conditions);
-		} elseif ($model->hasField('language_id', true)) {
-			$conditions = Hash::merge(array(
-				'Block.id' => Current::read('Block.id'),
-				'Block.room_id' => Current::read('Room.id'),
-				$model->alias . '.language_id' => Current::read('Language.id', '0'),
-			), $conditions);
-		} else {
-			$conditions = Hash::merge(array(
-				'Block.id' => Current::read('Block.id'),
-				'Block.room_id' => Current::read('Room.id'),
-			), $conditions);
-		}
+			),
+			$this->__getBlockDefaultConditions($model),
+			$conditions
+		);
 
 		return $conditions;
 	}
