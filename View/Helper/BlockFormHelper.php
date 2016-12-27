@@ -78,22 +78,4 @@ class BlockFormHelper extends AppHelper {
 		return $html;
 	}
 
-/**
- * ブロック一覧のラジオボタン
- * 後で削除
- *
- * @param string $fieldName フィールド名(Model.field)
- * @param int $blockId ブロックID
- * @return string ラジオボタン
- */
-	public function displayFrame($fieldName, $blockId) {
-		return $this->NetCommonsForm->radio($fieldName, array($blockId => ''), array(
-			'hiddenField' => false,
-			'onclick' => 'submit()',
-			'ng-click' => 'sending=true',
-			'ng-disabled' => 'sending',
-			'div' => array('class' => 'block-index'),
-		));
-	}
-
 }
