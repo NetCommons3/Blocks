@@ -268,13 +268,26 @@ class BlockBehavior extends ModelBehavior {
 		Current::$current['Block'] = $block['Block'];
 
 		//blocks_languagesの登録
-		$blockLanguage = $model->BlocksLanguage->find('first', array(
-			'recursive' => -1,
-			'conditions' => array(
-				'block_id' => $model->data['BlocksLanguage']['block_id'],
-				'language_id' => Current::read('Language.id'),
-			),
-		));
+		if ($model->BlocksLanguage->isM7nGeneralPlugin()) {
+			$blockLanguage = $model->BlocksLanguage->find('first', array(
+				'recursive' => -1,
+				'conditions' => array(
+					'block_id' => $model->data['BlocksLanguage']['block_id'],
+					'language_id' => Current::read('Language.id'),
+				),
+			));
+		} else {
+			$blockLanguage = $model->BlocksLanguage->find('first', array(
+				'recursive' => -1,
+				'conditions' => array(
+					'block_id' => $model->data['BlocksLanguage']['block_id'],
+					'OR' => array(
+						'language_id' => Current::read('Language.id'),
+						'is_origin' => true,
+					)
+				),
+			));
+		}
 		$model->data['BlocksLanguage'] = Hash::merge(
 			Hash::get($blockLanguage, 'BlocksLanguage', array()),
 			Hash::get($model->data, 'BlocksLanguage', array())
