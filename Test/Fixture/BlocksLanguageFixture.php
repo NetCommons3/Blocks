@@ -31,6 +31,7 @@ class BlocksLanguageFixture extends CakeTestFixture {
 			'name' => 'Block name 1',
 			'is_origin' => true,
 			'is_translation' => false,
+			'is_original_copy' => false,
 		),
 		//非公開データ
 		array(
@@ -40,6 +41,7 @@ class BlocksLanguageFixture extends CakeTestFixture {
 			'name' => 'Block name 2',
 			'is_origin' => true,
 			'is_translation' => false,
+			'is_original_copy' => false,
 		),
 		//期間限定公開(範囲内)
 		array(
@@ -49,6 +51,7 @@ class BlocksLanguageFixture extends CakeTestFixture {
 			'name' => 'Block name 3',
 			'is_origin' => true,
 			'is_translation' => false,
+			'is_original_copy' => false,
 		),
 
 		//期間限定公開(過去)
@@ -59,6 +62,7 @@ class BlocksLanguageFixture extends CakeTestFixture {
 			'name' => 'Block name 4',
 			'is_origin' => true,
 			'is_translation' => false,
+			'is_original_copy' => false,
 		),
 
 		//期間限定公開(未来)
@@ -69,6 +73,7 @@ class BlocksLanguageFixture extends CakeTestFixture {
 			'name' => 'Block name 5',
 			'is_origin' => true,
 			'is_translation' => false,
+			'is_original_copy' => false,
 		),
 	);
 

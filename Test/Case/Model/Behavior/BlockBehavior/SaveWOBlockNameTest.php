@@ -158,6 +158,7 @@ class BlockBehaviorSaveWOBlockNameTest extends NetCommonsModelTestCase {
 			'id' => $data[$alias]['id'],
 			'is_origin' => true,
 			'is_translation' => false,
+			'is_original_copy' => false,
 		);
 		$this->assertDatetime($result[$alias]['modified']);
 		$result[$alias] = Hash::remove($result[$alias], 'modified');
