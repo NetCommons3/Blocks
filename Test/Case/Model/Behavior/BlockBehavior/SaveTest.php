@@ -673,6 +673,7 @@ class BlockBehaviorSaveTest extends NetCommonsModelTestCase {
  *
  * @param array $data 登録データ
  * @param array $result 結果データ
+ * @param bool $originalCopy is_original_copyフィールドを含めるかどうか
  * @return void
  * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
  */
