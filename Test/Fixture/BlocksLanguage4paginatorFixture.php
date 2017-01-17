@@ -40,6 +40,7 @@ class BlocksLanguage4paginatorFixture extends BlocksLanguageFixture {
 			'name' => 'Block name 1',
 			'is_origin' => true,
 			'is_translation' => false,
+			'is_original_copy' => false,
 		),
 		//非公開データ
 		array(
@@ -49,6 +50,7 @@ class BlocksLanguage4paginatorFixture extends BlocksLanguageFixture {
 			'name' => 'Block name 2',
 			'is_origin' => true,
 			'is_translation' => false,
+			'is_original_copy' => false,
 		),
 		//期間限定公開(範囲内)
 		array(
@@ -58,6 +60,7 @@ class BlocksLanguage4paginatorFixture extends BlocksLanguageFixture {
 			'name' => 'Block name 3',
 			'is_origin' => true,
 			'is_translation' => false,
+			'is_original_copy' => false,
 		),
 
 		//期間限定公開(過去)
@@ -68,6 +71,7 @@ class BlocksLanguage4paginatorFixture extends BlocksLanguageFixture {
 			'name' => 'Block name 4',
 			'is_origin' => true,
 			'is_translation' => false,
+			'is_original_copy' => false,
 		),
 
 		//期間限定公開(未来)
@@ -78,6 +82,7 @@ class BlocksLanguage4paginatorFixture extends BlocksLanguageFixture {
 			'name' => 'Block name 5',
 			'is_origin' => true,
 			'is_translation' => false,
+			'is_original_copy' => false,
 		),
 
 		//11-20は、各プラグインで設定関係のテストで使う
@@ -99,6 +104,7 @@ class BlocksLanguage4paginatorFixture extends BlocksLanguageFixture {
 				'name' => 'Block name ' . $i,
 				'is_origin' => true,
 				'is_translation' => false,
+				'is_original_copy' => false,
 			);
 		}
 		for ($i = 101; $i <= 200; $i++) {
@@ -109,6 +115,7 @@ class BlocksLanguage4paginatorFixture extends BlocksLanguageFixture {
 				'name' => 'Block name ' . $i,
 				'is_origin' => true,
 				'is_translation' => false,
+				'is_original_copy' => false,
 			);
 		}
 		parent::init();
