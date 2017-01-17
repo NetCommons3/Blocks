@@ -177,7 +177,9 @@ class Block extends BlocksAppModel {
 							'BlocksLanguage.language_id' => Current::read('Language.id', '0'),
 						),
 					),
-					'fields' => array('language_id', 'block_id', 'name', 'is_origin', 'is_translation'),
+					'fields' => array(
+						'language_id', 'block_id', 'name', 'is_origin', 'is_translation', 'is_original_copy'
+					),
 					'order' => ''
 				),
 			)

@@ -147,6 +147,7 @@ class BlockBehaviorGetBlockConditionsTest extends NetCommonsModelTestCase {
 					'name' => 'Block name 1',
 					'is_origin' => true,
 					'is_translation' => false,
+					'is_original_copy' => false,
 				),
 			),
 			1 => array(
@@ -185,6 +186,7 @@ class BlockBehaviorGetBlockConditionsTest extends NetCommonsModelTestCase {
 					'name' => 'Block name 1',
 					'is_origin' => true,
 					'is_translation' => false,
+					'is_original_copy' => false,
 				),
 			),
 		);
