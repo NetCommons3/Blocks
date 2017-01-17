@@ -674,6 +674,7 @@ class BlockBehaviorSaveTest extends NetCommonsModelTestCase {
  * @param array $data 登録データ
  * @param array $result 結果データ
  * @return void
+ * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
  */
 	private function __assertBlock($data, $result, $originalCopy = true) {
 		$alias = 'Block';
