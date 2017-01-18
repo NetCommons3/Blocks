@@ -9,6 +9,8 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
+App::uses('NetCommonsTestSuite', 'NetCommons.TestSuite');
+
 /**
  * Blocks All Test Case
  *
@@ -16,7 +18,7 @@
  * @package NetCommons\Blocks\Test\Case
  * @codeCoverageIgnore
  */
-class AllBlocksTest extends CakeTestSuite {
+class AllBlocksTest extends NetCommonsTestSuite {
 
 /**
  * All test suite
@@ -25,7 +27,7 @@ class AllBlocksTest extends CakeTestSuite {
  */
 	public static function suite() {
 		$plugin = preg_replace('/^All([\w]+)Test$/', '$1', __CLASS__);
-		$suite = new CakeTestSuite(sprintf('All %s Plugin tests', $plugin));
+		$suite = new NetCommonsTestSuite(sprintf('All %s Plugin tests', $plugin));
 		$suite->addTestDirectoryRecursive(CakePlugin::path($plugin) . 'Test' . DS . 'Case');
 		return $suite;
 	}
