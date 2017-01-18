@@ -500,7 +500,7 @@ class BlockBehaviorSaveTest extends NetCommonsModelTestCase {
 		$data['Block']['id'] = '11';
 		$data['Block']['key'] = OriginalKeyBehavior::generateKey($this->TestModel->Block->alias, $this->TestModel->useDbConfig);
 		$data['BlocksLanguage']['name'] = $data[$this->TestModel->alias]['name'];
-		$this->__assertBlock($data, $result, false);
+		$this->__assertBlock($data, $result);
 		$this->__assertTestModel($data, $result);
 	}
 
@@ -675,9 +675,8 @@ class BlockBehaviorSaveTest extends NetCommonsModelTestCase {
  * @param array $result 結果データ
  * @param bool $originalCopy is_original_copyフィールドを含めるかどうか
  * @return void
- * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
  */
-	private function __assertBlock($data, $result, $originalCopy = true) {
+	private function __assertBlock($data, $result) {
 		$alias = 'Block';
 		$expected = array(
 			'id' => $data[$alias]['id'],
@@ -708,9 +707,6 @@ class BlockBehaviorSaveTest extends NetCommonsModelTestCase {
 			'is_translation' => false,
 			'is_original_copy' => false,
 		);
-		if (! $originalCopy) {
-			unset($expected['is_original_copy']);
-		}
 
 		$this->assertDatetime($result[$alias]['modified']);
 		$result[$alias] = Hash::remove($result[$alias], 'modified');
