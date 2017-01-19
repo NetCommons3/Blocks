@@ -250,7 +250,11 @@ class BlockBehavior extends ModelBehavior {
 		$roomId = Hash::get($model->data, 'Block.room_id', $frame['Frame']['room_id']);
 		$model->data['Block']['room_id'] = $roomId;
 
-		$langId = Hash::get($model->data, 'BlocksLanguage.language_id', Current::read('Language.id'));
+		$langId = Hash::get($model->data, 'BlocksLanguage.language_id');
+		if (! $langId) {
+			$langId = Current::read('Language.id');
+		}
+
 		$model->data['BlocksLanguage']['language_id'] = $langId;
 
 		$model->data['Block'] = Hash::insert($model->data['Block'], 'modified', null);
