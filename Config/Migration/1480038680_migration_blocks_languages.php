@@ -72,7 +72,7 @@ class MigrationBlocksLanguages extends NetCommonsMigration {
 			$BlocksLanguage->query($sql);
 
 			$conditions = array(
-				'Block.language_id !=' => '2'
+				'Block.language_id NOT' => array('2', '0')
 			);
 			if (! $Block->deleteAll($conditions, false)) {
 				return false;
