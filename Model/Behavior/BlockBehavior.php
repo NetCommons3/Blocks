@@ -272,7 +272,7 @@ class BlockBehavior extends ModelBehavior {
 		Current::$current['Block'] = $block['Block'];
 
 		//blocks_languagesの登録
-		if ($model->BlocksLanguage->isM7nGeneralPlugin()) {
+		if ($model->BlocksLanguage->isM17nGeneralPlugin()) {
 			$blockLanguage = $model->BlocksLanguage->find('first', array(
 				'recursive' => -1,
 				'conditions' => array(
