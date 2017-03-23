@@ -285,36 +285,26 @@ class BlockTabsHelper extends AppHelper {
 	public function main($activeTab) {
 		$tabs = $this->_View->viewVars['settingTabs'];
 
+		if (! isset($this->settings['mainTabsOrder'])) {
+			$mainTabsOrder = array(
+				self::MAIN_TAB_BLOCK_INDEX,
+				self::MAIN_TAB_FRAME_SETTING,
+				self::MAIN_TAB_MAIL_SETTING,
+				self::MAIN_TAB_PERMISSION,
+			);
+		} else {
+			$mainTabsOrder = $this->settings['mainTabsOrder'];
+		}
+
 		$html = '';
 		$html .= '<ul class="nav nav-tabs" role="tablist">';
 
-		//一覧表示
-		if (isset($tabs[self::MAIN_TAB_BLOCK_INDEX])) {
-			$html .= $this->__listTag(
-				$activeTab, self::MAIN_TAB_BLOCK_INDEX, $tabs[self::MAIN_TAB_BLOCK_INDEX]
-			);
-			unset($tabs[self::MAIN_TAB_BLOCK_INDEX]);
-		}
-		//表示方法変更
-		if (isset($tabs[self::MAIN_TAB_FRAME_SETTING])) {
-			$html .= $this->__listTag(
-				$activeTab, self::MAIN_TAB_FRAME_SETTING, $tabs[self::MAIN_TAB_FRAME_SETTING]
-			);
-			unset($tabs[self::MAIN_TAB_FRAME_SETTING]);
-		}
-		//メール通知
-		if (isset($tabs[self::MAIN_TAB_MAIL_SETTING])) {
-			$html .= $this->__listTag(
-				$activeTab, self::MAIN_TAB_MAIL_SETTING, $tabs[self::MAIN_TAB_MAIL_SETTING]
-			);
-			unset($tabs[self::MAIN_TAB_MAIL_SETTING]);
-		}
-		//権限設定
-		if (isset($tabs[self::MAIN_TAB_PERMISSION])) {
-			$html .= $this->__listTag(
-				$activeTab, self::MAIN_TAB_PERMISSION, $tabs[self::MAIN_TAB_PERMISSION]
-			);
-			unset($tabs[self::MAIN_TAB_PERMISSION]);
+		//タブの出力
+		foreach ($mainTabsOrder as $tabKey) {
+			if (isset($tabs[$tabKey])) {
+				$html .= $this->__listTag($activeTab, $tabKey, $tabs[$tabKey]);
+				unset($tabs[$tabKey]);
+			}
 		}
 		//その他のタブ
 		if ($tabs) {
