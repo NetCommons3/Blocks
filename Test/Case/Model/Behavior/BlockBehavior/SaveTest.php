@@ -399,8 +399,6 @@ class BlockBehaviorSaveTest extends NetCommonsModelTestCase {
 		$result = $this->TestModel->save($data);
 
 		//チェック
-		$alias = 'TestBlockBehaviorSaveModel';
-
 		$data['BlocksLanguage']['name'] = $data[$this->TestModel->alias]['name'];
 		$this->__assertBlock($data, $result);
 		$this->__assertTestModel($data, $result);
