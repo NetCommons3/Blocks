@@ -142,10 +142,6 @@ class BlockBehavior extends ModelBehavior {
  * @throws InternalErrorException
  */
 	public function saveBlock(Model $model) {
-		if (! isset($model->data['Frame']['id'])) {
-			return true;
-		}
-
 		$model->loadModels(array(
 			'Block' => 'Blocks.Block',
 			'BlocksLanguage' => 'Blocks.BlocksLanguage',
@@ -153,21 +149,25 @@ class BlockBehavior extends ModelBehavior {
 		));
 		$model->loadModels(Hash::get($this->settings, 'loadModels', array()));
 
-		//frameの取得
-		$frame = $model->Frame->findById($model->data['Frame']['id']);
-		if (! $frame) {
-			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-		}
+		if (isset($model->data['Frame']['id'])) {
+			//frameの取得
+			$frame = $model->Frame->findById($model->data['Frame']['id']);
+			if (! $frame) {
+				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+			}
 
-		if (! isset($model->data['Block']) && $frame['Frame']['block_id']) {
-			return true;
+			if (! isset($model->data['Block']) && $frame['Frame']['block_id']) {
+				return true;
+			}
+		} else {
+			$frame = array();
 		}
 
 		//blocksの登録
 		$this->__saveBlock($model, $frame);
 
 		//framesテーブル更新
-		if (! $frame['Frame']['block_id']) {
+		if ($frame && ! $frame['Frame']['block_id']) {
 			$frame['Frame']['block_id'] = (int)$model->data['Block']['id'];
 			$model->Frame->save($frame, false);
 		}
@@ -247,7 +247,11 @@ class BlockBehavior extends ModelBehavior {
  * @throws InternalErrorException
  */
 	private function __saveBlock(Model $model, $frame) {
-		$roomId = Hash::get($model->data, 'Block.room_id', $frame['Frame']['room_id']);
+		$roomId = Hash::get(
+			$model->data,
+			'Block.room_id',
+			Hash::get($frame, 'Frame.room_id', Current::read('Room.id'))
+		);
 		$model->data['Block']['room_id'] = $roomId;
 
 		$langId = Hash::get($model->data, 'BlocksLanguage.language_id');

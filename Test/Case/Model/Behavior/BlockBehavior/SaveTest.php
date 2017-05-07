@@ -393,28 +393,17 @@ class BlockBehaviorSaveTest extends NetCommonsModelTestCase {
 	public function testSaveCaseWOFrame($data) {
 		//テストデータ生成
 		unset($data['Frame']);
+		Current::write('Room.id', '2');
 
 		//テスト実施
 		$result = $this->TestModel->save($data);
 
 		//チェック
 		$alias = 'TestBlockBehaviorSaveModel';
-		$this->assertEquals($data['Block'], $result['Block']);
 
-		$expected = array(
-			'id' => '3',
-			'block_id' => '',
-			'block_key' => '',
-			'language_id' => '2',
-			'key' => 'key_1',
-			'name' => $data[$alias]['name'],
-		);
-		$this->assertDatetime($result[$alias]['created']);
-		$this->assertDatetime($result[$alias]['modified']);
-		$result[$alias] = Hash::remove($result[$alias], 'created');
-		$result[$alias] = Hash::remove($result[$alias], 'modified');
-
-		$this->assertEquals($expected, $result[$alias]);
+		$data['BlocksLanguage']['name'] = $data[$this->TestModel->alias]['name'];
+		$this->__assertBlock($data, $result);
+		$this->__assertTestModel($data, $result);
 	}
 
 /**
