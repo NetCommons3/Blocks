@@ -330,7 +330,7 @@ class BlockTabsHelper extends AppHelper {
 		$options = Hash::merge(
 			[
 				'displayAllTab' => false,
-				'displayBlockTitle' => true,
+				'displayBlockTitle' => !($this->_View->request->params['action'] === 'add'),
 			],
 			$options
 		);
