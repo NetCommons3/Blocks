@@ -76,6 +76,9 @@ class BlocksHelper extends AppHelper {
 			$text = Hash::get($options, 'status') . ' ' . $text;
 			$options = Hash::remove($options, 'status');
 		}
+		if (! isset($options['class'])) {
+			$options['class'] = 'block-title';
+		}
 
 		$output .= $this->Html->tag('h1', $text, $options);
 		return $output;
