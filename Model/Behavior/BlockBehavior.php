@@ -336,7 +336,7 @@ class BlockBehavior extends ModelBehavior {
 			}
 		} elseif (isset($this->settings['name'])) {
 			list($alias, $filed) = pluginSplit($this->settings['name']);
-			$name = $model->data[$alias][$filed];
+			$name = Hash::get($model->data, $alias . '.' . $filed);
 		} else {
 			$name = sprintf(__d('blocks', 'Block %s'), date('YmdHis'));
 		}
