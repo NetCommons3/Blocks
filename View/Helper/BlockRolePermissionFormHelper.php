@@ -164,7 +164,7 @@ class BlockRolePermissionFormHelper extends AppHelper {
 		$html .= $this->NetCommonsForm->hidden($pubFieldName . '.roles_room_id');
 		$html .= $this->NetCommonsForm->hidden($pubFieldName . '.block_key');
 		$html .= $this->NetCommonsForm->hidden($pubFieldName . '.permission');
-		//$html .= $this->NetCommonsForm->hidden($pubFieldName . '.value');
+		$html .= $this->NetCommonsForm->hidden($pubFieldName . '.value');
 
 		$html .= '</div>';
 		return $html;
