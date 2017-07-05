@@ -104,68 +104,6 @@ class BlockRolePermissionBehavior extends ModelBehavior {
 	}
 
 /**
- * beforeSave is called before a model is saved. Returning false from a beforeSave callback
- * will abort the save operation.
- *
- * @param Model $model Model using this behavior
- * @param array $options Options passed from Model::save().
- * @return mixed False if the operation should abort. Any other result will continue.
- * @see Model::save()
- */
-	public function beforeSave(Model $model, $options = array()) {
-		if (! isset($model->data['BlockRolePermission'])) {
-			return true;
-		}
-
-		if (! isset($model->data[$model->alias]['approval_type'])) {
-			return true;
-		}
-		$approvalType = $model->data[$model->alias]['approval_type'];
-
-		$approvalTypes = [Block::NOT_NEED_APPROVAL, Block::NEED_APPROVAL, Block::NEED_COMMENT_APPROVAL];
-		if (! in_array($approvalType, $approvalTypes, true)) {
-			return true;
-		}
-
-		$permission = Hash::get($model->data['BlockRolePermission'], 'content_publishable', array());
-		foreach ($permission as $roleKey => $role) {
-			if (in_array($approvalType, [Block::NOT_NEED_APPROVAL, Block::NEED_COMMENT_APPROVAL])) {
-				$value = Hash::get(
-					$model->data['BlockRolePermission'], 'content_creatable.' . $roleKey . '.value', true
-				);
-			} else {
-				$value = false;
-			}
-			$model->data['BlockRolePermission'] = Hash::insert(
-				$model->data['BlockRolePermission'], 'content_publishable.' . $roleKey . '.value', $value
-			);
-		}
-
-		$permission = Hash::get(
-			$model->data['BlockRolePermission'], 'content_comment_publishable', array()
-		);
-		foreach ($permission as $roleKey => $role) {
-			if ($approvalType === Block::NOT_NEED_APPROVAL) {
-				$pathKey = 'content_comment_creatable.' . $roleKey . '.value';
-				$value = Hash::get($model->data['BlockRolePermission'], $pathKey, true);
-
-			} elseif ($approvalType === Block::NEED_COMMENT_APPROVAL) {
-				$pathKey = 'content_comment_publishable.' . $roleKey . '.value';
-				$value = Hash::get($model->data['BlockRolePermission'], $pathKey, false);
-
-			} else {
-				$value = false;
-			}
-			$pathKey = 'content_comment_publishable.' . $roleKey . '.value';
-			$model->data['BlockRolePermission'] = Hash::insert(
-				$model->data['BlockRolePermission'], $pathKey, $value
-			);
-		}
-
-		return true;
-	}
-
-/**
  * afterSave is called after a model is saved.
  *
  * @param Model $model Model using this behavior
