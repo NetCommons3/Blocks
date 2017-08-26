@@ -18,7 +18,7 @@ App::uses('WorkflowComponent', 'Workflow.Controller/Component');
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Blocks\TestSuite
  */
-class BlocksControllerPaginatorTest extends NetCommonsControllerTestCase {
+abstract class BlocksControllerPaginatorTest extends NetCommonsControllerTestCase {
 
 /**
  * Edit controller name
