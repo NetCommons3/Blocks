@@ -20,7 +20,7 @@ App::uses('NetCommonsHelperTestCase', 'NetCommons.TestSuite');
  * @package NetCommons\Blocks\TestSuite
  * @codeCoverageIgnore
  */
-class BlocksHelperTestCase extends NetCommonsHelperTestCase {
+abstract class BlocksHelperTestCase extends NetCommonsHelperTestCase {
 
 /**
  * Fixtures

@@ -18,7 +18,7 @@ App::uses('WorkflowComponent', 'Workflow.Controller/Component');
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Blocks\TestSuite
  */
-class BlocksControllerEditTest extends NetCommonsControllerTestCase {
+abstract class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 
 /**
  * setUp method

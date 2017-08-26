@@ -19,7 +19,7 @@ App::uses('RolesRoomFixture', 'Rooms.Test/Fixture');
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Blocks\TestSuite
  */
-class BlockRolePermissionsControllerEditTest extends NetCommonsControllerTestCase {
+abstract class BlockRolePermissionsControllerEditTest extends NetCommonsControllerTestCase {
 
 /**
  * setUp method
