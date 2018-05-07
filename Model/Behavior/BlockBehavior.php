@@ -387,6 +387,7 @@ class BlockBehavior extends ModelBehavior {
 	private function __getBlockDefaultConditions(Model $model) {
 		$model->loadModels([
 			'Block' => 'Blocks.Block',
+			'Language' => 'M17n.Language',
 		]);
 
 		//belongsToの定義は、こっちでやる
@@ -394,12 +395,19 @@ class BlockBehavior extends ModelBehavior {
 		$model->bindModel($belongsTo, false);
 
 		if ($model->hasField('is_translation', true)) {
-			$conditions = array(
-				'OR' => array(
-					$model->alias . '.is_translation' => false,
+			$langs = $model->Language->getLanguage();
+			if (count($langs) > 1) {
+				$conditions = array(
+					'OR' => array(
+						$model->alias . '.is_translation' => false,
+						$model->alias . '.language_id' => Current::read('Language.id', '0'),
+					),
+				);
+			} else {
+				$conditions = array(
 					$model->alias . '.language_id' => Current::read('Language.id', '0'),
-				),
-			);
+				);
+			}
 		} elseif ($model->hasField('language_id', true)) {
 			$conditions = array(
 				$model->alias . '.language_id' => Current::read('Language.id', '0'),

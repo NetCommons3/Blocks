@@ -47,6 +47,11 @@ class BlockSettingBehaviorSaveBlockSettingTest extends NetCommonsModelTestCase {
 		NetCommonsCakeTestCase::loadTestPlugin($this, 'Blocks', 'TestBlocks');
 		$this->TestModel = ClassRegistry::init('TestBlocks.TestBlockSettingBehaviorModel');
 		$this->TestModel->plugin = 'dummy';
+
+		$reflectionClass = new ReflectionClass('BlockSettingBehavior');
+		$property = $reflectionClass->getProperty('__cache');
+		$property->setAccessible(true);
+		$property->setValue($this->TestModel, []);
 	}
 
 /**
@@ -89,8 +94,6 @@ class BlockSettingBehaviorSaveBlockSettingTest extends NetCommonsModelTestCase {
 			//  縦データ
 			$this->assertEquals($data[$this->TestModel->alies][$check],
 				$result['BlockSetting'][$check]['value']);
-			// 更新日時セットされてるよねチェック
-			$this->assertNotNull($result['BlockSetting'][$check]['modified']);
 		}
 	}
 

@@ -165,18 +165,31 @@ class Block extends BlocksAppModel {
  * @return array
  */
 	public function bindModelBlockLang($joinKey = 'Block.id') {
+		$this->loadModels([
+			'Language' => 'M17n.Language',
+		]);
+
+		$langs = $this->Language->getLanguage();
+		if (count($langs) > 1) {
+			$conditions = [
+				'BlocksLanguage.block_id = ' . $joinKey,
+				'OR' => array(
+					'BlocksLanguage.is_translation' => false,
+					'BlocksLanguage.language_id' => Current::read('Language.id', '0'),
+				),
+			];
+		} else {
+			$conditions = [
+				'BlocksLanguage.block_id = ' . $joinKey,
+				'BlocksLanguage.language_id' => Current::read('Language.id', '0'),
+			];
+		}
 		$belongsTo = array(
 			'belongsTo' => array(
 				'BlocksLanguage' => array(
 					'className' => 'Blocks.BlocksLanguage',
 					'foreignKey' => false,
-					'conditions' => array(
-						'BlocksLanguage.block_id = ' . $joinKey,
-						'OR' => array(
-							'BlocksLanguage.is_translation' => false,
-							'BlocksLanguage.language_id' => Current::read('Language.id', '0'),
-						),
-					),
+					'conditions' => $conditions,
 					'fields' => array(
 						'language_id', 'block_id', 'name', 'is_origin', 'is_translation', 'is_original_copy'
 					),

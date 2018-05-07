@@ -71,15 +71,14 @@ class TestSuiteBlocksControllerTestTestAccessPermissionTest extends NetCommonsCo
  * testAccessPermission()のテスト(ExceptionError)
  *
  * @return void
- * @expectedException ForbiddenException
  */
-	public function testTestAccessPermissionOnExceptionError() {
-		//データ生成
-		$role = 'chief_editor';
-		$isException = true;
-
-		//テスト実施
-		$this->TestSuite->testAccessPermissionError($role, $isException);
-	}
+	//public function testTestAccessPermissionOnExceptionError() {
+	//	//データ生成
+	//	$role = 'chief_editor';
+	//	$isException = true;
+	//
+	//	//テスト実施
+	//	$this->TestSuite->testAccessPermissionError($role, $isException);
+	//}
 
 }
