@@ -295,7 +295,10 @@ class BlockSettingBehavior extends ModelBehavior {
 		// 新規作成時はデータあっても、データなしとして扱い、use_workflow, use_comment_approvalを新規作成する
 		if (!$create) {
 			// データありは、何もしない（つまりデータを使う）
-			$fields = Hash::extract($blockSettings, '{n}.{s}.field_name');
+			$fields = [];
+			foreach ($blockSettings as $blockSetting) {
+				$fields[] = $blockSetting['BlockSetting']['field_name'];
+			}
 			if (in_array($fieldName, $fields, true)) {
 				return $blockSettings;
 			}
