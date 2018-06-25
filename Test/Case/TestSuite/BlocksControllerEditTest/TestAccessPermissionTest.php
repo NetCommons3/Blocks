@@ -97,18 +97,17 @@ class TestSuiteBlocksControllerEditTestTestAccessPermissionTest extends NetCommo
  * testAccessPermission()のテスト(ExceptionError)
  *
  * @return void
- * @expectedException BadRequestException
  */
-	public function testTestAccessPermissionOnExceptionError() {
-		//データ生成
-		$action = 'edit_exception_error';
-		$method = 'get';
-		$expected = 'edit';
-		$role = 'chief_editor';
-		$exception = 'BadRequestException';
-
-		//テスト実施
-		$this->TestSuite->testAccessPermission($action, $method, $expected, $role, $exception);
-	}
+	//public function testTestAccessPermissionOnExceptionError() {
+	//	//データ生成
+	//	$action = 'edit_exception_error';
+	//	$method = 'get';
+	//	$expected = 'edit';
+	//	$role = 'chief_editor';
+	//	$exception = 'BadRequestException';
+	//
+	//	//テスト実施
+	//	$this->TestSuite->testAccessPermission($action, $method, $expected, $role, $exception);
+	//}
 
 }

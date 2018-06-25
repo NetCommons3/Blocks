@@ -48,10 +48,10 @@ class DeletePublishablePermission extends CakeMigration {
 			return true;
 		}
 
-		/* @var $DefaultRolePermission AppModel */
+		/* @var $DefaultPermission AppModel */
 		/* @var $RolesRoom AppModel */
 		/* @var $Block AppModel */
-		$DefaultRolePermission = $this->generateModel('DefaultRolePermission');
+		$DefaultPermission = $this->generateModel('DefaultRolePermission');
 		$RolesRoom = $this->generateModel('RolesRoom');
 		$Block = $this->generateModel('BlockRolePermission');
 
@@ -63,7 +63,7 @@ class DeletePublishablePermission extends CakeMigration {
 			],
 			'recursive' => -1
 		];
-		$roleKeyList = $DefaultRolePermission->find('list', $query);
+		$roleKeyList = $DefaultPermission->find('list', $query);
 
 		$query = [
 			'fields' => 'id',

@@ -47,6 +47,22 @@ class BlockSettingBehavior extends ModelBehavior {
 		TYPE_NUMERIC = 'numeric';
 
 /**
+ * 余計なfieldを取得しないために取得するカラム名を定義する
+ *
+ * @var array
+ */
+	private $__fields = [
+		'id', 'plugin_key', 'room_id', 'block_key', 'field_name', 'value', 'type'
+	];
+
+/**
+ * 何度も同じ条件で取得しないようにキャッシュする
+ *
+ * @var bool
+ */
+	private $__cache = [];
+
+/**
  * setup
  *
  * #### サンプルコード
@@ -122,10 +138,7 @@ class BlockSettingBehavior extends ModelBehavior {
 			'block_key' => null,
 			'field_name' => $this->_getFields($model),
 		);
-		$blockSettings = $model->BlockSetting->find('all', array(
-			'recursive' => -1,
-			'conditions' => $conditions,
-		));
+		$blockSettings = $this->__findBlockSetting($model, $conditions);
 
 		// use_workflow, use_comment_approval新規作成
 		$blockSettings = $this->_getDefaultApproval($model, $blockSettings,
@@ -136,10 +149,6 @@ class BlockSettingBehavior extends ModelBehavior {
 		// 縦持ち
 		// 新規登録時に不要な部分を除外
 		$blockSettings = Hash::remove($blockSettings, '{n}.{s}.id');
-		$blockSettings = Hash::remove($blockSettings, '{n}.{s}.created');
-		$blockSettings = Hash::remove($blockSettings, '{n}.{s}.created_user');
-		$blockSettings = Hash::remove($blockSettings, '{n}.{s}.modified');
-		$blockSettings = Hash::remove($blockSettings, '{n}.{s}.modified_user');
 		$blockSettings = Hash::insert($blockSettings, '{n}.{s}.plugin_key', $pluginKey);
 		$blockSettings = Hash::insert($blockSettings, '{n}.{s}.room_id', $roomId);
 
@@ -165,6 +174,29 @@ class BlockSettingBehavior extends ModelBehavior {
  */
 	protected function _getPluginKey($model) {
 		return Inflector::underscore($model->plugin);
+	}
+
+/**
+ * BlockSettingのデータ取得
+ *
+ * @param Model $model モデル
+ * @param array $conditions 条件
+ * @return array ブロックセッティングデータ
+ */
+	private function __findBlockSetting(Model $model, $conditions) {
+		$cacheId = json_encode($conditions);
+		if (isset($this->__cache[$cacheId])) {
+			$blockSettings = $this->__cache[$cacheId];
+		} else {
+			$blockSettings = $model->BlockSetting->find('all', array(
+				'recursive' => -1,
+				'fields' => $this->__fields,
+				'conditions' => $conditions,
+			));
+			$this->__cache[$cacheId] = $blockSettings;
+		}
+
+		return $blockSettings;
 	}
 
 /**
@@ -196,10 +228,7 @@ class BlockSettingBehavior extends ModelBehavior {
 			'block_key' => $blockKey,
 			'field_name' => $this->_getFields($model),
 		);
-		$blockSettings = $model->BlockSetting->find('all', array(
-			'recursive' => -1,
-			'conditions' => $conditions,
-		));
+		$blockSettings = $this->__findBlockSetting($model, $conditions);
 		if (!$blockSettings) {
 			// データなければ新規作成
 			$blockSettings = $this->createBlockSetting($model, $roomId, $isRow);
@@ -242,10 +271,7 @@ class BlockSettingBehavior extends ModelBehavior {
 			'block_key' => $blockKey,
 			'field_name' => $this->_getFields($model),
 		);
-		$blockSettings = $model->BlockSetting->find('all', array(
-			'recursive' => -1,
-			'conditions' => $conditions,
-		));
+		$blockSettings = $this->__findBlockSetting($model, $conditions);
 		return !empty($blockSettings);
 	}
 
@@ -269,7 +295,10 @@ class BlockSettingBehavior extends ModelBehavior {
 		// 新規作成時はデータあっても、データなしとして扱い、use_workflow, use_comment_approvalを新規作成する
 		if (!$create) {
 			// データありは、何もしない（つまりデータを使う）
-			$fields = Hash::extract($blockSettings, '{n}.{s}.field_name');
+			$fields = [];
+			foreach ($blockSettings as $blockSetting) {
+				$fields[] = $blockSetting['BlockSetting']['field_name'];
+			}
 			if (in_array($fieldName, $fields, true)) {
 				return $blockSettings;
 			}
@@ -424,6 +453,8 @@ class BlockSettingBehavior extends ModelBehavior {
 			!$model->BlockSetting->saveMany($saveData, ['validate' => false])) {
 			throw new InternalErrorException('Failed - BlockSetting ' . __METHOD__);
 		}
+
+		$this->__cache = [];
 		return true;
 	}
 
