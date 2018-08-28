@@ -184,16 +184,42 @@ class BlockSettingBehavior extends ModelBehavior {
  * @return array ブロックセッティングデータ
  */
 	private function __findBlockSetting(Model $model, $conditions) {
-		$cacheId = json_encode($conditions);
-		if (isset($this->__cache[$cacheId])) {
-			$blockSettings = $this->__cache[$cacheId];
-		} else {
-			$blockSettings = $model->BlockSetting->find('all', array(
+		// プラグインキーでの絞り込みを外す
+		$pluginKey = $conditions['plugin_key'];
+		// ルームIDとブロックキーが存在しない場合（新規追加の場合）は、プラグインを絞り込む
+		if (!is_null($conditions['room_id']) && !is_null($conditions['block_key'])) {
+			unset($conditions['plugin_key']);
+		}
+
+		// ブロックキーのがnullではない場合、絞り込みを外す
+		$blockKey = $conditions['block_key'];
+		if (!is_null($conditions['block_key'])) {
+			unset($conditions['block_key']);
+		}
+
+		// フィールドネームの絞り込みを外す
+		$fieldName = $conditions['field_name'];
+		unset($conditions['field_name']);
+
+		// キャッシュが存在しない場合
+		if (!isset($this->__cache[$conditions['room_id']])) {
+			// そのルームのブロックセッティングを全て取得する
+			$this->__cache[$conditions['room_id']] = $model->BlockSetting->find('all', array(
 				'recursive' => -1,
 				'fields' => $this->__fields,
 				'conditions' => $conditions,
 			));
-			$this->__cache[$cacheId] = $blockSettings;
+		}
+		$results = $this->__cache[$conditions['room_id']];
+
+		$blockSettings = [];
+		foreach ($results as $result) {
+			// 指定された、プラグインキー、ブロックキー、フィールドネームのみ抽出する
+			if ($result['BlockSetting']['plugin_key'] == $pluginKey
+					&& $result['BlockSetting']['block_key'] == $blockKey
+					&& in_array($result['BlockSetting']['field_name'], $fieldName)) {
+				$blockSettings[] = $result;
+			}
 		}
 
 		return $blockSettings;
