@@ -22,8 +22,6 @@ ClassRegistry::init('Blocks.Block');
 				Block::TYPE_LIMITED => __d('blocks', 'Setting limited public'),
 			);
 			echo $this->NetCommonsForm->radio('Block.public_type', $options, array('outer' => true));
-
-			$publicTypePeriod = Hash::get($this->data, 'Block.public_type') === Block::TYPE_LIMITED;
 		?>
 	</div>
 
