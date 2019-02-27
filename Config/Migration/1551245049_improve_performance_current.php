@@ -40,7 +40,7 @@ class ImprovePerformanceCurrent extends NetCommonsMigration {
 			'create_field' => array(
 				'block_settings' => array(
 					'indexes' => array(
-						'block_key' => array('column' => array('block_key', 'room_id', 'field_name', 'plugin_key', 'value'), 'unique' => 0),
+						'block_key' => array('column' => array('block_key', 'field_name', 'room_id', 'plugin_key', 'value'), 'unique' => 0),
 					),
 				),
 			),
