@@ -53,7 +53,7 @@ class BlocksSchema extends CakeSchema {
 	public $block_role_permissions = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'unsigned' => false, 'key' => 'primary'),
 		'roles_room_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'unsigned' => false, 'key' => 'index'),
-		'block_key' => array('type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'block_key' => array('type' => 'string', 'null' => false, 'default' => null, 'key' => 'index', 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'permission' => array('type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => 'パーミッション  e.g.) content_creatable,  post_top_article', 'charset' => 'utf8'),
 		'value' => array('type' => 'boolean', 'null' => false, 'default' => null),
 		'created_user' => array('type' => 'integer', 'null' => true, 'default' => null, 'unsigned' => false),
@@ -62,7 +62,8 @@ class BlocksSchema extends CakeSchema {
 		'modified' => array('type' => 'datetime', 'null' => true, 'default' => null),
 		'indexes' => array(
 			'PRIMARY' => array('column' => 'id', 'unique' => 1),
-			'roles_room_id' => array('column' => array('roles_room_id', 'block_key'), 'unique' => 0)
+			'roles_room_id' => array('column' => array('roles_room_id', 'block_key'), 'unique' => 0),
+			'block_key' => array('column' => array('block_key', 'permission', 'roles_room_id', 'value', 'id'), 'unique' => 0)
 		),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
