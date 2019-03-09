@@ -78,7 +78,7 @@ class TestSuiteBlocksControllerEditTestTestEditTest extends NetCommonsController
 					'method' => 'assertInput',
 					'type' => 'form',
 					'name' => null,
-					'value' => '/test_blocks/TestSuiteBlocksControllerEditTest/edit/4?frame_id=6'
+					'value' => '/test_blocks/TestSuiteBlocksControllerEditTest/edit/2?frame_id=6'
 				),
 				1 => array(
 					'method' => 'assertInput',
@@ -90,7 +90,7 @@ class TestSuiteBlocksControllerEditTestTestEditTest extends NetCommonsController
 					'method' => 'assertInput',
 					'type' => 'input',
 					'name' => 'data[Block][id]',
-					'value' => '4'
+					'value' => '2'
 				),
 				3 => array(
 					'method' => 'assertInput',
@@ -102,7 +102,7 @@ class TestSuiteBlocksControllerEditTestTestEditTest extends NetCommonsController
 					'method' => 'assertInput',
 					'type' => 'form',
 					'name' => null,
-					'value' => '/test_blocks/TestSuiteBlocksControllerEditTest/delete/4?frame_id=6'
+					'value' => '/test_blocks/TestSuiteBlocksControllerEditTest/delete/2'
 				),
 				5 => array(
 					'method' => 'assertInput',

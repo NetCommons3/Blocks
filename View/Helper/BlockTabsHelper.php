@@ -394,7 +394,13 @@ class BlockTabsHelper extends AppHelper {
 			$activeTabCss = '';
 		}
 
-		if (Current::permission(Hash::get($tab, 'permission', 'block_editable'))) {
+		if (isset($tab['permission'])) {
+			if (Current::permission($tab['permission'])) {
+				$html .= '<li class="' . $activeTabCss . '">';
+				$html .= $this->NetCommonsHtml->link(__d($tab['label'][0], $tab['label'][1]), $tab['url']);
+				$html .= '</li>';
+			}
+		} elseif (Current::permission('block_editable')) {
 			$html .= '<li class="' . $activeTabCss . '">';
 			$html .= $this->NetCommonsHtml->link(__d($tab['label'][0], $tab['label'][1]), $tab['url']);
 			$html .= '</li>';

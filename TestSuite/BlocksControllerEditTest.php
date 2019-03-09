@@ -228,7 +228,7 @@ abstract class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 			'plugin' => $this->plugin,
 			'controller' => $this->_controller,
 			'action' => 'delete',
-			'frame_id' => $frameId,
+			//'frame_id' => $frameId,
 			'block_id' => $blockId
 		));
 

@@ -69,7 +69,7 @@ class TestSuiteBlockRolePermissionsControllerEditTestTestEditPostTest extends Ne
 
 		//チェック
 		$expected = array(
-			'Block' => array('id' => '4', 'key' => 'block_2'),
+			'Block' => array('id' => '2', 'key' => 'block_2'),
 			'BlockRolePermission' => array(
 				'content_creatable' => array(
 					'general_user' => array(
@@ -126,7 +126,7 @@ class TestSuiteBlockRolePermissionsControllerEditTestTestEditPostTest extends Ne
 
 		//チェック
 		$expected = array(
-			'Block' => array('id' => '4', 'key' => 'block_2'),
+			'Block' => array('id' => '2', 'key' => 'block_2'),
 			'BlockRolePermission' => array(
 				'content_creatable' => array(
 					'general_user' => array(
