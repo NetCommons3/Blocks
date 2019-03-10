@@ -113,10 +113,10 @@ class BlockTabsHelperBlockTest extends NetCommonsHelperTestCase {
 	public function dataProvider() {
 		return array(
 			array('activeTab' => 'block_settings', 'blockPermission' => true),
-//			array('activeTab' => 'mail_settings', 'blockPermission' => true),
-//			array('activeTab' => 'role_permissions', 'blockPermission' => true),
-//			array('activeTab' => 'role_permissions', 'blockPermission' => false),
-//			array('activeTab' => 'original', 'blockPermission' => true),
+			array('activeTab' => 'mail_settings', 'blockPermission' => true),
+			array('activeTab' => 'role_permissions', 'blockPermission' => true),
+			array('activeTab' => 'role_permissions', 'blockPermission' => false),
+			array('activeTab' => 'original', 'blockPermission' => true),
 		);
 	}
 
