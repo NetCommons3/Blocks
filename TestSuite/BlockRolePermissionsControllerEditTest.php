@@ -207,7 +207,7 @@ abstract class BlockRolePermissionsControllerEditTest extends NetCommonsControll
 		TestAuthGeneral::login($this);
 
 		$frameId = '6';
-		$blockId = '4';
+		$blockId = '2';
 
 		//テスト実施
 		$url = array(
@@ -260,8 +260,8 @@ abstract class BlockRolePermissionsControllerEditTest extends NetCommonsControll
 		TestAuthGeneral::login($this);
 
 		$frameId = '6';
-		$blockId = '4';
-		$blockKey = 'block_2';
+		$blockId = '2';
+		$blockKey = 'block_1';
 		$roomId = '2';
 		$permissions = $this->_getPermissionData(true, Hash::check($data, '{s}.use_comment_approval'));
 

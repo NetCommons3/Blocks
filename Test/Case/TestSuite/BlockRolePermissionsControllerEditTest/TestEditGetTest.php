@@ -71,10 +71,10 @@ class TestSuiteBlockRolePermissionsControllerEditTestTestEditGetTest extends Net
 		$expected = array(
 			0 => array(array(
 				'method' => 'assertInput', 'type' => 'form', 'name' => null,
-				'value' => '/test_blocks/TestSuiteBlockRolePermissionsControllerEditTest/edit/4?frame_id=6'
+				'value' => '/test_blocks/TestSuiteBlockRolePermissionsControllerEditTest/edit/2?frame_id=6'
 			)),
 			1 => array(array(
-				'method' => 'assertInput', 'type' => 'input', 'name' => 'data[Block][id]', 'value' => '4'
+				'method' => 'assertInput', 'type' => 'input', 'name' => 'data[Block][id]', 'value' => '2'
 			)),
 			2 => array(array(
 				'name' => 'data[BlockRolePermission][content_creatable][room_administrator][value]',
@@ -163,10 +163,10 @@ class TestSuiteBlockRolePermissionsControllerEditTestTestEditGetTest extends Net
 		$expected = array(
 			0 => array(array(
 				'method' => 'assertInput', 'type' => 'form', 'name' => null,
-				'value' => '/test_blocks/TestSuiteBlockRolePermissionsControllerEditTest/edit/4?frame_id=6'
+				'value' => '/test_blocks/TestSuiteBlockRolePermissionsControllerEditTest/edit/2?frame_id=6'
 			)),
 			1 => array(array(
-				'method' => 'assertInput', 'type' => 'input', 'name' => 'data[Block][id]', 'value' => '4'
+				'method' => 'assertInput', 'type' => 'input', 'name' => 'data[Block][id]', 'value' => '2'
 			)),
 			2 => array(array(
 				'name' => 'data[BlockRolePermission][content_creatable][room_administrator][value]',

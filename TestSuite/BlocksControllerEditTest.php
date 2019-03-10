@@ -209,7 +209,7 @@ abstract class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 		TestAuthGeneral::login($this);
 
 		$frameId = '6';
-		$blockId = '4';
+		$blockId = '2';
 		$roomId = '2';
 		if ($validationError) {
 			$data = Hash::remove($data, $validationError['field']);
@@ -224,11 +224,20 @@ abstract class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 			'frame_id' => $frameId,
 			'block_id' => $blockId
 		));
+		$deleteUrl = NetCommonsUrl::actionUrl(array(
+			'plugin' => $this->plugin,
+			'controller' => $this->_controller,
+			'action' => 'delete',
+			//'frame_id' => $frameId,
+			'block_id' => $blockId
+		));
+
 		$params = array(
 			'method' => $method,
 			'return' => 'view',
 			'data' => $data
 		);
+
 		$this->testAction($url, $params);
 
 		//チェック
@@ -239,14 +248,6 @@ abstract class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 			);
 		} else {
 			//削除フォームの確認
-			$deleteUrl = NetCommonsUrl::actionUrl(array(
-				'plugin' => $this->plugin,
-				'controller' => $this->_controller,
-				'action' => 'delete',
-				'frame_id' => $frameId,
-				'block_id' => $blockId
-			));
-
 			$asserts = array(
 				array(
 					'method' => 'assertInput', 'type' => 'form',
@@ -304,7 +305,7 @@ abstract class BlocksControllerEditTest extends NetCommonsControllerTestCase {
 		TestAuthGeneral::login($this);
 
 		$frameId = '6';
-		$blockId = '4';
+		$blockId = '2';
 
 		//アクション実行
 		$url = NetCommonsUrl::actionUrl(array(

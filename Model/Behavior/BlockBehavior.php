@@ -273,7 +273,7 @@ class BlockBehavior extends ModelBehavior {
 		}
 		$model->data['BlocksLanguage']['block_id'] = $block['Block']['id'];
 		$model->data['Block'] = $block['Block'];
-		Current::$current['Block'] = $block['Block'];
+		Current::write('Block', $block['Block']);
 
 		//blocks_languagesの登録
 		if ($model->BlocksLanguage->isM17nGeneralPlugin()) {
@@ -307,7 +307,7 @@ class BlockBehavior extends ModelBehavior {
 			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 		}
 		$model->data['BlocksLanguage'] = $blockLanguage['BlocksLanguage'];
-		Current::$current['BlocksLanguage'] = $blockLanguage['BlocksLanguage'];
+		Current::write('BlocksLanguage', $blockLanguage['BlocksLanguage']);
 
 		//Behaviorをセットしているモデルに対してblock_idとblock_keyをセットする
 		if ($model->hasField('block_id') && ! Hash::check($model->data, $model->alias . '.block_id')) {

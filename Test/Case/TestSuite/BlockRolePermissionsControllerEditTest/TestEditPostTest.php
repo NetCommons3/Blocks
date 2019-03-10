@@ -69,31 +69,31 @@ class TestSuiteBlockRolePermissionsControllerEditTestTestEditPostTest extends Ne
 
 		//チェック
 		$expected = array(
-			'Block' => array('id' => '4', 'key' => 'block_2'),
+			'Block' => array('id' => '2', 'key' => 'block_1'),
 			'BlockRolePermission' => array(
 				'content_creatable' => array(
 					'general_user' => array(
-						'roles_room_id' => '4', 'block_key' => 'block_2',
+						'roles_room_id' => '4', 'block_key' => 'block_1',
 						'permission' => 'content_creatable', 'value' => '1'
 					)
 				),
 				'content_comment_creatable' => array(
 					'editor' => array(
-						'roles_room_id' => '3', 'block_key' => 'block_2',
+						'roles_room_id' => '3', 'block_key' => 'block_1',
 						'permission' => 'content_comment_creatable', 'value' => '1'
 					),
 					'general_user' => array(
-						'roles_room_id' => '4', 'block_key' => 'block_2',
+						'roles_room_id' => '4', 'block_key' => 'block_1',
 						'permission' => 'content_comment_creatable', 'value' => '1'
 					),
 					'visitor' => array(
-						'roles_room_id' => '5', 'block_key' => 'block_2',
+						'roles_room_id' => '5', 'block_key' => 'block_1',
 						'permission' => 'content_comment_creatable', 'value' => '1'
 					)
 				),
 				'content_comment_publishable' => array(
 					'editor' => array(
-						'roles_room_id' => '3', 'block_key' => 'block_2',
+						'roles_room_id' => '3', 'block_key' => 'block_1',
 						'permission' => 'content_comment_publishable', 'value' => '1'
 					)
 				)
@@ -126,11 +126,11 @@ class TestSuiteBlockRolePermissionsControllerEditTestTestEditPostTest extends Ne
 
 		//チェック
 		$expected = array(
-			'Block' => array('id' => '4', 'key' => 'block_2'),
+			'Block' => array('id' => '2', 'key' => 'block_1'),
 			'BlockRolePermission' => array(
 				'content_creatable' => array(
 					'general_user' => array(
-						'roles_room_id' => '4', 'block_key' => 'block_2',
+						'roles_room_id' => '4', 'block_key' => 'block_1',
 						'permission' => 'content_creatable', 'value' => '1'
 					)
 				),
