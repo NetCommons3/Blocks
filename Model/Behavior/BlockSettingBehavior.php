@@ -505,7 +505,7 @@ class BlockSettingBehavior extends ModelBehavior {
 			if (array_key_exists($field, $inputData)) {
 				// validate追加
 				$rule = $blockSetting['BlockSetting'][$field]['type'];
-				$model->validate = Hash::merge($model->validate, array(
+				$model->validate = ValidateMerge::merge($model->validate, array(
 					$field => array(
 						$rule => array(
 							'rule' => $rule,
