@@ -27,7 +27,7 @@ class TestSuiteBlocksControllerTestErrorController extends AppController {
  */
 	public function index() {
 		$this->autoRender = true;
-		throw new ForbiddenException(__d('net_commons', 'Permission denied'));
+		throw new ForbiddenException();
 	}
 
 }
