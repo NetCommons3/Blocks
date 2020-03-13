@@ -267,6 +267,7 @@ class BlockBehavior extends ModelBehavior {
 		$model->data['Block']['plugin_key'] = Inflector::underscore($model->plugin);
 
 		//blocksの登録
+		$model->Block->create();
 		$block = $model->Block->save($model->data['Block'], false);
 		if (! $block) {
 			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
@@ -302,6 +303,7 @@ class BlockBehavior extends ModelBehavior {
 		);
 		$model->data['BlocksLanguage'] = Hash::insert($model->data['BlocksLanguage'], 'modified', null);
 
+		$model->BlocksLanguage->create();
 		$blockLanguage = $model->BlocksLanguage->save($model->data['BlocksLanguage'], false);
 		if (! $blockLanguage) {
 			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
