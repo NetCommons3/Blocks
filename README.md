@@ -1,16 +1,14 @@
 Blocks
 ==============
+
+[![Tests Status](https://github.com/NetCommons3/Blocks/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Blocks/actions/workflows/tests.yml)
+[![Coverage Status](https://coveralls.io/repos/NetCommons3/Blocks/badge.svg?branch=master)](https://coveralls.io/r/NetCommons3/Blocks?branch=master)
+[![Stable Version](https://img.shields.io/packagist/v/netcommons/blocks.svg?label=stable)](https://packagist.org/packages/netcommons/blocks)
+
 NetCommonsのブロックとは、フレームに割り当てるデータ概念です。<br>
 フレームに配置されるプラグインは、１つ以上のブロックを持ち１ブロックにたいして、複数のコンテンツが関連付けられます。<br>
 
 フレームの右上部Glyphicon(歯車)をクリックすると表示されるブロック設定画面の共通処理をまとめています。
-
-[![Build Status](https://api.travis-ci.org/NetCommons3/Blocks.png?branch=master)](https://travis-ci.org/NetCommons3/Blocks)
-[![Coverage Status](https://coveralls.io/repos/NetCommons3/Blocks/badge.png?branch=master)](https://coveralls.io/r/NetCommons3/Blocks?branch=master)
-
-| dependencies  | status |
-| ------------- | ------ |
-| composer.json | [![Dependency Status](https://www.versioneye.com/user/projects/543b99c1b2a9c5db88000385/badge.png)](https://www.versioneye.com/user/projects/543b99c1b2a9c5db88000385) |
 
 
 ### BlockTabsComponent
