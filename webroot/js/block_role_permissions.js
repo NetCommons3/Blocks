@@ -88,13 +88,13 @@ NetCommonsApp.controller('BlockRolePermissions', ['$scope', function($scope) {
                       '[value]"]');
 
       if (! $event.currentTarget.checked) {
-        if (baseRole['level'] > role['level']) {
+        if (Number(baseRole['level']) > Number(role['level'])) {
           if (! angular.isUndefined(element[0]) && ! element[0].disabled) {
             element[0].checked = false;
           }
         }
       } else {
-        if (baseRole['level'] < role['level']) {
+        if (Number(baseRole['level']) < Number(role['level'])) {
           if (! angular.isUndefined(element[0]) && ! element[0].disabled) {
             element[0].checked = true;
           }
